@@ -1,7 +1,9 @@
 package com.yishian;
 
-import com.yishian.auxiliary.AuxiliaryCommand;
 import com.yishian.auxiliary.AuxiliaryCommandEnum;
+import com.yishian.auxiliary.FeedCommand;
+import com.yishian.auxiliary.HealAndFeedCommand;
+import com.yishian.auxiliary.HealCommand;
 import com.yishian.customjoinandleave.CustomJoinAndLeaveCommand;
 import com.yishian.customjoinandleave.CustomJoinAndLeaveCommandEnum;
 import com.yishian.customjoinandleave.CustomJoinAndLeaveListener;
@@ -25,11 +27,10 @@ public final class Main extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new CustomJoinAndLeaveListener(), this);
 
         //使服务注册指令
-        AuxiliaryCommand auxiliaryCommand = new AuxiliaryCommand();
         getCommand(CustomJoinAndLeaveCommandEnum.RELOAD.getCommand()).setExecutor(new CustomJoinAndLeaveCommand());
-        getCommand(AuxiliaryCommandEnum.HEAL_COMMAND.getCommand()).setExecutor(auxiliaryCommand);
-        getCommand(AuxiliaryCommandEnum.FEED_COMMAND.getCommand()).setExecutor(auxiliaryCommand);
-        getCommand(AuxiliaryCommandEnum.HEAL_AND_FEED_COMMAND.getCommand()).setExecutor(auxiliaryCommand);
+        getCommand(AuxiliaryCommandEnum.HEAL_COMMAND.getCommand()).setExecutor(new HealCommand());
+        getCommand(AuxiliaryCommandEnum.FEED_COMMAND.getCommand()).setExecutor(new FeedCommand());
+        getCommand(AuxiliaryCommandEnum.HEAL_AND_FEED_COMMAND.getCommand()).setExecutor(new HealAndFeedCommand());
 
     }
 
