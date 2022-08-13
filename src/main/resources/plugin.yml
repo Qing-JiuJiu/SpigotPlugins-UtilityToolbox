@@ -6,13 +6,9 @@ api-version: 1.18
 commands:
   hello:
     description: 这是重载自定义加入和离开的指令
-    usage: /hello
   heal:
     description: 这是恢复生命值
-    usage: /heal
   feed:
     description: 这是恢复饱食度
-    usage: /feed
   healandfeed:
     description: 这是恢复生命值和饱食度
-    usage: /heal

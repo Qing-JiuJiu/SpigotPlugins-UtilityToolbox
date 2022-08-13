@@ -26,11 +26,10 @@ public final class Main extends JavaPlugin {
 
         //使服务注册指令
         AuxiliaryCommand auxiliaryCommand = new AuxiliaryCommand();
-        CustomJoinAndLeaveCommand customJoinAndLeaveCommand = new CustomJoinAndLeaveCommand();
-        getCommand(CustomJoinAndLeaveCommandEnum.RELOAD.getCommand()).setExecutor(customJoinAndLeaveCommand);
+        getCommand(CustomJoinAndLeaveCommandEnum.RELOAD.getCommand()).setExecutor(new CustomJoinAndLeaveCommand());
         getCommand(AuxiliaryCommandEnum.HEAL_COMMAND.getCommand()).setExecutor(auxiliaryCommand);
         getCommand(AuxiliaryCommandEnum.FEED_COMMAND.getCommand()).setExecutor(auxiliaryCommand);
-        getCommand(AuxiliaryCommandEnum.HEALANDFEED_COMMAND.getCommand()).setExecutor(auxiliaryCommand);
+        getCommand(AuxiliaryCommandEnum.HEAL_AND_FEED_COMMAND.getCommand()).setExecutor(auxiliaryCommand);
 
     }
 

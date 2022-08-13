@@ -9,16 +9,18 @@ public enum AuxiliaryCommandEnum {
 
     //获取治愈指令
     HEAL_COMMAND("heal", "恢复生命的指令"),
-    //获取治愈权限
+    HEAL_OTHERS_COMMAND("healothers", "恢复他人生命的指令"),
+    //获取治愈自己权限
     HEAL_PERMISSION(CommandEnum.PLUGHIN_NAME.getCommand() + "." + HEAL_COMMAND.getCommand(), "恢复生命的权限"),
-
+    //获取治愈他人
+    HEAL_OTHERS_PERMISSION(CommandEnum.PLUGHIN_NAME.getCommand() + "." + HEAL_OTHERS_COMMAND.getCommand(), "恢复他人生命的权限"),
     //恢复饱食指令
     FEED_COMMAND("feed", "恢复饱食的指令"),
     //恢复饱食权限
     FEED_PERMISSION(CommandEnum.PLUGHIN_NAME.getCommand() + "." + FEED_COMMAND.getCommand(),  "恢复饱食的权限"),
 
     //恢复全部状态指令
-    HEALANDFEED_COMMAND("healandfeed", "恢复生命和饱食的指令");
+    HEAL_AND_FEED_COMMAND("healandfeed", "恢复生命和饱食的指令");
 
     private final String command;
     private final String msg;
