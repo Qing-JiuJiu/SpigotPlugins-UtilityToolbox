@@ -1,8 +1,27 @@
 #这是一个配置文件
-message-prefix: '[Enhancements]'
+message-prefix: '&e[Enhancements]&7'
 heal:
   enable: true
+  message:
+    heal-no-permission: '你没有执行恢复生命值指令的权限'
+    heal-self: '你已恢复生命值'
+    heal-others: '你已恢复&3%others-player%&7的生命值'
+    heal-others-no-permission: '你没有执行恢复他人生命值指令的权限'
+    heal-by-others: '你已被&3%player%&7恢复生命值'
+    heal-by-console: '你已被服务器恢复生命值'
+    heal-console-error: '控制台请执行恢复他人生命值的指令：heal <玩家名称>'
+    heal-command-error: '恢复生命值指令格式错误，正确格式：/heal [玩家名称]'
 feed:
   enable: false
+  message:
+    feed-no-permission: '你没有执行恢复饱食度指令的权限'
+    feed-self: '你已恢复饱食度'
+    feed-others: '你已恢复&b%player%的饱食度'
+    feed-others-no-permission: '你没有执行恢复他人饱食度指令的权限'
+    feed-by-others: '你已被&b%player%恢复饱食度'
+    feed-by-console: '你已被服务器恢复饱食度'
+    feed-console-error: '控制台请执行恢复他人饱食度的指令：&bfeed <玩家名称>'
+    feed-command-error: '恢复饱食度指令格式错误，正确格式：&b/feed [玩家名称]'
 custom-join-and-leave:
   enable: true
+  message:

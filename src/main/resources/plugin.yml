@@ -1,4 +1,4 @@
-name: ServerEnhancements
+name: Enhancements
 version: '${project.version}'
 main: com.yishian.Main
 api-version: 1.18

@@ -29,13 +29,13 @@ public final class Main extends JavaPlugin {
         this.getLogger().info("欢迎使用本插件");
 
         //服务注册监听事件
-        if (((MemorySection) config.get("custom-join-and-leave")).getBoolean("enable")) {
+        if (config.getConfigurationSection("custom-join-and-leave").getBoolean("enable")) {
             getServer().getPluginManager().registerEvents(new CustomJoinAndLeaveListener(), this);
         }
 
         //服务注册指令，判断配置文件
-        boolean healHasEnable = ((MemorySection) config.get("heal")).getBoolean("enable");
-        boolean feedHasEnable = ((MemorySection) config.get("feed")).getBoolean("enable");
+        boolean healHasEnable = config.getConfigurationSection("heal").getBoolean("enable");
+        boolean feedHasEnable = config.getConfigurationSection("feed").getBoolean("enable");
         if (healHasEnable) {
             getCommand(AuxiliaryCommandEnum.HEAL_COMMAND.getCommand()).setExecutor(new HealCommand());
         }

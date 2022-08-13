@@ -1,11 +1,17 @@
 package com.yishian.auxiliary;
 
+import com.yishian.Main;
+import com.yishian.currency.ServerUtils;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
+import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.configuration.MemorySection;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
@@ -17,8 +23,21 @@ import java.util.List;
  */
 public class HealCommand implements TabExecutor {
 
+    /**
+     * 指令设置
+     *
+     * @param sender  Source of the command
+     * @param command Command which was executed
+     * @param label   Alias of the command which was used
+     * @param args    Passed command arguments
+     * @return
+     */
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+        //获取配置文件
+        ConfigurationSection configurationSection = ServerUtils.getServerConfig();
+        String messagePrefix = configurationSection.getString("message-prefix");
+        ConfigurationSection healMessage = configurationSection.getConfigurationSection("heal").getConfigurationSection("message");
         //恢复血量
         if (AuxiliaryCommandEnum.HEAL_COMMAND.getCommand().equalsIgnoreCase(label)) {
             if (args.length == 0) {
@@ -28,13 +47,13 @@ public class HealCommand implements TabExecutor {
                         //获取最大生命值
                         double maxHealth = player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue();
                         player.setHealth(maxHealth);
-                        player.sendMessage("已恢复生命值");
+                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + healMessage.getString("heal-self").replaceAll("%player%", player.getName())));
                     } else {
-                        player.sendMessage("你没有执行恢复生命值指令的权限");
+                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + healMessage.getString("heal-no-permission").replaceAll("%player%", player.getName())));
                     }
                     return true;
                 } else {
-                    sender.sendMessage("控制台请执行恢复他人生命值的指令：heal <玩家名称>");
+                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + healMessage.getString("heal-console-error")));
                 }
             } else if (args.length == 1) {
                 //恢复他人生命
@@ -44,25 +63,37 @@ public class HealCommand implements TabExecutor {
                         String othersPlayerName = args[0];
                         Player othersPlayer = Bukkit.getPlayer(othersPlayerName);
                         othersPlayer.setHealth(othersPlayer.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue());
-                        player.sendMessage("你已恢复" + othersPlayerName + "的生命值");
-                        othersPlayer.sendMessage("你已被" + player.getName() + "恢复生命值");
+                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + healMessage.getString("heal-others").replaceAll("%others-player%", othersPlayer.getName())));
+                        othersPlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + healMessage.getString("heal-by-others").replaceAll("%player%", player.getName())));
                     } else {
-                        player.sendMessage("你没有执行恢复他人生命值指令的权限");
+                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + healMessage.getString("heal-others-no-permission")));
                     }
                 } else {
                     String othersPlayerName = args[0];
                     Player othersPlayer = Bukkit.getPlayer(othersPlayerName);
                     othersPlayer.setHealth(othersPlayer.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue());
-                    othersPlayer.sendMessage("你已被控制台恢复生命值");
+                    othersPlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + healMessage.getString("heal-by-console")));
                 }
             } else {
-                sender.sendMessage("恢复生命值指令格式错误，正确格式：/heal [玩家名称]");
+                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + healMessage.getString("heal-command-error")));
             }
             return true;
         }
         return false;
     }
 
+    /**
+     * 指令补全提示
+     *
+     * @param sender  Source of the command.  For players tab-completing a
+     *                command inside of a command block, this will be the player, not
+     *                the command block.
+     * @param command Command which was executed
+     * @param label   Alias of the command which was used
+     * @param args    The arguments passed to the command, including final
+     *                partial argument to be completed
+     * @return
+     */
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
         List<String> tips = new ArrayList<>();

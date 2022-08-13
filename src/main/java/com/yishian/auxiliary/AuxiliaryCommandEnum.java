@@ -19,9 +19,10 @@ public enum AuxiliaryCommandEnum {
     //恢复饱食指令
     FEED_COMMAND("feed", "恢复饱食的指令"),
     //恢复饱食权限
-    FEED_PERMISSION(CommandEnum.PLUGHIN_NAME.getCommand() + "." + FEED_COMMAND.getCommand(),  "恢复饱食的权限"),
-    //恢复他人饱食度权限
+    FEED_PERMISSION(CommandEnum.PLUGHIN_NAME.getCommand() + "." + FEED_COMMAND.getCommand(), "恢复饱食的权限"),
+    //恢复他人饱食度指令
     FEED_OTHERS_COMMAND("feedothers", "恢复他人饱食的指令"),
+    //恢复他人饱食度权限
     FEED_OTHERS_PERMISSION(CommandEnum.PLUGHIN_NAME.getCommand() + "." + FEED_OTHERS_COMMAND.getCommand(), "恢复他人生命的权限"),
 
     //恢复全部状态指令

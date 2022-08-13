@@ -61,6 +61,17 @@ public class HealAndFeedCommand implements TabExecutor {
         return false;
     }
 
+    /**
+     * 指令补全提示
+     * @param sender Source of the command.  For players tab-completing a
+     *     command inside of a command block, this will be the player, not
+     *     the command block.
+     * @param command Command which was executed
+     * @param label Alias of the command which was used
+     * @param args The arguments passed to the command, including final
+     *     partial argument to be completed
+     * @return
+     */
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
         List<String> tips = new ArrayList<>();
