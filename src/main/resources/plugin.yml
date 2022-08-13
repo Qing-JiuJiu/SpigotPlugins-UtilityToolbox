@@ -1,14 +1,12 @@
-name: enhancements
+name: ServerEnhancements
 version: '${project.version}'
 main: com.yishian.Main
 api-version: 1.18
 
 commands:
-  hello:
-    description: 这是重载自定义加入和离开的指令
   heal:
-    description: 这是恢复生命值
+    description: 恢复生命值
   feed:
-    description: 这是恢复饱食度
+    description: 恢复饱食度
   healandfeed:
-    description: 这是恢复生命值和饱食度
+    description: 恢复生命值和饱食度

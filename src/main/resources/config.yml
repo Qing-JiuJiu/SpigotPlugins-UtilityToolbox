@@ -1,0 +1,8 @@
+#这是一个配置文件
+message-prefix: '[Enhancements]'
+heal:
+  enable: true
+feed:
+  enable: false
+custom-join-and-leave:
+  enable: true

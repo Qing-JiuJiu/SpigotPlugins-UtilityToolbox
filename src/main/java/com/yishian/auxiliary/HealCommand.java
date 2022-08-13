@@ -11,6 +11,10 @@ import org.bukkit.entity.Player;
 import java.util.ArrayList;
 import java.util.List;
 
+
+/**
+ * @author XinQi
+ */
 public class HealCommand implements TabExecutor {
 
     @Override
