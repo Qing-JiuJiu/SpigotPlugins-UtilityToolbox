@@ -1,5 +1,10 @@
 #这是一个配置文件
 message-prefix: '&e[Enhancements]&7'
+custom-join-and-leave:
+  enable: true
+  message:
+    player-join: '&a%player% join server'
+    player-leave: '&c%player% leave server'
 heal:
   enable: true
   message:
@@ -16,12 +21,20 @@ feed:
   message:
     feed-no-permission: '你没有执行恢复饱食度指令的权限'
     feed-self: '你已恢复饱食度'
-    feed-others: '你已恢复&b%player%的饱食度'
+    feed-others: '你已恢复&3%player%&7的饱食度'
     feed-others-no-permission: '你没有执行恢复他人饱食度指令的权限'
-    feed-by-others: '你已被&b%player%恢复饱食度'
+    feed-by-others: '你已被&3%player%&7恢复饱食度'
     feed-by-console: '你已被服务器恢复饱食度'
-    feed-console-error: '控制台请执行恢复他人饱食度的指令：&bfeed <玩家名称>'
-    feed-command-error: '恢复饱食度指令格式错误，正确格式：&b/feed [玩家名称]'
-custom-join-and-leave:
-  enable: true
+    feed-console-error: '控制台请执行恢复他人饱食度的指令：feed <玩家名称>'
+    feed-command-error: '恢复饱食度指令格式错误，正确格式：/feed [玩家名称]'
+#当启用恢复生命值和饱食度指令时该功能自动自动，无需设置是否启用
+healandfeed:
   message:
+    heal-and-feed-no-permission: '你没有执行恢复生命值和饱食度指令的权限'
+    heal-and-feed-self: '你已恢复生命值和饱食度'
+    heal-and-feed-others: '你已恢复&3%player%&7的生命值和饱食度'
+    heal-and-feed-others-no-permission: '你没有执行恢复他人生命值和饱食度指令的权限'
+    heal-and-feed-by-others: '你已被&3%player%&7恢复生命值和饱食度'
+    heal-and-feed-by-console: '你已被服务器恢复生命值和饱食度'
+    heal-and-feed-console-error: '控制台请执行恢复他人生命值和饱食度的指令：healandfeed <玩家名称>'
+    heal-and-feed-command-error: '恢复生命值和饱食度指令格式错误，正确格式：/healandfeed [玩家名称]'

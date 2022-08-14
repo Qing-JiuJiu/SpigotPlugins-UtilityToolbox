@@ -1,5 +1,8 @@
 package com.yishian.customjoinandleave;
 
+import com.yishian.currency.ServerUtils;
+import org.bukkit.ChatColor;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -10,6 +13,11 @@ import org.bukkit.event.player.PlayerQuitEvent;
  */
 public class CustomJoinAndLeaveListener implements Listener {
 
+    ConfigurationSection configurationSection = ServerUtils.getServerConfig();
+    String messagePrefix = configurationSection.getString("message-prefix");
+    ConfigurationSection customJoinAndLeaveMessage = configurationSection.getConfigurationSection("custom-join-and-leave").getConfigurationSection("message");
+
+
     /**
      * 当玩家加入服务器时触发的方法
      *
@@ -17,8 +25,7 @@ public class CustomJoinAndLeaveListener implements Listener {
      */
     @EventHandler
     public void playerOnJoin(PlayerJoinEvent playerJoinEvent) {
-        String displayName = playerJoinEvent.getPlayer().getDisplayName();
-        playerJoinEvent.setJoinMessage(displayName + "欢迎加入本服务器");
+        playerJoinEvent.setJoinMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + customJoinAndLeaveMessage.getString("player-join").replaceAll("%player%", playerJoinEvent.getPlayer().getDisplayName())));
     }
 
     /**
@@ -28,7 +35,6 @@ public class CustomJoinAndLeaveListener implements Listener {
      */
     @EventHandler
     public void playerOnLeave(PlayerQuitEvent playerQuitEvent) {
-        String displayName = playerQuitEvent.getPlayer().getDisplayName();
-        playerQuitEvent.setQuitMessage(displayName + "已离开本服务器");
+        playerQuitEvent.setQuitMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + customJoinAndLeaveMessage.getString("player-leave").replaceAll("%player%", playerQuitEvent.getPlayer().getDisplayName())));
     }
 }

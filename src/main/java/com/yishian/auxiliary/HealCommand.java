@@ -51,7 +51,6 @@ public class HealCommand implements TabExecutor {
                     } else {
                         player.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + healMessage.getString("heal-no-permission").replaceAll("%player%", player.getName())));
                     }
-                    return true;
                 } else {
                     sender.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + healMessage.getString("heal-console-error")));
                 }
