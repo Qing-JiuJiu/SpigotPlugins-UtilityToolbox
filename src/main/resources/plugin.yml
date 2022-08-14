@@ -4,6 +4,8 @@ main: com.yishian.Main
 api-version: 1.18
 
 commands:
+  Enhancements:
+    description: 插件主指令
   heal:
     description: 恢复生命值
   feed:

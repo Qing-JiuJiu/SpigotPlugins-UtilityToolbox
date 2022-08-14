@@ -1,10 +1,22 @@
 #这是一个配置文件
-message-prefix: '&e[Enhancements]&7'
-custom-join-and-leave:
+plugin-message:
+  message-prefix: '&e[Enhancements]&7'
+  reload-message: '配置文件重载成功'
+  command-args-error: '子指令错误，正确格式：/Enhancements <子指令>'
+  command-no-permission: '你没有执行该主指令的权限'
+
+join-and-leave-server-message:
   enable: true
   message:
-    player-join: '&a%player% join server'
-    player-leave: '&c%player% leave server'
+    player-join-server-message: '&a%player% join server'
+    player-leave-server-message: '&c%player% leave server'
+join-server-welcome:
+    enable: true
+    message:
+      join-server-welcome-message:
+        - '&c欢迎加入本服务器1'
+        - '&c欢迎加入本服务器2'
+        - '&c欢迎加入本服务器3'
 heal:
   enable: true
   message:

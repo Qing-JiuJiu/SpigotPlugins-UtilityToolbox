@@ -4,8 +4,11 @@ import com.yishian.auxiliary.AuxiliaryCommandEnum;
 import com.yishian.auxiliary.FeedCommand;
 import com.yishian.auxiliary.HealAndFeedCommand;
 import com.yishian.auxiliary.HealCommand;
+import com.yishian.common.CommandEnum;
+import com.yishian.common.PluginCommonCommand;
 import com.yishian.customjoinandleave.CustomJoinAndLeaveListener;
-import org.bukkit.configuration.MemorySection;
+import com.yishian.joinwelcome.JoinWelcomeListener;
+import org.bukkit.command.PluginCommand;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -26,25 +29,38 @@ public final class Main extends JavaPlugin {
         FileConfiguration config = getConfig();
 
         //启动服务器时发送公告
-        this.getLogger().info("欢迎使用本插件");
+        this.getLogger().info("欢迎使用本插件，插件制作者QQ:592342403");
 
         //服务注册监听事件
-        if (config.getConfigurationSection("custom-join-and-leave").getBoolean("enable")) {
+        if (config.getConfigurationSection("join-server-welcome").getBoolean("enable")) {
+            getServer().getPluginManager().registerEvents(new JoinWelcomeListener(), this);
+        }
+        if (config.getConfigurationSection("join-and-leave-server-message").getBoolean("enable")) {
             getServer().getPluginManager().registerEvents(new CustomJoinAndLeaveListener(), this);
         }
 
-        //服务注册指令，判断配置文件
-        boolean healHasEnable = config.getConfigurationSection("heal").getBoolean("enable");
-        boolean feedHasEnable = config.getConfigurationSection("feed").getBoolean("enable");
-        if (healHasEnable) {
-            getCommand(AuxiliaryCommandEnum.HEAL_COMMAND.getCommand()).setExecutor(new HealCommand());
-        }
-        if (feedHasEnable) {
-            getCommand(AuxiliaryCommandEnum.FEED_COMMAND.getCommand()).setExecutor(new FeedCommand());
-        }
-        if (healHasEnable && feedHasEnable) {
-            getCommand(AuxiliaryCommandEnum.HEAL_AND_FEED_COMMAND.getCommand()).setExecutor(new HealAndFeedCommand());
-        }
+
+        //服务注册指令
+        //重载配置文件
+        PluginCommand reloadCommand = getCommand(CommandEnum.PLUGHIN_NAME.getCommand());
+        reloadCommand.setPermission(CommandEnum.RELOAD_CONFIG_PERMISSION.getCommand());
+        reloadCommand.setExecutor(new PluginCommonCommand());
+
+        //恢复生命值注册
+        PluginCommand healCommand = getCommand(AuxiliaryCommandEnum.HEAL_COMMAND.getCommand());
+        healCommand.setPermission(AuxiliaryCommandEnum.HEAL_PERMISSION.getCommand());
+        healCommand.setExecutor(new HealCommand());
+
+        //恢复饱食度注册
+        PluginCommand feedCommand = getCommand(AuxiliaryCommandEnum.FEED_COMMAND.getCommand());
+        feedCommand.setPermission(AuxiliaryCommandEnum.FEED_PERMISSION.getCommand());
+        feedCommand.setExecutor(new FeedCommand());
+
+        //恢复生命值和饱食度完全恢复
+        PluginCommand healAndFeedCommand = getCommand(AuxiliaryCommandEnum.HEAL_AND_FEED_COMMAND.getCommand());
+        healAndFeedCommand.setPermission(AuxiliaryCommandEnum.HEAL_PERMISSION.getCommand());
+        healAndFeedCommand.setPermission(AuxiliaryCommandEnum.FEED_PERMISSION.getCommand());
+        healAndFeedCommand.setExecutor(new HealAndFeedCommand());
     }
 
     /**

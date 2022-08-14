@@ -1,6 +1,6 @@
 package com.yishian.auxiliary;
 
-import com.yishian.currency.CommandEnum;
+import com.yishian.common.CommandEnum;
 
 /**
  * @author XinQi

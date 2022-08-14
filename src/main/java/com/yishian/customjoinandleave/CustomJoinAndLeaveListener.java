@@ -1,6 +1,6 @@
 package com.yishian.customjoinandleave;
 
-import com.yishian.currency.ServerUtils;
+import com.yishian.common.ServerUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.event.EventHandler;
@@ -15,7 +15,7 @@ public class CustomJoinAndLeaveListener implements Listener {
 
     ConfigurationSection configurationSection = ServerUtils.getServerConfig();
     String messagePrefix = configurationSection.getString("message-prefix");
-    ConfigurationSection customJoinAndLeaveMessage = configurationSection.getConfigurationSection("custom-join-and-leave").getConfigurationSection("message");
+    ConfigurationSection customJoinAndLeaveMessage = configurationSection.getConfigurationSection("join-and-leave-server-message").getConfigurationSection("message");
 
 
     /**
@@ -25,7 +25,7 @@ public class CustomJoinAndLeaveListener implements Listener {
      */
     @EventHandler
     public void playerOnJoin(PlayerJoinEvent playerJoinEvent) {
-        playerJoinEvent.setJoinMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + customJoinAndLeaveMessage.getString("player-join").replaceAll("%player%", playerJoinEvent.getPlayer().getDisplayName())));
+        playerJoinEvent.setJoinMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + customJoinAndLeaveMessage.getString("player-join-server-message").replaceAll("%player%", playerJoinEvent.getPlayer().getDisplayName())));
     }
 
     /**
@@ -35,6 +35,6 @@ public class CustomJoinAndLeaveListener implements Listener {
      */
     @EventHandler
     public void playerOnLeave(PlayerQuitEvent playerQuitEvent) {
-        playerQuitEvent.setQuitMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + customJoinAndLeaveMessage.getString("player-leave").replaceAll("%player%", playerQuitEvent.getPlayer().getDisplayName())));
+        playerQuitEvent.setQuitMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + customJoinAndLeaveMessage.getString("player-leave-server-message").replaceAll("%player%", playerQuitEvent.getPlayer().getDisplayName())));
     }
 }

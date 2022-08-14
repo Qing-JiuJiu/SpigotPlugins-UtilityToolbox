@@ -1,7 +1,6 @@
 package com.yishian.auxiliary;
 
-import com.yishian.Main;
-import com.yishian.currency.ServerUtils;
+import com.yishian.common.ServerUtils;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -10,8 +9,6 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
 import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.configuration.MemorySection;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
@@ -36,7 +33,7 @@ public class HealCommand implements TabExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         //获取配置文件
         ConfigurationSection configurationSection = ServerUtils.getServerConfig();
-        String messagePrefix = configurationSection.getString("message-prefix");
+        String messagePrefix = configurationSection.getConfigurationSection("plugin-message").getString("message-prefix");
         ConfigurationSection healMessage = configurationSection.getConfigurationSection("heal").getConfigurationSection("message");
         //恢复血量
         if (AuxiliaryCommandEnum.HEAL_COMMAND.getCommand().equalsIgnoreCase(label)) {
@@ -100,15 +97,15 @@ public class HealCommand implements TabExecutor {
             if (StringUtils.isEmpty(args[0])) {
                 Bukkit.getOnlinePlayers().forEach(player -> tips.add(player.getName()));
                 return tips;
+            } else if (args.length == 1) {
+                Bukkit.getOnlinePlayers().forEach(player -> {
+                    String playerName = player.getName();
+                    if (playerName.startsWith(args[0])) {
+                        tips.add(playerName);
+                    }
+                });
+                return tips;
             }
-        } else {
-            Bukkit.getOnlinePlayers().forEach(player -> {
-                String playerName = player.getName();
-                if (playerName.startsWith(args[0])) {
-                    tips.add(playerName);
-                }
-            });
-            return tips;
         }
         return null;
     }

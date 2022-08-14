@@ -1,6 +1,6 @@
 package com.yishian.auxiliary;
 
-import com.yishian.currency.ServerUtils;
+import com.yishian.common.ServerUtils;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -22,7 +22,7 @@ public class HealAndFeedCommand implements TabExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         //获取配置文件
         ConfigurationSection configurationSection = ServerUtils.getServerConfig();
-        String messagePrefix = configurationSection.getString("message-prefix");
+        String messagePrefix = configurationSection.getConfigurationSection("plugin-message").getString("message-prefix");
         ConfigurationSection healAndFeedMessage = configurationSection.getConfigurationSection("healandfeed").getConfigurationSection("message");
         //恢复全部状态，当有恢复生命值和恢复饱食度权限时可以执行，恢复他人同理
         if (AuxiliaryCommandEnum.HEAL_AND_FEED_COMMAND.getCommand().equalsIgnoreCase(label)) {
@@ -70,13 +70,14 @@ public class HealAndFeedCommand implements TabExecutor {
 
     /**
      * 指令补全提示
-     * @param sender Source of the command.  For players tab-completing a
-     *     command inside of a command block, this will be the player, not
-     *     the command block.
+     *
+     * @param sender  Source of the command.  For players tab-completing a
+     *                command inside of a command block, this will be the player, not
+     *                the command block.
      * @param command Command which was executed
-     * @param label Alias of the command which was used
-     * @param args The arguments passed to the command, including final
-     *     partial argument to be completed
+     * @param label   Alias of the command which was used
+     * @param args    The arguments passed to the command, including final
+     *                partial argument to be completed
      * @return
      */
     @Override
@@ -86,15 +87,15 @@ public class HealAndFeedCommand implements TabExecutor {
             if (StringUtils.isEmpty(args[0])) {
                 Bukkit.getOnlinePlayers().forEach(player -> tips.add(player.getName()));
                 return tips;
+            } else if (args.length == 1) {
+                Bukkit.getOnlinePlayers().forEach(player -> {
+                    String playerName = player.getName();
+                    if (playerName.startsWith(args[0])) {
+                        tips.add(playerName);
+                    }
+                });
+                return tips;
             }
-        } else {
-            Bukkit.getOnlinePlayers().forEach(player -> {
-                String playerName = player.getName();
-                if (playerName.startsWith(args[0])) {
-                    tips.add(playerName);
-                }
-            });
-            return tips;
         }
         return null;
     }
