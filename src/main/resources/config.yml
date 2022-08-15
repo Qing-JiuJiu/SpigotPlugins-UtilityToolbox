@@ -1,8 +1,8 @@
 #这是一个配置文件
 plugin-message:
-  message-prefix: '&e[Enhancements]&7'
+  message-prefix: '&e[Enhancements] &7'
   reload-message: '配置文件重载成功'
-  command-args-error: '子指令错误，正确格式：/Enhancements <子指令>'
+  command-args-error: '子指令错误或无子指令，正确格式：/enhancements <子指令>'
   command-no-permission: '你没有执行该主指令的权限'
 
 join-and-leave-server-message:
@@ -33,7 +33,7 @@ feed:
   message:
     feed-no-permission: '你没有执行恢复饱食度指令的权限'
     feed-self: '你已恢复饱食度'
-    feed-others: '你已恢复&3%player%&7的饱食度'
+    feed-others: '你已恢复&3%others-player%&7的饱食度'
     feed-others-no-permission: '你没有执行恢复他人饱食度指令的权限'
     feed-by-others: '你已被&3%player%&7恢复饱食度'
     feed-by-console: '你已被服务器恢复饱食度'
@@ -44,7 +44,7 @@ healandfeed:
   message:
     heal-and-feed-no-permission: '你没有执行恢复生命值和饱食度指令的权限'
     heal-and-feed-self: '你已恢复生命值和饱食度'
-    heal-and-feed-others: '你已恢复&3%player%&7的生命值和饱食度'
+    heal-and-feed-others: '你已恢复&3%others-player%&7的生命值和饱食度'
     heal-and-feed-others-no-permission: '你没有执行恢复他人生命值和饱食度指令的权限'
     heal-and-feed-by-others: '你已被&3%player%&7恢复生命值和饱食度'
     heal-and-feed-by-console: '你已被服务器恢复生命值和饱食度'

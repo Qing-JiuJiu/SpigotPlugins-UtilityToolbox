@@ -32,13 +32,12 @@ public final class Main extends JavaPlugin {
         this.getLogger().info("欢迎使用本插件，插件制作者QQ:592342403");
 
         //服务注册监听事件
-        if (config.getConfigurationSection("join-server-welcome").getBoolean("enable")) {
-            getServer().getPluginManager().registerEvents(new JoinWelcomeListener(), this);
-        }
         if (config.getConfigurationSection("join-and-leave-server-message").getBoolean("enable")) {
             getServer().getPluginManager().registerEvents(new CustomJoinAndLeaveListener(), this);
         }
-
+        if (config.getConfigurationSection("join-server-welcome").getBoolean("enable")) {
+            getServer().getPluginManager().registerEvents(new JoinWelcomeListener(), this);
+        }
 
         //服务注册指令
         //重载配置文件

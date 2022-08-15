@@ -14,7 +14,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 public class CustomJoinAndLeaveListener implements Listener {
 
     ConfigurationSection configurationSection = ServerUtils.getServerConfig();
-    String messagePrefix = configurationSection.getString("message-prefix");
+    String messagePrefix = configurationSection.getConfigurationSection("plugin-message").getString("message-prefix");
     ConfigurationSection customJoinAndLeaveMessage = configurationSection.getConfigurationSection("join-and-leave-server-message").getConfigurationSection("message");
 
 
