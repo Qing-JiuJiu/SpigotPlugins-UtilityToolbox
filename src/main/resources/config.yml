@@ -9,6 +9,7 @@ join-and-leave-server-message:
   message:
     player-join-server-message: '&a%player% join server'
     player-leave-server-message: '&c%player% leave server'
+
 join-server-welcome:
     enable: true
     message:

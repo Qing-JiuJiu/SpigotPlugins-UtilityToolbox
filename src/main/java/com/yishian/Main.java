@@ -39,6 +39,7 @@ public final class Main extends JavaPlugin {
             getServer().getPluginManager().registerEvents(new JoinWelcomeListener(), this);
         }
 
+
         //服务注册指令
         //重载配置文件
         PluginCommand reloadCommand = getCommand(CommandEnum.PLUGHIN_NAME.getCommand());
