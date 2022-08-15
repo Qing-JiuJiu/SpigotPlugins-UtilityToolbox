@@ -5,12 +5,17 @@ package com.yishian.common;
  */
 public enum CommandEnum {
 
-    //获取插件名称
-    PLUGHIN_NAME("Enhancements", "获取插件名称"),
+    /**
+     * 通用枚举
+     */
+    PLUGHIN_NAME("enhancements", "本插件的名称"),
+    OTHERS("others", "他人的英语"),
 
-    //重载配置文件的指令和权限，重载配置文件需要打插件名称+空格+reload
-    RELOAD_CONFIG_COMMAND("reload", "重载配置文件"),
-    RELOAD_CONFIG_PERMISSION(PLUGHIN_NAME.getCommand() + "." + RELOAD_CONFIG_COMMAND.getCommand(), "重载配置文件权限");
+    /**
+     * 重载配置文件
+     */
+    RELOAD_CONFIG_COMMAND("reload", "重载配置文件的指令"),
+    RELOAD_CONFIG_PERMISSION(PLUGHIN_NAME.getCommand() + "." + RELOAD_CONFIG_COMMAND.getCommand(), "重载配置文件的权限");
 
     private final String command;
     private final String msg;

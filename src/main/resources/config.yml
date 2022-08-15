@@ -3,7 +3,6 @@ plugin-message:
   message-prefix: '&e[Enhancements] &7'
   reload-message: '配置文件重载成功'
   command-args-error: '子指令错误或无子指令，正确格式：/enhancements <子指令>'
-  command-no-permission: '你没有执行该主指令的权限'
 
 join-and-leave-server-message:
   enable: true
@@ -18,35 +17,65 @@ join-server-welcome:
         - '&c欢迎加入本服务器2'
         - '&c欢迎加入本服务器3'
 heal:
-  enable: true
   message:
-    heal-no-permission: '你没有执行恢复生命值指令的权限'
     heal-self: '你已恢复生命值'
     heal-others: '你已恢复&3%others-player%&7的生命值'
+    heal-others-no-exist: '玩家&3%others-player%&7不存在，请检查玩家名字'
+    heal-others-is-self: '你已恢复生命值，可以使用不带参数的指令来恢复自己'
     heal-others-no-permission: '你没有执行恢复他人生命值指令的权限'
     heal-by-others: '你已被&3%player%&7恢复生命值'
     heal-by-console: '你已被服务器恢复生命值'
     heal-console-error: '控制台请执行恢复他人生命值的指令：heal <玩家名称>'
     heal-command-error: '恢复生命值指令格式错误，正确格式：/heal [玩家名称]'
 feed:
-  enable: false
   message:
-    feed-no-permission: '你没有执行恢复饱食度指令的权限'
     feed-self: '你已恢复饱食度'
     feed-others: '你已恢复&3%others-player%&7的饱食度'
+    feed-others-no-exist: '玩家&3%others-player%&7不存在，请检查玩家名字'
+    feed-others-is-self: '你已恢复饱食度，可以使用不带参数的指令来恢复自己'
     feed-others-no-permission: '你没有执行恢复他人饱食度指令的权限'
     feed-by-others: '你已被&3%player%&7恢复饱食度'
     feed-by-console: '你已被服务器恢复饱食度'
     feed-console-error: '控制台请执行恢复他人饱食度的指令：feed <玩家名称>'
     feed-command-error: '恢复饱食度指令格式错误，正确格式：/feed [玩家名称]'
-#当启用恢复生命值和饱食度指令时该功能自动自动，无需设置是否启用
+
+#当启用恢复生命值和饱食度指令时该指令自动可使用
 healandfeed:
   message:
-    heal-and-feed-no-permission: '你没有执行恢复生命值和饱食度指令的权限'
     heal-and-feed-self: '你已恢复生命值和饱食度'
     heal-and-feed-others: '你已恢复&3%others-player%&7的生命值和饱食度'
+    heal-and-feed-no-exist: '玩家&3%others-player%&7不存在，请检查玩家名字'
+    heal-and-feed-others-is-self: '你已恢复生命值和饱食度，可以使用不带参数的指令来恢复自己'
     heal-and-feed-others-no-permission: '你没有执行恢复他人生命值和饱食度指令的权限'
     heal-and-feed-by-others: '你已被&3%player%&7恢复生命值和饱食度'
     heal-and-feed-by-console: '你已被服务器恢复生命值和饱食度'
     heal-and-feed-console-error: '控制台请执行恢复他人生命值和饱食度的指令：healandfeed <玩家名称>'
     heal-and-feed-command-error: '恢复生命值和饱食度指令格式错误，正确格式：/healandfeed [玩家名称]'
+
+fly:
+  message:
+    fly-self-open: '你已开启飞行'
+    fly-self-close: '你已关闭飞行'
+    fly-others-open: '你已开启&3%others-player%&7的飞行'
+    fly-others-close: '你已开启&3%others-player%&7的飞行'
+    fly-others-no-exist: '玩家&3%others-player%&7不存在，请检查玩家名字'
+    fly-others-is-self-open: '你已开启飞行，可以使用不带参数的指令来开关飞行'
+    fly-others-is-self-close: '你已关闭飞行，可以使用不带参数的指令来开关飞行'
+    fly-others-no-permission: '你没有执行恢复他人生命值指令的权限'
+    fly-by-others-open: '你已被&3%player%&7开启飞行'
+    fly-by-others-close: '你已被&3%player%&7关闭飞行'
+    fly-by-console-open: '你已被服务器开启飞行'
+    fly-by-console-close: '你已被服务器关闭飞行'
+    fly-console-error: '控制台请执行开关他人飞行的指令：fly <玩家名称>'
+    fly-command-error: '开关飞行指令格式错误，正确格式：/fly [玩家名称]'
+
+fly-speed:
+  message:
+    fly-speed-no-permission: '你没有执行修改飞行速度指令的权限'
+    fly-speed-self: '已修改飞行速度为%fly-speed%'
+    fly-speed-others: '你已修改&3%others-player%&7的飞行速度为%fly-speed%'
+    fly-speed-others-no-permission: '你没有修改他人飞行速度指令的权限'
+    fly-speed-by-others: '你已被&3%player%&7开修改飞行速度为%fly-speed%'
+    fly-speed-by-console: '你已被服务器修改飞行速度为%fly-speed%'
+    fly-speed-console-error: '控制台请执行修改他人飞行速度的指令：flyspeed <玩家名称>'
+    fly-speed-command-error: '修改飞行速度指令格式错误，正确格式：/flyspeed [玩家名称]'

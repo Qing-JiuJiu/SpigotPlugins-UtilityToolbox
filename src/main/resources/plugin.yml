@@ -6,9 +6,27 @@ api-version: 1.18
 commands:
   enhancements:
     description: 插件主指令
+    usage: '请使用：/enhancements help 指令查看本插件帮助'
   heal:
     description: 恢复生命值
+    usage: '请使用：/enhancements help 指令查看本插件帮助'
   feed:
     description: 恢复饱食度
+    usage: '请使用：/enhancements help 指令查看本插件帮助'
   healandfeed:
     description: 恢复生命值和饱食度
+    usage: '请使用：/enhancements help 指令查看本插件帮助'
+
+permissions:
+
+  enhancements.heal:
+    default: op
+    children:
+      enhancements.heal.others: false
+    description: 恢复生命值
+
+  enhancements.feed:
+    default: op
+    children:
+      enhancements.feed.others: false
+    description: 恢复饱食度

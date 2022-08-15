@@ -16,28 +16,28 @@ import java.util.List;
  */
 public class PluginCommonCommand implements TabExecutor {
 
-    /**
-     * 获取配置文件
-     */
-    ConfigurationSection pluginMessage = ServerUtils.getServerConfig().getConfigurationSection("plugin-message");
-    String messagePrefix = pluginMessage.getString("message-prefix");
+
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if (sender.hasPermission(CommandEnum.RELOAD_CONFIG_PERMISSION.getCommand())) {
-            if (CommandEnum.PLUGHIN_NAME.getCommand().equalsIgnoreCase(label)) {
-                if (args.length == 1 && CommandEnum.RELOAD_CONFIG_COMMAND.getCommand().equalsIgnoreCase(args[0])) {
-                    //重载配置文件
-                    Main.getProvidingPlugin(Main.class).reloadConfig();
-                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + pluginMessage.getString("reload-message")));
-                } else {
-                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + pluginMessage.getString("command-args-error")));
-                }
+        //获取配置文件对应的提示消息
+        ConfigurationSection pluginMessage = ServerUtils.getServerConfig().getConfigurationSection("plugin-message");
+        String messagePrefix = pluginMessage.getString("message-prefix");
+
+        //判断执行的指令内容
+        if (CommandEnum.PLUGHIN_NAME.getCommand().equalsIgnoreCase(label)) {
+            //判断参数长度是否为1 且是否是需要的参数
+            if (args.length == 1 && CommandEnum.RELOAD_CONFIG_COMMAND.getCommand().equalsIgnoreCase(args[0])) {
+                //重载配置文件
+                Main.getProvidingPlugin(Main.class).reloadConfig();
+                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + pluginMessage.getString("reload-message")));
+            } else {
+                //提示参数错误
+                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + pluginMessage.getString("command-args-error")));
             }
-        } else {
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + pluginMessage.getString("command-no-permission")));
+            return true;
         }
-        return true;
+        return false;
     }
 
     @Override

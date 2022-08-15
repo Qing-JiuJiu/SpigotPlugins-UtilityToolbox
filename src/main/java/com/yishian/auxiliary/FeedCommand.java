@@ -19,42 +19,62 @@ import java.util.List;
 public class FeedCommand implements TabExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        //获取配置文件
+        //获取配置文件里该指令的消息提示
         ConfigurationSection configurationSection = ServerUtils.getServerConfig();
         String messagePrefix = configurationSection.getConfigurationSection("plugin-message").getString("message-prefix");
         ConfigurationSection feedMessage = configurationSection.getConfigurationSection("feed").getConfigurationSection("message");
 
+        //判断执行的指令内容
         if (AuxiliaryCommandEnum.FEED_COMMAND.getCommand().equalsIgnoreCase(label)) {
+            //判断指令是否带参数
             if (args.length == 0) {
+                //判断执行恢复自己指令的是用户还是控制台
                 if (sender instanceof Player) {
+                    //恢复自己饱食度
                     Player player = (Player) sender;
-                    if (player.hasPermission(AuxiliaryCommandEnum.FEED_PERMISSION.getCommand())) {
-                        player.setFoodLevel(20);
-                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + feedMessage.getString("feed-self").replaceAll("%player%", player.getName())));
-                    } else {
-                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + feedMessage.getString("feed-no-permission").replaceAll("%player%", player.getName())));
-                    }
+                    player.setFoodLevel(20);
+                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + feedMessage.getString("feed-self").replaceAll("%player%", player.getName())));
                 } else {
                     sender.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + feedMessage.getString("feed-console-error")));
                 }
+                //判断参数数量是否为1
             } else if (args.length == 1) {
-                //治愈他人生命
+                //判断执行的是用户还是控制台
                 if (sender instanceof Player) {
                     Player player = (Player) sender;
-                    if (player.hasPermission(AuxiliaryCommandEnum.FEED_OTHERS_PERMISSION.getCommand())) {
-                        String othersPlayerName = args[0];
-                        Player othersPlayer = Bukkit.getPlayer(othersPlayerName);
-                        othersPlayer.setFoodLevel(20);
-                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + feedMessage.getString("feed-others").replaceAll("%others-player%", othersPlayer.getName())));
-                        othersPlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + feedMessage.getString("feed-by-others").replaceAll("%player%", player.getName())));
+                    String othersPlayerName = args[0];
+                    String playerName = player.getName();
+                    //判断参数指向的是否是自己
+                    if (!playerName.equals(othersPlayerName)) {
+                        //判断执行恢复他人指令的玩家权限
+                        if (player.hasPermission(AuxiliaryCommandEnum.FEED_OTHERS_PERMISSION.getCommand())) {
+                            Player othersPlayer = Bukkit.getPlayer(othersPlayerName);
+                            //判断玩家是否存在
+                            if (othersPlayer != null) {
+                                othersPlayer.setFoodLevel(20);
+                                player.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + feedMessage.getString("feed-others").replaceAll("%others-player%", othersPlayerName)));
+                                othersPlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + feedMessage.getString("feed-by-others").replaceAll("%player%", playerName)));
+                            } else {
+                                player.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + feedMessage.getString("feed-others-no-exist").replaceAll("%others-player%", othersPlayerName)));
+                            }
+                        } else {
+                            player.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + feedMessage.getString("feed-others-no-permission")));
+                        }
                     } else {
-                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + feedMessage.getString("feed-others-no-permission")));
+                        //参数指向的是自己，恢复自己，并给出对应提示
+                        player.setFoodLevel(20);
+                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + feedMessage.getString("feed-others-is-self").replaceAll("%player%", player.getName())));
                     }
                 } else {
                     String othersPlayerName = args[0];
                     Player othersPlayer = Bukkit.getPlayer(othersPlayerName);
-                    othersPlayer.setFoodLevel(20);
-                    othersPlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + feedMessage.getString("feed-by-console")));
+                    if (othersPlayer != null) {
+                        othersPlayer.setFoodLevel(20);
+                        othersPlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + feedMessage.getString("feed-by-console")));
+                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + feedMessage.getString("feed-others").replaceAll("%others-player%", othersPlayerName)));
+                    } else {
+                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + feedMessage.getString("feed-others-no-exist").replaceAll("%others-player%", othersPlayerName)));
+                    }
                 }
             } else {
                 sender.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + feedMessage.getString("feed-command-error")));
@@ -74,15 +94,18 @@ public class FeedCommand implements TabExecutor {
      * @param label   Alias of the command which was used
      * @param args    The arguments passed to the command, including final
      *                partial argument to be completed
-     * @return
+     * @return 返回的提示内容
      */
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
         List<String> tips = new ArrayList<>();
+        //判断指令是否是上面执行的指令
         if (AuxiliaryCommandEnum.FEED_COMMAND.getCommand().equalsIgnoreCase(label)) {
+            //判断参数是否为空，是的话就给出全部提示
             if (StringUtils.isEmpty(args[0])) {
                 Bukkit.getOnlinePlayers().forEach(player -> tips.add(player.getName()));
                 return tips;
+                //判断参数数量是否为1，证明输入了内容给出根据输入的参数前缀给出对应的提示
             } else if (args.length == 1) {
                 Bukkit.getOnlinePlayers().forEach(player -> {
                     String playerName = player.getName();
