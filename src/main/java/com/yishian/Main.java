@@ -5,6 +5,7 @@ import com.yishian.common.CommandEnum;
 import com.yishian.common.PluginCommonCommand;
 import com.yishian.customjoinandleave.CustomJoinAndLeaveListener;
 import com.yishian.joinwelcome.JoinWelcomeListener;
+import com.yishian.timingservermessages.TimingServerMessagesRunnable;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -25,8 +26,12 @@ public final class Main extends JavaPlugin {
         saveDefaultConfig();
         FileConfiguration config = getConfig();
 
-        //启动服务器时发送公告
+        //启动服务器时发送插件消息
         this.getLogger().info("欢迎使用本插件，插件制作者QQ:592342403");
+
+        //注册定时任务
+        //按照tick时间计算，1tick=0.05s，20tick=1s
+        new TimingServerMessagesRunnable().runTaskTimer(this,0,20);
 
         //服务注册监听事件
         if (config.getConfigurationSection("join-and-leave-server-message").getBoolean("enable")) {

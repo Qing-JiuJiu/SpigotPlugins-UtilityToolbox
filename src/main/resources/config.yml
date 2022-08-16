@@ -40,7 +40,7 @@ feed:
     feed-console-error: '控制台请执行恢复他人饱食度的指令：feed <玩家名称>'
     feed-command-error: '恢复饱食度指令格式错误，正确格式：/feed [玩家名称]'
 
-#当启用恢复生命值和饱食度指令时该指令自动可使用
+#当拥有恢复生命值和饱食度指令时该指令自动可使用
 healandfeed:
   message:
     heal-and-feed-self: '你已恢复生命值和饱食度'
