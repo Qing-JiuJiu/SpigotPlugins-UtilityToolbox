@@ -1,9 +1,6 @@
 package com.yishian;
 
-import com.yishian.auxiliary.AuxiliaryCommandEnum;
-import com.yishian.auxiliary.FeedCommand;
-import com.yishian.auxiliary.HealAndFeedCommand;
-import com.yishian.auxiliary.HealCommand;
+import com.yishian.auxiliary.*;
 import com.yishian.common.CommandEnum;
 import com.yishian.common.PluginCommonCommand;
 import com.yishian.customjoinandleave.CustomJoinAndLeaveListener;
@@ -61,6 +58,11 @@ public final class Main extends JavaPlugin {
         healAndFeedCommand.setPermission(AuxiliaryCommandEnum.HEAL_PERMISSION.getCommand());
         healAndFeedCommand.setPermission(AuxiliaryCommandEnum.FEED_PERMISSION.getCommand());
         healAndFeedCommand.setExecutor(new HealAndFeedCommand());
+
+        //开关飞行
+        PluginCommand flyCommand = getCommand(AuxiliaryCommandEnum.FLY_COMMAND.getCommand());
+        flyCommand.setPermission(AuxiliaryCommandEnum.FLY_PERMISSION.getCommand());
+        flyCommand.setExecutor(new FlyCommand());
     }
 
     /**

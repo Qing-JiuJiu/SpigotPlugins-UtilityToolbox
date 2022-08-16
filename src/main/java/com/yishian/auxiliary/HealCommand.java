@@ -81,6 +81,7 @@ public class HealCommand implements TabExecutor {
                 } else {
                     String othersPlayerName = args[0];
                     Player othersPlayer = Bukkit.getPlayer(othersPlayerName);
+                    //判断该玩家是否存在
                     if (othersPlayer != null) {
                         othersPlayer.setHealth(othersPlayer.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue());
                         othersPlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + healMessage.getString("heal-by-console")));

@@ -16,6 +16,9 @@ commands:
   healandfeed:
     description: 恢复生命值和饱食度
     usage: '请使用：/enhancements help 指令查看本插件帮助'
+  fly:
+    description: 开关飞行
+    usage: '请使用：/enhancements help 指令查看本插件帮助'
 
 permissions:
 
@@ -30,3 +33,9 @@ permissions:
     children:
       enhancements.feed.others: false
     description: 恢复饱食度
+
+  enhancements.fly:
+    default: op
+    children:
+      enhancements.fly.others: false
+    description: 开关飞行

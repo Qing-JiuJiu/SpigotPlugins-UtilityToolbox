@@ -68,6 +68,7 @@ public class FeedCommand implements TabExecutor {
                 } else {
                     String othersPlayerName = args[0];
                     Player othersPlayer = Bukkit.getPlayer(othersPlayerName);
+                    //判断玩家是否存在
                     if (othersPlayer != null) {
                         othersPlayer.setFoodLevel(20);
                         othersPlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + feedMessage.getString("feed-by-console")));
