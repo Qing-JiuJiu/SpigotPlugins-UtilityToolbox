@@ -4,7 +4,6 @@ import com.yishian.common.ServerUtils;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.attribute.Attribute;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
@@ -63,7 +62,7 @@ public class FlyCommand implements TabExecutor {
                     String othersPlayerName = args[0];
                     //判断参数指向的是否是自己
                     if (!playerName.equals(othersPlayerName)) {
-                        //判断执行恢复他人指令的玩家权限
+                        //判断执行开关他人飞行指令的玩家权限
                         if (player.hasPermission(AuxiliaryCommandEnum.FLY_OTHERS_PERMISSION.getCommand())) {
                             Player othersPlayer = Bukkit.getPlayer(othersPlayerName);
                             //判断玩家是否存在

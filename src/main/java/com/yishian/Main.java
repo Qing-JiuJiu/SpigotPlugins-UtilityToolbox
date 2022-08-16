@@ -63,6 +63,11 @@ public final class Main extends JavaPlugin {
         PluginCommand flyCommand = getCommand(AuxiliaryCommandEnum.FLY_COMMAND.getCommand());
         flyCommand.setPermission(AuxiliaryCommandEnum.FLY_PERMISSION.getCommand());
         flyCommand.setExecutor(new FlyCommand());
+
+        //修改飞行速度
+        PluginCommand flySpeedCommand = getCommand(AuxiliaryCommandEnum.FLY_SPEED_COMMAND.getCommand());
+        flySpeedCommand.setPermission(AuxiliaryCommandEnum.FLY_SPEED_PERMISSION.getCommand());
+        flySpeedCommand.setExecutor(new FlySpeedCommand());
     }
 
     /**

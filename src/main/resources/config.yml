@@ -72,11 +72,12 @@ fly:
 
 fly-speed:
   message:
-    fly-speed-no-permission: '你没有执行修改飞行速度指令的权限'
-    fly-speed-self: '已修改飞行速度为%fly-speed%'
+    fly-speed-self-reset: '你已重置飞行速度'
+    fly-speed-self: '你已修改飞行速度为%fly-speed%'
+    fly-speed-self-args-error: '飞行速度参数错误，飞行速度只能为1-10'
     fly-speed-others: '你已修改&3%others-player%&7的飞行速度为%fly-speed%'
     fly-speed-others-no-permission: '你没有修改他人飞行速度指令的权限'
     fly-speed-by-others: '你已被&3%player%&7开修改飞行速度为%fly-speed%'
     fly-speed-by-console: '你已被服务器修改飞行速度为%fly-speed%'
-    fly-speed-console-error: '控制台请执行修改他人飞行速度的指令：flyspeed <玩家名称>'
+    fly-speed-console-error: '控制台请执行修改他人飞行速度的指令：flyspeed [速度] <玩家名称>'
     fly-speed-command-error: '修改飞行速度指令格式错误，正确格式：/flyspeed [玩家名称]'

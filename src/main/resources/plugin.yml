@@ -9,16 +9,14 @@ commands:
     usage: '请使用：/enhancements help 指令查看本插件帮助'
   heal:
     description: 恢复生命值
-    usage: '请使用：/enhancements help 指令查看本插件帮助'
   feed:
     description: 恢复饱食度
-    usage: '请使用：/enhancements help 指令查看本插件帮助'
   healandfeed:
     description: 恢复生命值和饱食度
-    usage: '请使用：/enhancements help 指令查看本插件帮助'
   fly:
     description: 开关飞行
-    usage: '请使用：/enhancements help 指令查看本插件帮助'
+  flyspeed:
+    description: 修改飞行速度
 
 permissions:
 
@@ -39,3 +37,9 @@ permissions:
     children:
       enhancements.fly.others: false
     description: 开关飞行
+
+  enhancements.flyspeed:
+    default: op
+    children:
+      enhancements.flyspeed.others: false
+    description: 修改飞行速度
