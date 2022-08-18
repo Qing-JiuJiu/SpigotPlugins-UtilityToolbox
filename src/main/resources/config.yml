@@ -11,12 +11,22 @@ join-and-leave-server-message:
     player-leave-server-message: '&c%player% leave server'
 
 join-server-welcome:
-    enable: true
-    message:
-      join-server-welcome-message:
-        - '&c欢迎加入本服务器1'
-        - '&c欢迎加入本服务器2'
-        - '&c欢迎加入本服务器3'
+  enable: true
+  message:
+    join-server-welcome-message:
+      - '&e[Enhancements] &7欢迎使用本插件'
+      - '&e[Enhancements] &7欢迎使用本插件'
+      - '&e[Enhancements] &7欢迎使用本插件'
+
+auto-send-server-messages:
+  enable: true
+  #默认秒
+  time: 600
+  message:
+    send-messages:
+      - '&e[Enhancements] &7欢迎使用本插件'
+      - '&e[Enhancements] &7欢迎使用本插件'
+
 heal:
   message:
     heal-self: '你已恢复生命值'
@@ -74,7 +84,7 @@ fly-speed:
   message:
     fly-speed-self-reset: '你已重置飞行速度'
     fly-speed-self: '你已修改飞行速度为%fly-speed%'
-    fly-speed-self-args-error: '飞行速度参数错误，飞行速度只能为1-10'
+    fly-speed-self-args-error: '飞行速度参数错误，飞行速度只能为0-10，默认速度1'
     fly-speed-others: '你已修改&3%others-player%&7的飞行速度为%fly-speed%'
     fly-speed-others-reset: '你已重置&3%others-player%&7的飞行速度'
     fly-speed-others-reset-is-self: '你已重置飞行速度，修改自己可以不输入玩家名称'
@@ -83,7 +93,25 @@ fly-speed:
     fly-speed-others-is-self: '你已修改飞行速度为%fly-speed%，修改自己可以不输入玩家名称'
     fly-speed-others-no-exist: '玩家&3%others-player%&7不存在，请检查玩家名字'
     fly-speed-others-no-permission: '你没有修改他人飞行速度指令的权限'
-    fly-speed-by-others: '你已被&3%player%&7开修改飞行速度为%fly-speed%'
+    fly-speed-by-others: '你已被&3%player%&7修改飞行速度为%fly-speed%'
     fly-speed-by-console: '你已被服务器修改飞行速度为%fly-speed%'
     fly-speed-console-error: '控制台请执行修改他人飞行速度的指令：flyspeed [速度] <玩家名称>'
-    fly-speed-command-error: '修改飞行速度指令格式错误，正确格式：/flyspeed [玩家名称]'
+    fly-speed-command-error: '修改飞行速度指令格式错误，格式：/flyspeed [速度] [玩家名称]'
+
+walk-speed:
+  message:
+    walk-speed-self-reset: '你已重置移动速度'
+    walk-speed-self: '你已修改移动速度为%walk-speed%'
+    walk-speed-self-args-error: '移动速度参数错误，移动速度只能为0到10，默认速度2'
+    walk-speed-others: '你已修改&3%others-player%&7的移动速度为%walk-speed%'
+    walk-speed-others-reset: '你已重置&3%others-player%&7的移动速度'
+    walk-speed-others-reset-is-self: '你已重置移动速度，修改自己可以不输入玩家名称'
+    walk-speed-by-others-reset: '你已被&3%player%&7重置移动速度'
+    walk-speed-by-console-reset: '你已被服务器重置移动速度'
+    walk-speed-others-is-self: '你已修改移动速度为%walk-speed%，修改自己可以不输入玩家名称'
+    walk-speed-others-no-exist: '玩家&3%others-player%&7不存在，请检查玩家名字'
+    walk-speed-others-no-permission: '你没有修改他人移动速度指令的权限'
+    walk-speed-by-others: '你已被&3%player%&7修改移动速度为%walk-speed%'
+    walk-speed-by-console: '你已被服务器修改移动速度为%walk-speed%'
+    walk-speed-console-error: '控制台请执行修改他人移动速度的指令：walkspeed [速度] <玩家名称>'
+    walk-speed-command-error: '修改移动速度指令格式错误，格式：/walkspeed [速度] [玩家名称]'

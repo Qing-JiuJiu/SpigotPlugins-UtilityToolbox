@@ -5,11 +5,11 @@ import com.yishian.common.CommandEnum;
 import com.yishian.common.PluginCommonCommand;
 import com.yishian.customjoinandleave.CustomJoinAndLeaveListener;
 import com.yishian.joinwelcome.JoinWelcomeListener;
-import com.yishian.timingservermessages.TimingServerMessagesRunnable;
+import com.yishian.autosendservermessages.AutoSendServerMessagesRunnable;
 import org.bukkit.command.PluginCommand;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
-
 
 /**
  * @author XinQi
@@ -30,8 +30,12 @@ public final class Main extends JavaPlugin {
         this.getLogger().info("欢迎使用本插件，插件制作者QQ:592342403");
 
         //注册定时任务
-        //按照tick时间计算，1tick=0.05s，20tick=1s
-        new TimingServerMessagesRunnable().runTaskTimer(this,0,20);
+        ConfigurationSection autoSendServerMessagesconfigurationSection = config.getConfigurationSection("auto-send-server-messages");
+        if (autoSendServerMessagesconfigurationSection.getBoolean("enable")){
+            int sendTime = autoSendServerMessagesconfigurationSection.getInt("time")*20;
+            //按照tick时间计算，1tick=0.05s，20tick=1s
+            new AutoSendServerMessagesRunnable().runTaskTimer(this,0,sendTime);
+        }
 
         //服务注册监听事件
         if (config.getConfigurationSection("join-and-leave-server-message").getBoolean("enable")) {
@@ -73,6 +77,11 @@ public final class Main extends JavaPlugin {
         PluginCommand flySpeedCommand = getCommand(AuxiliaryCommandEnum.FLY_SPEED_COMMAND.getCommand());
         flySpeedCommand.setPermission(AuxiliaryCommandEnum.FLY_SPEED_PERMISSION.getCommand());
         flySpeedCommand.setExecutor(new FlySpeedCommand());
+
+        //修改移动速度
+        PluginCommand walkSpeedCommand = getCommand(AuxiliaryCommandEnum.WALK_SPEED_COMMAND.getCommand());
+        walkSpeedCommand.setPermission(AuxiliaryCommandEnum.WALK_SPEED_PERMISSION.getCommand());
+        walkSpeedCommand.setExecutor(new WalkSpeedCommand());
     }
 
     /**

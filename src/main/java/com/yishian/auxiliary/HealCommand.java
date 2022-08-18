@@ -60,7 +60,7 @@ public class HealCommand implements TabExecutor {
                     if (!playerName.equals(othersPlayerName)) {
                         //判断执行恢复他人指令的玩家权限
                         if (player.hasPermission(AuxiliaryCommandEnum.HEAL_OTHERS_PERMISSION.getCommand())) {
-                            Player othersPlayer = Bukkit.getPlayer(othersPlayerName);
+                            Player othersPlayer = Bukkit.getPlayerExact(othersPlayerName);
                             //判断玩家是否存在
                             if (othersPlayer != null) {
                                 othersPlayer.setHealth(othersPlayer.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue());
@@ -80,7 +80,7 @@ public class HealCommand implements TabExecutor {
                     }
                 } else {
                     String othersPlayerName = args[0];
-                    Player othersPlayer = Bukkit.getPlayer(othersPlayerName);
+                    Player othersPlayer = Bukkit.getPlayerExact(othersPlayerName);
                     //判断该玩家是否存在
                     if (othersPlayer != null) {
                         othersPlayer.setHealth(othersPlayer.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue());

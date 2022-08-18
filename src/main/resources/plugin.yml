@@ -17,6 +17,8 @@ commands:
     description: 开关飞行
   flyspeed:
     description: 修改飞行速度
+  walkspeed:
+    description: 修改移动速度
 
 permissions:
 
@@ -43,3 +45,9 @@ permissions:
     children:
       enhancements.flyspeed.others: false
     description: 修改飞行速度
+
+  enhancements.walkspeed:
+    default: op
+    children:
+      enhancements.walkspeed.others: false
+    description: 修改移动速度

@@ -64,7 +64,7 @@ public class FlyCommand implements TabExecutor {
                     if (!playerName.equals(othersPlayerName)) {
                         //判断执行开关他人飞行指令的玩家权限
                         if (player.hasPermission(AuxiliaryCommandEnum.FLY_OTHERS_PERMISSION.getCommand())) {
-                            Player othersPlayer = Bukkit.getPlayer(othersPlayerName);
+                            Player othersPlayer = Bukkit.getPlayerExact(othersPlayerName);
                             //判断玩家是否存在
                             if (othersPlayer != null) {
                                 //判断该玩家是否在飞行
@@ -95,7 +95,7 @@ public class FlyCommand implements TabExecutor {
                     }
                 } else {
                     String othersPlayerName = args[0];
-                    Player othersPlayer = Bukkit.getPlayer(othersPlayerName);
+                    Player othersPlayer = Bukkit.getPlayerExact(othersPlayerName);
                     //判断玩家存不存在
                     if (othersPlayer != null) {
                         //判断玩家是否在飞行状态

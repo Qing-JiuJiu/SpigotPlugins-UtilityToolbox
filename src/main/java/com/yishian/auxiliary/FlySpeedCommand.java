@@ -50,7 +50,7 @@ public class FlySpeedCommand implements TabExecutor {
                 }
                 //判断参数数量是否为1
             } else if (args.length == 1) {
-                Player othersPlayer = Bukkit.getPlayer(args[0]);
+                Player othersPlayer = Bukkit.getPlayerExact(args[0]);
                 //判断该参数是玩家还是速度
                 if (othersPlayer == null) {
                     //判断执行的是用户还是控制台
@@ -65,7 +65,7 @@ public class FlySpeedCommand implements TabExecutor {
                         }
                         //判断数字是否合规
                         BigDecimal bigDecimalOriginalFlySpeed = new BigDecimal(originalFlySpeed);
-                        if (bigDecimalOriginalFlySpeed.compareTo(new BigDecimal(1)) < 0 || bigDecimalOriginalFlySpeed.compareTo(new BigDecimal(10)) > 0) {
+                        if (bigDecimalOriginalFlySpeed.compareTo(new BigDecimal(0)) < 0 || bigDecimalOriginalFlySpeed.compareTo(new BigDecimal(10)) > 0) {
                             sender.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + flySpeedMessage.getString("fly-speed-self-args-error")));
                             return true;
                         }
@@ -119,7 +119,7 @@ public class FlySpeedCommand implements TabExecutor {
                 }
                 //判断数字是否合规
                 BigDecimal bigDecimalOriginalFlySpeed = new BigDecimal(originalFlySpeed);
-                if (bigDecimalOriginalFlySpeed.compareTo(new BigDecimal(1)) < 0 || bigDecimalOriginalFlySpeed.compareTo(new BigDecimal(10)) > 0) {
+                if (bigDecimalOriginalFlySpeed.compareTo(new BigDecimal(0)) < 0 || bigDecimalOriginalFlySpeed.compareTo(new BigDecimal(10)) > 0) {
                     sender.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + flySpeedMessage.getString("fly-speed-self-args-error")));
                     return true;
                 }
@@ -137,7 +137,7 @@ public class FlySpeedCommand implements TabExecutor {
                     if (!playerName.equals(othersPlayerName)) {
                         //判断执行修改他人飞行速度指令的玩家权限
                         if (player.hasPermission(AuxiliaryCommandEnum.FLY_SPEED_OTHERS_PERMISSION.getCommand())) {
-                            Player othersPlayer = Bukkit.getPlayer(othersPlayerName);
+                            Player othersPlayer = Bukkit.getPlayerExact(othersPlayerName);
                             //判断玩家是否存在
                             if (othersPlayer != null) {
                                 othersPlayer.setFlySpeed(properFlySpeed);
@@ -156,8 +156,8 @@ public class FlySpeedCommand implements TabExecutor {
                     }
                 } else {
                     String othersPlayerName = args[1];
-                    Player othersPlayer = Bukkit.getPlayer(othersPlayerName);
-                    //判断该玩家是否存在 已经完成
+                    Player othersPlayer = Bukkit.getPlayerExact(othersPlayerName);
+                    //判断该玩家是否存在
                     if (othersPlayer != null) {
                         othersPlayer.setFlySpeed(properFlySpeed);
                         othersPlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + flySpeedMessage.getString("fly-speed-by-console").replaceAll("%fly-speed%", originalFlySpeedString)));
