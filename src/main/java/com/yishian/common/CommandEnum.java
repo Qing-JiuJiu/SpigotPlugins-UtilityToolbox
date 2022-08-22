@@ -8,7 +8,7 @@ public enum CommandEnum {
     /**
      * 通用枚举
      */
-    PLUGHIN_NAME("enhancements", "本插件的名称"),
+    PLUGHIN_NAME("UtilityToolbox", "本插件的名称"),
     OTHERS("others", "他人的英语"),
 
     /**

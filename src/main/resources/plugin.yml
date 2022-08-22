@@ -1,12 +1,11 @@
-name: Enhancements
+name: UtilityToolbox
 version: '${project.version}'
 main: com.yishian.Main
 api-version: 1.18
 
 commands:
-  enhancements:
+  UtilityToolbox:
     description: 插件主指令
-    usage: '请使用：/enhancements help 指令查看本插件帮助'
   heal:
     description: 恢复生命值
   feed:
@@ -22,32 +21,32 @@ commands:
 
 permissions:
 
-  enhancements.heal:
+  UtilityToolbox.heal:
     default: op
     children:
-      enhancements.heal.others: false
+      UtilityToolbox.heal.others: false
     description: 恢复生命值
 
-  enhancements.feed:
+  UtilityToolbox.feed:
     default: op
     children:
-      enhancements.feed.others: false
+      UtilityToolbox.feed.others: false
     description: 恢复饱食度
 
-  enhancements.fly:
+  UtilityToolbox.fly:
     default: op
     children:
-      enhancements.fly.others: false
+      UtilityToolbox.fly.others: false
     description: 开关飞行
 
-  enhancements.flyspeed:
+  UtilityToolbox.flyspeed:
     default: op
     children:
-      enhancements.flyspeed.others: false
+      UtilityToolbox.flyspeed.others: false
     description: 修改飞行速度
 
-  enhancements.walkspeed:
+  UtilityToolbox.walkspeed:
     default: op
     children:
-      enhancements.walkspeed.others: false
+      UtilityToolbox.walkspeed.others: false
     description: 修改移动速度

@@ -1,8 +1,8 @@
 #这是一个配置文件
 plugin-message:
-  message-prefix: '&e[Enhancements] &7'
+  message-prefix: '&e[UtilityToolbox] &7'
   reload-message: '配置文件重载成功'
-  command-args-error: '子指令错误或无子指令，正确格式：/enhancements <子指令>'
+  command-args-error: '子指令错误或无子指令，正确格式：/UtilityToolbox <子指令>'
 
 join-and-leave-server-message:
   enable: true
@@ -14,9 +14,9 @@ join-server-welcome:
   enable: true
   message:
     join-server-welcome-message:
-      - '&e[Enhancements] &7欢迎使用本插件'
-      - '&e[Enhancements] &7欢迎使用本插件'
-      - '&e[Enhancements] &7欢迎使用本插件'
+      - '&e[UtilityToolbox] &7欢迎使用本插件'
+      - '&e[UtilityToolbox] &7欢迎使用本插件'
+      - '&e[UtilityToolbox] &7欢迎使用本插件'
 
 auto-send-server-messages:
   enable: true
@@ -24,8 +24,8 @@ auto-send-server-messages:
   time: 600
   message:
     send-messages:
-      - '&e[Enhancements] &7欢迎使用本插件'
-      - '&e[Enhancements] &7欢迎使用本插件'
+      - '&e[UtilityToolbox] &7欢迎使用本插件'
+      - '&e[UtilityToolbox] &7欢迎使用本插件'
 
 heal:
   message:
