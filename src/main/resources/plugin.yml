@@ -1,7 +1,7 @@
 name: UtilityToolbox
 version: '${project.version}'
 main: com.yishian.Main
-api-version: 1.12
+api-version: 1.13
 
 commands:
   UtilityToolbox:
