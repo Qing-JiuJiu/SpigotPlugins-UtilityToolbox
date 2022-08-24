@@ -4,7 +4,7 @@ import com.yishian.auxiliary.*;
 import com.yishian.common.CommandEnum;
 import com.yishian.common.PluginCommonCommand;
 import com.yishian.customjoinandleave.CustomJoinAndLeaveListener;
-import com.yishian.joinwelcome.JoinWelcomeListener;
+import com.yishian.joinserverwelcome.JoinServerWelcomeListener;
 import com.yishian.autosendservermessages.AutoSendServerMessagesRunnable;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.configuration.ConfigurationSection;
@@ -42,7 +42,7 @@ public final class Main extends JavaPlugin {
             getServer().getPluginManager().registerEvents(new CustomJoinAndLeaveListener(), this);
         }
         if (config.getConfigurationSection("join-server-welcome").getBoolean("enable")) {
-            getServer().getPluginManager().registerEvents(new JoinWelcomeListener(), this);
+            getServer().getPluginManager().registerEvents(new JoinServerWelcomeListener(), this);
         }
 
 

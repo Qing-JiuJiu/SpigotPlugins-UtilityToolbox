@@ -1,4 +1,4 @@
-package com.yishian.joinwelcome;
+package com.yishian.joinserverwelcome;
 
 import com.yishian.Main;
 import com.yishian.common.ServerUtils;
@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * @author XinQi
  */
-public class JoinWelcomeListener implements Listener {
+public class JoinServerWelcomeListener implements Listener {
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent playerJoinEvent) {
