@@ -81,7 +81,7 @@ fly-speed:
   message:
     fly-speed-self-reset: '你已重置飞行速度'
     fly-speed-self: '你已修改飞行速度为%fly-speed%'
-    fly-speed-self-args-error: '飞行速度参数错误，飞行速度只能为0-10，默认速度1'
+    fly-speed-self-args-error: '飞行速度参数错误，飞行速度只能为0-10，默认速度为1'
     fly-speed-others: '你已修改&3%others-player%&7的飞行速度为%fly-speed%'
     fly-speed-others-reset: '你已重置&3%others-player%&7的飞行速度'
     fly-speed-others-reset-is-self: '你已重置飞行速度，修改自己可以不输入玩家名称'
@@ -99,7 +99,7 @@ walk-speed:
   message:
     walk-speed-self-reset: '你已重置移动速度'
     walk-speed-self: '你已修改移动速度为%walk-speed%'
-    walk-speed-self-args-error: '移动速度参数错误，移动速度只能为0到10，默认速度2'
+    walk-speed-self-args-error: '移动速度参数错误，移动速度只能为0到10，默认速度为2'
     walk-speed-others: '你已修改&3%others-player%&7的移动速度为%walk-speed%'
     walk-speed-others-reset: '你已重置&3%others-player%&7的移动速度'
     walk-speed-others-reset-is-self: '你已重置移动速度，修改自己可以不输入玩家名称'
