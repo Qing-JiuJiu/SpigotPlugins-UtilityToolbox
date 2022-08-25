@@ -16,6 +16,7 @@
 + 移动速度：/walkspeed
 
 目前提供服务器功能：
+> 可通过配置文件开启/关闭相关功能
 + 自定义加入/离开服务器消息：CustomJoinAndLeave 
   + 第一次加入服务器消息：CustomFirstJoin
 + 定时发送服务器消息：AutoSendServerMessages
