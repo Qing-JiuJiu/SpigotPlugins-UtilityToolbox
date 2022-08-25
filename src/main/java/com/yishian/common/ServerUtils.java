@@ -9,8 +9,11 @@ import org.bukkit.configuration.file.FileConfiguration;
  */
 public class ServerUtils {
 
+    /**
+     * 得到服务器配置文件
+     * @return 返回配置文件
+     */
     public static FileConfiguration getServerConfig() {
         return Main.getProvidingPlugin(Main.class).getConfig();
     }
-
 }

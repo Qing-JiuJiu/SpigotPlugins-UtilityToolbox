@@ -6,15 +6,20 @@ plugin-message:
 
 join-and-leave-server-message:
   enable: true
+  first-join-server-message-enable: false
   message:
     player-join-server-message: '&a%player% join server'
     player-leave-server-message: '&c%player% leave server'
+    first-player-join-server-message: '&a%player% first join server'
 
 join-server-welcome:
   enable: true
+  first-join-server-welcome-enable: false
   message:
     join-server-welcome-message:
       - '&e[UtilityToolbox] &7欢迎使用本插件'
+    first-join-server-welcome-message:
+      - '&e[UtilityToolbox] &7欢迎第一次使用本插件'
 
 auto-send-server-messages:
   enable: false
@@ -35,6 +40,7 @@ heal:
     heal-by-console: '你已被服务器恢复生命值'
     heal-console-error: '控制台请执行恢复他人生命值的指令：heal <玩家名称>'
     heal-command-error: '恢复生命值指令格式错误，正确格式：/heal [玩家名称]'
+
 feed:
   message:
     feed-self: '你已恢复饱食度'
