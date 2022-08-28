@@ -1,0 +1,33 @@
+package com.yishian.antihighfrequencyredstone;
+
+import com.yishian.common.ServerUtils;
+import org.bukkit.Location;
+import org.bukkit.block.Block;
+import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockRedstoneEvent;
+
+import java.util.List;
+
+
+
+/**
+ * @author XinQi
+ */
+public class AntiHighFrequencyRedStoneListener implements Listener {
+
+    @EventHandler
+    public void highFrequencyRedStoneListener(BlockRedstoneEvent blockRedstoneEvent) {
+        ConfigurationSection antiHighFrequencyRedStoneConfigurationSection = ServerUtils.getServerConfig().getConfigurationSection("anti-high-frequency-red-stone");
+        List<String> antiList = antiHighFrequencyRedStoneConfigurationSection.getStringList("anti-red-stone-list");
+        //得到那个块
+        Block block = blockRedstoneEvent.getBlock();
+        //比对命名空间，如果对比成功，将物品登记一次
+        if (antiList.contains(block.getType().getKey().toString())) {
+            Location location = block.getLocation();
+            AntiHighFrequencyRedStoneRunnable.detectList.merge(location, 1, Integer::sum);
+        }
+    }
+
+}

@@ -1,20 +1,32 @@
 package com.yishian;
 
+import com.yishian.antihighfrequencyredstone.AntiHighFrequencyRedStoneListener;
+import com.yishian.antihighfrequencyredstone.AntiHighFrequencyRedStoneRunnable;
 import com.yishian.auxiliary.*;
 import com.yishian.common.CommandEnum;
 import com.yishian.common.PluginCommonCommand;
 import com.yishian.customjoinandleave.CustomJoinAndLeaveListener;
 import com.yishian.joinserverwelcome.JoinServerWelcomeListener;
 import com.yishian.autosendservermessages.AutoSendServerMessagesRunnable;
+import org.bukkit.ChatColor;
+import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
+
 
 /**
  * @author XinQi
  */
 public final class Main extends JavaPlugin {
+
+    FileConfiguration config = getConfig();
+    PluginManager pluginManager = getServer().getPluginManager();
+    ConsoleCommandSender consoleSender = getServer().getConsoleSender();
+
+    String prefix = "&e[" + CommandEnum.PLUGHIN_NAME.getCommand() + "] &7";
 
     /**
      * 这是插件启动时执行的方法
@@ -24,29 +36,26 @@ public final class Main extends JavaPlugin {
 
         //如果没读取到配置文件，保存默认配置文件到插件目录
         saveDefaultConfig();
-        FileConfiguration config = getConfig();
 
         //启动服务器时发送插件消息
-        this.getLogger().info("欢迎使用本插件，插件制作者QQ:592342403");
+        consoleSender.sendMessage(ChatColor.translateAlternateColorCodes('&', prefix + "欢迎使用本插件，插件制作者QQ:592342403"));
 
-        //注册定时任务
-        ConfigurationSection autoSendServerMessagesconfigurationSection = config.getConfigurationSection("auto-send-server-messages");
-        if (autoSendServerMessagesconfigurationSection.getBoolean("enable")){
-            int sendTime = autoSendServerMessagesconfigurationSection.getInt("time")*20;
-            //按照tick时间计算，1tick=0.05s，20tick=1s
-            new AutoSendServerMessagesRunnable().runTaskTimer(this,0,sendTime);
-        }
+        registerCommand();
+        registerListener();
+        registerTask();
+    }
 
-        //服务注册监听事件
-        if (config.getConfigurationSection("join-and-leave-server-message").getBoolean("enable")) {
-            getServer().getPluginManager().registerEvents(new CustomJoinAndLeaveListener(), this);
-        }
-        if (config.getConfigurationSection("join-server-welcome").getBoolean("enable")) {
-            getServer().getPluginManager().registerEvents(new JoinServerWelcomeListener(), this);
-        }
+    /**
+     * 这是插件停止时执行的方法
+     */
+    @Override
+    public void onDisable() {
+    }
 
-
-        //服务注册指令
+    /**
+     * 注册指令
+     */
+    public void registerCommand() {
         //重载配置文件
         PluginCommand reloadCommand = getCommand(CommandEnum.PLUGHIN_NAME.getCommand());
         reloadCommand.setPermission(CommandEnum.RELOAD_CONFIG_PERMISSION.getCommand());
@@ -85,9 +94,44 @@ public final class Main extends JavaPlugin {
     }
 
     /**
-     * 这是插件停止时执行的方法
+     * 注册监听器
      */
-    @Override
-    public void onDisable() {
+    public void registerListener() {
+        //服务注册监听事件
+        if (config.getConfigurationSection("join-and-leave-server-message").getBoolean("enable")) {
+            pluginManager.registerEvents(new CustomJoinAndLeaveListener(), this);
+            consoleSender.sendMessage(ChatColor.translateAlternateColorCodes('&', prefix + "已开启自定义加入和离开服务器消息"));
+        }
+        if (config.getConfigurationSection("join-server-welcome").getBoolean("enable")) {
+            pluginManager.registerEvents(new JoinServerWelcomeListener(), this);
+            consoleSender.sendMessage(ChatColor.translateAlternateColorCodes('&', prefix + "已开启加入服务器欢迎"));
+        }
+
+        if (config.getConfigurationSection("anti-high-frequency-red-stone").getBoolean("enable")) {
+            pluginManager.registerEvents(new AntiHighFrequencyRedStoneListener(), this);
+            consoleSender.sendMessage(ChatColor.translateAlternateColorCodes('&', prefix + "已开启防止高频红石"));
+        }
+    }
+
+    /**
+     * 注册定时任务
+     */
+    public void registerTask() {
+        //注册自动发送服务器消息
+        ConfigurationSection autoSendServerMessagesconfigurationSection = config.getConfigurationSection("auto-send-server-messages");
+        if (autoSendServerMessagesconfigurationSection.getBoolean("enable")) {
+            int sendTime = autoSendServerMessagesconfigurationSection.getInt("time") * 20;
+            //按照tick时间计算，1tick=0.05s，20tick=1s
+            new AutoSendServerMessagesRunnable().runTaskTimer(this, 0, sendTime);
+            consoleSender.sendMessage(ChatColor.translateAlternateColorCodes('&', prefix + "已开启自动发送服务器消息"));
+        }
+
+        ConfigurationSection antiHighFrequencyRedStone = config.getConfigurationSection("anti-high-frequency-red-stone");
+        if (antiHighFrequencyRedStone.getBoolean("enable")) {
+            int detectTime = antiHighFrequencyRedStone.getInt("time") * 20;
+            //按照tick时间计算，1tick=0.05s，20tick=1s
+            new AntiHighFrequencyRedStoneRunnable().runTaskTimer(this, 0, detectTime);
+            consoleSender.sendMessage(ChatColor.translateAlternateColorCodes('&', prefix + "已开启防止高频红石"));
+        }
     }
 }

@@ -29,6 +29,20 @@ auto-send-server-messages:
     send-messages:
       - '&e[UtilityToolbox] &7欢迎使用本插件'
 
+anti-high-frequency-red-stone:
+  enable: true
+  is-broadcast-message: true
+  #限制次数
+  limit: 50
+  #检测时间，默认秒
+  time: 5
+  anti-red-stone-list:
+    #默认红石+拉杆，可自行添加
+    - 'minecraft:redstone_wire'
+    - 'minecraft:lever'
+  message:
+    broadcast-message: "检测到高频红石：坐标为x:%x%,y:%y%,z:%z%，已销毁"
+
 heal:
   message:
     heal-self: '你已恢复生命值'
