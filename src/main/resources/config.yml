@@ -41,7 +41,7 @@ anti-high-frequency-red-stone:
     - 'minecraft:redstone_wire'
     - 'minecraft:lever'
   message:
-    destroy-message: "检测到高频红石：坐标为x:%x%,y:%y%,z:%z%，已销毁"
+    destroy-message: "%player%玩家附近检测到高频红石：坐标为x:%x%,y:%y%,z:%z%，已销毁"
 
 heal:
   message:

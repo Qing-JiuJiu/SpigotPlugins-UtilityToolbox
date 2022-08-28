@@ -58,11 +58,25 @@ public class PluginUtils {
         } else if (args.length == 2) {
             Bukkit.getOnlinePlayers().forEach(player -> {
                 String playerName = player.getName();
-                if (playerName.startsWith(args[0])) {
+                if (playerName.startsWith(args[1])) {
                     tips.add(playerName);
                 }
             });
         }
         return tips;
+    }
+
+    /**
+     *
+     * @param oneX 第一个位置的x坐标
+     * @param oneY 第一个位置的y坐标
+     * @param oneZ 第一个位置的z坐标
+     * @param twoX 第二个位置的x坐标
+     * @param twoY 第二个位置的y坐标
+     * @param twoZ 第二个位置的z坐标
+     * @return 返回计算后的距离
+     */
+    public static Double calculateDistance(Double oneX,Double oneY,Double oneZ,Double twoX,Double twoY,Double twoZ) {
+        return (Math.pow((oneX-twoX),2)+Math.pow((oneY-twoY),2)+Math.pow((oneZ-twoZ),2))/2;
     }
 }

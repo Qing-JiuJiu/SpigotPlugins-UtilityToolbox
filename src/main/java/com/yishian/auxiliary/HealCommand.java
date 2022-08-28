@@ -1,7 +1,7 @@
 package com.yishian.auxiliary;
 
 import com.yishian.common.PluginUtils;
-import org.apache.commons.lang.StringUtils;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.attribute.Attribute;
@@ -11,7 +11,6 @@ import org.bukkit.command.TabExecutor;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -112,28 +111,10 @@ public class HealCommand implements TabExecutor {
      */
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
-        List<String> tips = new ArrayList<>();
         //判断指令是否是上面执行的指令
         if (AuxiliaryCommandEnum.HEAL_COMMAND.getCommand().equalsIgnoreCase(label)) {
             return PluginUtils.arg1CommandPlayerTip(args);
         }
         return null;
-    }
-
-    public static boolean arg1CommandPlayerTip(String[] args, List<String> tips2, List<String> tips) {
-        if (StringUtils.isEmpty(args[0])) {
-            Bukkit.getOnlinePlayers().forEach(player -> tips2.add(player.getName()));
-            return true;
-            //判断参数数量是否为1，证明输入了内容给出根据输入的参数前缀给出对应的提示
-        } else if (args.length == 1) {
-            Bukkit.getOnlinePlayers().forEach(player -> {
-                String playerName = player.getName();
-                if (playerName.startsWith(args[0])) {
-                    tips2.add(playerName);
-                }
-            });
-            return true;
-        }
-        return false;
     }
 }

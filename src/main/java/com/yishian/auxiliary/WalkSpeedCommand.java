@@ -1,7 +1,6 @@
 package com.yishian.auxiliary;
 
 import com.yishian.common.PluginUtils;
-import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -11,7 +10,6 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -188,10 +186,8 @@ public class WalkSpeedCommand implements TabExecutor {
      */
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
-        List<String> tips = new ArrayList<>();
         //判断指令是否是上面执行的指令
         if (AuxiliaryCommandEnum.WALK_SPEED_COMMAND.getCommand().equalsIgnoreCase(label)) {
-            //判断参数是否为空，是的话就给出全部提示
             return PluginUtils.arg2CommandPlayerTips(args);
         }
         return null;
