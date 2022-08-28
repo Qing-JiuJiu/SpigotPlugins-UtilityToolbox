@@ -10,7 +10,7 @@ join-and-leave-server-message:
   message:
     player-join-server-message: '&a%player% join server'
     player-leave-server-message: '&c%player% leave server'
-    first-player-join-server-message: '&a%player% first join server'
+    player-first-join-server-message: '&a%player% first join server'
 
 join-server-welcome:
   enable: true
@@ -30,9 +30,9 @@ auto-send-server-messages:
       - '&e[UtilityToolbox] &7欢迎使用本插件'
 
 anti-high-frequency-red-stone:
-  enable: true
+  enable: false
+  #是否所有玩家都能看到消息，否则只有有权限的用户才能看
   is-broadcast-message: true
-  #限制次数
   limit: 50
   #检测时间，默认秒
   time: 5
@@ -41,7 +41,7 @@ anti-high-frequency-red-stone:
     - 'minecraft:redstone_wire'
     - 'minecraft:lever'
   message:
-    broadcast-message: "检测到高频红石：坐标为x:%x%,y:%y%,z:%z%，已销毁"
+    destroy-message: "检测到高频红石：坐标为x:%x%,y:%y%,z:%z%，已销毁"
 
 heal:
   message:

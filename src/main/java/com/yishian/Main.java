@@ -4,10 +4,10 @@ import com.yishian.antihighfrequencyredstone.AntiHighFrequencyRedStoneListener;
 import com.yishian.antihighfrequencyredstone.AntiHighFrequencyRedStoneRunnable;
 import com.yishian.auxiliary.*;
 import com.yishian.common.CommandEnum;
-import com.yishian.common.PluginCommonCommand;
+import com.yishian.common.CommonCommand;
 import com.yishian.customjoinandleave.CustomJoinAndLeaveListener;
 import com.yishian.joinserverwelcome.JoinServerWelcomeListener;
-import com.yishian.autosendservermessages.AutoSendServerMessagesRunnable;
+import com.yishian.autosendservermessage.AutoSendServerMessageRunnable;
 import org.bukkit.ChatColor;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.command.PluginCommand;
@@ -22,11 +22,22 @@ import org.bukkit.plugin.java.JavaPlugin;
  */
 public final class Main extends JavaPlugin {
 
+    /**
+     * 得到配置文件
+     */
     FileConfiguration config = getConfig();
+    /**
+     * 得到插件管理器
+     */
     PluginManager pluginManager = getServer().getPluginManager();
+    /**
+     * 得到控制台消息
+     */
     ConsoleCommandSender consoleSender = getServer().getConsoleSender();
-
-    String prefix = "&e[" + CommandEnum.PLUGHIN_NAME.getCommand() + "] &7";
+    /**
+     * 得到消息前缀
+     */
+    String messagePrefix = "&e[" + CommandEnum.PLUGHIN_NAME.getCommand() + "] &7";
 
     /**
      * 这是插件启动时执行的方法
@@ -34,12 +45,13 @@ public final class Main extends JavaPlugin {
     @Override
     public void onEnable() {
 
-        //如果没读取到配置文件，保存默认配置文件到插件目录
+        //如果插件目录下没配置文件，保存默认配置文件到插件目录
         saveDefaultConfig();
 
         //启动服务器时发送插件消息
-        consoleSender.sendMessage(ChatColor.translateAlternateColorCodes('&', prefix + "欢迎使用本插件，插件制作者QQ:592342403"));
+        consoleSender.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + "欢迎使用本插件，插件制作者QQ:592342403"));
 
+        //注册相关功能
         registerCommand();
         registerListener();
         registerTask();
@@ -59,7 +71,7 @@ public final class Main extends JavaPlugin {
         //重载配置文件
         PluginCommand reloadCommand = getCommand(CommandEnum.PLUGHIN_NAME.getCommand());
         reloadCommand.setPermission(CommandEnum.RELOAD_CONFIG_PERMISSION.getCommand());
-        reloadCommand.setExecutor(new PluginCommonCommand());
+        reloadCommand.setExecutor(new CommonCommand());
 
         //恢复生命值注册
         PluginCommand healCommand = getCommand(AuxiliaryCommandEnum.HEAL_COMMAND.getCommand());
@@ -97,19 +109,22 @@ public final class Main extends JavaPlugin {
      * 注册监听器
      */
     public void registerListener() {
-        //服务注册监听事件
-        if (config.getConfigurationSection("join-and-leave-server-message").getBoolean("enable")) {
+        //加入/离开服务器提醒消息
+        if (config.getConfigurationSection("join-and-leave-server-message").getBoolean(CommandEnum.FUNCTION_IS_ENABLE.getCommand())) {
             pluginManager.registerEvents(new CustomJoinAndLeaveListener(), this);
-            consoleSender.sendMessage(ChatColor.translateAlternateColorCodes('&', prefix + "已开启自定义加入和离开服务器消息"));
-        }
-        if (config.getConfigurationSection("join-server-welcome").getBoolean("enable")) {
-            pluginManager.registerEvents(new JoinServerWelcomeListener(), this);
-            consoleSender.sendMessage(ChatColor.translateAlternateColorCodes('&', prefix + "已开启加入服务器欢迎"));
+            consoleSender.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + "已开启自定义加入和离开服务器消息"));
         }
 
-        if (config.getConfigurationSection("anti-high-frequency-red-stone").getBoolean("enable")) {
+        //加入欢迎
+        if (config.getConfigurationSection("join-server-welcome").getBoolean(CommandEnum.FUNCTION_IS_ENABLE.getCommand())) {
+            pluginManager.registerEvents(new JoinServerWelcomeListener(), this);
+            consoleSender.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + "已开启加入服务器欢迎"));
+        }
+
+        //检测高频红石
+        if (config.getConfigurationSection("anti-high-frequency-red-stone").getBoolean(CommandEnum.FUNCTION_IS_ENABLE.getCommand())) {
             pluginManager.registerEvents(new AntiHighFrequencyRedStoneListener(), this);
-            consoleSender.sendMessage(ChatColor.translateAlternateColorCodes('&', prefix + "已开启防止高频红石"));
+            consoleSender.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + "已开启防止高频红石"));
         }
     }
 
@@ -117,21 +132,20 @@ public final class Main extends JavaPlugin {
      * 注册定时任务
      */
     public void registerTask() {
-        //注册自动发送服务器消息
-        ConfigurationSection autoSendServerMessagesconfigurationSection = config.getConfigurationSection("auto-send-server-messages");
-        if (autoSendServerMessagesconfigurationSection.getBoolean("enable")) {
-            int sendTime = autoSendServerMessagesconfigurationSection.getInt("time") * 20;
+        //自动发送服务器消息
+        ConfigurationSection configurationSection = config.getConfigurationSection("auto-send-server-messages");
+        if (configurationSection.getBoolean(CommandEnum.FUNCTION_IS_ENABLE.getCommand())) {
             //按照tick时间计算，1tick=0.05s，20tick=1s
-            new AutoSendServerMessagesRunnable().runTaskTimer(this, 0, sendTime);
-            consoleSender.sendMessage(ChatColor.translateAlternateColorCodes('&', prefix + "已开启自动发送服务器消息"));
+            new AutoSendServerMessageRunnable().runTaskTimer(this, 0, configurationSection.getInt("time") * 20L);
+            consoleSender.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + "已开启自动发送服务器消息"));
         }
 
-        ConfigurationSection antiHighFrequencyRedStone = config.getConfigurationSection("anti-high-frequency-red-stone");
-        if (antiHighFrequencyRedStone.getBoolean("enable")) {
-            int detectTime = antiHighFrequencyRedStone.getInt("time") * 20;
+        //高频红石定时检测
+        configurationSection = config.getConfigurationSection("anti-high-frequency-red-stone");
+        if (configurationSection.getBoolean(CommandEnum.FUNCTION_IS_ENABLE.getCommand())) {
             //按照tick时间计算，1tick=0.05s，20tick=1s
-            new AntiHighFrequencyRedStoneRunnable().runTaskTimer(this, 0, detectTime);
-            consoleSender.sendMessage(ChatColor.translateAlternateColorCodes('&', prefix + "已开启防止高频红石"));
+            new AntiHighFrequencyRedStoneRunnable().runTaskTimer(this, 0, configurationSection.getInt("time") * 20L);
+            consoleSender.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + "已开启防止高频红石"));
         }
     }
 }

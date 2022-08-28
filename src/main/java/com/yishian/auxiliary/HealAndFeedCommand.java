@@ -1,7 +1,6 @@
 package com.yishian.auxiliary;
 
-import com.yishian.common.ServerUtils;
-import org.apache.commons.lang.StringUtils;
+import com.yishian.common.PluginUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.attribute.Attribute;
@@ -21,7 +20,7 @@ public class HealAndFeedCommand implements TabExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         //获取配置文件里该指令的消息提示
-        ConfigurationSection configurationSection = ServerUtils.getServerConfig();
+        ConfigurationSection configurationSection = PluginUtils.getServerConfig();
         String messagePrefix = configurationSection.getConfigurationSection("plugin-message").getString("message-prefix");
         ConfigurationSection healAndFeedMessage = configurationSection.getConfigurationSection("healandfeed").getConfigurationSection("message");
 
@@ -106,20 +105,7 @@ public class HealAndFeedCommand implements TabExecutor {
         List<String> tips = new ArrayList<>();
         //判断指令是否是上面执行的指令
         if (AuxiliaryCommandEnum.HEAL_AND_FEED_COMMAND.getCommand().equalsIgnoreCase(label)) {
-            //判断参数是否为空，是的话就给出全部提示
-            if (StringUtils.isEmpty(args[0])) {
-                Bukkit.getOnlinePlayers().forEach(player -> tips.add(player.getName()));
-                return tips;
-                //判断参数数量是否为1，证明输入了内容给出根据输入的参数前缀给出对应的提示
-            } else if (args.length == 1) {
-                Bukkit.getOnlinePlayers().forEach(player -> {
-                    String playerName = player.getName();
-                    if (playerName.startsWith(args[0])) {
-                        tips.add(playerName);
-                    }
-                });
-                return tips;
-            }
+            return PluginUtils.arg1CommandPlayerTip(args);
         }
         return null;
     }

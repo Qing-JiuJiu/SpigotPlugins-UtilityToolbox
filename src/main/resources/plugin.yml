@@ -49,3 +49,8 @@ permissions:
     children:
       UtilityToolbox.walkspeed.others: false
     description: 修改移动速度
+
+  UtilityToolbox.AntiRedStoneMessage:
+    default: op
+    description: 是否能看到高频红石被销毁的消息
+

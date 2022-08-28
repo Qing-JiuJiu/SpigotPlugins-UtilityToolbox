@@ -14,16 +14,13 @@ import java.util.List;
 /**
  * @author XinQi
  */
-public class PluginCommonCommand implements TabExecutor {
-
-
+public class CommonCommand implements TabExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         //获取配置文件对应的提示消息
-        ConfigurationSection pluginMessage = ServerUtils.getServerConfig().getConfigurationSection("plugin-message");
+        ConfigurationSection pluginMessage = PluginUtils.getServerConfig().getConfigurationSection("plugin-message");
         String messagePrefix = pluginMessage.getString("message-prefix");
-
         //判断执行的指令内容
         if (CommandEnum.PLUGHIN_NAME.getCommand().equalsIgnoreCase(label)) {
             //判断参数长度是否为1 且是否是需要的参数

@@ -1,6 +1,6 @@
 package com.yishian.auxiliary;
 
-import com.yishian.common.ServerUtils;
+import com.yishian.common.PluginUtils;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -32,7 +32,7 @@ public class FlySpeedCommand implements TabExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         //获取配置文件里该指令的消息提示
-        ConfigurationSection configurationSection = ServerUtils.getServerConfig();
+        ConfigurationSection configurationSection = PluginUtils.getServerConfig();
         String messagePrefix = configurationSection.getConfigurationSection("plugin-message").getString("message-prefix");
         ConfigurationSection flySpeedMessage = configurationSection.getConfigurationSection("fly-speed").getConfigurationSection("message");
 
@@ -192,19 +192,7 @@ public class FlySpeedCommand implements TabExecutor {
         //判断指令是否是上面执行的指令
         if (AuxiliaryCommandEnum.FLY_SPEED_COMMAND.getCommand().equalsIgnoreCase(label)) {
             //判断参数是否为空，是的话就给出全部提示
-            if (args.length == 2 && StringUtils.isEmpty(args[1])) {
-                Bukkit.getOnlinePlayers().forEach(player -> tips.add(player.getName()));
-                return tips;
-                //判断参数数量是否为1，证明输入了内容给出根据输入的参数前缀给出对应的提示
-            } else if (args.length == 2) {
-                Bukkit.getOnlinePlayers().forEach(player -> {
-                    String playerName = player.getName();
-                    if (playerName.startsWith(args[0])) {
-                        tips.add(playerName);
-                    }
-                });
-                return tips;
-            }
+            return PluginUtils.arg2CommandPlayerTips(args);
         }
         return null;
     }

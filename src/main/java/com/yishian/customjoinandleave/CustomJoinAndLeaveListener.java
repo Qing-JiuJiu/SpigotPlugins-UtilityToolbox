@@ -1,6 +1,6 @@
 package com.yishian.customjoinandleave;
 
-import com.yishian.common.ServerUtils;
+import com.yishian.common.PluginUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
@@ -22,26 +22,27 @@ public class CustomJoinAndLeaveListener implements Listener {
     @EventHandler
     public void playerOnJoin(PlayerJoinEvent playerJoinEvent) {
         //得到配置文件
-        ConfigurationSection configurationSection = ServerUtils.getServerConfig();
+        ConfigurationSection configurationSection = PluginUtils.getServerConfig();
         //得到插件名称前缀
         String messagePrefix = configurationSection.getConfigurationSection("plugin-message").getString("message-prefix");
         //得到该功能的配置文件坐标
-        ConfigurationSection joinAndLeaveServerConfigurationSection = configurationSection.getConfigurationSection("join-and-leave-server-message");
+        ConfigurationSection functionConfigurationSection = configurationSection.getConfigurationSection("join-and-leave-server-message");
         //得到消息列表
-        ConfigurationSection customJoinAndLeaveMessage = joinAndLeaveServerConfigurationSection.getConfigurationSection("message");
+        ConfigurationSection messageConfigurationSection = functionConfigurationSection.getConfigurationSection("message");
+        //得到玩家
         Player player = playerJoinEvent.getPlayer();
         String playerDisplayName = player.getDisplayName();
         //判断是否开启第一次加入服务器功能
-        if (joinAndLeaveServerConfigurationSection.getBoolean("first-join-server-message-enable")) {
+        if (functionConfigurationSection.getBoolean("first-join-server-message-enable")) {
             if (player.hasPlayedBefore()) {
                 //后续来到服务器
-                playerJoinEvent.setJoinMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + customJoinAndLeaveMessage.getString("player-join-server-message").replaceAll("%player%", playerDisplayName)));
+                playerJoinEvent.setJoinMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + messageConfigurationSection.getString("player-join-server-message").replaceAll("%player%", playerDisplayName)));
             } else {
                 //第一次加入服务器
-                playerJoinEvent.setJoinMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + customJoinAndLeaveMessage.getString("first-player-join-server-message").replaceAll("%player%", playerDisplayName)));
+                playerJoinEvent.setJoinMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + messageConfigurationSection.getString("player-first-join-server-message").replaceAll("%player%", playerDisplayName)));
             }
         } else {
-            playerJoinEvent.setJoinMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + customJoinAndLeaveMessage.getString("player-join-server-message").replaceAll("%player%", playerDisplayName)));
+            playerJoinEvent.setJoinMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + messageConfigurationSection.getString("player-join-server-message").replaceAll("%player%", playerDisplayName)));
         }
     }
 
@@ -53,7 +54,7 @@ public class CustomJoinAndLeaveListener implements Listener {
     @EventHandler
     public void playerOnLeave(PlayerQuitEvent playerQuitEvent) {
         //得到配置文件
-        ConfigurationSection configurationSection = ServerUtils.getServerConfig();
+        ConfigurationSection configurationSection = PluginUtils.getServerConfig();
         //得到插件名称前缀
         String messagePrefix = configurationSection.getConfigurationSection("plugin-message").getString("message-prefix");
         //得到该功能的配置文件坐标
