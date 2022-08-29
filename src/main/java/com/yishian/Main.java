@@ -145,7 +145,6 @@ public final class Main extends JavaPlugin {
         if (configurationSection.getBoolean(CommandEnum.FUNCTION_IS_ENABLE.getCommand())) {
             //按照tick时间计算，1tick=0.05s，20tick=1s
             new AntiHighFrequencyRedStoneRunnable().runTaskTimer(this, 0, configurationSection.getInt("time") * 20L);
-            consoleSender.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + "已开启防止高频红石"));
         }
     }
 }

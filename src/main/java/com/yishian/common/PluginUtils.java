@@ -75,6 +75,7 @@ public class PluginUtils {
      * @param twoY 第二个位置的y坐标
      * @param twoZ 第二个位置的z坐标
      * @return 返回计算后的距离
+     * 该方案被移除，location提供了方法来计算距离
      */
     public static Double calculateDistance(Double oneX,Double oneY,Double oneZ,Double twoX,Double twoY,Double twoZ) {
         return (Math.pow((oneX-twoX),2)+Math.pow((oneY-twoY),2)+Math.pow((oneZ-twoZ),2))/2;

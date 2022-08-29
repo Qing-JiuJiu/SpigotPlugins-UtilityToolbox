@@ -1,9 +1,11 @@
-#这是一个配置文件
+#这是一个配置文件，所有主功能的开启和关闭都必须重启服务器/重载插件
+#消息提醒和子功能使用UtilityToolbox reload重载配置文件即可
 plugin-message:
   message-prefix: '&e[UtilityToolbox] &7'
   reload-message: '配置文件重载成功'
   command-args-error: '子指令无效或无子指令，正确格式: /UtilityToolbox <子指令>'
 
+#自定义加入和离开服务器消息
 join-and-leave-server-message:
   enable: true
   first-join-server-message-enable: false
@@ -12,6 +14,7 @@ join-and-leave-server-message:
     player-leave-server-message: '&c%player% leave server'
     player-first-join-server-message: '&a%player% first join server'
 
+#加入服务器欢迎
 join-server-welcome:
   enable: true
   first-join-server-welcome-enable: false
@@ -21,6 +24,7 @@ join-server-welcome:
     first-join-server-welcome-message:
       - '&e[UtilityToolbox] &7欢迎第一次使用本插件'
 
+#自动发送服务器消息，类似公告
 auto-send-server-messages:
   enable: false
   #默认秒
@@ -29,20 +33,24 @@ auto-send-server-messages:
     send-messages:
       - '&e[UtilityToolbox] &7欢迎使用本插件'
 
+#高频红石检测
 anti-high-frequency-red-stone:
   enable: false
-  #是否所有玩家都能看到消息，否则只有有权限的用户才能看
+  #是否所有玩家都能看到消息，否则只有UtilityToolbox.AntiRedStoneMessage权限的用户才能看
   is-broadcast-message: true
+  #红石在检测时间内的限制次数
   limit: 50
   #检测时间，默认秒
   time: 5
+  #检测的红石列表
   anti-red-stone-list:
-    #默认红石+拉杆，可自行添加
+    #默认红石、拉杆，可自行添加
     - 'minecraft:redstone_wire'
     - 'minecraft:lever'
   message:
-    destroy-message: "%player%玩家附近检测到高频红石：坐标为x:%x%,y:%y%,z:%z%，已销毁"
+    destroy-message: "玩家&3%player%&7附近存在高频红石，坐标x:%x% y:%y% z:%z%，已打破"
 
+#恢复生命值
 heal:
   message:
     heal-self: '你已恢复生命值'
@@ -55,6 +63,7 @@ heal:
     heal-console-error: '控制台请执行恢复他人生命值的指令：heal <玩家名称>'
     heal-command-error: '恢复生命值指令格式错误，正确格式：/heal [玩家名称]'
 
+#恢复饱食度
 feed:
   message:
     feed-self: '你已恢复饱食度'
@@ -67,7 +76,8 @@ feed:
     feed-console-error: '控制台请执行恢复他人饱食度的指令：feed <玩家名称>'
     feed-command-error: '恢复饱食度指令格式错误，正确格式：/feed [玩家名称]'
 
-#当拥有恢复生命值和饱食度指令时该指令自动可使用
+#恢复生命值和饱食度
+#当拥有恢复生命值和饱食度指令时该指令可使用
 healandfeed:
   message:
     heal-and-feed-self: '你已恢复生命值和饱食度'
@@ -80,6 +90,7 @@ healandfeed:
     heal-and-feed-console-error: '控制台请执行恢复他人生命值和饱食度的指令：healandfeed <玩家名称>'
     heal-and-feed-command-error: '恢复生命值和饱食度指令格式错误，正确格式：/healandfeed [玩家名称]'
 
+#飞行
 fly:
   message:
     fly-self-open: '你已开启飞行'
@@ -97,6 +108,7 @@ fly:
     fly-console-error: '控制台请执行开关他人飞行的指令：fly <玩家名称>'
     fly-command-error: '开关飞行指令格式错误，正确格式：/fly [玩家名称]'
 
+#飞行速度
 fly-speed:
   message:
     fly-speed-self-reset: '你已重置飞行速度'
@@ -115,6 +127,7 @@ fly-speed:
     fly-speed-console-error: '控制台请执行修改他人飞行速度的指令：flyspeed [速度] <玩家名称>'
     fly-speed-command-error: '修改飞行速度指令格式错误，格式：/flyspeed [速度] [玩家名称]'
 
+#行走速度
 walk-speed:
   message:
     walk-speed-self-reset: '你已重置移动速度'
