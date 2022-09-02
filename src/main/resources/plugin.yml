@@ -54,3 +54,6 @@ permissions:
     default: op
     description: 是否能看到高频红石被销毁的消息
 
+  UtilityToolbox.LimitFlowMessage:
+    default: op
+    description: 是否能看到流体被限制的消息

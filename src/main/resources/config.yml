@@ -50,6 +50,19 @@ anti-high-frequency-red-stone:
   message:
     destroy-message: "玩家&3%player%&7附近存在高频红石，坐标x:%x% y:%y% z:%z%，已打破"
 
+limit-high-Altitude-water-flow:
+  enable: true
+  is-broadcast-message: true
+  limit-high: 80
+  limit-fluid-list:
+    #默认水和岩浆，该名字为流动液体的名字
+    - 'flowing_water'
+    - 'flowing_lava'
+  limit-world-list:
+    #*为限制所有世界
+    - '*'
+  message:
+    destroy-message: "玩家&3%player%&7附近存在高空流体，坐标x:%x% y:%y% z:%z%，已限制"
 #恢复生命值
 heal:
   message:

@@ -1,12 +1,18 @@
 package com.yishian.common;
 
+import com.google.common.collect.Lists;
 import com.yishian.Main;
+import com.yishian.antihighfrequencyredstone.AntiHighFrequencyRedStoneEnum;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.TreeMap;
 
 
 /**
@@ -25,6 +31,7 @@ public class PluginUtils {
 
     /**
      * 参数数量最大为0-1时玩家通用提示
+     *
      * @param args 指令参数
      * @return 提示
      */
@@ -47,6 +54,7 @@ public class PluginUtils {
 
     /**
      * 参数数量最大为1-2时玩家通用提示
+     *
      * @param args 指令参数
      * @return 提示
      */
@@ -67,7 +75,6 @@ public class PluginUtils {
     }
 
     /**
-     *
      * @param oneX 第一个位置的x坐标
      * @param oneY 第一个位置的y坐标
      * @param oneZ 第一个位置的z坐标
@@ -77,7 +84,55 @@ public class PluginUtils {
      * @return 返回计算后的距离
      * 该方案被移除，location提供了方法来计算距离
      */
-    public static Double calculateDistance(Double oneX,Double oneY,Double oneZ,Double twoX,Double twoY,Double twoZ) {
-        return (Math.pow((oneX-twoX),2)+Math.pow((oneY-twoY),2)+Math.pow((oneZ-twoZ),2))/2;
+    public static Double calculateDistance(Integer oneX, Integer oneY, Integer oneZ, Integer twoX, Integer twoY, Integer twoZ) {
+        return (Math.pow((oneX - twoX), 2) + Math.pow((oneY - twoY), 2) + Math.pow((oneZ - twoZ), 2)) / 2;
     }
+
+    /**
+     * 计算一个物品中心区块+周边区块的玩家距离
+     *
+     * @param location 物品的位置
+     * @return 计算后的以中心为区块加周边8个区块内所有玩家距离该物品的位置
+     */
+    public static TreeMap<Double, Player> calculatePlayerAroundTheItem(Location location) {
+        //用于存储玩家，根据距离来得到玩家，方便排序
+        TreeMap<Double, Player> playerDistanceTreeMap = new TreeMap<>();
+        //一共要计算多少个位置，以中间为基础向周围8个区块计算有多少个玩家在内
+        List<Location> locations = Lists.newArrayList();
+        for (int i = 0; i < 360; i += 45) {
+            // 转弧度制
+            double radians = Math.toRadians(i);
+            //添加距离中心坐标为圆心向周边16格外共计8个坐标，一个区块16*16
+            locations.add(location.clone().add(16 * Math.cos(radians), 0D, 16 * Math.sin(radians)));
+        }
+        //添加中心坐标
+        locations.add(location);
+
+        //计算坐标内每个玩家跟被销毁红石的位置
+        locations.forEach(detectLocation -> Arrays.stream(detectLocation.getChunk().getEntities()).forEach(entity -> {
+            if (entity instanceof Player) {
+                Player player = (Player) entity;
+                Location playerLocation = player.getLocation();
+                playerDistanceTreeMap.put(location.distanceSquared(playerLocation), player);
+            }
+        }));
+
+        return playerDistanceTreeMap;
+    }
+
+    /**
+     * 获取拥有该权限的所有玩家列表
+     * @param permission 权限
+     * @return 返回拥有该权限的玩家列表
+     */
+    public static ArrayList<Player> hasPermissionPlayerList(String permission) {
+        ArrayList<Player> players = new ArrayList<>();
+        Bukkit.getServer().getOnlinePlayers().forEach(player -> {
+            if (player.hasPermission(permission)) {
+                players.add(player);
+            }
+        });
+        return players;
+    }
+
 }

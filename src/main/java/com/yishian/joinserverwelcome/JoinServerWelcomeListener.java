@@ -19,9 +19,10 @@ public class JoinServerWelcomeListener implements Listener {
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent playerJoinEvent) {
+        //得到配置文件
         ConfigurationSection functionConfigurationSection = PluginUtils.getServerConfig().getConfigurationSection("join-server-welcome");
         ConfigurationSection functionMessageConfigurationSection = functionConfigurationSection.getConfigurationSection("message");
-        List<String> joinServerWelcomeMessageList = functionMessageConfigurationSection.getStringList("join-server-welcome-message");
+        List<String> MessageList = functionMessageConfigurationSection.getStringList("join-server-welcome-message");
 
         //发送欢迎内容
         Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getProvidingPlugin(Main.class), new Runnable() {
@@ -31,13 +32,13 @@ public class JoinServerWelcomeListener implements Listener {
                 if (functionConfigurationSection.getBoolean("first-join-server-welcome-enable")) {
                     if (player.hasPlayedBefore()) {
                         //后续来到服务器
-                        joinServerWelcomeMessageList.forEach(joinServerWelcomeMessage -> player.sendMessage(ChatColor.translateAlternateColorCodes('&', joinServerWelcomeMessage.replaceAll("%player%", player.getName()))));
+                        MessageList.forEach(joinServerWelcomeMessage -> player.sendMessage(ChatColor.translateAlternateColorCodes('&', joinServerWelcomeMessage.replaceAll("%player%", player.getName()))));
                     } else {
                         //第一次来到服务器
                         functionMessageConfigurationSection.getStringList("first-join-server-welcome-message").forEach(joinServerWelcomeMessage -> player.sendMessage(ChatColor.translateAlternateColorCodes('&', joinServerWelcomeMessage.replaceAll("%player%", player.getName()))));
                     }
                 } else {
-                    joinServerWelcomeMessageList.forEach(joinServerWelcomeMessage -> player.sendMessage(ChatColor.translateAlternateColorCodes('&', joinServerWelcomeMessage.replaceAll("%player%", player.getName()))));
+                    MessageList.forEach(joinServerWelcomeMessage -> player.sendMessage(ChatColor.translateAlternateColorCodes('&', joinServerWelcomeMessage.replaceAll("%player%", player.getName()))));
                 }
             }
         });

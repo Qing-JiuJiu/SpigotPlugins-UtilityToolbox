@@ -1,6 +1,6 @@
 package com.yishian.antihighfrequencyredstone;
 
-import com.google.common.collect.Lists;
+import com.yishian.common.CommandEnum;
 import com.yishian.common.PluginUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -34,32 +34,31 @@ public class AntiHighFrequencyRedStoneRunnable extends BukkitRunnable {
         String destroyMessage = functionConfiguration.getConfigurationSection("message").getString("destroy-message");
 
         //判断是否要广播消息
-        if (functionConfiguration.getBoolean("is-broadcast-message")) {
+        if (functionConfiguration.getBoolean(CommandEnum.IS_BROADCAST_MESSAGE.getCommand())) {
             //循环获取Value比对出现次数，超过设置出现次数就将该红石去除
             detectList.forEach((location, frequency) -> {
                 if (frequency.compareTo(limit) >= 0) {
+                    //普通破坏，就跟玩家挖掘一样。
+                    location.getBlock().breakNaturally();
                     //得到周边区块玩家距离
-                    TreeMap<Double, Player> playerDistanceTreeMap = calculateRedStone(location);
+                    TreeMap<Double, Player> playerDistanceTreeMap = PluginUtils.calculatePlayerAroundTheItem(location);
                     //广播消息
-                    Bukkit.getServer().broadcastMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + destroyMessage.replaceAll("%player%", playerDistanceTreeMap.pollFirstEntry().getValue().getName()).replaceAll("%x%", String.valueOf(Location.locToBlock(location.getX()))).replaceAll("%y%", String.valueOf(Location.locToBlock(location.getY()))).replaceAll("%z%", String.valueOf(Location.locToBlock(location.getZ())))));
+                    Bukkit.getServer().broadcastMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + destroyMessage.replaceAll("%player%", playerDistanceTreeMap.pollFirstEntry().getValue().getName()).replaceAll("%x%", String.valueOf(location.getBlockX())).replaceAll("%y%", String.valueOf(location.getBlockY())).replaceAll("%z%", String.valueOf(location.getBlockZ()))));
                 }
             });
         } else {
             //获取拥有能收到高频红石消息的玩家
-            ArrayList<Player> players = new ArrayList<>();
-            Bukkit.getServer().getOnlinePlayers().forEach(player -> {
-                if (player.hasPermission(AntiHighFrequencyRedStoneEnum.RED_STONE_MESSAGE_PERMISSION.getCommand())) {
-                    players.add(player);
-                }
-            });
+            ArrayList<Player> players = PluginUtils.hasPermissionPlayerList(AntiHighFrequencyRedStoneEnum.RED_STONE_MESSAGE_PERMISSION.getCommand());
 
             //循环获取Value比对出现次数，超过出现次数就将该红石去除
             detectList.forEach((location, frequency) -> {
                 if (frequency.compareTo(limit) >= 0) {
+                    //普通破坏，就跟玩家挖掘一样。
+                    location.getBlock().breakNaturally();
                     //得到周边区块玩家距离
-                    TreeMap<Double, Player> playerDistanceTreeMap = calculateRedStone(location);
+                    TreeMap<Double, Player> playerDistanceTreeMap = PluginUtils.calculatePlayerAroundTheItem(location);
                     //发送消息给有权限的用户
-                    players.forEach(player -> player.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + destroyMessage.replaceAll("%player%", playerDistanceTreeMap.pollFirstEntry().getValue().getName()).replaceAll("%x%", String.valueOf(Location.locToBlock(location.getX()))).replaceAll("%y%", String.valueOf(Location.locToBlock(location.getY()))).replaceAll("%z%", String.valueOf(Location.locToBlock(location.getZ()))))));
+                    players.forEach(player -> player.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + destroyMessage.replaceAll("%player%", playerDistanceTreeMap.pollFirstEntry().getValue().getName()).replaceAll("%x%", String.valueOf(location.getBlockX())).replaceAll("%y%", String.valueOf(location.getBlockY())).replaceAll("%z%", String.valueOf(location.getBlockZ())))));
                 }
             });
         }
@@ -67,36 +66,5 @@ public class AntiHighFrequencyRedStoneRunnable extends BukkitRunnable {
         detectList.clear();
     }
 
-    /**
-     * 计算中心区块+周边区块的玩家距离
-     * @param location 红石被销毁的位置
-     * @return 计算后的所有玩家距离红石的位置
-     */
-    public TreeMap<Double, Player> calculateRedStone(Location location) {
-        //普通破坏，就跟玩家挖掘一样。
-        location.getBlock().breakNaturally();
-        //用于存储玩家，根据距离来得到玩家，方便排序
-        TreeMap<Double, Player> playerDistanceTreeMap = new TreeMap<>();
-        //一共要计算多少个位置，以中间为基础向周围8个区块计算有多少个玩家在内
-        List<Location> locations = Lists.newArrayList();
-        for (int i = 0; i < 360; i += 45) {
-            // 转弧度制
-            double radians = Math.toRadians(i);
-            //添加距离中心坐标为圆心向周边16格外共计8个坐标，一个区块16*16
-            locations.add(location.clone().add(16 * Math.cos(radians), 0D, 16 * Math.sin(radians)));
-        }
-        //添加中心坐标
-        locations.add(location);
 
-        //计算坐标内每个玩家跟被销毁红石的位置
-        locations.forEach(detectLocation -> Arrays.stream(detectLocation.getChunk().getEntities()).forEach(entity -> {
-            if (entity instanceof Player) {
-                Player player = (Player) entity;
-                Location playerLocation = player.getLocation();
-                playerDistanceTreeMap.put(location.distanceSquared(playerLocation), player);
-            }
-        }));
-
-        return playerDistanceTreeMap;
-    }
 }

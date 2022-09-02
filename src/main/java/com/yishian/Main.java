@@ -8,6 +8,7 @@ import com.yishian.common.CommonCommand;
 import com.yishian.customjoinandleave.CustomJoinAndLeaveListener;
 import com.yishian.joinserverwelcome.JoinServerWelcomeListener;
 import com.yishian.autosendservermessage.AutoSendServerMessageRunnable;
+import com.yishian.limithighaltitudewater.LimitHighAltitudeWaterFlowListener;
 import org.bukkit.ChatColor;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.command.PluginCommand;
@@ -125,6 +126,12 @@ public final class Main extends JavaPlugin {
         if (config.getConfigurationSection("anti-high-frequency-red-stone").getBoolean(CommandEnum.FUNCTION_IS_ENABLE.getCommand())) {
             pluginManager.registerEvents(new AntiHighFrequencyRedStoneListener(), this);
             consoleSender.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + "已开启防止高频红石"));
+        }
+
+        //检测高空流水
+        if (config.getConfigurationSection("limit-high-Altitude-water-flow").getBoolean(CommandEnum.FUNCTION_IS_ENABLE.getCommand())) {
+            pluginManager.registerEvents(new LimitHighAltitudeWaterFlowListener(), this);
+            consoleSender.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + "已开启限制高空流体"));
         }
     }
 
