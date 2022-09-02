@@ -50,8 +50,8 @@ anti-high-frequency-red-stone:
   message:
     destroy-message: "玩家&3%player%&7附近存在高频红石，坐标x:%x% y:%y% z:%z%，已打破"
 
-limit-high-Altitude-water-flow:
-  enable: true
+limit-high-altitude-fluid:
+  enable: false
   is-broadcast-message: true
   limit-high: 80
   limit-fluid-list:

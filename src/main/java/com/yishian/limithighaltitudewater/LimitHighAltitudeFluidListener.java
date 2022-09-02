@@ -22,13 +22,13 @@ import java.util.TreeMap;
 /**
  * @author XinQi
  */
-public class LimitHighAltitudeWaterFlowListener implements Listener {
+public class LimitHighAltitudeFluidListener implements Listener {
 
     @EventHandler
     public void onWaterLavaTo(BlockFromToEvent blockFromToEvent) {
         //得到配置文件
         FileConfiguration serverConfig = PluginUtils.getServerConfig();
-        ConfigurationSection functionConfiguration = PluginUtils.getServerConfig().getConfigurationSection("limit-high-Altitude-water-flow");
+        ConfigurationSection functionConfiguration = PluginUtils.getServerConfig().getConfigurationSection("limit-high-altitude-fluid");
         //被限制的世界
         List<String> limitWorldList = functionConfiguration.getStringList("limit-world-list");
         //被限制的流体
@@ -70,7 +70,7 @@ public class LimitHighAltitudeWaterFlowListener implements Listener {
                         Bukkit.getServer().broadcastMessage(messageTemplate);
                     } else {
                         //获取拥有能收到限制流体消息的玩家,并发送消息
-                        ArrayList<Player> players = PluginUtils.hasPermissionPlayerList(LimitHighAltitudeWaterFlowEnum.LIMIT_FLOW_MESSAGE_PERMISSION.getCommand());
+                        ArrayList<Player> players = PluginUtils.hasPermissionPlayerList(LimitHighAltitudeFluidEnum.LIMIT_FLOW_MESSAGE_PERMISSION.getCommand());
                         players.forEach(player -> player.sendMessage(messageTemplate));
                     }
                 }

@@ -5,7 +5,7 @@ import com.yishian.common.CommandEnum;
 /**
  * @author XinQi
  */
-public enum LimitHighAltitudeWaterFlowEnum {
+public enum LimitHighAltitudeFluidEnum {
 
     /**
      * 限制流体信息权限
@@ -15,7 +15,7 @@ public enum LimitHighAltitudeWaterFlowEnum {
     private final String command;
     private final String msg;
 
-    LimitHighAltitudeWaterFlowEnum(String command, String msg) {
+    LimitHighAltitudeFluidEnum(String command, String msg) {
         this.command = command;
         this.msg = msg;
     }

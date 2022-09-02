@@ -8,7 +8,7 @@ import com.yishian.common.CommonCommand;
 import com.yishian.customjoinandleave.CustomJoinAndLeaveListener;
 import com.yishian.joinserverwelcome.JoinServerWelcomeListener;
 import com.yishian.autosendservermessage.AutoSendServerMessageRunnable;
-import com.yishian.limithighaltitudewater.LimitHighAltitudeWaterFlowListener;
+import com.yishian.limithighaltitudewater.LimitHighAltitudeFluidListener;
 import org.bukkit.ChatColor;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.command.PluginCommand;
@@ -129,8 +129,8 @@ public final class Main extends JavaPlugin {
         }
 
         //检测高空流水
-        if (config.getConfigurationSection("limit-high-Altitude-water-flow").getBoolean(CommandEnum.FUNCTION_IS_ENABLE.getCommand())) {
-            pluginManager.registerEvents(new LimitHighAltitudeWaterFlowListener(), this);
+        if (config.getConfigurationSection("limit-high-altitude-fluid").getBoolean(CommandEnum.FUNCTION_IS_ENABLE.getCommand())) {
+            pluginManager.registerEvents(new LimitHighAltitudeFluidListener(), this);
             consoleSender.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + "已开启限制高空流体"));
         }
     }
