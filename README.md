@@ -22,3 +22,4 @@
 + 定时发送服务器消息：AutoSendServerMessages
 + 加入服务器欢迎：JoinServerWelcome
   + 第一次加入服务器欢迎：FirstJoinServerWelcome
++ 高频红石检测
