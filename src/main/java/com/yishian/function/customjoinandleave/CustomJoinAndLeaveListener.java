@@ -1,5 +1,6 @@
-package com.yishian.customjoinandleave;
+package com.yishian.function.customjoinandleave;
 
+import com.yishian.common.CommonEnum;
 import com.yishian.common.PluginUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.ConfigurationSection;
@@ -24,11 +25,11 @@ public class CustomJoinAndLeaveListener implements Listener {
         //得到配置文件
         ConfigurationSection configurationSection = PluginUtils.getServerConfig();
         //得到插件名称前缀
-        String messagePrefix = configurationSection.getConfigurationSection("plugin-message").getString("message-prefix");
+        String messagePrefix = configurationSection.getConfigurationSection(CommonEnum.PLUGIN_MESSAGE.getCommand()).getString(CommonEnum.MESSAGE_PREFIX.getCommand());
         //得到该功能的配置文件坐标
         ConfigurationSection functionConfigurationSection = configurationSection.getConfigurationSection("join-and-leave-server-message");
         //得到消息列表
-        ConfigurationSection messageConfigurationSection = functionConfigurationSection.getConfigurationSection("message");
+        ConfigurationSection messageConfigurationSection = functionConfigurationSection.getConfigurationSection(CommonEnum.MESSAGE.getCommand());
         //得到玩家
         Player player = playerJoinEvent.getPlayer();
         String playerDisplayName = player.getDisplayName();

@@ -1,5 +1,6 @@
-package com.yishian.auxiliary;
+package com.yishian.command.walkspeed;
 
+import com.yishian.common.CommonEnum;
 import com.yishian.common.PluginUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -18,6 +19,8 @@ import java.util.List;
  */
 public class WalkSpeedCommand implements TabExecutor {
 
+    String walkSpeedCommand = WalkSpeedEnum.WALK_SPEED_COMMAND.getCommand();
+
     /**
      * 指令设置
      *
@@ -31,11 +34,11 @@ public class WalkSpeedCommand implements TabExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         //获取配置文件里该指令的消息提示
         ConfigurationSection configurationSection = PluginUtils.getServerConfig();
-        String messagePrefix = configurationSection.getConfigurationSection("plugin-message").getString("message-prefix");
-        ConfigurationSection walkSpeedMessage = configurationSection.getConfigurationSection("walk-speed").getConfigurationSection("message");
+        String messagePrefix = configurationSection.getConfigurationSection(CommonEnum.PLUGHIN_NAME.getCommand()).getString(CommonEnum.MESSAGE_PREFIX.getCommand());
+        ConfigurationSection walkSpeedMessage = configurationSection.getConfigurationSection(walkSpeedCommand).getConfigurationSection(CommonEnum.MESSAGE.getCommand());
 
         //判断执行的指令内容
-        if (AuxiliaryCommandEnum.WALK_SPEED_COMMAND.getCommand().equalsIgnoreCase(label)) {
+        if (walkSpeedCommand.equalsIgnoreCase(label)) {
             //判断指令是否带参数，没参数就是重置移动速度
             if (args.length == 0) {
                 if (sender instanceof Player) {
@@ -86,7 +89,7 @@ public class WalkSpeedCommand implements TabExecutor {
                         //判断参数指向的是否是自己
                         if (!playerName.equals(othersPlayerName)) {
                             //判断执行修改他人移动速度指令的玩家权限
-                            if (player.hasPermission(AuxiliaryCommandEnum.WALK_SPEED_OTHERS_PERMISSION.getCommand())) {
+                            if (player.hasPermission(WalkSpeedEnum.WALK_SPEED_OTHERS_PERMISSION.getCommand())) {
                                 othersPlayer.setWalkSpeed(0.2F);
                                 player.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + walkSpeedMessage.getString("walk-speed-others-reset").replaceAll("%others-player%", othersPlayerName)));
                                 othersPlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + walkSpeedMessage.getString("walk-speed-by-others-reset").replaceAll("%player%", playerName)));
@@ -134,7 +137,7 @@ public class WalkSpeedCommand implements TabExecutor {
                     //判断参数指向的是否是自己
                     if (!playerName.equals(othersPlayerName)) {
                         //判断执行修改他人移动速度指令的玩家权限
-                        if (player.hasPermission(AuxiliaryCommandEnum.WALK_SPEED_OTHERS_PERMISSION.getCommand())) {
+                        if (player.hasPermission(WalkSpeedEnum.WALK_SPEED_OTHERS_PERMISSION.getCommand())) {
                             Player othersPlayer = Bukkit.getPlayerExact(othersPlayerName);
                             //判断玩家是否存在
                             if (othersPlayer != null) {
@@ -187,7 +190,7 @@ public class WalkSpeedCommand implements TabExecutor {
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
         //判断指令是否是上面执行的指令
-        if (AuxiliaryCommandEnum.WALK_SPEED_COMMAND.getCommand().equalsIgnoreCase(label)) {
+        if (walkSpeedCommand.equalsIgnoreCase(label)) {
             return PluginUtils.arg2CommandPlayerTips(args);
         }
         return null;

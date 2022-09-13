@@ -1,5 +1,6 @@
-package com.yishian.auxiliary;
+package com.yishian.command.flyspeed;
 
+import com.yishian.common.CommonEnum;
 import com.yishian.common.PluginUtils;
 
 import org.bukkit.Bukkit;
@@ -20,6 +21,8 @@ import java.util.List;
  */
 public class FlySpeedCommand implements TabExecutor {
 
+    String flySpeedCommand = FlySpeedEnum.FLY_SPEED_COMMAND.getCommand();
+
     /**
      * 指令设置
      *
@@ -33,11 +36,11 @@ public class FlySpeedCommand implements TabExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         //获取配置文件里该指令的消息提示
         ConfigurationSection configurationSection = PluginUtils.getServerConfig();
-        String messagePrefix = configurationSection.getConfigurationSection("plugin-message").getString("message-prefix");
-        ConfigurationSection flySpeedMessage = configurationSection.getConfigurationSection("fly-speed").getConfigurationSection("message");
+        String messagePrefix = configurationSection.getConfigurationSection(CommonEnum.PLUGHIN_NAME.getCommand()).getString(CommonEnum.MESSAGE_PREFIX.getCommand());
+        ConfigurationSection flySpeedMessage = configurationSection.getConfigurationSection(flySpeedCommand).getConfigurationSection(CommonEnum.MESSAGE.getCommand());
 
         //判断执行的指令内容
-        if (AuxiliaryCommandEnum.FLY_SPEED_COMMAND.getCommand().equalsIgnoreCase(label)) {
+        if (flySpeedCommand.equalsIgnoreCase(label)) {
             //判断指令是否带参数，没参数就是重置飞行
             if (args.length == 0) {
                 if (sender instanceof Player) {
@@ -88,7 +91,7 @@ public class FlySpeedCommand implements TabExecutor {
                         //判断参数指向的是否是自己
                         if (!playerName.equals(othersPlayerName)) {
                             //判断执行修改他人飞行速度指令的玩家权限
-                            if (player.hasPermission(AuxiliaryCommandEnum.FLY_SPEED_OTHERS_PERMISSION.getCommand())) {
+                            if (player.hasPermission(FlySpeedEnum.FLY_SPEED_OTHERS_PERMISSION.getCommand())) {
                                 othersPlayer.setFlySpeed(0.1F);
                                 player.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + flySpeedMessage.getString("fly-speed-others-reset").replaceAll("%others-player%", othersPlayerName)));
                                 othersPlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + flySpeedMessage.getString("fly-speed-by-others-reset").replaceAll("%player%", playerName)));
@@ -136,7 +139,7 @@ public class FlySpeedCommand implements TabExecutor {
                     //判断参数指向的是否是自己
                     if (!playerName.equals(othersPlayerName)) {
                         //判断执行修改他人飞行速度指令的玩家权限
-                        if (player.hasPermission(AuxiliaryCommandEnum.FLY_SPEED_OTHERS_PERMISSION.getCommand())) {
+                        if (player.hasPermission(FlySpeedEnum.FLY_SPEED_OTHERS_PERMISSION.getCommand())) {
                             Player othersPlayer = Bukkit.getPlayerExact(othersPlayerName);
                             //判断玩家是否存在
                             if (othersPlayer != null) {
@@ -189,7 +192,7 @@ public class FlySpeedCommand implements TabExecutor {
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
         //判断指令是否是上面执行的指令
-        if (AuxiliaryCommandEnum.FLY_SPEED_COMMAND.getCommand().equalsIgnoreCase(label)) {
+        if (flySpeedCommand.equalsIgnoreCase(label)) {
             return PluginUtils.arg2CommandPlayerTips(args);
         }
         return null;

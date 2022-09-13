@@ -1,4 +1,4 @@
-package com.yishian.antihighfrequencyredstone;
+package com.yishian.function.antihighfrequencyredstone;
 
 import com.yishian.common.PluginUtils;
 import org.bukkit.block.Block;

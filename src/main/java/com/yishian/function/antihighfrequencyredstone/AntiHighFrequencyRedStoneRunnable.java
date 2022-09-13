@@ -1,6 +1,6 @@
-package com.yishian.antihighfrequencyredstone;
+package com.yishian.function.antihighfrequencyredstone;
 
-import com.yishian.common.CommandEnum;
+import com.yishian.common.CommonEnum;
 import com.yishian.common.PluginUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -30,11 +30,11 @@ public class AntiHighFrequencyRedStoneRunnable extends BukkitRunnable {
         int limit = functionConfiguration.getInt("limit");
 
         //得到消息前缀和内容
-        String messagePrefix = serverConfig.getConfigurationSection("plugin-message").getString("message-prefix");
-        String destroyMessage = functionConfiguration.getConfigurationSection("message").getString("destroy-message");
+        String messagePrefix = serverConfig.getConfigurationSection(CommonEnum.PLUGIN_MESSAGE.getCommand()).getString(CommonEnum.MESSAGE_PREFIX.getCommand());
+        String destroyMessage = functionConfiguration.getConfigurationSection(CommonEnum.MESSAGE.getCommand()).getString("destroy-message");
 
         //判断是否要广播消息
-        if (functionConfiguration.getBoolean(CommandEnum.IS_BROADCAST_MESSAGE.getCommand())) {
+        if (functionConfiguration.getBoolean(CommonEnum.IS_BROADCAST_MESSAGE.getCommand())) {
             //循环获取Value比对出现次数，超过设置出现次数就将该红石去除
             detectList.forEach((location, frequency) -> {
                 if (frequency.compareTo(limit) >= 0) {

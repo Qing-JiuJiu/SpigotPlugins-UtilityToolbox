@@ -1,5 +1,6 @@
-package com.yishian.auxiliary;
+package com.yishian.command.fly;
 
+import com.yishian.common.CommonEnum;
 import com.yishian.common.PluginUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -17,6 +18,8 @@ import java.util.List;
  */
 public class FlyCommand implements TabExecutor {
 
+    String flyCommand = FlyEnum.FLY_COMMAND.getCommand();
+
     /**
      * 指令设置
      *
@@ -30,11 +33,11 @@ public class FlyCommand implements TabExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         //获取配置文件里该指令的消息提示
         ConfigurationSection configurationSection = PluginUtils.getServerConfig();
-        String messagePrefix = configurationSection.getConfigurationSection("plugin-message").getString("message-prefix");
-        ConfigurationSection flyMessage = configurationSection.getConfigurationSection("fly").getConfigurationSection("message");
+        String messagePrefix = configurationSection.getConfigurationSection(CommonEnum.PLUGHIN_NAME.getCommand()).getString(CommonEnum.MESSAGE_PREFIX.getCommand());
+        ConfigurationSection flyMessage = configurationSection.getConfigurationSection(flyCommand).getConfigurationSection(CommonEnum.MESSAGE.getCommand());
 
         //判断执行的指令内容
-        if (AuxiliaryCommandEnum.FLY_COMMAND.getCommand().equalsIgnoreCase(label)) {
+        if (flyCommand.equalsIgnoreCase(label)) {
             //判断指令是否带参数
             if (args.length == 0) {
                 //判断执行开启飞行的是自己还是控制台
@@ -61,7 +64,7 @@ public class FlyCommand implements TabExecutor {
                     //判断参数指向的是否是自己
                     if (!playerName.equals(othersPlayerName)) {
                         //判断执行开关他人飞行指令的玩家权限
-                        if (player.hasPermission(AuxiliaryCommandEnum.FLY_OTHERS_PERMISSION.getCommand())) {
+                        if (player.hasPermission(FlyEnum.FLY_OTHERS_PERMISSION.getCommand())) {
                             Player othersPlayer = Bukkit.getPlayerExact(othersPlayerName);
                             //判断玩家是否存在
                             if (othersPlayer != null) {
@@ -120,20 +123,12 @@ public class FlyCommand implements TabExecutor {
 
     /**
      * 指令补全提示
-     *
-     * @param sender  Source of the command.  For players tab-completing a
-     *                command inside of a command block, this will be the player, not
-     *                the command block.
-     * @param command Command which was executed
-     * @param label   Alias of the command which was used
-     * @param args    The arguments passed to the command, including final
-     *                partial argument to be completed
      * @return 返回的提示内容
      */
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
         //判断指令是否是上面执行的指令
-        if (AuxiliaryCommandEnum.FLY_COMMAND.getCommand().equalsIgnoreCase(label)) {
+        if (flyCommand.equalsIgnoreCase(label)) {
             return PluginUtils.arg1CommandPlayerTip(args);
         }
         return null;

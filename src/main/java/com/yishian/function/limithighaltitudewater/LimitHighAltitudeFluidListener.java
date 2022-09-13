@@ -1,6 +1,6 @@
-package com.yishian.limithighaltitudewater;
+package com.yishian.function.limithighaltitudewater;
 
-import com.yishian.common.CommandEnum;
+import com.yishian.common.CommonEnum;
 import com.yishian.common.PluginUtils;
 
 import org.bukkit.Bukkit;
@@ -28,7 +28,7 @@ public class LimitHighAltitudeFluidListener implements Listener {
     public void onWaterLavaTo(BlockFromToEvent blockFromToEvent) {
         //得到配置文件
         FileConfiguration serverConfig = PluginUtils.getServerConfig();
-        ConfigurationSection functionConfiguration = PluginUtils.getServerConfig().getConfigurationSection("limit-high-altitude-fluid");
+        ConfigurationSection functionConfiguration = serverConfig.getConfigurationSection("limit-high-altitude-fluid");
         //被限制的世界
         List<String> limitWorldList = functionConfiguration.getStringList("limit-world-list");
         //被限制的流体
@@ -36,11 +36,11 @@ public class LimitHighAltitudeFluidListener implements Listener {
         //获取限制最高高度
         int limitHigh = functionConfiguration.getInt("limit-high");
         //获取是否要广播消息
-        boolean isBroadcastMessage = functionConfiguration.getBoolean("is-broadcast-message");
+        boolean isBroadcastMessage = functionConfiguration.getBoolean(CommonEnum.IS_BROADCAST_MESSAGE.getCommand());
 
         //得到消息前缀和后缀
-        String messagePrefix = serverConfig.getConfigurationSection("plugin-message").getString("message-prefix");
-        String destroyMessage = functionConfiguration.getConfigurationSection("message").getString("destroy-message");
+        String messagePrefix = serverConfig.getConfigurationSection(CommonEnum.PLUGIN_MESSAGE.getCommand()).getString(CommonEnum.MESSAGE_PREFIX.getCommand());
+        String destroyMessage = functionConfiguration.getConfigurationSection(CommonEnum.MESSAGE.getCommand()).getString("destroy-message");
 
         //得到物品类
         Block block = blockFromToEvent.getBlock();
@@ -54,7 +54,7 @@ public class LimitHighAltitudeFluidListener implements Listener {
         //先判断高度是否被限制
         if (blockY > limitHigh) {
             //判断是否是被限制的世界
-            if (limitWorldList.contains(CommandEnum.ALL.getCommand()) || limitWorldList.contains(block.getWorld().getName())) {
+            if (limitWorldList.contains(CommonEnum.ALL.getCommand()) || limitWorldList.contains(block.getWorld().getName())) {
                 //循环流体限制
                 if (limitFluidList.contains(block.getType().getKey().toString())) {
                     //禁止该方块的事件

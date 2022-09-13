@@ -1,6 +1,6 @@
-package com.yishian.limithighaltitudewater;
+package com.yishian.function.limithighaltitudewater;
 
-import com.yishian.common.CommandEnum;
+import com.yishian.common.CommonEnum;
 
 /**
  * @author XinQi
@@ -10,7 +10,7 @@ public enum LimitHighAltitudeFluidEnum {
     /**
      * 限制流体信息权限
      */
-    LIMIT_FLOW_MESSAGE_PERMISSION(CommandEnum.PLUGHIN_NAME.getCommand() + ".LimitFlowMessage", "限制流体信息");
+    LIMIT_FLOW_MESSAGE_PERMISSION(CommonEnum.PLUGHIN_NAME.getCommand() + ".LimitFlowMessage", "限制流体信息");
 
     private final String command;
     private final String msg;

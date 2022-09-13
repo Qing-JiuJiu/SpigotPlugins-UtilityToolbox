@@ -2,7 +2,6 @@ package com.yishian.common;
 
 import com.google.common.collect.Lists;
 import com.yishian.Main;
-import com.yishian.antihighfrequencyredstone.AntiHighFrequencyRedStoneEnum;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;

@@ -1,6 +1,7 @@
-package com.yishian.joinserverwelcome;
+package com.yishian.function.joinserverwelcome;
 
 import com.yishian.Main;
+import com.yishian.common.CommonEnum;
 import com.yishian.common.PluginUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -21,8 +22,8 @@ public class JoinServerWelcomeListener implements Listener {
     public void onPlayerJoin(PlayerJoinEvent playerJoinEvent) {
         //得到配置文件
         ConfigurationSection functionConfigurationSection = PluginUtils.getServerConfig().getConfigurationSection("join-server-welcome");
-        ConfigurationSection functionMessageConfigurationSection = functionConfigurationSection.getConfigurationSection("message");
-        List<String> MessageList = functionMessageConfigurationSection.getStringList("join-server-welcome-message");
+        ConfigurationSection functionMessageConfigurationSection = functionConfigurationSection.getConfigurationSection(CommonEnum.MESSAGE.getCommand());
+        List<String> messageList = functionMessageConfigurationSection.getStringList("join-server-welcome-message");
 
         //发送欢迎内容
         Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getProvidingPlugin(Main.class), new Runnable() {
@@ -32,13 +33,13 @@ public class JoinServerWelcomeListener implements Listener {
                 if (functionConfigurationSection.getBoolean("first-join-server-welcome-enable")) {
                     if (player.hasPlayedBefore()) {
                         //后续来到服务器
-                        MessageList.forEach(joinServerWelcomeMessage -> player.sendMessage(ChatColor.translateAlternateColorCodes('&', joinServerWelcomeMessage.replaceAll("%player%", player.getName()))));
+                        messageList.forEach(joinServerWelcomeMessage -> player.sendMessage(ChatColor.translateAlternateColorCodes('&', joinServerWelcomeMessage.replaceAll("%player%", player.getName()))));
                     } else {
                         //第一次来到服务器
                         functionMessageConfigurationSection.getStringList("first-join-server-welcome-message").forEach(joinServerWelcomeMessage -> player.sendMessage(ChatColor.translateAlternateColorCodes('&', joinServerWelcomeMessage.replaceAll("%player%", player.getName()))));
                     }
                 } else {
-                    MessageList.forEach(joinServerWelcomeMessage -> player.sendMessage(ChatColor.translateAlternateColorCodes('&', joinServerWelcomeMessage.replaceAll("%player%", player.getName()))));
+                    messageList.forEach(joinServerWelcomeMessage -> player.sendMessage(ChatColor.translateAlternateColorCodes('&', joinServerWelcomeMessage.replaceAll("%player%", player.getName()))));
                 }
             }
         });

@@ -1,5 +1,6 @@
-package com.yishian.autosendservermessage;
+package com.yishian.function.autosendservermessage;
 
+import com.yishian.common.CommonEnum;
 import com.yishian.common.PluginUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -15,7 +16,7 @@ public class AutoSendServerMessageRunnable extends BukkitRunnable {
 
     @Override
     public void run() {
-        ConfigurationSection messagesconfigurationSection = PluginUtils.getServerConfig().getConfigurationSection("auto-send-server-messages").getConfigurationSection("message");
+        ConfigurationSection messagesconfigurationSection = PluginUtils.getServerConfig().getConfigurationSection("auto-send-server-messages").getConfigurationSection(CommonEnum.MESSAGE.getCommand());
         List<String> sendMessageList = messagesconfigurationSection.getStringList("send-messages");
         //广播消息
         sendMessageList.forEach(message -> Bukkit.getServer().broadcastMessage(ChatColor.translateAlternateColorCodes('&', message)));
