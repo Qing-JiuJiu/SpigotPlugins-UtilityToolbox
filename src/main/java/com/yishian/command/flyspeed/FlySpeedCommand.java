@@ -36,7 +36,7 @@ public class FlySpeedCommand implements TabExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         //获取配置文件里该指令的消息提示
         ConfigurationSection configurationSection = PluginUtils.getServerConfig();
-        String messagePrefix = configurationSection.getConfigurationSection(CommonEnum.PLUGHIN_NAME.getCommand()).getString(CommonEnum.MESSAGE_PREFIX.getCommand());
+        String messagePrefix = configurationSection.getConfigurationSection(CommonEnum.PLUGIN_MESSAGE.getCommand()).getString(CommonEnum.MESSAGE_PREFIX.getCommand());
         ConfigurationSection flySpeedMessage = configurationSection.getConfigurationSection(flySpeedCommand).getConfigurationSection(CommonEnum.MESSAGE.getCommand());
 
         //判断执行的指令内容
@@ -72,7 +72,7 @@ public class FlySpeedCommand implements TabExecutor {
                             sender.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + flySpeedMessage.getString("fly-speed-self-args-error")));
                             return true;
                         }
-                        //获得正确速度保留两位小鼠并判断范围是否在1-10 //判断参数是否正确
+                        //获得正确速度保留两位小数并判断范围是否在1-10
                         float properFlySpeed = (originalFlySpeed / 10);
                         properFlySpeed = (float) (Math.round(properFlySpeed * 100)) / 100;
                         Player player = (Player) sender;

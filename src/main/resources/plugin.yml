@@ -18,6 +18,10 @@ commands:
     description: 修改飞行速度
   walkspeed:
     description: 修改移动速度
+  tpa:
+    description: 申请传送至该玩家位置
+  tpacancel:
+    description: 取消传送请求
 
 permissions:
   UtilityToolbox.heal:
@@ -49,6 +53,10 @@ permissions:
     children:
       UtilityToolbox.walkspeed.others: false
     description: 修改移动速度
+
+  UtilityToolbox.tpa:
+    default: op
+    description: 申请传送至该玩家位置
 
   UtilityToolbox.AntiRedStoneMessage:
     default: op

@@ -35,6 +35,7 @@ public class CustomJoinAndLeaveListener implements Listener {
         String playerDisplayName = player.getDisplayName();
         //判断是否开启第一次加入服务器功能
         if (functionConfigurationSection.getBoolean("first-join-server-message-enable")) {
+            //判断玩家是否第一次加入服务器
             if (player.hasPlayedBefore()) {
                 //后续来到服务器
                 playerJoinEvent.setJoinMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + messageConfigurationSection.getString("player-join-server-message").replaceAll("%player%", playerDisplayName)));

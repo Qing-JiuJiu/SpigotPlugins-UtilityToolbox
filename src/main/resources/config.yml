@@ -122,7 +122,7 @@ fly:
     fly-command-error: '开关飞行指令格式错误，正确格式：/fly [玩家名称]'
 
 #飞行速度
-fly-speed:
+flyspeed:
   message:
     fly-speed-self-reset: '你已重置飞行速度'
     fly-speed-self: '你已修改飞行速度为%fly-speed%'
@@ -141,7 +141,7 @@ fly-speed:
     fly-speed-command-error: '修改飞行速度指令格式错误，格式：/flyspeed [速度] [玩家名称]'
 
 #行走速度
-walk-speed:
+walkspeed:
   message:
     walk-speed-self-reset: '你已重置移动速度'
     walk-speed-self: '你已修改移动速度为%walk-speed%'
@@ -158,3 +158,24 @@ walk-speed:
     walk-speed-by-console: '你已被服务器修改移动速度为%walk-speed%'
     walk-speed-console-error: '控制台请执行修改他人移动速度的指令：walkspeed [速度] <玩家名称>'
     walk-speed-command-error: '修改移动速度指令格式错误，格式：/walkspeed [速度] [玩家名称]'
+
+#申请传送
+tpa:
+  message:
+    tpa-console-error: '控制台无法使用申请传送指令'
+    tpa-command-error: 'tpa传送指令格式错误，正确格式：/tpa <其他玩家名称>'
+    tpa-others-no-exist: '玩家&3%others-player%&7不存在，请检查玩家名字'
+    tpa-apply: '你发送申请传送至&3%others-player%&7的位置，请等待该玩家处理请求'
+    tpa-apply-others: '玩家&3%player%&7申请传送至你的位置'
+    tpa-apply-tpacancel-tips: '取消传送请求请输入：/tpacancel'
+    tpa-apply-accept-tips: '同意申请传送请求请输入：/tpaccept'
+    tpa-apply-deny-tips: '拒绝申请传送请求请输入：/deny'
+    tpa-accept: '你已同意&3%player%&7的申请传送'
+    tpa-deny: '你已拒绝&3%player%&7的申请传送'
+
+tpacancel:
+  message:
+    tpacancel-console-error: '控制台无法使用取消传送指令'
+    tpacancel-apply: '已取消申请传送至&3%others-player%&7的传送请求'
+    tpacancel-others: '玩家&3%player%&7已取消传送申请'
+    tpacancel-no-tpa-error: '你没有待处理的传送请求'

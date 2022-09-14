@@ -49,9 +49,9 @@ public class AntiHighFrequencyRedStoneRunnable extends BukkitRunnable {
         } else {
             //获取拥有能收到高频红石消息的玩家
             ArrayList<Player> players = PluginUtils.hasPermissionPlayerList(AntiHighFrequencyRedStoneEnum.RED_STONE_MESSAGE_PERMISSION.getCommand());
-
             //循环获取Value比对出现次数，超过出现次数就将该红石去除
             detectList.forEach((location, frequency) -> {
+                //判断被登记的次数是否大于配置文件限制的次数
                 if (frequency.compareTo(limit) >= 0) {
                     //普通破坏，就跟玩家挖掘一样。
                     location.getBlock().breakNaturally();

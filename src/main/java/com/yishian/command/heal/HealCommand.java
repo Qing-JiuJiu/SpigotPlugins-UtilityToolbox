@@ -35,7 +35,7 @@ public class HealCommand implements TabExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         //获取配置文件里该指令的消息提示
         ConfigurationSection configurationSection = PluginUtils.getServerConfig();
-        String messagePrefix = configurationSection.getConfigurationSection(CommonEnum.PLUGHIN_NAME.getCommand()).getString(CommonEnum.MESSAGE_PREFIX.getCommand());
+        String messagePrefix = configurationSection.getConfigurationSection(CommonEnum.PLUGIN_MESSAGE.getCommand()).getString(CommonEnum.MESSAGE_PREFIX.getCommand());
         ConfigurationSection healMessage = configurationSection.getConfigurationSection(healCommand).getConfigurationSection(CommonEnum.MESSAGE.getCommand());
 
         //判断执行的指令内容

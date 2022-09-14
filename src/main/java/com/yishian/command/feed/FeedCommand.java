@@ -27,7 +27,7 @@ public class FeedCommand implements TabExecutor {
 
         //获取配置文件里该指令的消息提示
         ConfigurationSection configurationSection = PluginUtils.getServerConfig();
-        String messagePrefix = configurationSection.getConfigurationSection(CommonEnum.PLUGHIN_NAME.getCommand()).getString(CommonEnum.MESSAGE_PREFIX.getCommand());
+        String messagePrefix = configurationSection.getConfigurationSection(CommonEnum.PLUGIN_MESSAGE.getCommand()).getString(CommonEnum.MESSAGE_PREFIX.getCommand());
         ConfigurationSection feedMessage = configurationSection.getConfigurationSection(feedCommand).getConfigurationSection(CommonEnum.MESSAGE.getCommand());
 
         //判断执行的指令内容

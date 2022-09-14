@@ -5,6 +5,7 @@ import com.yishian.Main;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
@@ -74,6 +75,34 @@ public class PluginUtils {
     }
 
     /**
+     * 参数数量最大为0-1时玩家通用提示(排除自己)
+     *
+     * @param args          指令参数
+     * @param excludePlayer 排除的提示
+     * @return 提示
+     */
+    public static List<String> arg1CommandPlayerTip(String[] args, CommandSender excludePlayer) {
+        ArrayList<String> tips = new ArrayList<>();
+        //判断参数是否为空，是的话就给出全部提示
+        if (StringUtils.isEmpty(args[0])) {
+            Bukkit.getOnlinePlayers().forEach(player -> {
+                if (excludePlayer != player) {
+                    tips.add(player.getName());
+                }
+            });
+            //判断参数数量是否为1，证明输入了内容给出根据输入的参数前缀给出对应的提示
+        } else if (args.length == 1) {
+            Bukkit.getOnlinePlayers().forEach(player -> {
+                String playerName = player.getName();
+                if (excludePlayer != player && playerName.startsWith(args[0])) {
+                    tips.add(playerName);
+                }
+            });
+        }
+        return tips;
+    }
+
+    /**
      * @param oneX 第一个位置的x坐标
      * @param oneY 第一个位置的y坐标
      * @param oneZ 第一个位置的z坐标
@@ -121,6 +150,7 @@ public class PluginUtils {
 
     /**
      * 获取拥有该权限的所有玩家列表
+     *
      * @param permission 权限
      * @return 返回拥有该权限的玩家列表
      */

@@ -5,6 +5,10 @@ import com.yishian.command.fly.FlyEnum;
 import com.yishian.command.flyspeed.FlySpeedEnum;
 import com.yishian.command.heal.HealEnum;
 import com.yishian.command.healandfeed.HealAndFeedEnum;
+import com.yishian.command.tpa.TpaCommand;
+import com.yishian.command.tpa.TpaEnum;
+import com.yishian.command.tpacancel.TpaCancelCommand;
+import com.yishian.command.tpacancel.TpaCancelEnum;
 import com.yishian.command.walkspeed.WalkSpeedEnum;
 import com.yishian.common.CommonEnum;
 import com.yishian.function.antihighfrequencyredstone.AntiHighFrequencyRedStoneListener;
@@ -120,6 +124,16 @@ public final class Main extends JavaPlugin {
         PluginCommand walkSpeedCommand = getCommand(WalkSpeedEnum.WALK_SPEED_COMMAND.getCommand());
         walkSpeedCommand.setPermission(WalkSpeedEnum.WALK_SPEED_PERMISSION.getCommand());
         walkSpeedCommand.setExecutor(new WalkSpeedCommand());
+
+        //申请传送至该玩家位置
+        PluginCommand TpaCommand = getCommand(TpaEnum.TPA_COMMAND.getCommand());
+        TpaCommand.setPermission(TpaEnum.TPA_PERMISSION.getCommand());
+        TpaCommand.setExecutor(new TpaCommand());
+
+        //取消申请传送
+        PluginCommand TpaCancelCommand = getCommand(TpaCancelEnum.TPA_CANCEL_COMMAND.getCommand());
+        TpaCancelCommand.setPermission(TpaEnum.TPA_PERMISSION.getCommand());
+        TpaCancelCommand.setExecutor(new TpaCancelCommand());
     }
 
     /**

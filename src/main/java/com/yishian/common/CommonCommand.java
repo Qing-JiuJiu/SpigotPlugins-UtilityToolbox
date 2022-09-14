@@ -19,8 +19,8 @@ public class CommonCommand implements TabExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         //获取配置文件对应的提示消息
-        ConfigurationSection pluginMessage = PluginUtils.getServerConfig().getConfigurationSection("plugin-message");
-        String messagePrefix = pluginMessage.getString("message-prefix");
+        ConfigurationSection pluginMessage = PluginUtils.getServerConfig().getConfigurationSection(CommonEnum.PLUGIN_MESSAGE.getCommand());
+        String messagePrefix = pluginMessage.getString(CommonEnum.MESSAGE_PREFIX.getCommand());
         //判断执行的指令内容
         if (CommonEnum.PLUGHIN_NAME.getCommand().equalsIgnoreCase(label)) {
             //判断参数长度是否为1 且是否是需要的参数
@@ -40,15 +40,20 @@ public class CommonCommand implements TabExecutor {
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
         List<String> tips = new ArrayList<>();
+        //判断输入的字符是否是插件名称的第一个字符
         if (label.startsWith(CommonEnum.PLUGHIN_NAME.getCommand().substring(0, 1)) && args.length == 0) {
             tips.add(CommonEnum.PLUGHIN_NAME.getCommand());
             return tips;
         }
+
         //重载指令的提示
         tips.add(CommonEnum.RELOAD_CONFIG_COMMAND.getCommand());
+        //判断输入的主指令是否是插件名称
         if (CommonEnum.PLUGHIN_NAME.getCommand().equalsIgnoreCase(label)) {
+            //判断是否有输入第一个参数，没有就显示所有子指令
             if (StringUtils.isEmpty(args[0])) {
                 return tips;
+                //判断是否输入了一个参数，提示这个参数的提示
             } else if (args.length == 1) {
                 List<String> argNoEmptyTips = new ArrayList<>();
                 tips.forEach(tip -> {
