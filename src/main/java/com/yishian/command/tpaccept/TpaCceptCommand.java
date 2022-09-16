@@ -75,7 +75,6 @@ public class TpaCceptCommand implements TabExecutor {
                     sender.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + tpaCceptMessage.getString("tpaccept-console-error")));
                     return true;
                 }
-
                 Player player = (Player) sender;
                 String playerName = player.getName();
                 String othersPlayerName = args[0];
