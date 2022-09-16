@@ -38,12 +38,6 @@ public class TpaCommand implements TabExecutor {
 
     /**
      * 指令设置
-     *
-     * @param sender  Source of the command
-     * @param command Command which was executed
-     * @param label   Alias of the command which was used
-     * @param args    Passed command arguments
-     * @return 返回的提示内容
      */
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -83,15 +77,26 @@ public class TpaCommand implements TabExecutor {
                                 playerSet = new HashSet<>();
                                 playerSet.add(player);
                             }
+                            //判断是否是相同传送
+                            Player recordPlayer = transfeRecordMap.get(player);
+                            //如果相同将不重复发送，如果不相同将自动取消上一个传送请求
+                            if (recordPlayer == othersPlayer){
+                                player.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + tpaMessage.getString("tpa-others-identical")));
+                                return true;
+                            } else if(recordPlayer != null){
+                                transfeMap.get(recordPlayer).removeIf(judgePlayer -> player == judgePlayer);
+                                recordPlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + tpaMessage.getString("tpa-auto-tpacancel")));
+                                othersPlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + tpaMessage.getString("tpa-auto-tpacancel-others").replaceAll("%player%", playerName)));
+                            }
+
                             //添加至传送列表
                             transfeMap.put(othersPlayer,playerSet);
-
                             //添加自身传送信息
                             transfeRecordMap.put(player, othersPlayer);
+                            //发送相关提醒
                             player.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + tpaMessage.getString("tpa-apply").replaceAll("%others-player%", othersPlayerName)));
                             player.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + tpaMessage.getString("tpa-apply-tpacancel-tips")));
-
-                            othersPlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + tpaMessage.getString("tpa-apply-others").replaceAll("%others-player%", othersPlayerName)));
+                            othersPlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + tpaMessage.getString("tpa-apply-others").replaceAll("%player%", playerName)));
                             othersPlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + tpaMessage.getString("tpa-apply-accept-tips")));
                             othersPlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + tpaMessage.getString("tpa-apply-deny-tips")));
                         } else {

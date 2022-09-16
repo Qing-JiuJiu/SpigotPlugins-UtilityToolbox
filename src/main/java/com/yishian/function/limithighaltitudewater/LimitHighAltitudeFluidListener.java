@@ -61,7 +61,11 @@ public class LimitHighAltitudeFluidListener implements Listener {
                     blockFromToEvent.setCancelled(true);
                     //得到距离这个流体最近的玩家
                     TreeMap<Double, Player> playerDistanceTreeMap = PluginUtils.calculatePlayerAroundTheItem(blockLocation);
-                    String recentPlayerDistanceName = playerDistanceTreeMap.pollFirstEntry().getValue().getName();
+                    String recentPlayerDistanceName = "&c(未找到玩家)";
+                    //判断是否附近有玩家
+                    if (PluginUtils.MapIsEmpty(playerDistanceTreeMap)){
+                        recentPlayerDistanceName = playerDistanceTreeMap.pollFirstEntry().getValue().getName();
+                    }
                     //发送消息内容模板
                     String messageTemplate = ChatColor.translateAlternateColorCodes('&', messagePrefix + destroyMessage.replaceAll("%player%", recentPlayerDistanceName).replaceAll("%x%", String.valueOf(blockX)).replaceAll("%y%", String.valueOf(blockY)).replaceAll("%z%", String.valueOf(blockZ)));
                     //判断是否要广播消息

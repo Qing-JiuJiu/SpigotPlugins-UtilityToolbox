@@ -9,6 +9,10 @@ import com.yishian.command.tpa.TpaCommand;
 import com.yishian.command.tpa.TpaEnum;
 import com.yishian.command.tpacancel.TpaCancelCommand;
 import com.yishian.command.tpacancel.TpaCancelEnum;
+import com.yishian.command.tpaccept.TpaCceptCommand;
+import com.yishian.command.tpaccept.TpaCceptEnum;
+import com.yishian.command.tpadeny.TpaDenyCommand;
+import com.yishian.command.tpadeny.TpaDenyEnum;
 import com.yishian.command.walkspeed.WalkSpeedEnum;
 import com.yishian.common.CommonEnum;
 import com.yishian.function.antihighfrequencyredstone.AntiHighFrequencyRedStoneListener;
@@ -134,6 +138,16 @@ public final class Main extends JavaPlugin {
         PluginCommand TpaCancelCommand = getCommand(TpaCancelEnum.TPA_CANCEL_COMMAND.getCommand());
         TpaCancelCommand.setPermission(TpaEnum.TPA_PERMISSION.getCommand());
         TpaCancelCommand.setExecutor(new TpaCancelCommand());
+
+        //同意申请传送
+        PluginCommand TpaCceptCommand = getCommand(TpaCceptEnum.TPA_CCEPT_COMMAND.getCommand());
+        TpaCceptCommand.setPermission(TpaEnum.TPA_PERMISSION.getCommand());
+        TpaCceptCommand.setExecutor(new TpaCceptCommand());
+
+        //拒绝申请传送
+        PluginCommand TpaDenyCommand = getCommand(TpaDenyEnum.TPA_DENY_COMMAND.getCommand());
+        TpaDenyCommand.setPermission(TpaEnum.TPA_PERMISSION.getCommand());
+        TpaDenyCommand.setExecutor(new TpaDenyCommand());
     }
 
     /**

@@ -40,10 +40,15 @@ public class AntiHighFrequencyRedStoneRunnable extends BukkitRunnable {
                 if (frequency.compareTo(limit) >= 0) {
                     //普通破坏，就跟玩家挖掘一样。
                     location.getBlock().breakNaturally();
-                    //得到周边区块玩家距离
+                    //得到周边区块玩家距离  TODO
                     TreeMap<Double, Player> playerDistanceTreeMap = PluginUtils.calculatePlayerAroundTheItem(location);
+                    String recentPlayerDistanceName = "&c(未找到)";
+                    //判断是否附近有玩家
+                    if (PluginUtils.MapIsEmpty(playerDistanceTreeMap)){
+                        recentPlayerDistanceName = playerDistanceTreeMap.pollFirstEntry().getValue().getName();
+                    }
                     //广播消息
-                    Bukkit.getServer().broadcastMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + destroyMessage.replaceAll("%player%", playerDistanceTreeMap.pollFirstEntry().getValue().getName()).replaceAll("%x%", String.valueOf(location.getBlockX())).replaceAll("%y%", String.valueOf(location.getBlockY())).replaceAll("%z%", String.valueOf(location.getBlockZ()))));
+                    Bukkit.getServer().broadcastMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + destroyMessage.replaceAll("%player%", recentPlayerDistanceName).replaceAll("%x%", String.valueOf(location.getBlockX())).replaceAll("%y%", String.valueOf(location.getBlockY())).replaceAll("%z%", String.valueOf(location.getBlockZ()))));
                 }
             });
         } else {
@@ -57,8 +62,14 @@ public class AntiHighFrequencyRedStoneRunnable extends BukkitRunnable {
                     location.getBlock().breakNaturally();
                     //得到周边区块玩家距离
                     TreeMap<Double, Player> playerDistanceTreeMap = PluginUtils.calculatePlayerAroundTheItem(location);
+                    String recentPlayerDistanceName = "&c(未找到玩家)";
+                    //判断是否附近有玩家
+                    if (PluginUtils.MapIsEmpty(playerDistanceTreeMap)){
+                        recentPlayerDistanceName = playerDistanceTreeMap.pollFirstEntry().getValue().getName();
+                    }
                     //发送消息给有权限的用户
-                    players.forEach(player -> player.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + destroyMessage.replaceAll("%player%", playerDistanceTreeMap.pollFirstEntry().getValue().getName()).replaceAll("%x%", String.valueOf(location.getBlockX())).replaceAll("%y%", String.valueOf(location.getBlockY())).replaceAll("%z%", String.valueOf(location.getBlockZ())))));
+                    String finalRecentPlayerDistanceName = recentPlayerDistanceName;
+                    players.forEach(player -> player.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + destroyMessage.replaceAll("%player%", finalRecentPlayerDistanceName).replaceAll("%x%", String.valueOf(location.getBlockX())).replaceAll("%y%", String.valueOf(location.getBlockY())).replaceAll("%z%", String.valueOf(location.getBlockZ())))));
                 }
             });
         }

@@ -9,10 +9,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.TreeMap;
+import java.util.*;
 
 
 /**
@@ -164,4 +161,17 @@ public class PluginUtils {
         return players;
     }
 
+    /**
+     * 判断集合是否为空
+     */
+    public static boolean CollectionIsEmpty(Collection<?> list){
+        return list == null || list.isEmpty();
+    }
+
+    /**
+     * 判断Map是否为空
+     */
+    public static boolean MapIsEmpty(Map<?,?> map){
+        return map == null || map.isEmpty();
+    }
 }

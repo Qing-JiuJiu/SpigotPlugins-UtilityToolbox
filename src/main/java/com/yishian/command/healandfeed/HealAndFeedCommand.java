@@ -61,7 +61,7 @@ public class HealAndFeedCommand implements TabExecutor {
                                 player.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + healAndFeedMessage.getString("heal-and-feed-others").replaceAll("%others-player%", othersPlayerName)));
                                 othersPlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + healAndFeedMessage.getString("heal-and-feed-by-others").replaceAll("%player%", playerName)));
                             } else {
-                                player.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + healAndFeedMessage.getString("heal-and-feed-no-exist").replaceAll("%others-player%", othersPlayerName)));
+                                player.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + healAndFeedMessage.getString("heal-and-feed-others-no-exist").replaceAll("%others-player%", othersPlayerName)));
                             }
                         } else {
                             player.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + healAndFeedMessage.getString("heal-and-feed-others-no-permission")));

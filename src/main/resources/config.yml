@@ -3,7 +3,7 @@
 plugin-message:
   message-prefix: '&e[UtilityToolbox] &7'
   reload-message: '配置文件重载成功'
-  command-args-error: '子指令无效或无子指令，正确格式: /UtilityToolbox <子指令>'
+  command-args-error: '子指令无效或无子指令，正确格式: &c/UtilityToolbox <子指令>'
 
 #自定义加入和离开服务器消息
 join-and-leave-server-message:
@@ -56,8 +56,8 @@ limit-high-altitude-fluid:
   limit-high: 80
   limit-fluid-list:
     #默认水和岩浆，该名字为流动液体的名字
-    - 'flowing_water'
-    - 'flowing_lava'
+    - 'minecraft:water'
+    - 'minecraft:lava'
   limit-world-list:
     #*为限制所有世界
     - '*'
@@ -73,8 +73,8 @@ heal:
     heal-others-no-permission: '你没有执行恢复他人生命值指令的权限'
     heal-by-others: '你已被&3%player%&7恢复生命值'
     heal-by-console: '你已被服务器恢复生命值'
-    heal-console-error: '控制台请执行恢复他人生命值的指令：heal <玩家名称>'
-    heal-command-error: '恢复生命值指令格式错误，正确格式：/heal [玩家名称]'
+    heal-console-error: '控制台请执行恢复他人生命值的指令: &cheal <玩家名称>'
+    heal-command-error: '恢复生命值指令格式错误，正确格式: &c/heal [玩家名称]'
 
 #恢复饱食度
 feed:
@@ -86,8 +86,8 @@ feed:
     feed-others-no-permission: '你没有执行恢复他人饱食度指令的权限'
     feed-by-others: '你已被&3%player%&7恢复饱食度'
     feed-by-console: '你已被服务器恢复饱食度'
-    feed-console-error: '控制台请执行恢复他人饱食度的指令：feed <玩家名称>'
-    feed-command-error: '恢复饱食度指令格式错误，正确格式：/feed [玩家名称]'
+    feed-console-error: '控制台请执行恢复他人饱食度的指令: &cfeed <玩家名称>'
+    feed-command-error: '恢复饱食度指令格式错误，正确格式: &c/feed [玩家名称]'
 
 #恢复生命值和饱食度
 #当拥有恢复生命值和饱食度指令时该指令可使用
@@ -95,13 +95,13 @@ healandfeed:
   message:
     heal-and-feed-self: '你已恢复生命值和饱食度'
     heal-and-feed-others: '你已恢复&3%others-player%&7的生命值和饱食度'
-    heal-and-feed-no-exist: '玩家&3%others-player%&7不存在，请检查玩家名字'
+    heal-and-feed-others-no-exist: '玩家&3%others-player%&7不存在，请检查玩家名字'
     heal-and-feed-others-is-self: '你已恢复生命值和饱食度，可以使用不带参数的指令来恢复自己'
     heal-and-feed-others-no-permission: '你没有执行恢复他人生命值和饱食度指令的权限'
     heal-and-feed-by-others: '你已被&3%player%&7恢复生命值和饱食度'
     heal-and-feed-by-console: '你已被服务器恢复生命值和饱食度'
-    heal-and-feed-console-error: '控制台请执行恢复他人生命值和饱食度的指令：healandfeed <玩家名称>'
-    heal-and-feed-command-error: '恢复生命值和饱食度指令格式错误，正确格式：/healandfeed [玩家名称]'
+    heal-and-feed-console-error: '控制台请执行恢复他人生命值和饱食度的指令: &chealandfeed <玩家名称>'
+    heal-and-feed-command-error: '恢复生命值和饱食度指令格式错误，正确格式: &c/healandfeed [玩家名称]'
 
 #飞行
 fly:
@@ -118,8 +118,8 @@ fly:
     fly-by-others-close: '你已被&3%player%&7关闭飞行'
     fly-by-console-open: '你已被服务器开启飞行'
     fly-by-console-close: '你已被服务器关闭飞行'
-    fly-console-error: '控制台请执行开关他人飞行的指令：fly <玩家名称>'
-    fly-command-error: '开关飞行指令格式错误，正确格式：/fly [玩家名称]'
+    fly-console-error: '控制台请执行开关他人飞行的指令: &cfly <玩家名称>'
+    fly-command-error: '开关飞行指令格式错误，正确格式: &c/fly [玩家名称]'
 
 #飞行速度
 flyspeed:
@@ -130,15 +130,15 @@ flyspeed:
     fly-speed-others: '你已修改&3%others-player%&7的飞行速度为%fly-speed%'
     fly-speed-others-reset: '你已重置&3%others-player%&7的飞行速度'
     fly-speed-others-reset-is-self: '你已重置飞行速度，修改自己可以不输入玩家名称'
-    fly-speed-by-others-reset: '你已被&3%player%&7重置飞行速度'
-    fly-speed-by-console-reset: '你已被服务器重置飞行速度'
     fly-speed-others-is-self: '你已修改飞行速度为%fly-speed%，修改自己可以不输入玩家名称'
     fly-speed-others-no-exist: '玩家&3%others-player%&7不存在，请检查玩家名字'
     fly-speed-others-no-permission: '你没有修改他人飞行速度指令的权限'
+    fly-speed-by-others-reset: '你已被&3%player%&7重置飞行速度'
+    fly-speed-by-console-reset: '你已被服务器重置飞行速度'
     fly-speed-by-others: '你已被&3%player%&7修改飞行速度为%fly-speed%'
     fly-speed-by-console: '你已被服务器修改飞行速度为%fly-speed%'
-    fly-speed-console-error: '控制台请执行修改他人飞行速度的指令：flyspeed [速度] <玩家名称>'
-    fly-speed-command-error: '修改飞行速度指令格式错误，格式：/flyspeed [速度] [玩家名称]'
+    fly-speed-console-error: '控制台请执行修改他人飞行速度的指令: &cflyspeed [速度] <玩家名称>'
+    fly-speed-command-error: '修改飞行速度指令格式错误，格式: &c/flyspeed [速度] [玩家名称]'
 
 #行走速度
 walkspeed:
@@ -149,33 +149,58 @@ walkspeed:
     walk-speed-others: '你已修改&3%others-player%&7的移动速度为%walk-speed%'
     walk-speed-others-reset: '你已重置&3%others-player%&7的移动速度'
     walk-speed-others-reset-is-self: '你已重置移动速度，修改自己可以不输入玩家名称'
-    walk-speed-by-others-reset: '你已被&3%player%&7重置移动速度'
-    walk-speed-by-console-reset: '你已被服务器重置移动速度'
     walk-speed-others-is-self: '你已修改移动速度为%walk-speed%，修改自己可以不输入玩家名称'
     walk-speed-others-no-exist: '玩家&3%others-player%&7不存在，请检查玩家名字'
     walk-speed-others-no-permission: '你没有修改他人移动速度指令的权限'
     walk-speed-by-others: '你已被&3%player%&7修改移动速度为%walk-speed%'
+    walk-speed-by-others-reset: '你已被&3%player%&7重置移动速度'
     walk-speed-by-console: '你已被服务器修改移动速度为%walk-speed%'
-    walk-speed-console-error: '控制台请执行修改他人移动速度的指令：walkspeed [速度] <玩家名称>'
-    walk-speed-command-error: '修改移动速度指令格式错误，格式：/walkspeed [速度] [玩家名称]'
+    walk-speed-by-console-reset: '你已被服务器重置移动速度'
+    walk-speed-console-error: '控制台请执行修改他人移动速度的指令: &cwalkspeed [速度] <玩家名称>'
+    walk-speed-command-error: '修改移动速度指令格式错误，格式: &c/walkspeed [速度] [玩家名称]'
 
 #申请传送
 tpa:
   message:
-    tpa-console-error: '控制台无法使用申请传送指令'
-    tpa-command-error: 'tpa传送指令格式错误，正确格式：/tpa <其他玩家名称>'
     tpa-others-no-exist: '玩家&3%others-player%&7不存在，请检查玩家名字'
-    tpa-apply: '你发送申请传送至&3%others-player%&7的位置，请等待该玩家处理请求'
-    tpa-apply-others: '玩家&3%player%&7申请传送至你的位置'
-    tpa-apply-tpacancel-tips: '取消传送请求请输入：/tpacancel'
-    tpa-apply-accept-tips: '同意申请传送请求请输入：/tpaccept'
-    tpa-apply-deny-tips: '拒绝申请传送请求请输入：/deny'
-    tpa-accept: '你已同意&3%player%&7的申请传送'
-    tpa-deny: '你已拒绝&3%player%&7的申请传送'
+    tpa-others-identical: '请不要发送重复申请'
+    tpa-auto-tpacancel: '已自动取消上一个传送请求'
+    tpa-auto-tpacancel-others: '玩家&3%player%&7已取消传送请求'
+    tpa-apply: '传送请求已发送给玩家&3%others-player%'
+    tpa-apply-others: '玩家&3%player%&7请求传送到你这里'
+    tpa-apply-tpacancel-tips: '取消请求输入: &c/tpacancel'
+    tpa-apply-accept-tips: '同意请求输入: &c/tpaccept'
+    tpa-apply-deny-tips: '拒绝请求输入: &c/tpadeny'
+    tpa-console-error: '控制台无法使用传送相关指令'
+    tpa-command-error: '传送指令格式错误，正确格式: &c/tpa <其他玩家名称>'
 
+#取消传送
 tpacancel:
   message:
-    tpacancel-console-error: '控制台无法使用取消传送指令'
-    tpacancel-apply: '已取消申请传送至&3%others-player%&7的传送请求'
-    tpacancel-others: '玩家&3%player%&7已取消传送申请'
+    tpacancel-apply: '已取消传送请求'
+    tpacancel-others: '玩家&3%player%&7已取消传送请求'
     tpacancel-no-tpa-error: '你没有待处理的传送请求'
+    tpacancel-console-error: '控制台无法使用传送相关指令'
+
+#同意传送
+tpaccept:
+  message:
+    tpaccept-apply: '你已接受&3%others-player%&7的传送请求'
+    tpaccept-apply-is-self: '请不要接受自己的传送请求'
+    tpaccept-apply-others: '你向&3%player%&7申请的传送请求已被接受'
+    tpaccept-console-error: '控制台无法使用传送相关指令'
+    tpaccept-others-no-exist: '玩家&3%others-player%&7不存在，请检查玩家名字'
+    tpaccept-command-error: '同意请求指令格式错误，正确格式: &c/tpaccept [其他玩家名称]'
+    tpaccept-no-tpa-error: '你没有待处理的传送请求'
+    tpaccept-no-others-player-tpa-error: '你没有玩家&3%others-player%&7的传送请求'
+
+#拒绝传送
+tpadeny:
+  message:
+    tpadeny-apply: '你已拒绝&3%others-player%&7的传送请求'
+    tpadeny-apply-is-self: '请不要拒绝自己的传送请求'
+    tpadeny-apply-others: '你向&3%player%&7申请的传送请求已被拒绝'
+    tpadeny-console-error: '控制台无法使用传送相关指令'
+    tpadeny-others-no-exist: '玩家&3%others-player%&7不存在，请检查玩家名字'
+    tpadeny-command-error: '拒绝请求指令格式错误，正确格式: &c/tpadeny [其他玩家名称]'
+    tpadeny-no-tpa-error: '你没有待处理的传送请求'

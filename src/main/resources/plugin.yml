@@ -22,6 +22,10 @@ commands:
     description: 申请传送至该玩家位置
   tpacancel:
     description: 取消传送请求
+  tpaccept:
+    description: 同意传送请求
+  tpadeny:
+    description: 拒绝传送请求
 
 permissions:
   UtilityToolbox.heal:
