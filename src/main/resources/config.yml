@@ -48,7 +48,7 @@ anti-high-frequency-red-stone:
     - 'minecraft:redstone_wire'
     - 'minecraft:lever'
   message:
-    destroy-message: "玩家&3%player%&7附近存在高频红石，坐标x:%x% y:%y% z:%z%，已打破"
+    destroy-message: "玩家&3%player%&7附近存在高频红石，坐标&3x:%x% y:%y% z:%z%&7，已摧毁"
 
 limit-high-altitude-fluid:
   enable: false
@@ -62,7 +62,7 @@ limit-high-altitude-fluid:
     #*为限制所有世界
     - '*'
   message:
-    destroy-message: "玩家&3%player%&7附近存在高空流体，坐标x:%x% y:%y% z:%z%，已限制"
+    destroy-message: "玩家&3%player%&7附近存在高空流体，坐标&3x:%x% y:%y% z:%z%&7，已限制"
 #恢复生命值
 heal:
   message:
@@ -173,6 +173,7 @@ tpa:
     tpa-apply-deny-tips: '拒绝请求输入: &c/tpadeny'
     tpa-console-error: '控制台无法使用传送相关指令'
     tpa-command-error: '传送指令格式错误，正确格式: &c/tpa <其他玩家名称>'
+    tpa-others-leave-server: '玩家&3%others-player%&7已离开服务器，已自动取消其传送请求'
 
 #取消传送
 tpacancel:
@@ -204,3 +205,12 @@ tpadeny:
     tpadeny-others-no-exist: '玩家&3%others-player%&7不存在，请检查玩家名字'
     tpadeny-command-error: '拒绝请求指令格式错误，正确格式: &c/tpadeny [其他玩家名称]'
     tpadeny-no-tpa-error: '你没有待处理的传送请求'
+
+sethome:
+  allow-home-world:
+    - 'world'
+  message:
+    sethome-apply: '已将该位置设置为家'
+    sethome-world-error: '世界&3%world%&7禁止设置家'
+    sethome-console-error: '控制台无法使用家相关指令'
+    sethome-command-error: '设置家指令格式错误，正确格式: &c/sethome'

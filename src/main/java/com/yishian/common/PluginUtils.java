@@ -164,14 +164,34 @@ public class PluginUtils {
     /**
      * 判断集合是否为空
      */
-    public static boolean CollectionIsEmpty(Collection<?> list){
+    public static boolean collectionIsEmpty(Collection<?> list){
         return list == null || list.isEmpty();
     }
 
     /**
      * 判断Map是否为空
      */
-    public static boolean MapIsEmpty(Map<?,?> map){
+    public static boolean mapIsEmpty(Map<?,?> map){
         return map == null || map.isEmpty();
+    }
+
+    /**
+     * 根据Set<Player>来提示
+     */
+    public static List<String> playerSetCommandPlayerTip(String[] args, Set<Player> playerSet) {
+        ArrayList<String> tips = new ArrayList<>();
+        //判断参数是否为空，是的话就给出全部提示
+        if (StringUtils.isEmpty(args[0])) {
+            playerSet.forEach(player -> tips.add(player.getName()));
+            //判断参数数量是否为1，证明输入了内容给出根据输入的参数前缀给出对应的提示
+        } else if (args.length == 1) {
+            playerSet.forEach(player -> {
+                String playerName = player.getName();
+                if (playerName.startsWith(args[0])) {
+                    tips.add(playerName);
+                }
+            });
+        }
+        return tips;
     }
 }

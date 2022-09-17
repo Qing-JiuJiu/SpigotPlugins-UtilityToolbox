@@ -26,7 +26,7 @@ public class JoinServerWelcomeListener implements Listener {
         List<String> messageList = functionMessageConfigurationSection.getStringList("join-server-welcome-message");
 
         //发送欢迎内容
-        Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getProvidingPlugin(Main.class), () -> {
+        Bukkit.getScheduler().runTaskAsynchronously(Main.getProvidingPlugin(Main.class), () -> {
             Player player = playerJoinEvent.getPlayer();
             //判断是否开启第一次进入服务器欢迎，没开启就直接发送消息列表即可
             if (functionConfigurationSection.getBoolean("first-join-server-welcome-enable")) {

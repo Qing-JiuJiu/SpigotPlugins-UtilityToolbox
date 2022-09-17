@@ -1,5 +1,8 @@
 package com.yishian;
 
+import com.yishian.command.SetHome.SetHomeCommand;
+import com.yishian.command.SetHome.SetHomeConfig;
+import com.yishian.command.SetHome.SetHomeEnum;
 import com.yishian.command.feed.FeedEnum;
 import com.yishian.command.fly.FlyEnum;
 import com.yishian.command.flyspeed.FlySpeedEnum;
@@ -7,6 +10,7 @@ import com.yishian.command.heal.HealEnum;
 import com.yishian.command.healandfeed.HealAndFeedEnum;
 import com.yishian.command.tpa.TpaCommand;
 import com.yishian.command.tpa.TpaEnum;
+import com.yishian.command.tpa.TpaPlayerLeaveServerListener;
 import com.yishian.command.tpacancel.TpaCancelCommand;
 import com.yishian.command.tpacancel.TpaCancelEnum;
 import com.yishian.command.tpaccept.TpaCceptCommand;
@@ -35,6 +39,8 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.io.IOException;
 
 
 /**
@@ -69,7 +75,6 @@ public final class Main extends JavaPlugin {
      */
     @Override
     public void onEnable() {
-
         //如果插件目录下没配置文件，保存默认配置文件到插件目录
         saveDefaultConfig();
 
@@ -80,6 +85,7 @@ public final class Main extends JavaPlugin {
         registerCommand();
         registerListener();
         registerTask();
+        registerCommandConfig();
     }
 
     /**
@@ -148,6 +154,11 @@ public final class Main extends JavaPlugin {
         PluginCommand TpaDenyCommand = getCommand(TpaDenyEnum.TPA_DENY_COMMAND.getCommand());
         TpaDenyCommand.setPermission(TpaEnum.TPA_PERMISSION.getCommand());
         TpaDenyCommand.setExecutor(new TpaDenyCommand());
+
+        //设置家
+        PluginCommand SetHomeCommand = getCommand(SetHomeEnum.SET_HOME_COMMAND.getCommand());
+        SetHomeCommand.setPermission(SetHomeEnum.SET_HOME_PERMISSION.getCommand());
+        SetHomeCommand.setExecutor(new SetHomeCommand());
     }
 
     /**
@@ -177,6 +188,10 @@ public final class Main extends JavaPlugin {
             pluginManager.registerEvents(new LimitHighAltitudeFluidListener(), this);
             consoleSender.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + "已开启限制高空流体"));
         }
+
+        //离开服务器删除tpa相关信息
+        pluginManager.registerEvents(new TpaPlayerLeaveServerListener(), this);
+
     }
 
     /**
@@ -196,6 +211,18 @@ public final class Main extends JavaPlugin {
         if (configurationSection.getBoolean(CommonEnum.FUNCTION_IS_ENABLE.getCommand())) {
             //按照tick时间计算，1tick=0.05s，20tick=1s
             new AntiHighFrequencyRedStoneRunnable().runTaskTimer(this, 0, configurationSection.getInt(timeString) * 20L);
+        }
+    }
+
+    /**
+     * 注册指令配置
+     */
+    public void registerCommandConfig(){
+        //创建home配置文件
+        try {
+            SetHomeConfig.loadHomeConfigFile();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 }

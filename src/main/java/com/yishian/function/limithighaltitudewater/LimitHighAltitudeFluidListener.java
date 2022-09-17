@@ -63,7 +63,7 @@ public class LimitHighAltitudeFluidListener implements Listener {
                     TreeMap<Double, Player> playerDistanceTreeMap = PluginUtils.calculatePlayerAroundTheItem(blockLocation);
                     String recentPlayerDistanceName = "&c(未找到)";
                     //判断是否附近有玩家
-                    if (!PluginUtils.MapIsEmpty(playerDistanceTreeMap)){
+                    if (!PluginUtils.mapIsEmpty(playerDistanceTreeMap)){
                         recentPlayerDistanceName = playerDistanceTreeMap.pollFirstEntry().getValue().getName();
                     }
                     //发送消息内容模板

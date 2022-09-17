@@ -44,7 +44,7 @@ public class AntiHighFrequencyRedStoneRunnable extends BukkitRunnable {
                     TreeMap<Double, Player> playerDistanceTreeMap = PluginUtils.calculatePlayerAroundTheItem(location);
                     String recentPlayerDistanceName = "&c(未找到)";
                     //判断是否附近有玩家
-                    if (PluginUtils.MapIsEmpty(playerDistanceTreeMap)){
+                    if (PluginUtils.mapIsEmpty(playerDistanceTreeMap)){
                         recentPlayerDistanceName = playerDistanceTreeMap.pollFirstEntry().getValue().getName();
                     }
                     //广播消息
@@ -64,7 +64,7 @@ public class AntiHighFrequencyRedStoneRunnable extends BukkitRunnable {
                     TreeMap<Double, Player> playerDistanceTreeMap = PluginUtils.calculatePlayerAroundTheItem(location);
                     String recentPlayerDistanceName = "&c(未找到)";
                     //判断是否附近有玩家
-                    if (!PluginUtils.MapIsEmpty(playerDistanceTreeMap)){
+                    if (!PluginUtils.mapIsEmpty(playerDistanceTreeMap)){
                         recentPlayerDistanceName = playerDistanceTreeMap.pollFirstEntry().getValue().getName();
                     }
                     //发送消息给有权限的用户

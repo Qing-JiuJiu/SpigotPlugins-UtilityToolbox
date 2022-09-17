@@ -52,7 +52,7 @@ public class TpaCceptCommand implements TabExecutor {
                 Player player = (Player) sender;
                 String playerName = player.getName();
                 Set<Player> tpaPlayers = TpaCommand.transfeMap.get(player);
-                if (PluginUtils.CollectionIsEmpty(tpaPlayers)){
+                if (PluginUtils.collectionIsEmpty(tpaPlayers)) {
                     player.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + tpaCceptMessage.getString("tpaccept-no-tpa-error")));
                     return true;
                 }
@@ -125,8 +125,8 @@ public class TpaCceptCommand implements TabExecutor {
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
         //判断指令是否是上面执行的指令
-        if (tpaCceptCommand.equalsIgnoreCase(label)) {
-            return PluginUtils.arg1CommandPlayerTip(args, sender);
+        if (tpaCceptCommand.equalsIgnoreCase(label) && sender instanceof Player) {
+            return PluginUtils.playerSetCommandPlayerTip(args, TpaCommand.transfeMap.get((Player) sender));
         }
         return null;
     }

@@ -26,6 +26,8 @@ commands:
     description: 同意传送请求
   tpadeny:
     description: 拒绝传送请求
+  sethome:
+    description: 设置家
 
 permissions:
   UtilityToolbox.heal:
