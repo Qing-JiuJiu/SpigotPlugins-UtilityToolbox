@@ -28,6 +28,8 @@ commands:
     description: 拒绝传送请求
   sethome:
     description: 设置家
+  home:
+    description: 回家
 
 permissions:
   UtilityToolbox.heal:

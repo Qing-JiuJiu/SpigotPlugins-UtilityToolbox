@@ -1,4 +1,4 @@
-package com.yishian.command.SetHome;
+package com.yishian.command.sethome;
 
 
 import com.yishian.Main;
@@ -11,9 +11,9 @@ import java.io.IOException;
 
 public class SetHomeConfig {
 
-    static YamlConfiguration homeFileYaml;
+    public static YamlConfiguration homeFileYaml;
 
-    static File file;
+    public static File file;
 
     public static void loadHomeConfigFile() throws IOException {
         file = new File(JavaPlugin.getPlugin(Main.class).getDataFolder(), "homes.yml");
@@ -25,4 +25,5 @@ public class SetHomeConfig {
             homeFileYaml = YamlConfiguration.loadConfiguration(file);
         }
     }
+
 }

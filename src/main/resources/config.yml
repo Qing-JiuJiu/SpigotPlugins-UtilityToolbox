@@ -186,9 +186,9 @@ tpacancel:
 #同意传送
 tpaccept:
   message:
-    tpaccept-apply: '你已接受&3%others-player%&7的传送请求'
+    tpaccept-apply: '你已接受玩家&3%others-player%&7的传送请求'
     tpaccept-apply-is-self: '请不要接受自己的传送请求'
-    tpaccept-apply-others: '你向&3%player%&7申请的传送请求已被接受'
+    tpaccept-apply-others: '你向玩家&3%player%&7申请的传送请求已被接受'
     tpaccept-console-error: '控制台无法使用传送相关指令'
     tpaccept-others-no-exist: '玩家&3%others-player%&7不存在，请检查玩家名字'
     tpaccept-command-error: '同意请求指令格式错误，正确格式: &c/tpaccept [其他玩家名称]'
@@ -198,19 +198,27 @@ tpaccept:
 #拒绝传送
 tpadeny:
   message:
-    tpadeny-apply: '你已拒绝&3%others-player%&7的传送请求'
+    tpadeny-apply: '你已拒绝玩家&3%others-player%&7的传送请求'
     tpadeny-apply-is-self: '请不要拒绝自己的传送请求'
-    tpadeny-apply-others: '你向&3%player%&7申请的传送请求已被拒绝'
+    tpadeny-apply-others: '你向玩家&3%player%&7申请的传送请求已被拒绝'
     tpadeny-console-error: '控制台无法使用传送相关指令'
     tpadeny-others-no-exist: '玩家&3%others-player%&7不存在，请检查玩家名字'
     tpadeny-command-error: '拒绝请求指令格式错误，正确格式: &c/tpadeny [其他玩家名称]'
     tpadeny-no-tpa-error: '你没有待处理的传送请求'
+    tpadeny-no-others-player-tpa-error: '你没有玩家&3%others-player%&7的传送请求'
 
 sethome:
   allow-home-world:
     - 'world'
   message:
-    sethome-apply: '已将该位置设置为家'
+    sethome-apply: '已将该位置设为家'
     sethome-world-error: '世界&3%world%&7禁止设置家'
     sethome-console-error: '控制台无法使用家相关指令'
     sethome-command-error: '设置家指令格式错误，正确格式: &c/sethome'
+
+home:
+  message:
+    home-apply: '你已传送回家'
+    home-no-exist: '暂无家，请使用&c/sethome&7指令设置家的位置'
+    home-console-error: '控制台无法使用家相关指令'
+    home-command-error: '设置家指令格式错误，正确格式: &c/sethome'

@@ -1,4 +1,4 @@
-package com.yishian.command.SetHome;
+package com.yishian.command.sethome;
 
 
 import com.yishian.common.CommonEnum;
@@ -37,7 +37,7 @@ public class SetHomeCommand implements CommandExecutor {
                 return true;
             }
 
-            //判断执行恢复自己指令的是用户还是控制台
+            //判断执行指令的是用户还是控制台
             if (!(sender instanceof Player)) {
                 sender.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + setHomeMessage.getString("sethome-console-error")));
                 return true;
@@ -59,8 +59,9 @@ public class SetHomeCommand implements CommandExecutor {
             double playerLocationY = playerLocation.getY();
             double playerLocationZ = playerLocation.getZ();
             float playerLocationYaw = playerLocation.getYaw();
+            float playerLocationPitch = playerLocation.getPitch();
 
-            //写入家数据文件
+            //写入家数据文件，用于重启服务器后读取
             String playerName = player.getName();
             YamlConfiguration homeFileYaml = SetHomeConfig.homeFileYaml;
             homeFileYaml.set(playerName + ".world", worldName);
@@ -68,11 +69,14 @@ public class SetHomeCommand implements CommandExecutor {
             homeFileYaml.set(playerName + ".y", playerLocationY);
             homeFileYaml.set(playerName + ".z", playerLocationZ);
             homeFileYaml.set(playerName + ".yaw", playerLocationYaw);
+            homeFileYaml.set(playerName + ".pitch", playerLocationPitch);
             try {
                 Writer writer = new OutputStreamWriter(Files.newOutputStream(SetHomeConfig.file.toPath()), StandardCharsets.UTF_8);
                 writer.write(homeFileYaml.saveToString());
                 writer.flush();
+                writer.close();
             } catch (IOException e) {
+                player.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + setHomeMessage.getString("sethome-apply").replaceAll("%world%", worldName).replaceAll("%x%", String.valueOf((int) playerLocationX)).replaceAll("%y%", String.valueOf((int) playerLocationY)).replaceAll("%z%", String.valueOf((int) playerLocationZ))));
                 throw new RuntimeException(e);
             }
 

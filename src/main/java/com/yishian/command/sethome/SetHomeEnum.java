@@ -1,4 +1,4 @@
-package com.yishian.command.SetHome;
+package com.yishian.command.sethome;
 
 import com.yishian.common.CommonEnum;
 

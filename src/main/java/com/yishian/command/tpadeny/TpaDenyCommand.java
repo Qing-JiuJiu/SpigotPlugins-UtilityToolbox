@@ -90,7 +90,6 @@ public class TpaDenyCommand implements TabExecutor {
                     return true;
                 }
 
-                //主功能接受传送--------------------------------
                 //传送指定玩家
                 Set<Player> tpaPlayers = TpaCommand.transfeMap.get(player);
                 for (Player tpaPlayer : tpaPlayers) {

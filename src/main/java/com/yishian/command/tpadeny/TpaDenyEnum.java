@@ -6,7 +6,7 @@ package com.yishian.command.tpadeny;
 public enum TpaDenyEnum {
 
     /**
-     * 拒绝申请传送
+     * 拒绝传送请求
      */
     TPA_DENY_COMMAND("tpadeny", "拒绝传送请求指令");
 

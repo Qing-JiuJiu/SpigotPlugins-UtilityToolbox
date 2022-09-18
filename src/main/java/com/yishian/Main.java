@@ -1,8 +1,10 @@
 package com.yishian;
 
-import com.yishian.command.SetHome.SetHomeCommand;
-import com.yishian.command.SetHome.SetHomeConfig;
-import com.yishian.command.SetHome.SetHomeEnum;
+import com.yishian.command.home.HomeCommand;
+import com.yishian.command.home.HomeEnum;
+import com.yishian.command.sethome.SetHomeCommand;
+import com.yishian.command.sethome.SetHomeConfig;
+import com.yishian.command.sethome.SetHomeEnum;
 import com.yishian.command.feed.FeedEnum;
 import com.yishian.command.fly.FlyEnum;
 import com.yishian.command.flyspeed.FlySpeedEnum;
@@ -159,6 +161,11 @@ public final class Main extends JavaPlugin {
         PluginCommand SetHomeCommand = getCommand(SetHomeEnum.SET_HOME_COMMAND.getCommand());
         SetHomeCommand.setPermission(SetHomeEnum.SET_HOME_PERMISSION.getCommand());
         SetHomeCommand.setExecutor(new SetHomeCommand());
+
+        //回家
+        PluginCommand homeCommand = getCommand(HomeEnum.HOME_COMMAND.getCommand());
+        homeCommand.setPermission(SetHomeEnum.SET_HOME_PERMISSION.getCommand());
+        homeCommand.setExecutor(new HomeCommand());
     }
 
     /**

@@ -57,13 +57,14 @@ public class TpaCceptCommand implements TabExecutor {
                     return true;
                 }
 
-                //主功能同意传送-----------------------
+                //开始传送所有玩家，传送完后删除传送信息并向对应玩家发送提醒
                 tpaPlayers.forEach(tpaPlayer -> {
                     tpaPlayer.teleport(player);
                     TpaCommand.transfeRecordMap.remove(tpaPlayer);
                     player.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + tpaCceptMessage.getString("tpaccept-apply")).replaceAll("%others-player%", tpaPlayer.getName()));
                     tpaPlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + tpaCceptMessage.getString("tpaccept-apply-others")).replaceAll("%player%", playerName));
                 });
+
                 //传送完后删除自己所有传送信息
                 tpaPlayers.clear();
                 TpaCommand.transfeMap.put(player, tpaPlayers);
@@ -75,10 +76,11 @@ public class TpaCceptCommand implements TabExecutor {
                     sender.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + tpaCceptMessage.getString("tpaccept-console-error")));
                     return true;
                 }
+
+                //判断传送的名字是否是自己
                 Player player = (Player) sender;
                 String playerName = player.getName();
                 String othersPlayerName = args[0];
-                //判断传送的名字是否是自己
                 if (playerName.equals(othersPlayerName)) {
                     player.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + tpaCceptMessage.getString("tpaccept-apply-is-self")));
                     return true;
@@ -91,11 +93,11 @@ public class TpaCceptCommand implements TabExecutor {
                     return true;
                 }
 
-                //主功能接受传送--------------------------------
                 //传送指定玩家
                 Set<Player> tpaPlayers = TpaCommand.transfeMap.get(player);
                 for (Player tpaPlayer : tpaPlayers) {
                     if (tpaPlayer == othersPlayer) {
+                        //传送玩家
                         tpaPlayer.teleport(player);
                         //删除对应传送信息
                         TpaCommand.transfeRecordMap.remove(tpaPlayer);

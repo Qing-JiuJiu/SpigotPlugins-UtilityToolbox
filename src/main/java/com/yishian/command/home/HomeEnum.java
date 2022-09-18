@@ -1,20 +1,19 @@
-package com.yishian.command.tpacancel;
-
+package com.yishian.command.home;
 
 /**
  * @author XinQi
  */
-public enum TpaCancelEnum {
+public enum HomeEnum {
 
     /**
-     * 取消传送请求
+     * 回家
      */
-    TPA_CANCEL_COMMAND("tpacancel", "取消传送请求指令");
+    HOME_COMMAND("home", "回家指令");
 
     private final String command;
     private final String msg;
 
-    TpaCancelEnum(String command, String msg) {
+    HomeEnum(String command, String msg) {
         this.command = command;
         this.msg = msg;
     }
