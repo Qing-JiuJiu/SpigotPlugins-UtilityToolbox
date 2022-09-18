@@ -30,6 +30,10 @@ commands:
     description: 设置家
   home:
     description: 回家
+  showtextcode:
+    description: 展示文本代码
+  killself:
+    description: 自杀
 
 permissions:
   UtilityToolbox.heal:

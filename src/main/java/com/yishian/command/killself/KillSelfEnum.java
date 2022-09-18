@@ -1,22 +1,22 @@
-package com.yishian.command.sethome;
+package com.yishian.command.killself;
 
 import com.yishian.common.CommonEnum;
 
 /**
  * @author XinQi
  */
-public enum SetHomeEnum {
+public enum KillSelfEnum {
 
     /**
-     * 设置家
+     * 自杀
      */
-    SET_HOME_COMMAND("sethome", "设置家指令"),
-    SET_HOME_PERMISSION(CommonEnum.PLUGHIN_NAME.getCommand() + "." + SET_HOME_COMMAND.getCommand(), "设置家权限");
+    KILL_SELF_COMMAND("killself", "自杀指令"),
+    KILL_SELF_PERMISSION(CommonEnum.PLUGHIN_NAME.getCommand() + "." + KILL_SELF_COMMAND.getCommand(), "自杀权限");
 
     private final String command;
     private final String msg;
 
-    SetHomeEnum(String command, String msg) {
+    KillSelfEnum(String command, String msg) {
         this.command = command;
         this.msg = msg;
     }

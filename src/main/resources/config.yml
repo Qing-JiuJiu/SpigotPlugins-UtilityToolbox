@@ -50,6 +50,7 @@ anti-high-frequency-red-stone:
   message:
     destroy-message: "玩家&3%player%&7附近存在高频红石，坐标&3x:%x% y:%y% z:%z%&7，已摧毁"
 
+#限制高空流体
 limit-high-altitude-fluid:
   enable: false
   is-broadcast-message: true
@@ -63,6 +64,15 @@ limit-high-altitude-fluid:
     - '*'
   message:
     destroy-message: "玩家&3%player%&7附近存在高空流体，坐标&3x:%x% y:%y% z:%z%&7，已限制"
+
+#玩家自动重生
+auto-respawn:
+  enable: false
+
+#玩家无死亡掉落
+no-death-drop:
+  enable: false
+
 #恢复生命值
 heal:
   message:
@@ -211,7 +221,7 @@ sethome:
   allow-home-world:
     - 'world'
   message:
-    sethome-apply: '已将该位置设为家'
+    sethome-apply: '已将此位置设为家'
     sethome-world-error: '世界&3%world%&7禁止设置家'
     sethome-console-error: '控制台无法使用家相关指令'
     sethome-command-error: '设置家指令格式错误，正确格式: &c/sethome'
@@ -222,3 +232,30 @@ home:
     home-no-exist: '暂无家，请使用&c/sethome&7指令设置家的位置'
     home-console-error: '控制台无法使用家相关指令'
     home-command-error: '设置家指令格式错误，正确格式: &c/sethome'
+
+showtextcode:
+  message:
+    showtextcode-command-error: '展示文本代码指令格式错误，正确格式: &c/showtextcolor'
+    show-list:
+      - '&c文本代码列表------------------------------'
+      - '&11 深紫 &7/ &99（淡紫）'
+      - '&22 墨绿 &7/ &aa（碧绿）'
+      - '&33 深蓝 &7/ &bb（天蓝）'
+      - '&44 深红 &7/ &cc（大红）'
+      - '&55 粉红 &7/ &dd（亮粉红）'
+      - '&66 橙色 &7/ &ee（金色）'
+      - '&77 浅灰 &7/ &ff（白色）'
+      - '&88 深灰 &7/ &00（黑色）'
+      - 'k是乱码(有非英文字符就会无效，不展示)'
+      - '&ll是粗体字'
+      - '&oo是斜体字'
+      - '&rr是恢复到原始效果'
+      - '&mm是删除线'
+      - '&nn是下划线'
+      - '&c展示列表结束------------------------------'
+
+killself:
+  message:
+    killself-apply: '已让服务器执行指令'
+    killself-console-error: '控制台请使用官方指令：kill [目标]'
+    killself-command-error: '自杀指令格式错误，正确格式: &c/killself'

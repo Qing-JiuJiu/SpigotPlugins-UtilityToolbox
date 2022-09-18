@@ -2,6 +2,8 @@ package com.yishian;
 
 import com.yishian.command.home.HomeCommand;
 import com.yishian.command.home.HomeEnum;
+import com.yishian.command.killself.KillSelfCommand;
+import com.yishian.command.killself.KillSelfEnum;
 import com.yishian.command.sethome.SetHomeCommand;
 import com.yishian.command.sethome.SetHomeConfig;
 import com.yishian.command.sethome.SetHomeEnum;
@@ -10,6 +12,8 @@ import com.yishian.command.fly.FlyEnum;
 import com.yishian.command.flyspeed.FlySpeedEnum;
 import com.yishian.command.heal.HealEnum;
 import com.yishian.command.healandfeed.HealAndFeedEnum;
+import com.yishian.command.showtextcolor.ShowTextCodeCommand;
+import com.yishian.command.showtextcolor.ShowTextCodeEnum;
 import com.yishian.command.tpa.TpaCommand;
 import com.yishian.command.tpa.TpaEnum;
 import com.yishian.command.tpa.TpaPlayerLeaveServerListener;
@@ -30,10 +34,12 @@ import com.yishian.command.heal.HealCommand;
 import com.yishian.command.healandfeed.HealAndFeedCommand;
 import com.yishian.command.walkspeed.WalkSpeedCommand;
 import com.yishian.common.CommonCommand;
+import com.yishian.function.autorespawn.AutoRespawnListener;
 import com.yishian.function.customjoinandleave.CustomJoinAndLeaveListener;
 import com.yishian.function.joinserverwelcome.JoinServerWelcomeListener;
 import com.yishian.function.autosendservermessage.AutoSendServerMessageRunnable;
 import com.yishian.function.limithighaltitudewater.LimitHighAltitudeFluidListener;
+import com.yishian.function.nodeathdrop.NoDeathDropListener;
 import org.bukkit.ChatColor;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.command.PluginCommand;
@@ -166,6 +172,16 @@ public final class Main extends JavaPlugin {
         PluginCommand homeCommand = getCommand(HomeEnum.HOME_COMMAND.getCommand());
         homeCommand.setPermission(SetHomeEnum.SET_HOME_PERMISSION.getCommand());
         homeCommand.setExecutor(new HomeCommand());
+
+        //展示文本代码
+        PluginCommand showTextCodeCommand = getCommand(ShowTextCodeEnum.SHOW_TEXT_CODE_COMMAND.getCommand());
+        showTextCodeCommand.setPermission(ShowTextCodeEnum.SHOW_TEXT_CODE_PERMISSION.getCommand());
+        showTextCodeCommand.setExecutor(new ShowTextCodeCommand());
+
+        //自杀
+        PluginCommand killSelfCommand = getCommand(KillSelfEnum.KILL_SELF_COMMAND.getCommand());
+        killSelfCommand.setPermission(KillSelfEnum.KILL_SELF_PERMISSION.getCommand());
+        killSelfCommand.setExecutor(new KillSelfCommand());
     }
 
     /**
@@ -194,6 +210,18 @@ public final class Main extends JavaPlugin {
         if (config.getConfigurationSection("limit-high-altitude-fluid").getBoolean(CommonEnum.FUNCTION_IS_ENABLE.getCommand())) {
             pluginManager.registerEvents(new LimitHighAltitudeFluidListener(), this);
             consoleSender.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + "已开启限制高空流体"));
+        }
+
+        //玩家死亡无掉落
+        if (config.getConfigurationSection("no-death-drop").getBoolean(CommonEnum.FUNCTION_IS_ENABLE.getCommand())) {
+            pluginManager.registerEvents(new NoDeathDropListener(), this);
+            consoleSender.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + "已开启玩家无死亡掉落"));
+        }
+
+        //玩家死亡自动重生
+        if (config.getConfigurationSection("auto-respawn").getBoolean(CommonEnum.FUNCTION_IS_ENABLE.getCommand())) {
+            pluginManager.registerEvents(new AutoRespawnListener(), this);
+            consoleSender.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + "已开启玩家死亡自动重生"));
         }
 
         //离开服务器删除tpa相关信息
