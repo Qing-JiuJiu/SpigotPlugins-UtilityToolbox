@@ -1,5 +1,8 @@
 package com.yishian;
 
+import com.yishian.command.back.BackCommand;
+import com.yishian.command.back.BackEnum;
+import com.yishian.command.back.BackListener;
 import com.yishian.command.home.HomeCommand;
 import com.yishian.command.home.HomeEnum;
 import com.yishian.command.killself.KillSelfCommand;
@@ -182,6 +185,11 @@ public final class Main extends JavaPlugin {
         PluginCommand killSelfCommand = getCommand(KillSelfEnum.KILL_SELF_COMMAND.getCommand());
         killSelfCommand.setPermission(KillSelfEnum.KILL_SELF_PERMISSION.getCommand());
         killSelfCommand.setExecutor(new KillSelfCommand());
+
+        //返回
+        PluginCommand backCommand = getCommand(BackEnum.BACK_COMMAND.getCommand());
+        backCommand.setPermission(BackEnum.BACK_PERMISSION.getCommand());
+        backCommand.setExecutor(new BackCommand());
     }
 
     /**
@@ -227,6 +235,8 @@ public final class Main extends JavaPlugin {
         //离开服务器删除tpa相关信息
         pluginManager.registerEvents(new TpaPlayerLeaveServerListener(), this);
 
+        //玩家Back位置记录
+        pluginManager.registerEvents(new BackListener(), this);
     }
 
     /**

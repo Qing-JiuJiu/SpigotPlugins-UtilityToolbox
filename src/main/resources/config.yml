@@ -256,6 +256,14 @@ showtextcode:
 
 killself:
   message:
-    killself-apply: '已让服务器执行指令'
+    killself-apply: '已让服务器执行kill [玩家]指令'
     killself-console-error: '控制台请使用官方指令：kill [目标]'
     killself-command-error: '自杀指令格式错误，正确格式: &c/killself'
+
+back:
+  message:
+    back-apply: '你已回到被传送前的位置'
+    back-died-tips: '服务器已允许使用&c/back&7指令回到死亡位置'
+    back-no-location: '你暂时没有返回的位置'
+    back-console-error: '控制台无法使用返回指令'
+    back-command-error: '返回指令格式错误，正确格式: &c/back'

@@ -34,6 +34,8 @@ commands:
     description: 展示文本代码
   killself:
     description: 自杀
+  back:
+    description: 返回
 
 permissions:
   UtilityToolbox.heal:
