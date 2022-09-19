@@ -17,6 +17,9 @@ import com.yishian.command.heal.HealEnum;
 import com.yishian.command.healandfeed.HealAndFeedEnum;
 import com.yishian.command.showtextcolor.ShowTextCodeCommand;
 import com.yishian.command.showtextcolor.ShowTextCodeEnum;
+import com.yishian.command.teleport.TeleportCommand;
+import com.yishian.command.teleport.TeleportEnum;
+import com.yishian.command.teleport.TeleportListener;
 import com.yishian.command.tpa.TpaCommand;
 import com.yishian.command.tpa.TpaEnum;
 import com.yishian.command.tpa.TpaPlayerLeaveServerListener;
@@ -190,6 +193,11 @@ public final class Main extends JavaPlugin {
         PluginCommand backCommand = getCommand(BackEnum.BACK_COMMAND.getCommand());
         backCommand.setPermission(BackEnum.BACK_PERMISSION.getCommand());
         backCommand.setExecutor(new BackCommand());
+
+        //切换是否允许传送
+        PluginCommand teleportCommand = getCommand(TeleportEnum.TELEPORT_COMMAND.getCommand());
+        teleportCommand.setPermission(TeleportEnum.TELEPORT_PERMISSION.getCommand());
+        teleportCommand.setExecutor(new TeleportCommand());
     }
 
     /**
@@ -237,6 +245,9 @@ public final class Main extends JavaPlugin {
 
         //玩家Back位置记录
         pluginManager.registerEvents(new BackListener(), this);
+
+        //检测是否允许传送
+        pluginManager.registerEvents(new TeleportListener(), this);
     }
 
     /**

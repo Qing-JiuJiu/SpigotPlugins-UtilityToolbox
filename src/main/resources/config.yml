@@ -264,6 +264,16 @@ back:
   message:
     back-apply: '你已回到被传送前的位置'
     back-died-tips: '服务器已允许使用&c/back&7指令回到死亡位置'
+    back-died-no-tp-tips: '服务器&c/back&7指令已记录你的死亡位置'
     back-no-location: '你暂时没有返回的位置'
     back-console-error: '控制台无法使用返回指令'
     back-command-error: '返回指令格式错误，正确格式: &c/back'
+
+teleport:
+  message:
+    teleport-allow: '&a服务器已恢复使用指令传送'
+    teleport-allow-reason: '&a服务器已恢复使用指令传送，原因: %reason%'
+    teleport-deny: '&c服务器已临时禁止指令传送'
+    teleport-deny-apply: '&c服务器已临时禁止指令传送，传送失败'
+    teleport-deny-reason: '&c服务器已临时禁止指令传送，原因: %reason%'
+    teleport-command-error: '服务器是否允许指令传送格式错误，正确格式: &c/teleport [原因]'

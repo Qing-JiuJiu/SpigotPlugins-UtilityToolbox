@@ -2,6 +2,7 @@ package com.yishian.command.home;
 
 
 import com.yishian.command.sethome.SetHomeConfig;
+import com.yishian.command.teleport.TeleportCommand;
 import com.yishian.common.CommonEnum;
 import com.yishian.common.PluginUtils;
 import org.bukkit.Bukkit;
@@ -54,7 +55,9 @@ public class HomeCommand implements CommandExecutor {
 
             //传送玩家并发送对应消息
             player.teleport(new Location(Bukkit.getWorld(playerConfig.getString("world")), playerConfig.getDouble("x"), playerConfig.getDouble("y"), playerConfig.getDouble("z"), Float.parseFloat(playerConfig.getString("yaw")), Float.parseFloat(playerConfig.getString("pitch"))));
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + homeMessage.getString("home-apply")));
+            if (TeleportCommand.allowTp) {
+                player.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + homeMessage.getString("home-apply")));
+            }
 
             return true;
         }

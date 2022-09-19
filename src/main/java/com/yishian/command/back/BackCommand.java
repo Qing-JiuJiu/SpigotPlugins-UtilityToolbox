@@ -2,6 +2,8 @@ package com.yishian.command.back;
 
 
 
+import com.yishian.command.teleport.TeleportCommand;
+
 import com.yishian.common.CommonEnum;
 import com.yishian.common.PluginUtils;
 
@@ -48,15 +50,17 @@ public class BackCommand implements CommandExecutor {
             Player player = (Player) sender;
             Location location = playerBackMap.get(player);
 
-            //判断该用户是否返回的位置
+            //判断该用户是否拥有返回的位置
             if (location == null) {
                 player.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + backMessage.getString("back-no-location")));
                 return true;
             }
 
-            //传送玩家并发送对应消息
+            //判断服务器是否允许传送传送玩家并发送对应消息
             player.teleport(location);
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + backMessage.getString("back-apply")));
+            if (TeleportCommand.allowTp){
+                player.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + backMessage.getString("back-apply")));
+            }
             return true;
         }
         return false;

@@ -36,6 +36,8 @@ commands:
     description: 自杀
   back:
     description: 返回
+  teleport:
+    description: 切换服务器是否允许传送
 
 permissions:
   UtilityToolbox.heal:

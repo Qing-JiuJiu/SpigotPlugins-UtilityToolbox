@@ -1,6 +1,8 @@
 package com.yishian.command.back;
 
 import com.yishian.Main;
+import com.yishian.command.teleport.TeleportCommand;
+
 import com.yishian.common.CommonEnum;
 import com.yishian.common.PluginUtils;
 import org.bukkit.Bukkit;
@@ -30,7 +32,7 @@ public class BackListener implements Listener {
         PlayerTeleportEvent.TeleportCause teleportCause = playerTeleportEvent.getCause();
 
         //当玩家被传送的原因是因为指令/插件时记录位置
-        if (teleportCause == PlayerTeleportEvent.TeleportCause.COMMAND || teleportCause == PlayerTeleportEvent.TeleportCause.PLUGIN) {
+        if (TeleportCommand.allowTp && (teleportCause == PlayerTeleportEvent.TeleportCause.COMMAND || teleportCause == PlayerTeleportEvent.TeleportCause.PLUGIN)) {
             Player player = playerTeleportEvent.getPlayer();
             BackCommand.playerBackMap.put(player, player.getLocation());
         }
@@ -43,7 +45,7 @@ public class BackListener implements Listener {
      */
     @EventHandler
     public void playerDeath(PlayerDeathEvent playerDeathEvent) {
-        Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getProvidingPlugin(Main.class),()->{
+        Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getProvidingPlugin(Main.class), () -> {
             Player player = playerDeathEvent.getEntity();
             //判断玩家是否有back的指令权限
             if (player.hasPermission(BackEnum.BACK_PERMISSION.getCommand())) {
@@ -53,7 +55,11 @@ public class BackListener implements Listener {
                 ConfigurationSection backMessage = configurationSection.getConfigurationSection(backCommand).getConfigurationSection(CommonEnum.MESSAGE.getCommand());
 
                 BackCommand.playerBackMap.put(player, player.getLocation());
-                player.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + backMessage.getString("back-died-tips")));
+                if (TeleportCommand.allowTp) {
+                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + backMessage.getString("back-died-tips")));
+                } else {
+                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + backMessage.getString("back-died-no-tp-tips")));
+                }
             }
         });
     }
