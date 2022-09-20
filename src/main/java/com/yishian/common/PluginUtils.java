@@ -164,14 +164,15 @@ public class PluginUtils {
     /**
      * 判断集合是否为空
      */
-    public static boolean collectionIsEmpty(Collection<?> list){
-        return list == null || list.isEmpty();
+    public static boolean collectionIsEmpty(Collection<?> list) {
+        if (list == null || list.isEmpty()) return true;
+        return list.size() == 1 && list.removeIf(judgelist -> judgelist == "");
     }
 
     /**
      * 判断Map是否为空
      */
-    public static boolean mapIsEmpty(Map<?,?> map){
+    public static boolean mapIsEmpty(Map<?, ?> map) {
         return map == null || map.isEmpty();
     }
 

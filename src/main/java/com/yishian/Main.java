@@ -3,6 +3,8 @@ package com.yishian;
 import com.yishian.command.back.BackCommand;
 import com.yishian.command.back.BackEnum;
 import com.yishian.command.back.BackListener;
+import com.yishian.command.copyres.CopyResCommand;
+import com.yishian.command.copyres.CopyResEnum;
 import com.yishian.command.home.HomeCommand;
 import com.yishian.command.home.HomeEnum;
 import com.yishian.command.killself.KillSelfCommand;
@@ -198,6 +200,11 @@ public final class Main extends JavaPlugin {
         PluginCommand teleportCommand = getCommand(TeleportEnum.TELEPORT_COMMAND.getCommand());
         teleportCommand.setPermission(TeleportEnum.TELEPORT_PERMISSION.getCommand());
         teleportCommand.setExecutor(new TeleportCommand());
+
+        //复制物品
+        PluginCommand copyResCommand = getCommand(CopyResEnum.COPY_RES_COMMAND.getCommand());
+        copyResCommand.setPermission(CopyResEnum.COPY_RES_PERMISSION.getCommand());
+        copyResCommand.setExecutor(new CopyResCommand());
     }
 
     /**

@@ -256,7 +256,7 @@ showtextcode:
 
 killself:
   message:
-    killself-apply: '已让服务器执行kill [玩家]指令'
+    killself-apply: '已让服务器执行自杀指令'
     killself-console-error: '控制台请使用官方指令：kill [目标]'
     killself-command-error: '自杀指令格式错误，正确格式: &c/killself'
 
@@ -277,3 +277,21 @@ teleport:
     teleport-deny-apply: '&c服务器已临时禁止指令传送，传送失败'
     teleport-deny-reason: '&c服务器已临时禁止指令传送，原因: %reason%'
     teleport-command-error: '服务器是否允许指令传送格式错误，正确格式: &c/teleport [原因]'
+
+copyres:
+  #排除列表(用于排除通配符内的物品)写法，例如钻石甲：minecraft:diamond_chestplate
+  exclude-list:
+    - ''
+  black-list:
+  #黑名单写法，例如钻石甲：minecraft:diamond_chestplate
+    - ''
+  wildcard-list:
+  #通配符列表写法(只写前缀)，例如minecraft:开头的所有物品，minecraft:
+    - ''
+  message:
+    copyres-apply: '你已复制&3%res%&7物品'
+    copyres-deny: '物品&3%res%&7禁止复制'
+    copyres-console-error: '控制台请使用官方指令：give <玩家> <物品[参数]> [数量]'
+    copyres-command-error: '复制物品指令格式错误，正确格式: &c/copyres'
+
+

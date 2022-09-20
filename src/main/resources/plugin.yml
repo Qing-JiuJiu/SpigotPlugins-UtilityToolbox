@@ -38,6 +38,8 @@ commands:
     description: 返回
   teleport:
     description: 切换服务器是否允许传送
+  copyres:
+    description: 复制主手上的物品
 
 permissions:
   UtilityToolbox.heal:
