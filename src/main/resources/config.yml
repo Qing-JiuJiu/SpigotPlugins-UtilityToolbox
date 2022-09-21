@@ -284,7 +284,13 @@ copyres:
     - ''
   black-list:
   #黑名单写法，例如钻石甲：minecraft:diamond_chestplate
-    - ''
+  #默认禁用:附魔金苹果、金苹果、金萝卜、黄金、金粒、金块
+    - 'minecraft:enchanted_golden_apple'
+    - 'minecraft:golden_apple'
+    - 'minecraft:golden_carrot'
+    - 'minecraft:gold_ingot'
+    - 'minecraft:gold_nugget'
+    - 'minecraft:gold_block'
   wildcard-list:
   #通配符列表写法(只写前缀)，例如minecraft:开头的所有物品，minecraft:
     - ''
@@ -293,5 +299,12 @@ copyres:
     copyres-deny: '物品&3%res%&7禁止复制'
     copyres-console-error: '控制台请使用官方指令：give <玩家> <物品[参数]> [数量]'
     copyres-command-error: '复制物品指令格式错误，正确格式: &c/copyres'
+
+playmode:
+  message:
+    playmode-apply: '已让服务器执行切换模式指令'
+    playmode-console-error: '控制台请使用官方指令：gamemode <模式> <玩家>'
+    playmode-command-error: '切换模式指令格式错误，正确格式: &c/playmode <游戏模式>'
+    playmode-no-permission-error: '你没有切换到模式&3%gamemode%&7的权限'
 
 

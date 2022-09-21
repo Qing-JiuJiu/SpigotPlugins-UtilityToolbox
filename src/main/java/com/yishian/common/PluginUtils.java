@@ -179,7 +179,7 @@ public class PluginUtils {
     /**
      * 根据Set<Player>来提示
      */
-    public static List<String> playerSetCommandPlayerTip(String[] args, Set<Player> playerSet) {
+    public static List<String> playerSetToTips(String[] args, Set<Player> playerSet) {
         ArrayList<String> tips = new ArrayList<>();
         //判断参数是否为空，是的话就给出全部提示
         if (StringUtils.isEmpty(args[0])) {
@@ -190,6 +190,25 @@ public class PluginUtils {
                 String playerName = player.getName();
                 if (playerName.startsWith(args[0])) {
                     tips.add(playerName);
+                }
+            });
+        }
+        return tips;
+    }
+
+    /**
+     * 根据List<String>来提示
+     */
+    public static List<String> tipsListToTips(String[] args, List<String> tipsList) {
+        ArrayList<String> tips = new ArrayList<>();
+        //判断参数是否为空，是的话就给出全部提示
+        if (StringUtils.isEmpty(args[0])) {
+            return tipsList;
+            //判断参数数量是否为1，证明输入了内容给出根据输入的参数前缀给出对应的提示
+        } else if (args.length == 1) {
+            tipsList.forEach(tip -> {
+                if (tip.startsWith(args[0])) {
+                    tips.add(tip);
                 }
             });
         }

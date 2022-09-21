@@ -9,6 +9,8 @@ import com.yishian.command.home.HomeCommand;
 import com.yishian.command.home.HomeEnum;
 import com.yishian.command.killself.KillSelfCommand;
 import com.yishian.command.killself.KillSelfEnum;
+import com.yishian.command.playmode.PlayModeCommand;
+import com.yishian.command.playmode.PlayModeEnum;
 import com.yishian.command.sethome.SetHomeCommand;
 import com.yishian.command.sethome.SetHomeConfig;
 import com.yishian.command.sethome.SetHomeEnum;
@@ -205,6 +207,11 @@ public final class Main extends JavaPlugin {
         PluginCommand copyResCommand = getCommand(CopyResEnum.COPY_RES_COMMAND.getCommand());
         copyResCommand.setPermission(CopyResEnum.COPY_RES_PERMISSION.getCommand());
         copyResCommand.setExecutor(new CopyResCommand());
+
+        //模式切换
+        PluginCommand playModeCommand = getCommand(PlayModeEnum.PLAY_MODE_COMMAND.getCommand());
+        playModeCommand.setPermission(PlayModeEnum.PLAY_MODE_PERMISSION.getCommand());
+        playModeCommand.setExecutor(new PlayModeCommand());
     }
 
     /**

@@ -128,7 +128,7 @@ public class TpaCceptCommand implements TabExecutor {
     public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
         //判断指令是否是上面执行的指令
         if (tpaCceptCommand.equalsIgnoreCase(label) && sender instanceof Player) {
-            return PluginUtils.playerSetCommandPlayerTip(args, TpaCommand.transfeMap.get((Player) sender));
+            return PluginUtils.playerSetToTips(args, TpaCommand.transfeMap.get((Player) sender));
         }
         return null;
     }

@@ -19,6 +19,7 @@ public enum CommonEnum {
     MESSAGE("message","用于获取配置文件消息"),
     TIME("time","用于获取定时器时间的英语"),
 
+
     /**
      * 重载配置文件
      */

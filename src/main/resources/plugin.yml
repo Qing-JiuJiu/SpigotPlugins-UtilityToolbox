@@ -40,6 +40,8 @@ commands:
     description: 切换服务器是否允许传送
   copyres:
     description: 复制主手上的物品
+  playmode:
+    description: 模式切换
 
 permissions:
   UtilityToolbox.heal:
@@ -83,3 +85,12 @@ permissions:
   UtilityToolbox.LimitFlowMessage:
     default: op
     description: 是否能看到流体被限制的消息
+
+  UtilityToolbox.playmode:
+    default: op
+    children:
+      UtilityToolbox.playmode.creative: false
+      UtilityToolbox.playmode.survival: false
+      UtilityToolbox.playmode.adventure: false
+      UtilityToolbox.playmode.spectator: false
+    description: 切换游戏模式
