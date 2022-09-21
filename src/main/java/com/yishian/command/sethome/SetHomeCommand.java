@@ -27,7 +27,7 @@ public class SetHomeCommand implements CommandExecutor {
         String messagePrefix = configurationSection.getConfigurationSection(CommonEnum.PLUGIN_MESSAGE.getCommand()).getString(CommonEnum.MESSAGE_PREFIX.getCommand());
         ConfigurationSection setHomeconfigurationSection = configurationSection.getConfigurationSection(setHomeCommand);
         ConfigurationSection setHomeMessage = setHomeconfigurationSection.getConfigurationSection(CommonEnum.MESSAGE.getCommand());
-        List<String> allowHomeWorldList = setHomeconfigurationSection.getStringList("allow-home-world");
+        List<String> allowHomeWorldList = setHomeconfigurationSection.getStringList("allow-world");
 
         //判断执行的指令内容
         if (setHomeCommand.equalsIgnoreCase(label)) {

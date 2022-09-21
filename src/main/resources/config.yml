@@ -218,7 +218,7 @@ tpadeny:
     tpadeny-no-others-player-tpa-error: '你没有玩家&3%others-player%&7的传送请求'
 
 sethome:
-  allow-home-world:
+  allow-world:
     - 'world'
   message:
     sethome-apply: '已将此位置设为家'
@@ -307,4 +307,18 @@ playmode:
     playmode-command-error: '切换模式指令格式错误，正确格式: &c/playmode <游戏模式>'
     playmode-no-permission-error: '你没有切换到模式&3%gamemode%&7的权限'
 
+setsnaptp:
+  allow-world:
+    - '*'
+  message:
+    setsnaptp-apply: '已将此位置设为临时传送点，下线后删除'
+    setsnaptp-world-error: '世界&3%world%&7禁止设置临时传送点'
+    setsnaptp-console-error: '控制台无法使用临时传送点相关指令'
+    setsnaptp-command-error: '设置临时传送点指令格式错误，正确格式: &c/setsnaptp'
 
+snaptp:
+  message:
+    snaptp-apply: '你已传送回临时传送点'
+    snaptp-no-exist: '暂无临时传送点，请使用&c/setsnaptp&7指令设置'
+    snaptp-console-error: '控制台无法使用临时传送点相关指令'
+    snaptp-command-error: '传送回临时传送点指令错误，正确格式: &c/snaptp'

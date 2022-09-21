@@ -19,8 +19,13 @@ import com.yishian.command.fly.FlyEnum;
 import com.yishian.command.flyspeed.FlySpeedEnum;
 import com.yishian.command.heal.HealEnum;
 import com.yishian.command.healandfeed.HealAndFeedEnum;
+import com.yishian.command.setsnaptp.SetSnapTpCommand;
+import com.yishian.command.setsnaptp.SetSnapTpEnum;
+import com.yishian.command.setsnaptp.SetSnapTpListener;
 import com.yishian.command.showtextcolor.ShowTextCodeCommand;
 import com.yishian.command.showtextcolor.ShowTextCodeEnum;
+import com.yishian.command.snaptp.home.SnapTpCommand;
+import com.yishian.command.snaptp.home.SnapTpEnum;
 import com.yishian.command.teleport.TeleportCommand;
 import com.yishian.command.teleport.TeleportEnum;
 import com.yishian.command.teleport.TeleportListener;
@@ -212,6 +217,16 @@ public final class Main extends JavaPlugin {
         PluginCommand playModeCommand = getCommand(PlayModeEnum.PLAY_MODE_COMMAND.getCommand());
         playModeCommand.setPermission(PlayModeEnum.PLAY_MODE_PERMISSION.getCommand());
         playModeCommand.setExecutor(new PlayModeCommand());
+
+        //设置临时传送点
+        PluginCommand setSnapTpCommand = getCommand(SetSnapTpEnum.SET_SNAP_TP_COMMAND.getCommand());
+        setSnapTpCommand.setPermission(SetSnapTpEnum.SET_SNAP_TP_PERMISSION.getCommand());
+        setSnapTpCommand.setExecutor(new SetSnapTpCommand());
+
+        //回临时传送点
+        PluginCommand snapTpCommand = getCommand(SnapTpEnum.SNAP_TP_COMMAND.getCommand());
+        snapTpCommand.setPermission(SetSnapTpEnum.SET_SNAP_TP_PERMISSION.getCommand());
+        snapTpCommand.setExecutor(new SnapTpCommand());
     }
 
     /**
@@ -262,6 +277,9 @@ public final class Main extends JavaPlugin {
 
         //检测是否允许传送
         pluginManager.registerEvents(new TeleportListener(), this);
+
+        //离开服务器删除临时传送点
+        pluginManager.registerEvents(new SetSnapTpListener(), this);
     }
 
     /**

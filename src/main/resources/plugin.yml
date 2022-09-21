@@ -42,6 +42,10 @@ commands:
     description: 复制主手上的物品
   playmode:
     description: 模式切换
+  setsnaptp:
+    description: 设置临时传送点
+  snaptp:
+    description: 回到临时传送点
 
 permissions:
   UtilityToolbox.heal:
