@@ -1,6 +1,6 @@
 name: UtilityToolbox
 version: '${project.version}'
-main: com.yishian.Main
+main: com.a.a
 api-version: 1.13
 
 commands:
@@ -46,6 +46,8 @@ commands:
     description: 设置临时传送点
   snaptp:
     description: 回到临时传送点
+  musterplayer:
+    description: 召集玩家
 
 permissions:
   UtilityToolbox.heal:

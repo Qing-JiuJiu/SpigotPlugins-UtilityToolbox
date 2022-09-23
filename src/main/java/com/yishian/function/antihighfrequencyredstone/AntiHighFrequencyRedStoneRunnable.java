@@ -40,7 +40,7 @@ public class AntiHighFrequencyRedStoneRunnable extends BukkitRunnable {
                 if (frequency.compareTo(limit) >= 0) {
                     //普通破坏，就跟玩家挖掘一样。
                     location.getBlock().breakNaturally();
-                    //得到周边区块玩家距离  TODO
+                    //得到周边区块玩家距离
                     TreeMap<Double, Player> playerDistanceTreeMap = PluginUtils.calculatePlayerAroundTheItem(location);
                     String recentPlayerDistanceName = "&c(未找到)";
                     //判断是否附近有玩家

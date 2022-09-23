@@ -9,6 +9,9 @@ import com.yishian.command.home.HomeCommand;
 import com.yishian.command.home.HomeEnum;
 import com.yishian.command.killself.KillSelfCommand;
 import com.yishian.command.killself.KillSelfEnum;
+import com.yishian.command.musterplayer.MusterPlayerCommand;
+import com.yishian.command.musterplayer.MusterPlayerEnum;
+import com.yishian.command.musterplayer.MusterPlayerListener;
 import com.yishian.command.playmode.PlayModeCommand;
 import com.yishian.command.playmode.PlayModeEnum;
 import com.yishian.command.sethome.SetHomeCommand;
@@ -227,6 +230,11 @@ public final class Main extends JavaPlugin {
         PluginCommand snapTpCommand = getCommand(SnapTpEnum.SNAP_TP_COMMAND.getCommand());
         snapTpCommand.setPermission(SetSnapTpEnum.SET_SNAP_TP_PERMISSION.getCommand());
         snapTpCommand.setExecutor(new SnapTpCommand());
+
+        //召集玩家
+        PluginCommand musterPlayerCommand = getCommand(MusterPlayerEnum.MUSTER_PLAYER_COMMAND.getCommand());
+        musterPlayerCommand.setPermission(MusterPlayerEnum.MUSTER_PLAYER_PERMISSION.getCommand());
+        musterPlayerCommand.setExecutor(new MusterPlayerCommand());
     }
 
     /**
@@ -280,6 +288,9 @@ public final class Main extends JavaPlugin {
 
         //离开服务器删除临时传送点
         pluginManager.registerEvents(new SetSnapTpListener(), this);
+
+        //离开服务器删除临时传送点
+        pluginManager.registerEvents(new MusterPlayerListener(), this);
     }
 
     /**

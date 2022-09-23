@@ -272,10 +272,10 @@ back:
 teleport:
   message:
     teleport-allow: '&a服务器已恢复使用指令传送'
-    teleport-allow-reason: '&a服务器已恢复使用指令传送，原因: %reason%'
+    teleport-allow-reason: '&a服务器已恢复使用指令传送，原因: &6%reason%'
     teleport-deny: '&c服务器已临时禁止指令传送'
     teleport-deny-apply: '&c服务器已临时禁止指令传送，传送失败'
-    teleport-deny-reason: '&c服务器已临时禁止指令传送，原因: %reason%'
+    teleport-deny-reason: '&c服务器已临时禁止指令传送，原因: &6%reason%'
     teleport-command-error: '服务器是否允许指令传送格式错误，正确格式: &c/teleport [原因]'
 
 copyres:
@@ -284,13 +284,15 @@ copyres:
     - ''
   black-list:
   #黑名单写法，例如钻石甲：minecraft:diamond_chestplate
-  #默认禁用:附魔金苹果、金苹果、金萝卜、黄金、金粒、金块
+  #默认禁用:附魔金苹果、金苹果、金萝卜、黄金、金粒、金块、tnt、火药
     - 'minecraft:enchanted_golden_apple'
     - 'minecraft:golden_apple'
     - 'minecraft:golden_carrot'
     - 'minecraft:gold_ingot'
     - 'minecraft:gold_nugget'
     - 'minecraft:gold_block'
+    - 'minecraft:tnt'
+    - 'minecraft:gunpowder'
   wildcard-list:
   #通配符列表写法(只写前缀)，例如minecraft:开头的所有物品，minecraft:
     - ''
@@ -322,3 +324,37 @@ snaptp:
     snaptp-no-exist: '暂无临时传送点，请使用&c/setsnaptp&7指令设置'
     snaptp-console-error: '控制台无法使用临时传送点相关指令'
     snaptp-command-error: '传送回临时传送点指令错误，正确格式: &c/snaptp'
+
+musterplayer:
+  time: 3
+  message:
+    musterplayer-apply-start: '已广播召集所有玩家到此位置，请等待所有玩家处理请求'
+    musterplayer-apply-start-repeat: '玩家&3%player%&7已发起召集请求，请等待该召集结束后再发起召集'
+    musterplayer-apply-start-error: '无其他在线玩家，请不要发起召集玩家请求'
+    musterplayer-apply-start-others: '玩家&3%player%&7正在召集所有玩家，请及时处理请求'
+    musterplayer-apply-start-others-reason: '玩家&3%player%&7正在召集所有玩家，原因: &6%reason%&7，请及时处理请求'
+    musterplayer-apply-again: '已发起上一次召集请求，请等待所有玩家处理请求'
+    musterplayer-apply-again-error: '没有上一次召集请求，请使用&c/musterplayer start&7指令发起新的召集'
+    musterplayer-apply-cancel-consloe: '控制台已取消此次召集请求'
+    musterplayer-player-leave-convenor: '召集者&3%player%&7已离开服务器，已取消此次召集'
+    musterplayer-player-leave-callee: '被召集者&3%player%&7已离开服务器，已在被召集列表中移除该玩家'
+    musterplayer-apply-cancel-player: '你已取消此次召集请求'
+    musterplayer-apply-cancel-player-others: '玩家&c%player%&7已取消此次召集请求'
+    musterplayer-apply-end: '玩家%player%已提前结束召集，同意召集的玩家已传送至召集位置'
+    musterplayer-apply-end-time: '玩家&3%player%&7提前结束召集，同意召集的玩家将在&c%time%&7秒后立即传送'
+    musterplayer-apply-end-tp: '你已传送至召集位置'
+    musterplayer-end: '已完成召集，同意召集的玩家已传送至召集位置'
+    musterplayer-end-time: '已完成召集，同意召集玩家将在&c%time%秒&7后立即传送'
+    musterplayer-apply-ccept: '玩家&3%player%&7已接受召集'
+    musterplayer-apply-deny: '玩家&c%player%&7已拒绝召集'
+    musterplayer-apply-list-allow: '已同意召集的玩家: &a%player-list%'
+    musterplayer-apply-list-deny: '已拒绝召集的玩家: &c%player-list%'
+    musterplayer-apply-list-deal-with: '还未处理召集的玩家: &6%player-list%'
+    musterplayer-cancel-tips: '取消召集输入: &c/musterplayer cancel'
+    musterplayer-end-tips: '结束召集输入: &c/musterplayer end'
+    musterplayer-accept-tips: '同意召集输入: &c/musterplayer ccept'
+    musterplayer-deny-tips: '拒绝召集输入: &c/musterplayer deny'
+    musterplayer-others-tips: '所有玩家处理召集请求后或发起者提前结束召集，才会进行传送'
+    musterplayer-apply-error: '没有需要处理的召集请求'
+    musterplayer-console-error: '控制台仅能使用&cmusterplayer cancel&7指令取消玩家召集'
+    musterplayer-command-error: '召集指令错误，正确格式: &c/musterplayer <参数>'
