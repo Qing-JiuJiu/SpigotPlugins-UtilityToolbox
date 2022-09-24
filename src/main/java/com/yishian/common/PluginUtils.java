@@ -214,4 +214,33 @@ public class PluginUtils {
         }
         return tips;
     }
+
+    /**
+     * &替换成$,用于特殊颜色演示
+     */
+    public static String replaceColorCode(String stringReplace){
+        stringReplace = stringReplace.replace("&0", "§0");
+        stringReplace = stringReplace.replace("&1", "§1");
+        stringReplace = stringReplace.replace("&2", "§2");
+        stringReplace = stringReplace.replace("&3", "§3");
+        stringReplace = stringReplace.replace("&4", "§4");
+        stringReplace = stringReplace.replace("&5", "§5");
+        stringReplace = stringReplace.replace("&6", "§6");
+        stringReplace = stringReplace.replace("&7", "§7");
+        stringReplace = stringReplace.replace("&8", "§8");
+        stringReplace = stringReplace.replace("&9", "§9");
+        stringReplace = stringReplace.replace("&a", "§a");
+        stringReplace = stringReplace.replace("&b", "§b");
+        stringReplace = stringReplace.replace("&c", "§c");
+        stringReplace = stringReplace.replace("&d", "§d");
+        stringReplace = stringReplace.replace("&e", "§e");
+        stringReplace = stringReplace.replace("&f", "§f");
+        stringReplace = stringReplace.replace("&k", "§k");
+        stringReplace = stringReplace.replace("&l", "§l");
+        stringReplace = stringReplace.replace("&m", "§m");
+        stringReplace = stringReplace.replace("&n", "§n");
+        stringReplace = stringReplace.replace("&o", "§o");
+        stringReplace = stringReplace.replace("&r", "§r");
+        return stringReplace;
+    }
 }

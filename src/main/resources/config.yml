@@ -73,6 +73,16 @@ auto-respawn:
 no-death-drop:
   enable: false
 
+#服务器列表显示
+server-list-display-modification:
+  enable: false
+  max-player: 20
+  #图标名称，放置在插件配置文件根目录下，规格必须为64*64，如果该图标不存在则无影响
+  icon: icon.png
+  message:
+    first-line: '&e[UtilityToolbox] &7欢迎使用本插件'
+    second-line: '&e[UtilityToolbox] &7欢迎使用本插件'
+
 #恢复生命值
 heal:
   message:

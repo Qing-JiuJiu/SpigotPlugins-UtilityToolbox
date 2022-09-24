@@ -1,4 +1,4 @@
-package com.yishian.function.autorespawn;
+package com.yishian.function.auto_respawn;
 
 import com.yishian.Main;
 

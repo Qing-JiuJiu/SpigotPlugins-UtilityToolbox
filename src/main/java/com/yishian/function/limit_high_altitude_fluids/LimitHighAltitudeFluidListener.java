@@ -1,4 +1,4 @@
-package com.yishian.function.limithighaltitudewater;
+package com.yishian.function.limit_high_altitude_fluids;
 
 import com.yishian.common.CommonEnum;
 import com.yishian.common.PluginUtils;

@@ -43,8 +43,8 @@ import com.yishian.command.tpadeny.TpaDenyCommand;
 import com.yishian.command.tpadeny.TpaDenyEnum;
 import com.yishian.command.walkspeed.WalkSpeedEnum;
 import com.yishian.common.CommonEnum;
-import com.yishian.function.antihighfrequencyredstone.AntiHighFrequencyRedStoneListener;
-import com.yishian.function.antihighfrequencyredstone.AntiHighFrequencyRedStoneRunnable;
+import com.yishian.function.anti_high_frequency_red_stone.AntiHighFrequencyRedStoneListener;
+import com.yishian.function.anti_high_frequency_red_stone.AntiHighFrequencyRedStoneRunnable;
 import com.yishian.command.feed.FeedCommand;
 import com.yishian.command.fly.FlyCommand;
 import com.yishian.command.flyspeed.FlySpeedCommand;
@@ -52,12 +52,13 @@ import com.yishian.command.heal.HealCommand;
 import com.yishian.command.healandfeed.HealAndFeedCommand;
 import com.yishian.command.walkspeed.WalkSpeedCommand;
 import com.yishian.common.CommonCommand;
-import com.yishian.function.autorespawn.AutoRespawnListener;
-import com.yishian.function.customjoinandleave.CustomJoinAndLeaveListener;
-import com.yishian.function.joinserverwelcome.JoinServerWelcomeListener;
-import com.yishian.function.autosendservermessage.AutoSendServerMessageRunnable;
-import com.yishian.function.limithighaltitudewater.LimitHighAltitudeFluidListener;
-import com.yishian.function.nodeathdrop.NoDeathDropListener;
+import com.yishian.function.auto_respawn.AutoRespawnListener;
+import com.yishian.function.custom_join_and_leave.CustomJoinAndLeaveListener;
+import com.yishian.function.join_server_welcome.JoinServerWelcomeListener;
+import com.yishian.function.auto_send_server_message.AutoSendServerMessageRunnable;
+import com.yishian.function.limit_high_altitude_fluids.LimitHighAltitudeFluidListener;
+import com.yishian.function.no_death_drop.NoDeathDropListener;
+import com.yishian.function.server_list_display_modification.ServerListDisplayModificationListener;
 import org.bukkit.ChatColor;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.command.PluginCommand;
@@ -291,6 +292,12 @@ public final class Main extends JavaPlugin {
 
         //离开服务器删除临时传送点
         pluginManager.registerEvents(new MusterPlayerListener(), this);
+
+        //设置服务器列表
+        if (config.getConfigurationSection("server-list-display-modification").getBoolean(CommonEnum.FUNCTION_IS_ENABLE.getCommand())) {
+            pluginManager.registerEvents(new ServerListDisplayModificationListener(), this);
+            consoleSender.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + "已开启修改服务器列表显示"));
+        }
     }
 
     /**

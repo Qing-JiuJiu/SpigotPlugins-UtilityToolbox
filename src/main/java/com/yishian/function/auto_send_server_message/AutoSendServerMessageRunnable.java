@@ -1,4 +1,4 @@
-package com.yishian.function.autosendservermessage;
+package com.yishian.function.auto_send_server_message;
 
 import com.yishian.common.CommonEnum;
 import com.yishian.common.PluginUtils;

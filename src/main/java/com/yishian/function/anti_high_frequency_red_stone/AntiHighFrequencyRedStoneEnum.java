@@ -1,21 +1,21 @@
-package com.yishian.function.limithighaltitudewater;
+package com.yishian.function.anti_high_frequency_red_stone;
 
 import com.yishian.common.CommonEnum;
 
 /**
  * @author XinQi
  */
-public enum LimitHighAltitudeFluidEnum {
+public enum AntiHighFrequencyRedStoneEnum {
 
     /**
-     * 限制流体信息权限
+     * 高频红石信息权限
      */
-    LIMIT_FLOW_MESSAGE_PERMISSION(CommonEnum.PLUGHIN_NAME.getCommand() + ".LimitFlowMessage", "限制流体信息");
+    RED_STONE_MESSAGE_PERMISSION(CommonEnum.PLUGHIN_NAME.getCommand() + ".RedStoneDestroyMessage", "高频红石信息");
 
     private final String command;
     private final String msg;
 
-    LimitHighAltitudeFluidEnum(String command, String msg) {
+    AntiHighFrequencyRedStoneEnum(String command, String msg) {
         this.command = command;
         this.msg = msg;
     }
