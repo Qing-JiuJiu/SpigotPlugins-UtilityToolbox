@@ -1,5 +1,4 @@
-#这是一个配置文件，所有主功能的开启和关闭都必须重启服务器/重载插件
-#消息提醒和子功能使用UtilityToolbox reload重载配置文件即可
+#这是一个配置文件，所有主功能的开启和关闭都必须重启服务器/重新加载插件
 plugin-message:
   message-prefix: '&e[UtilityToolbox] &7'
   reload-message: '配置文件重载成功'
@@ -36,7 +35,7 @@ auto-send-server-messages:
 #高频红石检测
 anti-high-frequency-red-stone:
   enable: false
-  #是否所有玩家都能看到消息，否则只有UtilityToolbox.AntiRedStoneMessage权限的用户才能看
+  #是否所有玩家都能看到红石被摧毁消息，否则只有UtilityToolbox.AntiRedStoneMessage权限的用户才能看
   is-broadcast-message: true
   #红石在检测时间内的限制次数
   limit: 50
@@ -53,12 +52,15 @@ anti-high-frequency-red-stone:
 #限制高空流体
 limit-high-altitude-fluid:
   enable: false
+  #是否所有玩家都能看到流体被限制的消息，否则只有UtilityToolbox.LimitFlowMessage权限的用户才能看
   is-broadcast-message: true
+  #限制高度
   limit-high: 80
   limit-fluid-list:
     #默认水和岩浆，该名字为流动液体的名字
     - 'minecraft:water'
     - 'minecraft:lava'
+  #限制的世界
   limit-world-list:
     #*为限制所有世界
     - '*'
@@ -76,6 +78,7 @@ no-death-drop:
 #服务器列表显示
 server-list-display-modification:
   enable: false
+  #最大玩家数
   max-player: 20
   #图标名称，放置在插件配置文件根目录下，规格必须为64*64，如果该图标不存在则无影响
   icon: icon.png
@@ -227,6 +230,7 @@ tpadeny:
     tpadeny-no-tpa-error: '你没有待处理的传送请求'
     tpadeny-no-others-player-tpa-error: '你没有玩家&3%others-player%&7的传送请求'
 
+#设置家
 sethome:
   allow-world:
     - 'world'
@@ -236,6 +240,7 @@ sethome:
     sethome-console-error: '控制台无法使用家相关指令'
     sethome-command-error: '设置家指令格式错误，正确格式: &c/sethome'
 
+#回家
 home:
   message:
     home-apply: '你已传送回家'
@@ -243,6 +248,7 @@ home:
     home-console-error: '控制台无法使用家相关指令'
     home-command-error: '设置家指令格式错误，正确格式: &c/sethome'
 
+#展示文本代码
 showtextcode:
   message:
     showtextcode-command-error: '展示文本代码指令格式错误，正确格式: &c/showtextcolor'
@@ -264,12 +270,14 @@ showtextcode:
       - '&nn是下划线'
       - '&c展示列表结束------------------------------'
 
+#等同于自己使用/kill指令
 killself:
   message:
     killself-apply: '已让服务器执行自杀指令'
     killself-console-error: '控制台请使用官方指令：kill [目标]'
     killself-command-error: '自杀指令格式错误，正确格式: &c/killself'
 
+#传送到上一个传送/死亡的位置
 back:
   message:
     back-apply: '你已回到被传送前的位置'
@@ -279,6 +287,7 @@ back:
     back-console-error: '控制台无法使用返回指令'
     back-command-error: '返回指令格式错误，正确格式: &c/back'
 
+#切换服务器是否允许指令传送
 teleport:
   message:
     teleport-allow: '&a服务器已恢复使用指令传送'
@@ -288,12 +297,13 @@ teleport:
     teleport-deny-reason: '&c服务器已临时禁止指令传送，原因: &6%reason%'
     teleport-command-error: '服务器是否允许指令传送格式错误，正确格式: &c/teleport [原因]'
 
+#复制物品
 copyres:
   #排除列表(用于排除通配符内的物品)写法，例如钻石甲：minecraft:diamond_chestplate
   exclude-list:
     - ''
+  #黑名单，写法：钻石甲：minecraft:diamond_chestplate
   black-list:
-  #黑名单写法，例如钻石甲：minecraft:diamond_chestplate
   #默认禁用:附魔金苹果、金苹果、金萝卜、黄金、金粒、金块、tnt、火药
     - 'minecraft:enchanted_golden_apple'
     - 'minecraft:golden_apple'
@@ -303,8 +313,8 @@ copyres:
     - 'minecraft:gold_block'
     - 'minecraft:tnt'
     - 'minecraft:gunpowder'
-  wildcard-list:
   #通配符列表写法(只写前缀)，例如minecraft:开头的所有物品，minecraft:
+  wildcard-list:
     - ''
   message:
     copyres-apply: '你已复制&3%res%&7物品'
@@ -312,6 +322,7 @@ copyres:
     copyres-console-error: '控制台请使用官方指令：give <玩家> <物品[参数]> [数量]'
     copyres-command-error: '复制物品指令格式错误，正确格式: &c/copyres'
 
+#模式切换
 playmode:
   message:
     playmode-apply: '已让服务器执行切换模式指令'
@@ -319,7 +330,9 @@ playmode:
     playmode-command-error: '切换模式指令格式错误，正确格式: &c/playmode <游戏模式>'
     playmode-no-permission-error: '你没有切换到模式&3%gamemode%&7的权限'
 
+#设置临时传送点
 setsnaptp:
+  #允许设置的世界
   allow-world:
     - '*'
   message:
@@ -328,6 +341,7 @@ setsnaptp:
     setsnaptp-console-error: '控制台无法使用临时传送点相关指令'
     setsnaptp-command-error: '设置临时传送点指令格式错误，正确格式: &c/setsnaptp'
 
+#传送到临时传送点
 snaptp:
   message:
     snaptp-apply: '你已传送回临时传送点'
@@ -335,7 +349,9 @@ snaptp:
     snaptp-console-error: '控制台无法使用临时传送点相关指令'
     snaptp-command-error: '传送回临时传送点指令错误，正确格式: &c/snaptp'
 
+#召集玩家
 musterplayer:
+  #召集完成后，传送的等待时间，默认秒
   time: 3
   message:
     musterplayer-apply-start: '已广播召集所有玩家到此位置，请等待所有玩家处理请求'
@@ -346,8 +362,6 @@ musterplayer:
     musterplayer-apply-again: '已发起上一次召集请求，请等待所有玩家处理请求'
     musterplayer-apply-again-error: '没有上一次召集请求，请使用&c/musterplayer start&7指令发起新的召集'
     musterplayer-apply-cancel-consloe: '控制台已取消此次召集请求'
-    musterplayer-player-leave-convenor: '召集者&3%player%&7已离开服务器，已取消此次召集'
-    musterplayer-player-leave-callee: '被召集者&3%player%&7已离开服务器，已在被召集列表中移除该玩家'
     musterplayer-apply-cancel-player: '你已取消此次召集请求'
     musterplayer-apply-cancel-player-others: '玩家&c%player%&7已取消此次召集请求'
     musterplayer-apply-end: '玩家%player%已提前结束召集，同意召集的玩家已传送至召集位置'
@@ -366,5 +380,7 @@ musterplayer:
     musterplayer-deny-tips: '拒绝召集输入: &c/musterplayer deny'
     musterplayer-others-tips: '所有玩家处理召集请求后或发起者提前结束召集，才会进行传送'
     musterplayer-apply-error: '没有需要处理的召集请求'
+    musterplayer-player-leave-convenor: '召集者&3%player%&7已离开服务器，已取消此次召集'
+    musterplayer-player-leave-callee: '被召集者&3%player%&7已离开服务器，已在被召集列表中移除该玩家'
     musterplayer-console-error: '控制台仅能使用&cmusterplayer cancel&7指令取消玩家召集'
     musterplayer-command-error: '召集指令错误，正确格式: &c/musterplayer <参数>'
