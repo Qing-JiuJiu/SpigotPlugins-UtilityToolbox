@@ -106,7 +106,7 @@ public final class Main extends JavaPlugin {
         saveDefaultConfig();
 
         //启动服务器时发送插件消息
-        consoleSender.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + "欢迎使用本插件，插件制作者QQ:592342403"));
+        consoleSender.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + "欢迎使用UtilityToolbox，插件主页：www.utilitytoolbox.cn"));
 
         //注册相关功能
         registerCommand();
