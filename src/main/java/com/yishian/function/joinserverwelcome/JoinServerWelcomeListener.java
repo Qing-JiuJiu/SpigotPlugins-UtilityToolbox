@@ -1,4 +1,4 @@
-package com.yishian.function.join_server_welcome;
+package com.yishian.function.joinserverwelcome;
 
 import com.yishian.Main;
 import com.yishian.common.CommonEnum;

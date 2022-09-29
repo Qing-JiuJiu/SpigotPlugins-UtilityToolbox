@@ -194,7 +194,7 @@ tpa:
     tpa-apply-tpacancel-tips: '取消请求输入: &c/tpacancel'
     tpa-apply-accept-tips: '同意请求输入: &c/tpaccept'
     tpa-apply-deny-tips: '拒绝请求输入: &c/tpadeny'
-    tpa-console-error: '控制台无法使用传送相关指令'
+    tpa-console-error: '控制台无法使用申请传送相关指令'
     tpa-command-error: '传送指令格式错误，正确格式: &c/tpa <其他玩家名称>'
     tpa-others-leave-server: '玩家&3%others-player%&7已离开服务器，已自动取消其传送请求'
 
@@ -204,7 +204,7 @@ tpacancel:
     tpacancel-apply: '已取消传送请求'
     tpacancel-others: '玩家&3%player%&7已取消传送请求'
     tpacancel-no-tpa-error: '你没有待处理的传送请求'
-    tpacancel-console-error: '控制台无法使用传送相关指令'
+    tpacancel-console-error: '控制台无法使用申请传送相关指令'
 
 #同意传送
 tpaccept:
@@ -212,7 +212,7 @@ tpaccept:
     tpaccept-apply: '你已接受玩家&3%others-player%&7的传送请求'
     tpaccept-apply-is-self: '请不要接受自己的传送请求'
     tpaccept-apply-others: '你向玩家&3%player%&7申请的传送请求已被接受'
-    tpaccept-console-error: '控制台无法使用传送相关指令'
+    tpaccept-console-error: '控制台无法使用申请传送相关指令'
     tpaccept-others-no-exist: '玩家&3%others-player%&7不存在，请检查玩家名字'
     tpaccept-command-error: '同意请求指令格式错误，正确格式: &c/tpaccept [其他玩家名称]'
     tpaccept-no-tpa-error: '你没有待处理的传送请求'
@@ -224,7 +224,7 @@ tpadeny:
     tpadeny-apply: '你已拒绝玩家&3%others-player%&7的传送请求'
     tpadeny-apply-is-self: '请不要拒绝自己的传送请求'
     tpadeny-apply-others: '你向玩家&3%player%&7申请的传送请求已被拒绝'
-    tpadeny-console-error: '控制台无法使用传送相关指令'
+    tpadeny-console-error: '控制台无法使用申请传送相关指令'
     tpadeny-others-no-exist: '玩家&3%others-player%&7不存在，请检查玩家名字'
     tpadeny-command-error: '拒绝请求指令格式错误，正确格式: &c/tpadeny [其他玩家名称]'
     tpadeny-no-tpa-error: '你没有待处理的传送请求'

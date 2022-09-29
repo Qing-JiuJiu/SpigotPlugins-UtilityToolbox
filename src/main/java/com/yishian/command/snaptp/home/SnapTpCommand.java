@@ -16,6 +16,9 @@ import org.bukkit.configuration.ConfigurationSection;
 
 import org.bukkit.entity.Player;
 
+/**
+ * @author XinQi
+ */
 public class SnapTpCommand implements CommandExecutor {
 
     String snapTpCommand = SnapTpEnum.SNAP_TP_COMMAND.getCommand();
@@ -27,8 +30,6 @@ public class SnapTpCommand implements CommandExecutor {
         String messagePrefix = configurationSection.getConfigurationSection(CommonEnum.PLUGIN_MESSAGE.getCommand()).getString(CommonEnum.MESSAGE_PREFIX.getCommand());
         ConfigurationSection snapTpMessage = configurationSection.getConfigurationSection(snapTpCommand).getConfigurationSection(CommonEnum.MESSAGE.getCommand());
 
-        //判断执行的指令内容
-        if (snapTpCommand.equalsIgnoreCase(label)) {
             //判断指令是否带参数
             if (args.length != 0) {
                 sender.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + snapTpMessage.getString("snaptp-command-error")));
@@ -57,7 +58,5 @@ public class SnapTpCommand implements CommandExecutor {
                 player.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + snapTpMessage.getString("snaptp-apply")));
             }
             return true;
-        }
-        return false;
     }
 }

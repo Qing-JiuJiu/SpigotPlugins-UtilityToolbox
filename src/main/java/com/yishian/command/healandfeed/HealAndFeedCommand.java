@@ -29,72 +29,74 @@ public class HealAndFeedCommand implements TabExecutor {
         String messagePrefix = configurationSection.getConfigurationSection(CommonEnum.PLUGIN_MESSAGE.getCommand()).getString(CommonEnum.MESSAGE_PREFIX.getCommand());
         ConfigurationSection healAndFeedMessage = configurationSection.getConfigurationSection(healAndFeedCommand).getConfigurationSection(CommonEnum.MESSAGE.getCommand());
 
-        //判断执行的指令内容
-        if (healAndFeedCommand.equalsIgnoreCase(label)) {
-            //判断指令是否带参数
-            if (args.length == 0) {
-                //判断执行恢复自己指令的是用户还是控制台
-                if (sender instanceof Player) {
-                    Player player = (Player) sender;
-                    player.setHealth(player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue());
-                    player.setFoodLevel(20);
-                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + healAndFeedMessage.getString("heal-and-feed-self").replaceAll("%player%", player.getName())));
-                } else {
-                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + healAndFeedMessage.getString("heal-and-feed-console-error")));
-                }
-                //判断参数数量是否为1
-            } else if (args.length == 1) {
-                //判断执行的是用户还是控制台
-                if (sender instanceof Player) {
-                    Player player = (Player) sender;
-                    String playerName = player.getName();
-                    String othersPlayerName = args[0];
-                    //判断参数指向的是否是自己
-                    if (!playerName.equals(othersPlayerName)) {
-                        //判断执行恢复他人指令的玩家权限
-                        if (player.hasPermission(HealEnum.HEAL_OTHERS_PERMISSION.getCommand()) && player.hasPermission(FeedEnum.FEED_OTHERS_PERMISSION.getCommand())) {
-                            Player othersPlayer = Bukkit.getPlayerExact(othersPlayerName);
-                            //判断玩家是否存在
-                            if (othersPlayer != null) {
-                                othersPlayer.setHealth(othersPlayer.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue());
-                                othersPlayer.setFoodLevel(20);
-                                player.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + healAndFeedMessage.getString("heal-and-feed-others").replaceAll("%others-player%", othersPlayerName)));
-                                othersPlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + healAndFeedMessage.getString("heal-and-feed-by-others").replaceAll("%player%", playerName)));
-                            } else {
-                                player.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + healAndFeedMessage.getString("heal-and-feed-others-no-exist").replaceAll("%others-player%", othersPlayerName)));
-                            }
-                        } else {
-                            player.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + healAndFeedMessage.getString("heal-and-feed-others-no-permission")));
-                        }
-                    } else {
-                        //参数指向的是自己，恢复自己，并给出对应提示
-                        player.setHealth(player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue());
-                        player.setFoodLevel(20);
-                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + healAndFeedMessage.getString("heal-and-feed-others-is-self").replaceAll("%player%", player.getName())));
-                    }
-                } else {
-                    String othersPlayerName = args[0];
-                    Player othersPlayer = Bukkit.getPlayerExact(othersPlayerName);
-                    //判断该玩家是否存在
-                    if (othersPlayer != null) {
-                        othersPlayer.setHealth(othersPlayer.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue());
-                        othersPlayer.setFoodLevel(20);
-                        othersPlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + healAndFeedMessage.getString("heal-and-feed-by-console")));
-                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + healAndFeedMessage.getString("heal-and-feed-others").replaceAll("%others-player%", othersPlayerName)));
-                    } else {
-                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + healAndFeedMessage.getString("heal-and-feed-no-exist").replaceAll("%others-player%", othersPlayerName)));
-                    }
-                }
-            } else {
-                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + healAndFeedMessage.getString("heal-and-feed-command-error")));
-            }
+        //判断参数数量是否大于1
+        if (args.length > 1) {
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + healAndFeedMessage.getString("heal-and-feed-command-error")));
             return true;
         }
-        return false;
+
+        //判断指令是否带参数
+        if (args.length == 0) {
+            //判断执行恢复自己指令的是用户还是控制台
+            if (!(sender instanceof Player)) {
+                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + healAndFeedMessage.getString("heal-and-feed-console-error")));
+                return true;
+            }
+            Player player = (Player) sender;
+            player.setHealth(player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue());
+            player.setFoodLevel(20);
+            player.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + healAndFeedMessage.getString("heal-and-feed-self").replaceAll("%player%", player.getName())));
+
+            //判断参数数量是否为1
+        } else {
+            //判断执行的是用户还是控制台
+            if (sender instanceof Player) {
+                Player player = (Player) sender;
+                String playerName = player.getName();
+                String othersPlayerName = args[0];
+                //判断参数指向的是否是自己
+                if (!playerName.equals(othersPlayerName)) {
+                    //判断执行恢复他人指令的玩家权限
+                    if (!player.hasPermission(HealEnum.HEAL_OTHERS_PERMISSION.getCommand()) && player.hasPermission(FeedEnum.FEED_OTHERS_PERMISSION.getCommand())) {
+                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + healAndFeedMessage.getString("heal-and-feed-others-no-permission")));
+                        return true;
+                    }
+                    Player othersPlayer = Bukkit.getPlayerExact(othersPlayerName);
+                    //判断玩家是否存在
+                    if (othersPlayer == null) {
+                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + healAndFeedMessage.getString("heal-and-feed-others-no-exist").replaceAll("%others-player%", othersPlayerName)));
+                        return true;
+                    }
+                    othersPlayer.setHealth(othersPlayer.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue());
+                    othersPlayer.setFoodLevel(20);
+                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + healAndFeedMessage.getString("heal-and-feed-others").replaceAll("%others-player%", othersPlayerName)));
+                    othersPlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + healAndFeedMessage.getString("heal-and-feed-by-others").replaceAll("%player%", playerName)));
+                } else {
+                    //参数指向的是自己，恢复自己，并给出对应提示
+                    player.setHealth(player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue());
+                    player.setFoodLevel(20);
+                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + healAndFeedMessage.getString("heal-and-feed-others-is-self").replaceAll("%player%", player.getName())));
+                }
+            } else {
+                String othersPlayerName = args[0];
+                Player othersPlayer = Bukkit.getPlayerExact(othersPlayerName);
+                //判断该玩家是否存在
+                if (othersPlayer == null) {
+                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + healAndFeedMessage.getString("heal-and-feed-no-exist").replaceAll("%others-player%", othersPlayerName)));
+                    return true;
+                }
+                othersPlayer.setHealth(othersPlayer.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue());
+                othersPlayer.setFoodLevel(20);
+                othersPlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + healAndFeedMessage.getString("heal-and-feed-by-console")));
+                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + healAndFeedMessage.getString("heal-and-feed-others").replaceAll("%others-player%", othersPlayerName)));
+            }
+        }
+        return true;
     }
 
     /**
      * 指令补全提示
+     *
      * @return 返回的提示内容
      */
     @Override

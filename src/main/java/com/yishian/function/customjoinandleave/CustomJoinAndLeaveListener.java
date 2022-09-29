@@ -1,4 +1,4 @@
-package com.yishian.function.custom_join_and_leave;
+package com.yishian.function.customjoinandleave;
 
 import com.yishian.common.CommonEnum;
 import com.yishian.common.PluginUtils;

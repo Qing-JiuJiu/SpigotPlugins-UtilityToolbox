@@ -16,6 +16,9 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
+/**
+ * @author XinQi
+ */
 public class HomeCommand implements CommandExecutor {
 
     String homeCommand = HomeEnum.HOME_COMMAND.getCommand();
@@ -27,8 +30,6 @@ public class HomeCommand implements CommandExecutor {
         String messagePrefix = configurationSection.getConfigurationSection(CommonEnum.PLUGIN_MESSAGE.getCommand()).getString(CommonEnum.MESSAGE_PREFIX.getCommand());
         ConfigurationSection homeMessage = configurationSection.getConfigurationSection(homeCommand).getConfigurationSection(CommonEnum.MESSAGE.getCommand());
 
-        //判断执行的指令内容
-        if (homeCommand.equalsIgnoreCase(label)) {
             //判断指令是否带参数
             if (args.length != 0) {
                 sender.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + homeMessage.getString("home-command-error")));
@@ -60,7 +61,5 @@ public class HomeCommand implements CommandExecutor {
             }
 
             return true;
-        }
-        return false;
     }
 }

@@ -165,7 +165,9 @@ public class PluginUtils {
      * 判断集合是否为空
      */
     public static boolean collectionIsEmpty(Collection<?> list) {
-        if (list == null || list.isEmpty()) return true;
+        if (list == null || list.isEmpty()) {
+            return true;
+        }
         return list.size() == 1 && list.removeIf(judgelist -> judgelist == "");
     }
 

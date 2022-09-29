@@ -16,6 +16,9 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.List;
 
+/**
+ * @author XinQi
+ */
 public class SetHomeCommand implements CommandExecutor {
 
     String setHomeCommand = SetHomeEnum.SET_HOME_COMMAND.getCommand();
@@ -29,8 +32,6 @@ public class SetHomeCommand implements CommandExecutor {
         ConfigurationSection setHomeMessage = setHomeconfigurationSection.getConfigurationSection(CommonEnum.MESSAGE.getCommand());
         List<String> allowHomeWorldList = setHomeconfigurationSection.getStringList("allow-world");
 
-        //判断执行的指令内容
-        if (setHomeCommand.equalsIgnoreCase(label)) {
             //判断指令是否带参数
             if (args.length != 0) {
                 sender.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + setHomeMessage.getString("sethome-command-error")));
@@ -83,7 +84,5 @@ public class SetHomeCommand implements CommandExecutor {
             //发送设置家成功消息
             player.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + setHomeMessage.getString("sethome-apply").replaceAll("%world%", worldName).replaceAll("%x%", String.valueOf((int) playerLocationX)).replaceAll("%y%", String.valueOf((int) playerLocationY)).replaceAll("%z%", String.valueOf((int) playerLocationZ))));
             return true;
-        }
-        return false;
     }
 }

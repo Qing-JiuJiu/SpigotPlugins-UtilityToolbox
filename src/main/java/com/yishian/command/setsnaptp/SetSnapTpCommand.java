@@ -15,6 +15,9 @@ import org.bukkit.entity.Player;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * @author XinQi
+ */
 public class SetSnapTpCommand implements CommandExecutor {
 
     String setSnapTpCommand = SetSnapTpEnum.SET_SNAP_TP_COMMAND.getCommand();
@@ -34,8 +37,6 @@ public class SetSnapTpCommand implements CommandExecutor {
         ConfigurationSection setSnapTpMessage = setSnapTpconfigurationSection.getConfigurationSection(CommonEnum.MESSAGE.getCommand());
         List<String> allowWorldList = setSnapTpconfigurationSection.getStringList("allow-world");
 
-        //判断执行的指令内容
-        if (setSnapTpCommand.equalsIgnoreCase(label)) {
             //判断指令是否带参数
             if (args.length != 0) {
                 sender.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + setSnapTpMessage.getString("setsnaptp-command-error")));
@@ -63,7 +64,5 @@ public class SetSnapTpCommand implements CommandExecutor {
             transfeRecordMap.put(player, playerLocation);
             player.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + setSnapTpMessage.getString("setsnaptp-apply")));
             return true;
-        }
-        return false;
     }
 }

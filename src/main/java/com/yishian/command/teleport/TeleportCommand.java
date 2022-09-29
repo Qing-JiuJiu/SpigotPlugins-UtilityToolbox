@@ -12,6 +12,9 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.ConfigurationSection;
 
 
+/**
+ * @author XinQi
+ */
 public class TeleportCommand implements CommandExecutor {
 
     String teleportCommand = TeleportEnum.TELEPORT_COMMAND.getCommand();
@@ -25,8 +28,6 @@ public class TeleportCommand implements CommandExecutor {
         String messagePrefix = configurationSection.getConfigurationSection(CommonEnum.PLUGIN_MESSAGE.getCommand()).getString(CommonEnum.MESSAGE_PREFIX.getCommand());
         ConfigurationSection teleportMessage = configurationSection.getConfigurationSection(teleportCommand).getConfigurationSection(CommonEnum.MESSAGE.getCommand());
 
-        //判断执行的指令内容
-        if (teleportCommand.equalsIgnoreCase(label)) {
             //判断指令是否带参数
             if (args.length == 0) {
                 if (allowTp) {
@@ -54,7 +55,5 @@ public class TeleportCommand implements CommandExecutor {
             }
 
             return true;
-        }
-        return false;
     }
 }

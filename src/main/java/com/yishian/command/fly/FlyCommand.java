@@ -36,12 +36,19 @@ public class FlyCommand implements TabExecutor {
         String messagePrefix = configurationSection.getConfigurationSection(CommonEnum.PLUGIN_MESSAGE.getCommand()).getString(CommonEnum.MESSAGE_PREFIX.getCommand());
         ConfigurationSection flyMessage = configurationSection.getConfigurationSection(flyCommand).getConfigurationSection(CommonEnum.MESSAGE.getCommand());
 
-        //判断执行的指令内容
-        if (flyCommand.equalsIgnoreCase(label)) {
+        //判断参数数量是否大于1个
+        if (args.length > 1){
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + flyMessage.getString("fly-command-error")));
+            return true;
+        }
+
             //判断指令是否带参数
             if (args.length == 0) {
                 //判断执行开启飞行的是自己还是控制台
-                if (sender instanceof Player) {
+                if (!(sender instanceof Player)) {
+                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + flyMessage.getString("fly-console-error")));
+                    return true;
+                }
                     Player player = (Player) sender;
                     //判断玩家是否目前是飞行状态
                     if (!player.getAllowFlight()) {
@@ -51,11 +58,8 @@ public class FlyCommand implements TabExecutor {
                         player.setAllowFlight(false);
                         player.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + flyMessage.getString("fly-self-close").replaceAll("%player%", player.getName())));
                     }
-                } else {
-                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + flyMessage.getString("fly-console-error")));
-                }
                 //判断参数数量是否为1
-            } else if (args.length == 1) {
+            } else{
                 //判断执行的是用户还是控制台
                 if (sender instanceof Player) {
                     Player player = (Player) sender;
@@ -64,10 +68,16 @@ public class FlyCommand implements TabExecutor {
                     //判断参数指向的是否是自己
                     if (!playerName.equals(othersPlayerName)) {
                         //判断执行开关他人飞行指令的玩家权限
-                        if (player.hasPermission(FlyEnum.FLY_OTHERS_PERMISSION.getCommand())) {
+                        if (!player.hasPermission(FlyEnum.FLY_OTHERS_PERMISSION.getCommand())) {
+                            player.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + flyMessage.getString("fly-others-no-permission")));
+                            return true;
+                        }
                             Player othersPlayer = Bukkit.getPlayerExact(othersPlayerName);
                             //判断玩家是否存在
-                            if (othersPlayer != null) {
+                            if (othersPlayer == null) {
+                                player.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + flyMessage.getString("fly-others-no-exist").replaceAll("%others-player%", othersPlayerName)));
+                                return true;
+                            }
                                 //判断该玩家是否在飞行
                                 if (!othersPlayer.getAllowFlight()) {
                                     othersPlayer.setAllowFlight(true);
@@ -78,12 +88,6 @@ public class FlyCommand implements TabExecutor {
                                     player.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + flyMessage.getString("fly-others-close").replaceAll("%others-player%", othersPlayerName)));
                                     othersPlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + flyMessage.getString("fly-by-others-close").replaceAll("%player%", playerName)));
                                 }
-                            } else {
-                                player.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + flyMessage.getString("fly-others-no-exist").replaceAll("%others-player%", othersPlayerName)));
-                            }
-                        } else {
-                            player.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + flyMessage.getString("fly-others-no-permission")));
-                        }
                     } else {
                         //判断玩家是否在飞行状态
                         if (!player.getAllowFlight()) {
@@ -98,7 +102,10 @@ public class FlyCommand implements TabExecutor {
                     String othersPlayerName = args[0];
                     Player othersPlayer = Bukkit.getPlayerExact(othersPlayerName);
                     //判断玩家存不存在
-                    if (othersPlayer != null) {
+                    if (othersPlayer == null) {
+                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + flyMessage.getString("fly-others-no-exist").replaceAll("%others-player%", othersPlayerName)));
+                        return true;
+                    }
                         //判断玩家是否在飞行状态
                         if (!othersPlayer.getAllowFlight()) {
                             othersPlayer.setAllowFlight(true);
@@ -109,16 +116,10 @@ public class FlyCommand implements TabExecutor {
                             othersPlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + flyMessage.getString("fly-by-console-close")));
                             sender.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + flyMessage.getString("fly-others-close").replaceAll("%others-player%", othersPlayerName)));
                         }
-                    } else {
-                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + flyMessage.getString("fly-others-no-exist").replaceAll("%others-player%", othersPlayerName)));
-                    }
+
                 }
-            } else {
-                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + flyMessage.getString("fly-command-error")));
             }
             return true;
-        }
-        return false;
     }
 
     /**

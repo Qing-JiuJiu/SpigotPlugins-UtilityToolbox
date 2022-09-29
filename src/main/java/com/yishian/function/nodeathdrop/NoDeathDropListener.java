@@ -1,4 +1,4 @@
-package com.yishian.function.no_death_drop;
+package com.yishian.function.nodeathdrop;
 
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;

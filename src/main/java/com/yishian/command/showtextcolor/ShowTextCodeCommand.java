@@ -11,6 +11,9 @@ import org.bukkit.configuration.ConfigurationSection;
 
 import java.util.List;
 
+/**
+ * @author XinQi
+ */
 public class ShowTextCodeCommand implements CommandExecutor {
 
     String showTextCodeCommand = ShowTextCodeEnum.SHOW_TEXT_CODE_COMMAND.getCommand();
@@ -23,8 +26,6 @@ public class ShowTextCodeCommand implements CommandExecutor {
         ConfigurationSection showTextCodeMessage = configurationSection.getConfigurationSection(showTextCodeCommand).getConfigurationSection(CommonEnum.MESSAGE.getCommand());
         List<String> sendMessageList = showTextCodeMessage.getStringList("show-list");
 
-        //判断执行的指令内容
-        if (showTextCodeCommand.equalsIgnoreCase(label)) {
             //判断指令是否带参数
             if (args.length != 0) {
                 sender.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + showTextCodeMessage.getString("showtextcode-command-error")));
@@ -34,7 +35,5 @@ public class ShowTextCodeCommand implements CommandExecutor {
             //发送消息
             sendMessageList.forEach(message ->  sender.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + message)));
             return true;
-        }
-        return false;
     }
 }

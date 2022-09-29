@@ -39,25 +39,23 @@ public class TpaCancelCommand implements CommandExecutor {
         String messagePrefix = configurationSection.getConfigurationSection(CommonEnum.PLUGIN_MESSAGE.getCommand()).getString(CommonEnum.MESSAGE_PREFIX.getCommand());
         ConfigurationSection tpaCancelMessage = configurationSection.getConfigurationSection(tpaCancelCommand).getConfigurationSection(CommonEnum.MESSAGE.getCommand());
 
-        //判断执行的指令内容
-        if (tpaCancelCommand.equalsIgnoreCase(label)) {
-                //判断执行指令是用户还是控制台
-                if (sender instanceof Player) {
-                    Player othersPlayer = TpaCommand.transfeRecordMap.remove(sender);
-                    if (othersPlayer != null){
-                        //删除对应的传送信息
-                        Set<Player> playerSet = TpaCommand.transfeMap.get(othersPlayer);
-                        playerSet.removeIf(player -> player == sender);
-                        //发送提示信息
-                        othersPlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + tpaCancelMessage.getString("tpacancel-others").replaceAll("%player%", sender.getName())));
-                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + tpaCancelMessage.getString("tpacancel-apply").replaceAll("%others-player%", othersPlayer.getName())));
-                    }else {
-                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + tpaCancelMessage.getString("tpacancel-no-tpa-error")));
-                    }
-                } else {
-                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + tpaCancelMessage.getString("tpacancel-console-error")));
-                }
-            }
+        //判断执行指令是用户还是控制台
+        if (!(sender instanceof Player)) {
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + tpaCancelMessage.getString("tpacancel-console-error")));
             return true;
+        }
+        Player othersPlayer = TpaCommand.transfeRecordMap.remove(sender);
+        if (othersPlayer == null) {
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + tpaCancelMessage.getString("tpacancel-no-tpa-error")));
+            return true;
+        }
+        //删除对应的传送信息
+        Set<Player> playerSet = TpaCommand.transfeMap.get(othersPlayer);
+        playerSet.removeIf(player -> player == sender);
+        //发送提示信息
+        othersPlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + tpaCancelMessage.getString("tpacancel-others").replaceAll("%player%", sender.getName())));
+        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + tpaCancelMessage.getString("tpacancel-apply").replaceAll("%others-player%", othersPlayer.getName())));
+
+        return true;
     }
 }

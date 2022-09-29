@@ -12,6 +12,9 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 
+/**
+ * @author XinQi
+ */
 public class KillSelfCommand implements CommandExecutor {
 
     String killSelfCommand = KillSelfEnum.KILL_SELF_COMMAND.getCommand();
@@ -23,8 +26,6 @@ public class KillSelfCommand implements CommandExecutor {
         String messagePrefix = configurationSection.getConfigurationSection(CommonEnum.PLUGIN_MESSAGE.getCommand()).getString(CommonEnum.MESSAGE_PREFIX.getCommand());
         ConfigurationSection homeMessage = configurationSection.getConfigurationSection(killSelfCommand).getConfigurationSection(CommonEnum.MESSAGE.getCommand());
 
-        //判断执行的指令内容
-        if (killSelfCommand.equalsIgnoreCase(label)) {
             //判断指令是否带参数
             if (args.length != 0) {
                 sender.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + homeMessage.getString("killself-command-error")));
@@ -42,7 +43,5 @@ public class KillSelfCommand implements CommandExecutor {
             Server server = Bukkit.getServer();
             server.dispatchCommand(server.getConsoleSender(),"kill "+ player.getName());
             return true;
-        }
-        return false;
     }
 }

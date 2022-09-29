@@ -1,4 +1,4 @@
-package com.yishian.function.anti_high_frequency_red_stone;
+package com.yishian.function.antihighfrequencyredstone;
 
 import com.yishian.common.CommonEnum;
 import com.yishian.common.PluginUtils;

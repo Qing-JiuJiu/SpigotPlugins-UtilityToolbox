@@ -15,6 +15,9 @@ import org.bukkit.inventory.PlayerInventory;
 import java.util.List;
 
 
+/**
+ * @author XinQi
+ */
 public class CopyResCommand implements CommandExecutor {
 
     String copyResCommand = CopyResEnum.COPY_RES_COMMAND.getCommand();
@@ -34,55 +37,52 @@ public class CopyResCommand implements CommandExecutor {
         //排除列表
         List<String> itemExcludeList = copyResConfigurationSection.getStringList("exclude-list");
 
-        //判断执行的指令内容
-        if (copyResCommand.equalsIgnoreCase(label)) {
-            //判断指令是否带参数
-            if (args.length != 0) {
-                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + copyResMessage.getString("copyres-command-error")));
+        //判断指令是否带参数
+        if (args.length != 0) {
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + copyResMessage.getString("copyres-command-error")));
+            return true;
+        }
+
+        //判断执行指令的是用户还是控制台
+        if (!(sender instanceof Player)) {
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + copyResMessage.getString("copyres-console-error")));
+            return true;
+        }
+
+        //得到玩家手上的物品
+        Player player = (Player) sender;
+        PlayerInventory playerInventory = player.getInventory();
+        ItemStack itemInMainHand = playerInventory.getItemInMainHand();
+
+        //获得物品名称
+        String itemName = itemInMainHand.getType().getKey().toString();
+
+        //判断是否在排除列表
+        if (!itemExcludeList.contains(itemName)) {
+            //判断黑名单
+            if (itemBlackList.contains(itemName)) {
+                player.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + copyResMessage.getString("copyres-deny").replaceAll("%res%", itemName)));
                 return true;
             }
 
-            //判断执行指令的是用户还是控制台
-            if (!(sender instanceof Player)) {
-                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + copyResMessage.getString("copyres-console-error")));
-                return true;
-            }
-
-            //得到玩家手上的物品
-            Player player = (Player) sender;
-            PlayerInventory playerInventory = player.getInventory();
-            ItemStack itemInMainHand = playerInventory.getItemInMainHand();
-
-            //获得物品名称
-            String itemName = itemInMainHand.getType().getKey().toString();
-
-            //判断是否在排除列表
-            if (!itemExcludeList.contains(itemName)) {
-                //判断黑名单
-                if (itemBlackList.contains(itemName)) {
-                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + copyResMessage.getString("copyres-deny").replaceAll("%res%", itemName)));
-                    return true;
-                }
-
-                //判断是否在通配符名单
-                if (!PluginUtils.collectionIsEmpty(itemWildcardList)){
-                    for (String itemWildcard : itemWildcardList) {
-                        if (itemName.startsWith(itemWildcard)) {
-                            player.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + copyResMessage.getString("copyres-deny").replaceAll("%res%", itemName)));
-                            return true;
-                        }
+            //判断是否在通配符名单
+            if (!PluginUtils.collectionIsEmpty(itemWildcardList)) {
+                for (String itemWildcard : itemWildcardList) {
+                    if (itemName.startsWith(itemWildcard)) {
+                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + copyResMessage.getString("copyres-deny").replaceAll("%res%", itemName)));
+                        return true;
                     }
                 }
             }
-
-            //修改物品数据让玩家获得最大物品并发送消息
-            ItemStack cloneItemStack = itemInMainHand.clone();
-            cloneItemStack.setAmount(cloneItemStack.getMaxStackSize());
-            playerInventory.addItem(cloneItemStack);
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + copyResMessage.getString("copyres-apply").replaceAll("%res%", itemName)));
-
-            return true;
         }
-        return false;
+
+        //修改物品数据让玩家获得最大物品并发送消息
+        ItemStack cloneItemStack = itemInMainHand.clone();
+        cloneItemStack.setAmount(cloneItemStack.getMaxStackSize());
+        playerInventory.addItem(cloneItemStack);
+        player.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + copyResMessage.getString("copyres-apply").replaceAll("%res%", itemName)));
+
+        //执行成功
+        return true;
     }
 }

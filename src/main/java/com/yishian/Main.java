@@ -43,8 +43,8 @@ import com.yishian.command.tpadeny.TpaDenyCommand;
 import com.yishian.command.tpadeny.TpaDenyEnum;
 import com.yishian.command.walkspeed.WalkSpeedEnum;
 import com.yishian.common.CommonEnum;
-import com.yishian.function.anti_high_frequency_red_stone.AntiHighFrequencyRedStoneListener;
-import com.yishian.function.anti_high_frequency_red_stone.AntiHighFrequencyRedStoneRunnable;
+import com.yishian.function.antihighfrequencyredstone.AntiHighFrequencyRedStoneListener;
+import com.yishian.function.antihighfrequencyredstone.AntiHighFrequencyRedStoneRunnable;
 import com.yishian.command.feed.FeedCommand;
 import com.yishian.command.fly.FlyCommand;
 import com.yishian.command.flyspeed.FlySpeedCommand;
@@ -52,13 +52,13 @@ import com.yishian.command.heal.HealCommand;
 import com.yishian.command.healandfeed.HealAndFeedCommand;
 import com.yishian.command.walkspeed.WalkSpeedCommand;
 import com.yishian.common.CommonCommand;
-import com.yishian.function.auto_respawn.AutoRespawnListener;
-import com.yishian.function.custom_join_and_leave.CustomJoinAndLeaveListener;
-import com.yishian.function.join_server_welcome.JoinServerWelcomeListener;
-import com.yishian.function.auto_send_server_message.AutoSendServerMessageRunnable;
-import com.yishian.function.limit_high_altitude_fluids.LimitHighAltitudeFluidListener;
-import com.yishian.function.no_death_drop.NoDeathDropListener;
-import com.yishian.function.server_list_display_modification.ServerListDisplayModificationListener;
+import com.yishian.function.autorespawn.AutoRespawnListener;
+import com.yishian.function.customjoinandleave.CustomJoinAndLeaveListener;
+import com.yishian.function.joinserverwelcome.JoinServerWelcomeListener;
+import com.yishian.function.autosendservermessage.AutoSendServerMessageRunnable;
+import com.yishian.function.limithighaltitudefluids.LimitHighAltitudeFluidListener;
+import com.yishian.function.nodeathdrop.NoDeathDropListener;
+import com.yishian.function.serverlistdisplaymodification.ServerListDisplayModificationListener;
 import org.bukkit.ChatColor;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.command.PluginCommand;
@@ -178,14 +178,14 @@ public final class Main extends JavaPlugin {
         TpaCceptCommand.setExecutor(new TpaCceptCommand());
 
         //拒绝申请传送
-        PluginCommand TpaDenyCommand = getCommand(TpaDenyEnum.TPA_DENY_COMMAND.getCommand());
-        TpaDenyCommand.setPermission(TpaEnum.TPA_PERMISSION.getCommand());
-        TpaDenyCommand.setExecutor(new TpaDenyCommand());
+        PluginCommand tpaDenyCommand = getCommand(TpaDenyEnum.TPA_DENY_COMMAND.getCommand());
+        tpaDenyCommand.setPermission(TpaEnum.TPA_PERMISSION.getCommand());
+        tpaDenyCommand.setExecutor(new TpaDenyCommand());
 
         //设置家
-        PluginCommand SetHomeCommand = getCommand(SetHomeEnum.SET_HOME_COMMAND.getCommand());
-        SetHomeCommand.setPermission(SetHomeEnum.SET_HOME_PERMISSION.getCommand());
-        SetHomeCommand.setExecutor(new SetHomeCommand());
+        PluginCommand setHomeCommand = getCommand(SetHomeEnum.SET_HOME_COMMAND.getCommand());
+        setHomeCommand.setPermission(SetHomeEnum.SET_HOME_PERMISSION.getCommand());
+        setHomeCommand.setExecutor(new SetHomeCommand());
 
         //回家
         PluginCommand homeCommand = getCommand(HomeEnum.HOME_COMMAND.getCommand());

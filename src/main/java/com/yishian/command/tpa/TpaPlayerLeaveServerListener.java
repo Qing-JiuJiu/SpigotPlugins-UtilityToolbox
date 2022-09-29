@@ -14,6 +14,9 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 import java.util.Set;
 
+/**
+ * @author XinQi
+ */
 public class TpaPlayerLeaveServerListener implements Listener {
 
     @EventHandler(priority = EventPriority.LOW)

@@ -1,4 +1,4 @@
-package com.yishian.function.server_list_display_modification;
+package com.yishian.function.serverlistdisplaymodification;
 
 import com.yishian.Main;
 import com.yishian.common.CommonEnum;
