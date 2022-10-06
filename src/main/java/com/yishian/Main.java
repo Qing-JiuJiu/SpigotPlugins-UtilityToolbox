@@ -27,8 +27,8 @@ import com.yishian.command.setsnaptp.SetSnapTpEnum;
 import com.yishian.command.setsnaptp.SetSnapTpListener;
 import com.yishian.command.showtextcolor.ShowTextCodeCommand;
 import com.yishian.command.showtextcolor.ShowTextCodeEnum;
-import com.yishian.command.snaptp.home.SnapTpCommand;
-import com.yishian.command.snaptp.home.SnapTpEnum;
+import com.yishian.command.snaptp.SnapTpCommand;
+import com.yishian.command.snaptp.SnapTpEnum;
 import com.yishian.command.teleport.TeleportCommand;
 import com.yishian.command.teleport.TeleportEnum;
 import com.yishian.command.teleport.TeleportListener;
@@ -106,7 +106,7 @@ public final class Main extends JavaPlugin {
         saveDefaultConfig();
 
         //启动服务器时发送插件消息
-        consoleSender.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + "欢迎使用UtilityToolbox，插件主页：www.utilitytoolbox.cn"));
+        consoleSender.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + "欢迎使用UtilityToolbox，插件主页：http://www.utilitytoolbox.cn"));
 
         //注册相关功能
         registerCommand();

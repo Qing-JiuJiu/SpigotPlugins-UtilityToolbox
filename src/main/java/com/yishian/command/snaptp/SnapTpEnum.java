@@ -1,4 +1,4 @@
-package com.yishian.command.snaptp.home;
+package com.yishian.command.snaptp;
 
 /**
  * @author XinQi
