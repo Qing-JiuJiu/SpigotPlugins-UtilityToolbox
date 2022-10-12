@@ -17,6 +17,7 @@ import org.bukkit.entity.Player;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * @author XinQi
@@ -25,7 +26,7 @@ public class BackCommand implements CommandExecutor {
 
     String backCommand = BackEnum.BACK_COMMAND.getCommand();
 
-    static Map<Player, Location> playerBackMap = new HashMap<>();
+    static Map<UUID, Location> playerBackMap = new HashMap<>();
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -48,7 +49,7 @@ public class BackCommand implements CommandExecutor {
 
         //获取玩家家的配置信息
         Player player = (Player) sender;
-        Location location = playerBackMap.get(player);
+        Location location = playerBackMap.get(player.getUniqueId());
 
         //判断该用户是否拥有返回的位置
         if (location == null) {

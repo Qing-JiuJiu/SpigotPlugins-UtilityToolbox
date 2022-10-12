@@ -50,7 +50,7 @@ public class MusterPlayerCommand implements TabExecutor {
      */
     String musterReason = null;
     /**
-     * 记录召集地址
+     * 记录召集位置
      */
     static Location musterLocation = null;
     /**

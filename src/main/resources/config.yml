@@ -35,7 +35,7 @@ auto-send-server-messages:
 #高频红石检测
 anti-high-frequency-red-stone:
   enable: false
-  #是否所有玩家都能看到红石被摧毁消息，否则只有UtilityToolbox.AntiRedStoneMessage权限的用户才能看
+  #是否所有玩家都能看到红石被摧毁消息，否则只有拥有UtilityToolbox.AntiRedStoneMessage权限的用户才能看到
   is-broadcast-message: true
   #红石在检测时间内的限制次数
   limit: 50
@@ -52,7 +52,7 @@ anti-high-frequency-red-stone:
 #限制高空流体
 limit-high-altitude-fluid:
   enable: false
-  #是否所有玩家都能看到流体被限制的消息，否则只有UtilityToolbox.LimitFlowMessage权限的用户才能看
+  #是否所有玩家都能看到流体被限制的消息，否则只有拥有UtilityToolbox.LimitFlowMessage权限的用户才能看到
   is-broadcast-message: true
   #限制高度
   limit-high: 80
@@ -85,6 +85,22 @@ server-list-display-modification:
   message:
     first-line: '&e[UtilityToolbox] &7欢迎使用本插件'
     second-line: '&e[UtilityToolbox] &7欢迎使用本插件'
+
+#连点左键限制
+prevent-high-hrequency-attacks:
+  enable: false
+  #是否所有玩家都能看到因高频左键被踢出服务器的消息，否则只有拥有UtilityToolbox.PlayerFrequencyAttacksKickMessage权限的用户才能看到
+  is-broadcast-message: true
+  #是否踢出服务器
+  is-kill: false
+  #在检测时间内的限制次数
+  limit: 50
+  #检测时间，默认秒
+  time: 3
+  message:
+    player-kick-message: "&c你因疑似使用连点器被服务器踢出，若有疑问请联系服主，CPS:%cps%"
+    broadcast-kick-message: "&c玩家&3%player%&c疑似使用连点器，已踢出服务器，&cCPS:%cps%"
+    broadcast-no-kick-message: "&c玩家&3%player%&c疑似使用连点器，&cCPS:%cps%"
 
 #恢复生命值
 heal:
@@ -281,7 +297,7 @@ killself:
 back:
   message:
     back-apply: '你已回到被传送前的位置'
-    back-died-tips: '服务器已允许使用&c/back&7指令回到死亡位置'
+    back-died-tips: '服务器已允许玩家使用&c/back&7指令回到死亡位置'
     back-died-no-tp-tips: '服务器&c/back&7指令已记录你的死亡位置'
     back-no-location: '你暂时没有返回的位置'
     back-console-error: '控制台无法使用返回指令'

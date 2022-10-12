@@ -34,7 +34,7 @@ public class BackListener implements Listener {
         //当玩家被传送的原因是因为指令/插件时记录位置
         if (TeleportCommand.allowTp && (teleportCause == PlayerTeleportEvent.TeleportCause.COMMAND || teleportCause == PlayerTeleportEvent.TeleportCause.PLUGIN)) {
             Player player = playerTeleportEvent.getPlayer();
-            BackCommand.playerBackMap.put(player, player.getLocation());
+            BackCommand.playerBackMap.put(player.getUniqueId(), player.getLocation());
         }
     }
 
@@ -54,7 +54,7 @@ public class BackListener implements Listener {
                 String messagePrefix = configurationSection.getConfigurationSection(CommonEnum.PLUGIN_MESSAGE.getCommand()).getString(CommonEnum.MESSAGE_PREFIX.getCommand());
                 ConfigurationSection backMessage = configurationSection.getConfigurationSection(backCommand).getConfigurationSection(CommonEnum.MESSAGE.getCommand());
 
-                BackCommand.playerBackMap.put(player, player.getLocation());
+                BackCommand.playerBackMap.put(player.getUniqueId(), player.getLocation());
                 if (TeleportCommand.allowTp) {
                     player.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + backMessage.getString("back-died-tips")));
                 } else {

@@ -58,6 +58,8 @@ import com.yishian.function.joinserverwelcome.JoinServerWelcomeListener;
 import com.yishian.function.autosendservermessage.AutoSendServerMessageRunnable;
 import com.yishian.function.limithighaltitudefluids.LimitHighAltitudeFluidListener;
 import com.yishian.function.nodeathdrop.NoDeathDropListener;
+import com.yishian.function.preventhighfrequencyattacks.PreventHighFrequencyAttacksListener;
+import com.yishian.function.preventhighfrequencyattacks.PreventHighFrequencyAttacksRunnable;
 import com.yishian.function.serverlistdisplaymodification.ServerListDisplayModificationListener;
 import org.bukkit.ChatColor;
 import org.bukkit.command.ConsoleCommandSender;
@@ -163,19 +165,19 @@ public final class Main extends JavaPlugin {
         walkSpeedCommand.setExecutor(new WalkSpeedCommand());
 
         //申请传送至该玩家位置
-        PluginCommand TpaCommand = getCommand(TpaEnum.TPA_COMMAND.getCommand());
-        TpaCommand.setPermission(TpaEnum.TPA_PERMISSION.getCommand());
-        TpaCommand.setExecutor(new TpaCommand());
+        PluginCommand tpaCommand = getCommand(TpaEnum.TPA_COMMAND.getCommand());
+        tpaCommand.setPermission(TpaEnum.TPA_PERMISSION.getCommand());
+        tpaCommand.setExecutor(new TpaCommand());
 
         //取消申请传送
-        PluginCommand TpaCancelCommand = getCommand(TpaCancelEnum.TPA_CANCEL_COMMAND.getCommand());
-        TpaCancelCommand.setPermission(TpaEnum.TPA_PERMISSION.getCommand());
-        TpaCancelCommand.setExecutor(new TpaCancelCommand());
+        PluginCommand tpaCancelCommand = getCommand(TpaCancelEnum.TPA_CANCEL_COMMAND.getCommand());
+        tpaCancelCommand.setPermission(TpaEnum.TPA_PERMISSION.getCommand());
+        tpaCancelCommand.setExecutor(new TpaCancelCommand());
 
         //同意申请传送
-        PluginCommand TpaCceptCommand = getCommand(TpaCceptEnum.TPA_CCEPT_COMMAND.getCommand());
-        TpaCceptCommand.setPermission(TpaEnum.TPA_PERMISSION.getCommand());
-        TpaCceptCommand.setExecutor(new TpaCceptCommand());
+        PluginCommand tpaCceptCommand = getCommand(TpaCceptEnum.TPA_CCEPT_COMMAND.getCommand());
+        tpaCceptCommand.setPermission(TpaEnum.TPA_PERMISSION.getCommand());
+        tpaCceptCommand.setExecutor(new TpaCceptCommand());
 
         //拒绝申请传送
         PluginCommand tpaDenyCommand = getCommand(TpaDenyEnum.TPA_DENY_COMMAND.getCommand());
@@ -298,6 +300,12 @@ public final class Main extends JavaPlugin {
             pluginManager.registerEvents(new ServerListDisplayModificationListener(), this);
             consoleSender.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + "已开启修改服务器列表显示"));
         }
+
+        //限制高频攻击
+        if (config.getConfigurationSection("prevent-high-hrequency-attacks").getBoolean(CommonEnum.FUNCTION_IS_ENABLE.getCommand())) {
+            pluginManager.registerEvents(new PreventHighFrequencyAttacksListener(), this);
+            consoleSender.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + "已开启限制高频攻击"));
+        }
     }
 
     /**
@@ -318,12 +326,19 @@ public final class Main extends JavaPlugin {
             //按照tick时间计算，1tick=0.05s，20tick=1s
             new AntiHighFrequencyRedStoneRunnable().runTaskTimer(this, 0, configurationSection.getInt(timeString) * 20L);
         }
+
+        //限制高频攻击定时检测
+        configurationSection = config.getConfigurationSection("prevent-high-hrequency-attacks");
+        if (configurationSection.getBoolean(CommonEnum.FUNCTION_IS_ENABLE.getCommand())) {
+            //按照tick时间计算，1tick=0.05s，20tick=1s
+            new PreventHighFrequencyAttacksRunnable().runTaskTimer(this, 0, configurationSection.getInt(timeString) * 20L);
+        }
     }
 
     /**
      * 注册指令配置
      */
-    public void registerCommandConfig(){
+    public void registerCommandConfig() {
         //创建home配置文件
         try {
             SetHomeConfig.loadHomeConfigFile();

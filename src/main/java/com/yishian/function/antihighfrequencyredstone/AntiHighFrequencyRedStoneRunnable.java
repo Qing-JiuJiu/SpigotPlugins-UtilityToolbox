@@ -29,7 +29,7 @@ public class AntiHighFrequencyRedStoneRunnable extends BukkitRunnable {
         //得到配置文件相关信息
         FileConfiguration serverConfig = PluginUtils.getServerConfig();
         ConfigurationSection functionConfiguration = serverConfig.getConfigurationSection("anti-high-frequency-red-stone");
-        //得到限制列表
+        //得到限制次数
         int limit = functionConfiguration.getInt("limit");
         //得到限制列表
         List<String> anitList = functionConfiguration.getStringList("anti-red-stone-list");
