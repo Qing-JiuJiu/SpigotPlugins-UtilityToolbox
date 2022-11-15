@@ -9,6 +9,9 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * @author XinQi
+ */
 public class SetHomeConfig {
 
     public static YamlConfiguration homeFileYaml;

@@ -6,7 +6,6 @@ import com.yishian.common.PluginUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.server.ServerListPingEvent;
 
@@ -21,7 +20,7 @@ public class ServerListDisplayModificationListener implements Listener {
     /**
      * 修改显示
      */
-    @EventHandler(priority = EventPriority.MONITOR)
+    @EventHandler
     public void onServerList(ServerListPingEvent serverListPingEvent) {
         //获取配置文件里该指令的消息提示
         ConfigurationSection serverConfig = PluginUtils.getServerConfig();
@@ -44,7 +43,6 @@ public class ServerListDisplayModificationListener implements Listener {
                 throw new RuntimeException(e);
             }
         }
-
     }
 }
 

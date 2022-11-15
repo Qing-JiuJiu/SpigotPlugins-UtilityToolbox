@@ -266,11 +266,13 @@ public class MusterPlayerCommand implements TabExecutor {
                 return true;
             }
 
+            //判断是否有之前召集的位置
             if (musterLocation == null) {
                 sender.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + musterPlayerMessage.getString("musterplayer-apply-again-error")));
                 return true;
             }
 
+            //判断玩家数量
             Collection<? extends Player> onlinePlayers = Bukkit.getOnlinePlayers();
             if (onlinePlayers.size() == 1) {
                 sender.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + musterPlayerMessage.getString("musterplayer-apply-start-error")));
@@ -336,7 +338,6 @@ public class MusterPlayerCommand implements TabExecutor {
      * 开始召集
      */
     private void musterPlayerStart(Player player, String[] args, String messagePrefix, ConfigurationSection musterPlayerMessage, Collection<? extends Player> onlinePlayers, Boolean isAgain) {
-
         //发送相关召集信息
         if (isAgain) {
             player.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + musterPlayerMessage.getString("musterplayer-apply-again")));

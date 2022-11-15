@@ -16,7 +16,7 @@ public class SetSnapTpListener implements Listener {
      *
      * @param playerQuitEvent 玩家离开服务器监听
      */
-    @EventHandler(priority = EventPriority.LOWEST)
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void playerOnLeave(PlayerQuitEvent playerQuitEvent) {
         SetSnapTpCommand.transfeRecordMap.remove(playerQuitEvent.getPlayer());
     }

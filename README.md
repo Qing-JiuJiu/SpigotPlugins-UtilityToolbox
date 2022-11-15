@@ -6,7 +6,7 @@
 
 适用版本：1.7，1.8，1.9，1.10，1.11，1.12，1.13，1.14，1.15，1.16，1.17，1.18，1.19
 
-最新版本：2.1.1
+最新版本：2.2.1
 
 下载链接：[https://www.spigotmc.org/resources/utilitytoolbox-add-common-commands-and-server-functions-1-7-1-19x.104791/](https://www.spigotmc.org/resources/utilitytoolbox-add-common-commands-and-server-functions-1-7-1-19x.104791/)
 
@@ -64,6 +64,12 @@
 优化配置文件内容，添加了更多注释
 #2.1.2
 优化代码，将旧代码逻辑修改至新代码逻辑，增加代码可读性
+#2.1.3
+添加高频红石摧毁时判断该位置是否还是红石，否则在特殊场景下会导致摧毁其他物品
+#2.2.0
+添加连点器检测功能
+#2.2.1
+修复自动重生后back指令无法回到之前位置的异常
 ```
 
 ## 配置文件

@@ -10,6 +10,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
@@ -43,7 +44,7 @@ public class BackListener implements Listener {
      *
      * @param playerDeathEvent 即将死亡的玩家
      */
-    @EventHandler
+    @EventHandler(priority = EventPriority.LOWEST)
     public void playerDeath(PlayerDeathEvent playerDeathEvent) {
         Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getProvidingPlugin(Main.class), () -> {
             Player player = playerDeathEvent.getEntity();

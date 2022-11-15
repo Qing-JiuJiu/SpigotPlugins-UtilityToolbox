@@ -26,7 +26,7 @@ public class TeleportListener implements Listener {
      * 禁止传送
      * @param playerTeleportEvent 即将传送的玩家
      */
-    @EventHandler(priority = EventPriority.HIGHEST)
+    @EventHandler(priority = EventPriority.LOWEST)
     public void playerTeleport(PlayerTeleportEvent playerTeleportEvent) {
         PlayerTeleportEvent.TeleportCause teleportCause = playerTeleportEvent.getCause();
         //判断是否允许传送,

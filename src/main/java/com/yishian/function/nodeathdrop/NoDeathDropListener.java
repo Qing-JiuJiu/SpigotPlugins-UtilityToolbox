@@ -14,7 +14,7 @@ public class NoDeathDropListener implements Listener {
      * 无死亡掉落
      * @param playerDeathEvent 即将死亡的玩家
      */
-    @EventHandler(priority = EventPriority.HIGHEST)
+    @EventHandler(priority = EventPriority.LOWEST)
     public void noDeathDrop(PlayerDeathEvent playerDeathEvent) {
         playerDeathEvent.setKeepInventory(true);
         playerDeathEvent.setKeepLevel(true);
