@@ -62,7 +62,6 @@ public class PreventHighFrequencyAttacksListener implements Listener {
         if (entityDamageByEntityEvent.getCause() == EntityDamageEvent.DamageCause.ENTITY_ATTACK) {
             PreventHighFrequencyAttacksRunnable.detectList.merge(entity.getUniqueId(), 1, Integer::sum);
         }
-        PreventHighFrequencyAttacksRunnable.detectList.forEach((a, b) -> Bukkit.getServer().broadcastMessage(b.toString()));
     }
 
     /**
