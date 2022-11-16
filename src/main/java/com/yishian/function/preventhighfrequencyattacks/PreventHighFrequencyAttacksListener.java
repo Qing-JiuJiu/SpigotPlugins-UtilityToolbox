@@ -1,6 +1,5 @@
 package com.yishian.function.preventhighfrequencyattacks;
 
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -43,10 +42,9 @@ public class PreventHighFrequencyAttacksListener implements Listener {
             if (isDropItem) {
                 isDropItem = false;
             } else {
+                //登记一次
                 PreventHighFrequencyAttacksRunnable.detectList.merge(playerInteractEvent.getPlayer().getUniqueId(), 1, Integer::sum);
             }
-            //登记一次
-            PreventHighFrequencyAttacksRunnable.detectList.forEach((a, b) -> Bukkit.getServer().broadcastMessage(b.toString()));
         }
     }
 
