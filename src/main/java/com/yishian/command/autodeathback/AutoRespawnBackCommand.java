@@ -42,10 +42,10 @@ public class AutoRespawnBackCommand implements CommandExecutor {
         //如果包含该玩家的UUID则移除，否则添加
         if (autoDeathBackList.contains(player.getUniqueId())) {
             autoDeathBackList.remove(player.getUniqueId());
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + autoDeathBackMessage.getString("autorespawnback-apply-open")));
+            player.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + autoDeathBackMessage.getString("autorespawnback-apply-close")));
         } else {
             autoDeathBackList.add(player.getUniqueId());
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + autoDeathBackMessage.getString("autorespawnback-apply-close")));
+            player.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + autoDeathBackMessage.getString("autorespawnback-apply-open")));
         }
         return true;
     }
