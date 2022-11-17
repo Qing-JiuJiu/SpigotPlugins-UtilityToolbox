@@ -26,7 +26,7 @@ public class BackCommand implements CommandExecutor {
 
     String backCommand = BackEnum.BACK_COMMAND.getCommand();
 
-    static Map<UUID, Location> playerBackMap = new HashMap<>();
+    public static Map<UUID, Location> playerBackMap = new HashMap<>();
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {

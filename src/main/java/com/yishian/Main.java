@@ -1,5 +1,8 @@
 package com.yishian;
 
+import com.yishian.command.autodeathback.AutoRespawnBackCommand;
+import com.yishian.command.autodeathback.AutoRespawnBackEnum;
+import com.yishian.command.autodeathback.AutoRespawnBackListener;
 import com.yishian.command.back.BackCommand;
 import com.yishian.command.back.BackEnum;
 import com.yishian.command.back.BackListener;
@@ -238,6 +241,11 @@ public final class Main extends JavaPlugin {
         PluginCommand musterPlayerCommand = getCommand(MusterPlayerEnum.MUSTER_PLAYER_COMMAND.getCommand());
         musterPlayerCommand.setPermission(MusterPlayerEnum.MUSTER_PLAYER_PERMISSION.getCommand());
         musterPlayerCommand.setExecutor(new MusterPlayerCommand());
+
+        //开关自动死亡回到死亡位置
+        PluginCommand AutoRespawnBackCommand = getCommand(AutoRespawnBackEnum.AUTO_RESPAWN_BACK_COMMAND.getCommand());
+        AutoRespawnBackCommand.setPermission(AutoRespawnBackEnum.AUTO_RESPAWN_BACK_PERMISSION.getCommand());
+        AutoRespawnBackCommand.setExecutor(new AutoRespawnBackCommand());
     }
 
     /**
@@ -306,6 +314,9 @@ public final class Main extends JavaPlugin {
             pluginManager.registerEvents(new PreventHighFrequencyAttacksListener(), this);
             consoleSender.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + "已开启限制高频攻击"));
         }
+
+        //玩家死亡自动回到死亡位置
+        pluginManager.registerEvents(new AutoRespawnBackListener(), this);
     }
 
     /**

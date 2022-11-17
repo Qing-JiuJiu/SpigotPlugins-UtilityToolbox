@@ -16,7 +16,12 @@ public class NoDeathDropListener implements Listener {
      */
     @EventHandler(priority = EventPriority.LOWEST)
     public void noDeathDrop(PlayerDeathEvent playerDeathEvent) {
+        //保存库存并取消物品掉落
+        playerDeathEvent.getDrops().clear();
         playerDeathEvent.setKeepInventory(true);
+
+        //保存经验并取消经验掉落
+        playerDeathEvent.setDroppedExp(0);
         playerDeathEvent.setKeepLevel(true);
     }
 }

@@ -55,7 +55,7 @@ limit-high-altitude-fluid:
   #是否所有玩家都能看到流体被限制的消息，否则只有拥有UtilityToolbox.LimitFlowMessage权限的用户才能看到
   is-broadcast-message: true
   #限制高度
-  limit-high: 80
+  limit-high: 100
   limit-fluid-list:
     #默认水和岩浆，该名字为流动液体的名字
     - 'minecraft:water'
@@ -63,7 +63,7 @@ limit-high-altitude-fluid:
   #限制的世界
   limit-world-list:
     #*为限制所有世界
-    - '*'
+    - 'world'
   message:
     destroy-message: "玩家&3%player%&7附近存在高空流体，坐标&3x:%x% y:%y% z:%z%&7，已限制"
 
@@ -293,11 +293,19 @@ killself:
     killself-console-error: '控制台请使用官方指令：kill [目标]'
     killself-command-error: '自杀指令格式错误，正确格式: &c/killself'
 
+#自动回到死亡位置
+autorespawnback:
+  message:
+    autorespawnback-apply-open: '你已开启重生后自动回到死亡位置'
+    autorespawnback-apply-close: '你已关闭重生后自动回到死亡位置'
+    autorespawnback-apply: '你已重生，已自动传送回死亡位置'
+    autorespawnback-console-error: '控制台无法使用此命令'
+
 #传送到上一个传送/死亡的位置
 back:
   message:
     back-apply: '你已回到被传送前的位置'
-    back-died-tips: '服务器已允许玩家使用&c/back&7指令回到死亡位置'
+    back-died-tips: '你在下一次传送前可使用&c/back&7指令回到死亡位置'
     back-died-no-tp-tips: '服务器&c/back&7指令已记录你的死亡位置'
     back-no-location: '你暂时没有返回的位置'
     back-console-error: '控制台无法使用返回指令'
@@ -320,7 +328,7 @@ copyres:
     - ''
   #黑名单，写法：钻石甲：minecraft:diamond_chestplate
   black-list:
-  #默认禁用:附魔金苹果、金苹果、金萝卜、黄金、金粒、金块、tnt、火药
+  #默认禁用:附魔金苹果、金苹果、金萝卜、黄金、金粒、金块、tnt、火药、粗金块、粗金
     - 'minecraft:enchanted_golden_apple'
     - 'minecraft:golden_apple'
     - 'minecraft:golden_carrot'
@@ -329,6 +337,8 @@ copyres:
     - 'minecraft:gold_block'
     - 'minecraft:tnt'
     - 'minecraft:gunpowder'
+    - 'minecraft:raw_gold_block'
+    - 'minecraft:raw_gold'
   #通配符列表写法(只写前缀)，例如minecraft:开头的所有物品，minecraft:
   wildcard-list:
     - ''

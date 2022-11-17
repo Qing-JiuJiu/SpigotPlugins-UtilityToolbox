@@ -72,6 +72,10 @@
 修复自动重生后back指令无法回到之前位置的异常
 #2.2.2
 删除遗留在限制高频攻击里的一个打印输出用于测试的代码
+#2.3.0
+添加autorespawnback指令，用于玩家重生后可自动回到重生前位置。
+修复无死亡掉落功能玩家死亡后会出现玩家库存保留却依然还会掉落物品的问题。
+优化了部分配置文件内容。
 ```
 
 ## 配置文件
@@ -114,7 +118,7 @@ auto-send-server-messages:
 #高频红石检测
 anti-high-frequency-red-stone:
   enable: false
-  #是否所有玩家都能看到红石被摧毁消息，否则只有UtilityToolbox.AntiRedStoneMessage权限的用户才能看
+  #是否所有玩家都能看到红石被摧毁消息，否则只有拥有UtilityToolbox.AntiRedStoneMessage权限的用户才能看到
   is-broadcast-message: true
   #红石在检测时间内的限制次数
   limit: 50
@@ -131,10 +135,10 @@ anti-high-frequency-red-stone:
 #限制高空流体
 limit-high-altitude-fluid:
   enable: false
-  #是否所有玩家都能看到流体被限制的消息，否则只有UtilityToolbox.LimitFlowMessage权限的用户才能看
+  #是否所有玩家都能看到流体被限制的消息，否则只有拥有UtilityToolbox.LimitFlowMessage权限的用户才能看到
   is-broadcast-message: true
   #限制高度
-  limit-high: 80
+  limit-high: 100
   limit-fluid-list:
     #默认水和岩浆，该名字为流动液体的名字
     - 'minecraft:water'
@@ -142,7 +146,7 @@ limit-high-altitude-fluid:
   #限制的世界
   limit-world-list:
     #*为限制所有世界
-    - '*'
+    - 'world'
   message:
     destroy-message: "玩家&3%player%&7附近存在高空流体，坐标&3x:%x% y:%y% z:%z%&7，已限制"
 
@@ -164,6 +168,22 @@ server-list-display-modification:
   message:
     first-line: '&e[UtilityToolbox] &7欢迎使用本插件'
     second-line: '&e[UtilityToolbox] &7欢迎使用本插件'
+
+#连点左键限制
+prevent-high-hrequency-attacks:
+  enable: false
+  #是否所有玩家都能看到因高频左键被踢出服务器的消息，否则只有拥有UtilityToolbox.PlayerFrequencyAttacksKickMessage权限的用户才能看到
+  is-broadcast-message: true
+  #是否踢出服务器
+  is-kill: false
+  #在检测时间内的限制次数
+  limit: 50
+  #检测时间，默认秒
+  time: 3
+  message:
+    player-kick-message: "&c你因疑似使用连点器被服务器踢出，若有疑问请联系服主，CPS:%cps%"
+    broadcast-kick-message: "&c玩家&3%player%&c疑似使用连点器，已踢出服务器，&cCPS:%cps%"
+    broadcast-no-kick-message: "&c玩家&3%player%&c疑似使用连点器，&cCPS:%cps%"
 
 #恢复生命值
 heal:
@@ -273,7 +293,7 @@ tpa:
     tpa-apply-tpacancel-tips: '取消请求输入: &c/tpacancel'
     tpa-apply-accept-tips: '同意请求输入: &c/tpaccept'
     tpa-apply-deny-tips: '拒绝请求输入: &c/tpadeny'
-    tpa-console-error: '控制台无法使用传送相关指令'
+    tpa-console-error: '控制台无法使用申请传送相关指令'
     tpa-command-error: '传送指令格式错误，正确格式: &c/tpa <其他玩家名称>'
     tpa-others-leave-server: '玩家&3%others-player%&7已离开服务器，已自动取消其传送请求'
 
@@ -283,7 +303,7 @@ tpacancel:
     tpacancel-apply: '已取消传送请求'
     tpacancel-others: '玩家&3%player%&7已取消传送请求'
     tpacancel-no-tpa-error: '你没有待处理的传送请求'
-    tpacancel-console-error: '控制台无法使用传送相关指令'
+    tpacancel-console-error: '控制台无法使用申请传送相关指令'
 
 #同意传送
 tpaccept:
@@ -291,7 +311,7 @@ tpaccept:
     tpaccept-apply: '你已接受玩家&3%others-player%&7的传送请求'
     tpaccept-apply-is-self: '请不要接受自己的传送请求'
     tpaccept-apply-others: '你向玩家&3%player%&7申请的传送请求已被接受'
-    tpaccept-console-error: '控制台无法使用传送相关指令'
+    tpaccept-console-error: '控制台无法使用申请传送相关指令'
     tpaccept-others-no-exist: '玩家&3%others-player%&7不存在，请检查玩家名字'
     tpaccept-command-error: '同意请求指令格式错误，正确格式: &c/tpaccept [其他玩家名称]'
     tpaccept-no-tpa-error: '你没有待处理的传送请求'
@@ -303,7 +323,7 @@ tpadeny:
     tpadeny-apply: '你已拒绝玩家&3%others-player%&7的传送请求'
     tpadeny-apply-is-self: '请不要拒绝自己的传送请求'
     tpadeny-apply-others: '你向玩家&3%player%&7申请的传送请求已被拒绝'
-    tpadeny-console-error: '控制台无法使用传送相关指令'
+    tpadeny-console-error: '控制台无法使用申请传送相关指令'
     tpadeny-others-no-exist: '玩家&3%others-player%&7不存在，请检查玩家名字'
     tpadeny-command-error: '拒绝请求指令格式错误，正确格式: &c/tpadeny [其他玩家名称]'
     tpadeny-no-tpa-error: '你没有待处理的传送请求'
@@ -356,11 +376,19 @@ killself:
     killself-console-error: '控制台请使用官方指令：kill [目标]'
     killself-command-error: '自杀指令格式错误，正确格式: &c/killself'
 
+#自动回到死亡位置
+autorespawnback:
+  message:
+    autorespawnback-apply-open: '你已开启重生后自动回到死亡位置'
+    autorespawnback-apply-close: '你已关闭重生后自动回到死亡位置'
+    autorespawnback-apply: '你已重生，已自动传送回死亡位置'
+    autorespawnback-console-error: '控制台无法使用此命令'
+
 #传送到上一个传送/死亡的位置
 back:
   message:
     back-apply: '你已回到被传送前的位置'
-    back-died-tips: '服务器已允许使用&c/back&7指令回到死亡位置'
+    back-died-tips: '你在下一次传送前可使用&c/back&7指令回到死亡位置'
     back-died-no-tp-tips: '服务器&c/back&7指令已记录你的死亡位置'
     back-no-location: '你暂时没有返回的位置'
     back-console-error: '控制台无法使用返回指令'
@@ -383,7 +411,7 @@ copyres:
     - ''
   #黑名单，写法：钻石甲：minecraft:diamond_chestplate
   black-list:
-  #默认禁用:附魔金苹果、金苹果、金萝卜、黄金、金粒、金块、tnt、火药
+  #默认禁用:附魔金苹果、金苹果、金萝卜、黄金、金粒、金块、tnt、火药、粗金块、粗金
     - 'minecraft:enchanted_golden_apple'
     - 'minecraft:golden_apple'
     - 'minecraft:golden_carrot'
@@ -392,6 +420,8 @@ copyres:
     - 'minecraft:gold_block'
     - 'minecraft:tnt'
     - 'minecraft:gunpowder'
+    - 'minecraft:raw_gold_block'
+    - 'minecraft:raw_gold'
   #通配符列表写法(只写前缀)，例如minecraft:开头的所有物品，minecraft:
   wildcard-list:
     - ''

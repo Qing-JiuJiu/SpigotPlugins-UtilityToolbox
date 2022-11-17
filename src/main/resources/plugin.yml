@@ -48,6 +48,8 @@ commands:
     description: 回到临时传送点
   musterplayer:
     description: 召集玩家
+  autorespawnback:
+    description: 自动重生后回到死亡位置
 
 permissions:
   UtilityToolbox.heal:
