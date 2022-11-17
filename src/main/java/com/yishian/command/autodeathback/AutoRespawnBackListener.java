@@ -30,7 +30,7 @@ public class AutoRespawnBackListener implements Listener {
     public void playerRespawn(PlayerRespawnEvent playerRespawnEvent) {
         Player player = playerRespawnEvent.getPlayer();
         UUID playerUniqueId = player.getUniqueId();
-        if (AutoRespawnBackCommand.autoDeathBackList.contains(playerUniqueId)) {
+        if (AutoRespawnBackCommand.autoRespawnBackList.contains(playerUniqueId)) {
             //获取配置文件消息
             ConfigurationSection configurationSection = PluginUtils.getServerConfig();
             String messagePrefix = configurationSection.getConfigurationSection(CommonEnum.PLUGIN_MESSAGE.getCommand()).getString(CommonEnum.MESSAGE_PREFIX.getCommand());

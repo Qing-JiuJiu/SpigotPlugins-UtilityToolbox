@@ -62,7 +62,7 @@ public class BackListener implements Listener {
                 UUID playerUniqueId = player.getUniqueId();
                 BackCommand.playerBackMap.put(playerUniqueId, player.getLocation());
                 if (TeleportCommand.allowTp) {
-                    if (!AutoRespawnBackCommand.autoDeathBackList.contains(playerUniqueId)){
+                    if (!AutoRespawnBackCommand.autoRespawnBackList.contains(playerUniqueId)){
                         player.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + backMessage.getString("back-died-tips")));
                     }
                 } else {

@@ -67,10 +67,6 @@ limit-high-altitude-fluid:
   message:
     destroy-message: "玩家&3%player%&7附近存在高空流体，坐标&3x:%x% y:%y% z:%z%&7，已限制"
 
-#玩家自动重生
-auto-respawn:
-  enable: false
-
 #玩家无死亡掉落
 no-death-drop:
   enable: false
@@ -293,14 +289,6 @@ killself:
     killself-console-error: '控制台请使用官方指令：kill [目标]'
     killself-command-error: '自杀指令格式错误，正确格式: &c/killself'
 
-#自动回到死亡位置
-autorespawnback:
-  message:
-    autorespawnback-apply-open: '你已开启重生后自动回到死亡位置'
-    autorespawnback-apply-close: '你已关闭重生后自动回到死亡位置'
-    autorespawnback-apply: '你已重生，已自动传送回死亡位置'
-    autorespawnback-console-error: '控制台无法使用此命令'
-
 #传送到上一个传送/死亡的位置
 back:
   message:
@@ -410,3 +398,19 @@ musterplayer:
     musterplayer-player-leave-callee: '被召集者&3%player%&7已离开服务器，已在被召集列表中移除该玩家'
     musterplayer-console-error: '控制台仅能使用&cmusterplayer cancel&7指令取消玩家召集'
     musterplayer-command-error: '召集指令错误，正确格式: &c/musterplayer <参数>'
+
+#重生后自动回到死亡位置
+autorespawnback:
+  message:
+    autorespawnback-apply-open: '你已开启重生后自动回到死亡位置'
+    autorespawnback-apply-close: '你已关闭重生后自动回到死亡位置'
+    autorespawnback-apply: '你已重生，已自动传送回死亡位置'
+    autorespawnback-console-error: '控制台无法使用此命令'
+
+#自动重生
+autorespawn:
+  message:
+    autorespawn-apply-open: '你已开启自动重生'
+    autorespawn-apply-close: '你已关闭自动重生'
+    autorespawn-apply: '你已自动跳过死亡结算界面'
+    autorespawn-console-error: '控制台无法使用此命令'

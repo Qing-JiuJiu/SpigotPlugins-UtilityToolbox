@@ -50,6 +50,8 @@ commands:
     description: 召集玩家
   autorespawnback:
     description: 自动重生后回到死亡位置
+  autorespawn:
+    description: 自动重生
 
 permissions:
   UtilityToolbox.heal:

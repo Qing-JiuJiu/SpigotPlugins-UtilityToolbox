@@ -3,6 +3,8 @@ package com.yishian;
 import com.yishian.command.autodeathback.AutoRespawnBackCommand;
 import com.yishian.command.autodeathback.AutoRespawnBackEnum;
 import com.yishian.command.autodeathback.AutoRespawnBackListener;
+import com.yishian.command.autorespawn.AutoRespawnCommand;
+import com.yishian.command.autorespawn.AutoRespawnEnum;
 import com.yishian.command.back.BackCommand;
 import com.yishian.command.back.BackEnum;
 import com.yishian.command.back.BackListener;
@@ -55,7 +57,7 @@ import com.yishian.command.heal.HealCommand;
 import com.yishian.command.healandfeed.HealAndFeedCommand;
 import com.yishian.command.walkspeed.WalkSpeedCommand;
 import com.yishian.common.CommonCommand;
-import com.yishian.function.autorespawn.AutoRespawnListener;
+import com.yishian.command.autorespawn.AutoRespawnListener;
 import com.yishian.function.customjoinandleave.CustomJoinAndLeaveListener;
 import com.yishian.function.joinserverwelcome.JoinServerWelcomeListener;
 import com.yishian.function.autosendservermessage.AutoSendServerMessageRunnable;
@@ -243,9 +245,14 @@ public final class Main extends JavaPlugin {
         musterPlayerCommand.setExecutor(new MusterPlayerCommand());
 
         //开关自动死亡回到死亡位置
-        PluginCommand AutoRespawnBackCommand = getCommand(AutoRespawnBackEnum.AUTO_RESPAWN_BACK_COMMAND.getCommand());
-        AutoRespawnBackCommand.setPermission(AutoRespawnBackEnum.AUTO_RESPAWN_BACK_PERMISSION.getCommand());
-        AutoRespawnBackCommand.setExecutor(new AutoRespawnBackCommand());
+        PluginCommand autoRespawnBackCommand = getCommand(AutoRespawnBackEnum.AUTO_RESPAWN_BACK_COMMAND.getCommand());
+        autoRespawnBackCommand.setPermission(AutoRespawnBackEnum.AUTO_RESPAWN_BACK_PERMISSION.getCommand());
+        autoRespawnBackCommand.setExecutor(new AutoRespawnBackCommand());
+
+        //开关自动重生
+        PluginCommand autoRespawnCommand = getCommand(AutoRespawnEnum.AUTO_RESPAWN_COMMAND.getCommand());
+        autoRespawnCommand.setPermission(AutoRespawnEnum.AUTO_RESPAWN_PERMISSION.getCommand());
+        autoRespawnCommand.setExecutor(new AutoRespawnCommand());
     }
 
     /**
@@ -282,12 +289,6 @@ public final class Main extends JavaPlugin {
             consoleSender.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + "已开启玩家无死亡掉落"));
         }
 
-        //玩家死亡自动重生
-        if (config.getConfigurationSection("auto-respawn").getBoolean(CommonEnum.FUNCTION_IS_ENABLE.getCommand())) {
-            pluginManager.registerEvents(new AutoRespawnListener(), this);
-            consoleSender.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + "已开启玩家死亡自动重生"));
-        }
-
         //离开服务器删除tpa相关信息
         pluginManager.registerEvents(new TpaPlayerLeaveServerListener(), this);
 
@@ -314,6 +315,9 @@ public final class Main extends JavaPlugin {
             pluginManager.registerEvents(new PreventHighFrequencyAttacksListener(), this);
             consoleSender.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + "已开启限制高频攻击"));
         }
+
+        //玩家死亡自动重生
+        pluginManager.registerEvents(new AutoRespawnListener(), this);
 
         //玩家死亡自动回到死亡位置
         pluginManager.registerEvents(new AutoRespawnBackListener(), this);
