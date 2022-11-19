@@ -68,7 +68,7 @@ public class FlyCommand implements TabExecutor {
                     //判断参数指向的是否是自己
                     if (!playerName.equals(othersPlayerName)) {
                         //判断执行开关他人飞行指令的玩家权限
-                        if (!player.hasPermission(FlyEnum.FLY_OTHERS_PERMISSION.getCommand())) {
+                        if (!player.hasPermission(FlyEnum.FLY_OTHERS_PERMISSION.getCommand()) && !player.isOp()) {
                             player.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + flyMessage.getString("fly-others-no-permission")));
                             return true;
                         }

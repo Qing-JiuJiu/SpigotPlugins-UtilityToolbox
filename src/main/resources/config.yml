@@ -1,8 +1,8 @@
 #这是一个配置文件，所有主功能的开启和关闭都必须重启服务器/重新加载插件
 plugin-message:
-  message-prefix: '&e[UtilityToolbox] &7'
-  reload-message: '配置文件重载成功'
-  command-args-error: '子指令无效或无子指令，正确格式: &c/UtilityToolbox <子指令>'
+  message-prefix: '&e[UtilityToolbox] &6'
+  reload-message: '&a配置文件重载成功'
+  command-args-error: '&c子指令无效或无子指令，正确格式: &6/UtilityToolbox <子指令>'
 
 #自定义加入和离开服务器消息
 join-and-leave-server-message:
@@ -19,9 +19,9 @@ join-server-welcome:
   first-join-server-welcome-enable: false
   message:
     join-server-welcome-message:
-      - '&e[UtilityToolbox] &7欢迎使用本插件'
+      - '&e[UtilityToolbox] &6欢迎使用本插件'
     first-join-server-welcome-message:
-      - '&e[UtilityToolbox] &7欢迎第一次使用本插件'
+      - '&e[UtilityToolbox] &6欢迎第一次使用本插件'
 
 #自动发送服务器消息，类似公告
 auto-send-server-messages:
@@ -30,7 +30,7 @@ auto-send-server-messages:
   time: 600
   message:
     send-messages:
-      - '&e[UtilityToolbox] &7欢迎使用本插件'
+      - '&e[UtilityToolbox] &6欢迎使用本插件'
 
 #高频红石检测
 anti-high-frequency-red-stone:
@@ -47,7 +47,7 @@ anti-high-frequency-red-stone:
     - 'minecraft:redstone_wire'
     - 'minecraft:lever'
   message:
-    destroy-message: "玩家&3%player%&7附近存在高频红石，坐标&3x:%x% y:%y% z:%z%&7，已摧毁"
+    destroy-message: "玩家&3%player%&6附近存在高频红石，坐标&3x:%x% y:%y% z:%z%&6，已摧毁"
 
 #限制高空流体
 limit-high-altitude-fluid:
@@ -65,7 +65,7 @@ limit-high-altitude-fluid:
     #*为限制所有世界
     - 'world'
   message:
-    destroy-message: "玩家&3%player%&7附近存在高空流体，坐标&3x:%x% y:%y% z:%z%&7，已限制"
+    destroy-message: "玩家&3%player%&6附近存在高空流体，坐标&3x:%x% y:%y% z:%z%&6，已限制"
 
 #玩家无死亡掉落
 no-death-drop:
@@ -79,8 +79,8 @@ server-list-display-modification:
   #图标名称，放置在插件配置文件根目录下，规格必须为64*64，如果该图标不存在则无影响
   icon: icon.png
   message:
-    first-line: '&e[UtilityToolbox] &7欢迎使用本插件'
-    second-line: '&e[UtilityToolbox] &7欢迎使用本插件'
+    first-line: '&e[UtilityToolbox] &6欢迎使用本插件'
+    second-line: '&e[UtilityToolbox] &6欢迎使用本插件'
 
 #连点左键限制
 prevent-high-hrequency-attacks:
@@ -95,175 +95,175 @@ prevent-high-hrequency-attacks:
   time: 3
   message:
     player-kick-message: "&c你因疑似使用连点器被服务器踢出，若有疑问请联系服主，CPS:%cps%"
-    broadcast-kick-message: "&c玩家&3%player%&c疑似使用连点器，已踢出服务器，&cCPS:%cps%"
-    broadcast-no-kick-message: "&c玩家&3%player%&c疑似使用连点器，&cCPS:%cps%"
+    broadcast-kick-message: "&c玩家&3%player%&c疑似使用连点器，已踢出服务器，CPS:%cps%"
+    broadcast-no-kick-message: "&c玩家&3%player%&c疑似使用连点器，CPS:%cps%"
 
 #恢复生命值
 heal:
   message:
-    heal-self: '你已恢复生命值'
-    heal-others: '你已恢复&3%others-player%&7的生命值'
-    heal-others-no-exist: '玩家&3%others-player%&7不存在，请检查玩家名字'
-    heal-others-is-self: '你已恢复生命值，可以使用不带参数的指令来恢复自己'
-    heal-others-no-permission: '你没有执行恢复他人生命值指令的权限'
-    heal-by-others: '你已被&3%player%&7恢复生命值'
+    heal-self: '&a你已恢复生命值'
+    heal-others: '&a你已恢复&3%others-player%&a的生命值'
+    heal-others-no-exist: '&c玩家&3%others-player%&c不存在，请检查玩家名字'
+    heal-others-is-self: '你已恢复生命值，你可以使用不带参数的指令来恢复自己'
+    heal-others-no-permission: '&c你没有执行恢复他人生命值指令的权限'
+    heal-by-others: '你已被&3%player%&6恢复生命值'
     heal-by-console: '你已被服务器恢复生命值'
-    heal-console-error: '控制台请执行恢复他人生命值的指令: &cheal <玩家名称>'
-    heal-command-error: '恢复生命值指令格式错误，正确格式: &c/heal [玩家名称]'
+    heal-console-error: '&c控制台请执行恢复他人生命值的指令: &6heal <玩家名称>'
+    heal-command-error: '&c恢复生命值指令格式错误，正确格式: &6/heal [玩家名称]'
 
 #恢复饱食度
 feed:
   message:
-    feed-self: '你已恢复饱食度'
-    feed-others: '你已恢复&3%others-player%&7的饱食度'
-    feed-others-no-exist: '玩家&3%others-player%&7不存在，请检查玩家名字'
-    feed-others-is-self: '你已恢复饱食度，可以使用不带参数的指令来恢复自己'
-    feed-others-no-permission: '你没有执行恢复他人饱食度指令的权限'
-    feed-by-others: '你已被&3%player%&7恢复饱食度'
+    feed-self: '&a你已恢复饱食度'
+    feed-others: '&a你已恢复&3%others-player%&a的饱食度'
+    feed-others-no-exist: '&c玩家&3%others-player%&c不存在，请检查玩家名字'
+    feed-others-is-self: '你已恢复饱食度，你可以使用不带参数的指令来恢复自己'
+    feed-others-no-permission: '&c你没有执行恢复他人饱食度指令的权限'
+    feed-by-others: '你已被&3%player%&6恢复饱食度'
     feed-by-console: '你已被服务器恢复饱食度'
-    feed-console-error: '控制台请执行恢复他人饱食度的指令: &cfeed <玩家名称>'
-    feed-command-error: '恢复饱食度指令格式错误，正确格式: &c/feed [玩家名称]'
+    feed-console-error: '&c控制台请执行恢复他人饱食度的指令: &6feed <玩家名称>'
+    feed-command-error: '&c恢复饱食度指令格式错误，正确格式: &6/feed [玩家名称]'
 
 #恢复生命值和饱食度
 #当拥有恢复生命值和饱食度指令时该指令可使用
 healandfeed:
   message:
-    heal-and-feed-self: '你已恢复生命值和饱食度'
-    heal-and-feed-others: '你已恢复&3%others-player%&7的生命值和饱食度'
-    heal-and-feed-others-no-exist: '玩家&3%others-player%&7不存在，请检查玩家名字'
+    heal-and-feed-self: '&a你已恢复生命值和饱食度'
+    heal-and-feed-others: '&a你已恢复&3%others-player%&a的生命值和饱食度'
+    heal-and-feed-others-no-exist: '&c玩家&3%others-player%&c不存在，请检查玩家名字'
     heal-and-feed-others-is-self: '你已恢复生命值和饱食度，可以使用不带参数的指令来恢复自己'
-    heal-and-feed-others-no-permission: '你没有执行恢复他人生命值和饱食度指令的权限'
-    heal-and-feed-by-others: '你已被&3%player%&7恢复生命值和饱食度'
+    heal-and-feed-others-no-permission: '&c你没有执行恢复他人生命值和饱食度指令的权限'
+    heal-and-feed-by-others: '你已被&3%player%&6恢复生命值和饱食度'
     heal-and-feed-by-console: '你已被服务器恢复生命值和饱食度'
-    heal-and-feed-console-error: '控制台请执行恢复他人生命值和饱食度的指令: &chealandfeed <玩家名称>'
-    heal-and-feed-command-error: '恢复生命值和饱食度指令格式错误，正确格式: &c/healandfeed [玩家名称]'
+    heal-and-feed-console-error: '&c控制台请执行恢复他人生命值和饱食度的指令: &6healandfeed <玩家名称>'
+    heal-and-feed-command-error: '&c恢复生命值和饱食度指令格式错误，正确格式: &6/healandfeed [玩家名称]'
 
 #飞行
 fly:
   message:
-    fly-self-open: '你已开启飞行'
-    fly-self-close: '你已关闭飞行'
-    fly-others-open: '你已开启&3%others-player%&7的飞行'
-    fly-others-close: '你已关闭&3%others-player%&7的飞行'
-    fly-others-no-exist: '玩家&3%others-player%&7不存在，请检查玩家名字'
+    fly-self-open: '&a你已开启飞行'
+    fly-self-close: '&a你已关闭飞行'
+    fly-others-open: '&a你已开启&3%others-player%&a的飞行'
+    fly-others-close: '&a你已关闭&3%others-player%&a的飞行'
+    fly-others-no-exist: '&c玩家&3%others-player%&c不存在，请检查玩家名字'
     fly-others-is-self-open: '你已开启飞行，可以使用不带参数的指令来开关飞行'
     fly-others-is-self-close: '你已关闭飞行，可以使用不带参数的指令来开关飞行'
-    fly-others-no-permission: '你没有执行开关他人飞行指令的权限'
-    fly-by-others-open: '你已被&3%player%&7开启飞行'
-    fly-by-others-close: '你已被&3%player%&7关闭飞行'
+    fly-others-no-permission: '&c你没有执行开关他人飞行指令的权限'
+    fly-by-others-open: '你已被&3%player%&6开启飞行'
+    fly-by-others-close: '你已被&3%player%&6关闭飞行'
     fly-by-console-open: '你已被服务器开启飞行'
     fly-by-console-close: '你已被服务器关闭飞行'
-    fly-console-error: '控制台请执行开关他人飞行的指令: &cfly <玩家名称>'
-    fly-command-error: '开关飞行指令格式错误，正确格式: &c/fly [玩家名称]'
+    fly-console-error: '&c控制台请执行开关他人飞行的指令: &6fly <玩家名称>'
+    fly-command-error: '&c开关飞行指令格式错误，正确格式: &6/fly [玩家名称]'
 
 #飞行速度
 flyspeed:
   message:
-    fly-speed-self-reset: '你已重置飞行速度'
-    fly-speed-self: '你已修改飞行速度为%fly-speed%'
-    fly-speed-self-args-error: '飞行速度参数错误，飞行速度只能为0-10，默认速度为1'
-    fly-speed-others: '你已修改&3%others-player%&7的飞行速度为%fly-speed%'
-    fly-speed-others-reset: '你已重置&3%others-player%&7的飞行速度'
+    fly-speed-self-reset: '&a你已重置飞行速度'
+    fly-speed-self: '&a你已修改飞行速度为%fly-speed%'
+    fly-speed-self-args-error: '&c飞行速度参数错误，飞行速度只能为0-10，默认速度为1'
+    fly-speed-others: '&a你已修改&3%others-player%&a的飞行速度为%fly-speed%'
+    fly-speed-others-reset: '&a你已重置&3%others-player%&a的飞行速度'
     fly-speed-others-reset-is-self: '你已重置飞行速度，修改自己可以不输入玩家名称'
     fly-speed-others-is-self: '你已修改飞行速度为%fly-speed%，修改自己可以不输入玩家名称'
-    fly-speed-others-no-exist: '玩家&3%others-player%&7不存在，请检查玩家名字'
-    fly-speed-others-no-permission: '你没有修改他人飞行速度指令的权限'
-    fly-speed-by-others-reset: '你已被&3%player%&7重置飞行速度'
+    fly-speed-others-no-exist: '&c玩家&3%others-player%&c不存在，请检查玩家名字'
+    fly-speed-others-no-permission: '&c你没有修改他人飞行速度指令的权限'
+    fly-speed-by-others-reset: '你已被&3%player%&6重置飞行速度'
     fly-speed-by-console-reset: '你已被服务器重置飞行速度'
-    fly-speed-by-others: '你已被&3%player%&7修改飞行速度为%fly-speed%'
+    fly-speed-by-others: '你已被&3%player%&6修改飞行速度为%fly-speed%'
     fly-speed-by-console: '你已被服务器修改飞行速度为%fly-speed%'
-    fly-speed-console-error: '控制台请执行修改他人飞行速度的指令: &cflyspeed [速度] <玩家名称>'
-    fly-speed-command-error: '修改飞行速度指令格式错误，格式: &c/flyspeed [速度] [玩家名称]'
+    fly-speed-console-error: '&c控制台请执行修改他人飞行速度的指令: &6flyspeed [速度] <玩家名称>'
+    fly-speed-command-error: '&c修改飞行速度指令格式错误，格式: &6/flyspeed [速度] [玩家名称]'
 
 #行走速度
 walkspeed:
   message:
-    walk-speed-self-reset: '你已重置移动速度'
-    walk-speed-self: '你已修改移动速度为%walk-speed%'
-    walk-speed-self-args-error: '移动速度参数错误，移动速度只能为0到10，默认速度为2'
-    walk-speed-others: '你已修改&3%others-player%&7的移动速度为%walk-speed%'
-    walk-speed-others-reset: '你已重置&3%others-player%&7的移动速度'
+    walk-speed-self-reset: '&a你已重置移动速度'
+    walk-speed-self: '&a你已修改移动速度为%walk-speed%'
+    walk-speed-self-args-error: '&c移动速度参数错误，移动速度只能为0到10，默认速度为2'
+    walk-speed-others: '&a你已修改&3%others-player%&a的移动速度为%walk-speed%'
+    walk-speed-others-reset: '&a你已重置&3%others-player%&a的移动速度'
     walk-speed-others-reset-is-self: '你已重置移动速度，修改自己可以不输入玩家名称'
     walk-speed-others-is-self: '你已修改移动速度为%walk-speed%，修改自己可以不输入玩家名称'
-    walk-speed-others-no-exist: '玩家&3%others-player%&7不存在，请检查玩家名字'
-    walk-speed-others-no-permission: '你没有修改他人移动速度指令的权限'
-    walk-speed-by-others: '你已被&3%player%&7修改移动速度为%walk-speed%'
-    walk-speed-by-others-reset: '你已被&3%player%&7重置移动速度'
+    walk-speed-others-no-exist: '&c玩家&3%others-player%&c不存在，请检查玩家名字'
+    walk-speed-others-no-permission: '&c你没有修改他人移动速度指令的权限'
+    walk-speed-by-others: '你已被&3%player%&6修改移动速度为%walk-speed%'
+    walk-speed-by-others-reset: '你已被&3%player%&6重置移动速度'
     walk-speed-by-console: '你已被服务器修改移动速度为%walk-speed%'
     walk-speed-by-console-reset: '你已被服务器重置移动速度'
-    walk-speed-console-error: '控制台请执行修改他人移动速度的指令: &cwalkspeed [速度] <玩家名称>'
-    walk-speed-command-error: '修改移动速度指令格式错误，格式: &c/walkspeed [速度] [玩家名称]'
+    walk-speed-console-error: '&c控制台请执行修改他人移动速度的指令: &6walkspeed [速度] <玩家名称>'
+    walk-speed-command-error: '&c修改移动速度指令格式错误，格式: &6/walkspeed [速度] [玩家名称]'
 
 #申请传送
 tpa:
   message:
-    tpa-others-no-exist: '玩家&3%others-player%&7不存在，请检查玩家名字'
-    tpa-others-identical: '请不要发送重复申请'
+    tpa-others-no-exist: '&c玩家&3%others-player%&c不存在，请检查玩家名字'
+    tpa-others-identical: '&c请不要发送重复传送请求'
     tpa-auto-tpacancel: '已自动取消上一个传送请求'
-    tpa-auto-tpacancel-others: '玩家&3%player%&7已取消传送请求'
-    tpa-apply: '传送请求已发送给玩家&3%others-player%'
-    tpa-apply-others: '玩家&3%player%&7请求传送到你这里'
+    tpa-auto-tpacancel-others: '玩家&3%player%&6已取消传送请求'
+    tpa-apply: '&a传送请求已发送给玩家&3%others-player%'
+    tpa-apply-others: '玩家&3%player%&6请求传送到你这里'
     tpa-apply-tpacancel-tips: '取消请求输入: &c/tpacancel'
-    tpa-apply-accept-tips: '同意请求输入: &c/tpaccept'
+    tpa-apply-accept-tips: '同意请求输入: &a/tpaccept'
     tpa-apply-deny-tips: '拒绝请求输入: &c/tpadeny'
-    tpa-console-error: '控制台无法使用申请传送相关指令'
-    tpa-command-error: '传送指令格式错误，正确格式: &c/tpa <其他玩家名称>'
-    tpa-others-leave-server: '玩家&3%others-player%&7已离开服务器，已自动取消其传送请求'
+    tpa-console-error: '&c控制台无法使用申请传送相关指令'
+    tpa-command-error: '&c传送指令格式错误，正确格式: &6/tpa <其他玩家名称>'
+    tpa-others-leave-server: '玩家&3%others-player%&6已离开服务器，已自动取消其传送请求'
 
 #取消传送
 tpacancel:
   message:
-    tpacancel-apply: '已取消传送请求'
-    tpacancel-others: '玩家&3%player%&7已取消传送请求'
-    tpacancel-no-tpa-error: '你没有待处理的传送请求'
-    tpacancel-console-error: '控制台无法使用申请传送相关指令'
+    tpacancel-apply: '&a已取消传送请求'
+    tpacancel-others: '玩家&3%player%&6已取消传送请求'
+    tpacancel-no-tpa-error: '&c你没有待处理的传送请求'
+    tpacancel-console-error: '&c控制台无法使用申请传送相关指令'
 
 #同意传送
 tpaccept:
   message:
-    tpaccept-apply: '你已接受玩家&3%others-player%&7的传送请求'
-    tpaccept-apply-is-self: '请不要接受自己的传送请求'
-    tpaccept-apply-others: '你向玩家&3%player%&7申请的传送请求已被接受'
-    tpaccept-console-error: '控制台无法使用申请传送相关指令'
-    tpaccept-others-no-exist: '玩家&3%others-player%&7不存在，请检查玩家名字'
-    tpaccept-command-error: '同意请求指令格式错误，正确格式: &c/tpaccept [其他玩家名称]'
-    tpaccept-no-tpa-error: '你没有待处理的传送请求'
-    tpaccept-no-others-player-tpa-error: '你没有玩家&3%others-player%&7的传送请求'
+    tpaccept-apply: '&a你已接受玩家&3%others-player%&a的传送请求'
+    tpaccept-apply-is-self: '&c请不要接受自己的传送请求'
+    tpaccept-apply-others: '你向玩家&3%player%&6申请的传送请求已被接受'
+    tpaccept-console-error: '&c控制台无法使用申请传送相关指令'
+    tpaccept-others-no-exist: '&c玩家&3%others-player%&c不存在，请检查玩家名字'
+    tpaccept-command-error: '&c同意请求指令格式错误，正确格式: &6/tpaccept [其他玩家名称]'
+    tpaccept-no-tpa-error: '&c你没有待处理的传送请求'
+    tpaccept-no-others-player-tpa-error: '&c你没有玩家&3%others-player%&c的传送请求'
 
 #拒绝传送
 tpadeny:
   message:
-    tpadeny-apply: '你已拒绝玩家&3%others-player%&7的传送请求'
-    tpadeny-apply-is-self: '请不要拒绝自己的传送请求'
-    tpadeny-apply-others: '你向玩家&3%player%&7申请的传送请求已被拒绝'
-    tpadeny-console-error: '控制台无法使用申请传送相关指令'
-    tpadeny-others-no-exist: '玩家&3%others-player%&7不存在，请检查玩家名字'
-    tpadeny-command-error: '拒绝请求指令格式错误，正确格式: &c/tpadeny [其他玩家名称]'
-    tpadeny-no-tpa-error: '你没有待处理的传送请求'
-    tpadeny-no-others-player-tpa-error: '你没有玩家&3%others-player%&7的传送请求'
+    tpadeny-apply: '&a你已拒绝玩家&3%others-player%&a的传送请求'
+    tpadeny-apply-is-self: '&c请不要拒绝自己的传送请求'
+    tpadeny-apply-others: '你向玩家&3%player%&6申请的传送请求已被拒绝'
+    tpadeny-console-error: '&c控制台无法使用申请传送相关指令'
+    tpadeny-others-no-exist: '&c玩家&3%others-player%&c不存在，请检查玩家名字'
+    tpadeny-command-error: '&c拒绝请求指令格式错误，正确格式: &6/tpadeny [其他玩家名称]'
+    tpadeny-no-tpa-error: '&c你没有待处理的传送请求'
+    tpadeny-no-others-player-tpa-error: '&c你没有玩家&3%others-player%&c的传送请求'
 
 #设置家
 sethome:
   allow-world:
     - 'world'
   message:
-    sethome-apply: '已将此位置设为家'
-    sethome-world-error: '世界&3%world%&7禁止设置家'
-    sethome-console-error: '控制台无法使用家相关指令'
-    sethome-command-error: '设置家指令格式错误，正确格式: &c/sethome'
+    sethome-apply: '&a已将此位置设为家'
+    sethome-world-error: '&c世界&3%world%&c禁止设置家'
+    sethome-console-error: '&c控制台无法使用家相关指令'
+    sethome-command-error: '&c设置家指令格式错误，正确格式: &6/sethome'
 
 #回家
 home:
   message:
-    home-apply: '你已传送回家'
-    home-no-exist: '暂无家，请使用&c/sethome&7指令设置家的位置'
-    home-console-error: '控制台无法使用家相关指令'
-    home-command-error: '设置家指令格式错误，正确格式: &c/sethome'
+    home-apply: '&a你已传送回家'
+    home-no-exist: '&c暂无家，请使用&6/sethome&c指令设置家的位置'
+    home-console-error: '&c控制台无法使用家相关指令'
+    home-command-error: '&c设置家指令格式错误，正确格式: &6/sethome'
 
 #展示文本代码
 showtextcode:
   message:
-    showtextcode-command-error: '展示文本代码指令格式错误，正确格式: &c/showtextcolor'
+    showtextcode-command-error: '&c展示文本代码指令格式错误，正确格式: &6/showtextcolor'
     show-list:
       - '&c文本代码列表------------------------------'
       - '&11 深紫 &7/ &99（淡紫）'
@@ -285,19 +285,19 @@ showtextcode:
 #等同于自己使用/kill指令
 killself:
   message:
-    killself-apply: '已让服务器执行自杀指令'
-    killself-console-error: '控制台请使用官方指令：kill [目标]'
-    killself-command-error: '自杀指令格式错误，正确格式: &c/killself'
+    killself-apply: '&a已让服务器执行自杀指令'
+    killself-console-error: '&c控制台请使用官方指令：kill [目标]'
+    killself-command-error: '&c自杀指令格式错误，正确格式: &6/killself'
 
 #传送到上一个传送/死亡的位置
 back:
   message:
-    back-apply: '你已回到被传送前的位置'
-    back-died-tips: '你在下一次传送前可使用&c/back&7指令回到死亡位置'
-    back-died-no-tp-tips: '服务器&c/back&7指令已记录你的死亡位置'
-    back-no-location: '你暂时没有返回的位置'
-    back-console-error: '控制台无法使用返回指令'
-    back-command-error: '返回指令格式错误，正确格式: &c/back'
+    back-apply: '&a你已回到被传送前的位置'
+    back-died-tips: '你在下一次传送前可使用&c/back&6指令回到死亡位置'
+    back-died-no-tp-tips: '服务器&c/back&6指令已记录你的死亡位置'
+    back-no-location: '&c你暂时没有返回的位置'
+    back-console-error: '&c控制台无法使用返回指令'
+    back-command-error: '&c返回指令格式错误，正确格式: &6/back'
 
 #切换服务器是否允许指令传送
 teleport:
@@ -307,7 +307,7 @@ teleport:
     teleport-deny: '&c服务器已临时禁止指令传送'
     teleport-deny-apply: '&c服务器已临时禁止指令传送，传送失败'
     teleport-deny-reason: '&c服务器已临时禁止指令传送，原因: &6%reason%'
-    teleport-command-error: '服务器是否允许指令传送格式错误，正确格式: &c/teleport [原因]'
+    teleport-command-error: '&c服务器是否允许指令传送格式错误，正确格式: &6/teleport [原因]'
 
 #复制物品
 copyres:
@@ -331,18 +331,18 @@ copyres:
   wildcard-list:
     - ''
   message:
-    copyres-apply: '你已复制&3%res%&7物品'
-    copyres-deny: '物品&3%res%&7禁止复制'
-    copyres-console-error: '控制台请使用官方指令：give <玩家> <物品[参数]> [数量]'
-    copyres-command-error: '复制物品指令格式错误，正确格式: &c/copyres'
+    copyres-apply: '&a你已复制&3%res%&a物品'
+    copyres-deny: '&c物品&3%res%&c禁止复制'
+    copyres-console-error: '&c控制台请使用官方指令：&6give <玩家> <物品[参数]> [数量]'
+    copyres-command-error: '&c复制物品指令格式错误，正确格式: &6/copyres'
 
 #模式切换
 playmode:
   message:
-    playmode-apply: '已让服务器执行切换模式指令'
-    playmode-console-error: '控制台请使用官方指令：gamemode <模式> <玩家>'
-    playmode-command-error: '切换模式指令格式错误，正确格式: &c/playmode <游戏模式>'
-    playmode-no-permission-error: '你没有切换到模式&3%gamemode%&7的权限'
+    playmode-apply: '&a已让服务器执行切换模式指令'
+    playmode-console-error: '&c控制台请使用官方指令：&6gamemode <模式> <玩家>'
+    playmode-command-error: '&c切换模式指令格式错误，正确格式: &6/playmode <游戏模式>'
+    playmode-no-permission-error: '&c你没有切换到模式&3%gamemode%&c的权限'
 
 #设置临时传送点
 setsnaptp:
@@ -350,67 +350,67 @@ setsnaptp:
   allow-world:
     - '*'
   message:
-    setsnaptp-apply: '已将此位置设为临时传送点，下线后删除'
-    setsnaptp-world-error: '世界&3%world%&7禁止设置临时传送点'
-    setsnaptp-console-error: '控制台无法使用临时传送点相关指令'
-    setsnaptp-command-error: '设置临时传送点指令格式错误，正确格式: &c/setsnaptp'
+    setsnaptp-apply: '&a已将此位置设为临时传送点，下线后删除'
+    setsnaptp-world-error: '&c世界&3%world%&c禁止设置临时传送点'
+    setsnaptp-console-error: '&c控制台无法使用临时传送点相关指令'
+    setsnaptp-command-error: '&c设置临时传送点指令格式错误，正确格式: &6/setsnaptp'
 
 #传送到临时传送点
 snaptp:
   message:
-    snaptp-apply: '你已传送回临时传送点'
-    snaptp-no-exist: '暂无临时传送点，请使用&c/setsnaptp&7指令设置'
-    snaptp-console-error: '控制台无法使用临时传送点相关指令'
-    snaptp-command-error: '传送回临时传送点指令错误，正确格式: &c/snaptp'
+    snaptp-apply: '&a你已传送回临时传送点'
+    snaptp-no-exist: '&c暂无临时传送点，请使用&6/setsnaptp&c指令设置'
+    snaptp-console-error: '&c控制台无法使用临时传送点相关指令'
+    snaptp-command-error: '&c传送回临时传送点指令错误，正确格式: &6/snaptp'
 
 #召集玩家
 musterplayer:
   #召集完成后，传送的等待时间，默认秒
   time: 3
   message:
-    musterplayer-apply-start: '已广播召集所有玩家到此位置，请等待所有玩家处理请求'
-    musterplayer-apply-start-repeat: '玩家&3%player%&7已发起召集请求，请等待该召集结束后再发起召集'
-    musterplayer-apply-start-error: '无其他在线玩家，请不要发起召集玩家请求'
-    musterplayer-apply-start-others: '玩家&3%player%&7正在召集所有玩家，请及时处理请求'
-    musterplayer-apply-start-others-reason: '玩家&3%player%&7正在召集所有玩家，原因: &6%reason%&7，请及时处理请求'
-    musterplayer-apply-again: '已发起上一次召集请求，请等待所有玩家处理请求'
-    musterplayer-apply-again-error: '没有上一次召集请求，请使用&c/musterplayer start&7指令发起新的召集'
+    musterplayer-apply-start: '&a已广播召集所有玩家到此位置，请等待所有玩家处理请求'
+    musterplayer-apply-start-repeat: '&c玩家&3%player%&c已发起召集请求，请等待该召集结束后再发起召集'
+    musterplayer-apply-start-error: '&c无其他在线玩家，请不要发起召集玩家请求'
+    musterplayer-apply-start-others: '玩家&3%player%&6正在召集所有玩家，请及时处理请求'
+    musterplayer-apply-start-others-reason: '玩家&3%player%&6正在召集所有玩家，原因: &c%reason%&c，请及时处理请求'
+    musterplayer-apply-again: '&a已发起上一次召集请求，请等待所有玩家处理请求'
+    musterplayer-apply-again-error: '&c没有上一次召集请求，请使用&6/musterplayer start&c指令发起新的召集'
     musterplayer-apply-cancel-consloe: '控制台已取消此次召集请求'
-    musterplayer-apply-cancel-player: '你已取消此次召集请求'
-    musterplayer-apply-cancel-player-others: '玩家&c%player%&7已取消此次召集请求'
-    musterplayer-apply-end: '玩家%player%已提前结束召集，同意召集的玩家已传送至召集位置'
-    musterplayer-apply-end-time: '玩家&3%player%&7提前结束召集，同意召集的玩家将在&c%time%&7秒后立即传送'
+    musterplayer-apply-cancel-player: '&a你已取消此次召集请求'
+    musterplayer-apply-cancel-player-others: '玩家&c%player%&6已取消此次召集请求'
+    musterplayer-apply-end: '玩家&3%player%&6已提前结束召集，同意召集的玩家已传送至召集位置'
+    musterplayer-apply-end-time: '玩家&3%player%&6提前结束召集，同意召集的玩家将在&c%time%&6秒后立即传送'
     musterplayer-apply-end-tp: '你已传送至召集位置'
     musterplayer-end: '已完成召集，同意召集的玩家已传送至召集位置'
-    musterplayer-end-time: '已完成召集，同意召集玩家将在&c%time%秒&7后立即传送'
-    musterplayer-apply-ccept: '玩家&3%player%&7已接受召集'
-    musterplayer-apply-deny: '玩家&c%player%&7已拒绝召集'
+    musterplayer-end-time: '已完成召集，同意召集玩家将在&c%time%秒&6后立即传送'
+    musterplayer-apply-ccept: '玩家&3%player%&6已接受召集'
+    musterplayer-apply-deny: '玩家&c%player%&6已拒绝召集'
     musterplayer-apply-list-allow: '已同意召集的玩家: &a%player-list%'
     musterplayer-apply-list-deny: '已拒绝召集的玩家: &c%player-list%'
     musterplayer-apply-list-deal-with: '还未处理召集的玩家: &6%player-list%'
     musterplayer-cancel-tips: '取消召集输入: &c/musterplayer cancel'
     musterplayer-end-tips: '结束召集输入: &c/musterplayer end'
-    musterplayer-accept-tips: '同意召集输入: &c/musterplayer ccept'
+    musterplayer-accept-tips: '同意召集输入: &a/musterplayer ccept'
     musterplayer-deny-tips: '拒绝召集输入: &c/musterplayer deny'
     musterplayer-others-tips: '所有玩家处理召集请求后或发起者提前结束召集，才会进行传送'
-    musterplayer-apply-error: '没有需要处理的召集请求'
-    musterplayer-player-leave-convenor: '召集者&3%player%&7已离开服务器，已取消此次召集'
-    musterplayer-player-leave-callee: '被召集者&3%player%&7已离开服务器，已在被召集列表中移除该玩家'
-    musterplayer-console-error: '控制台仅能使用&cmusterplayer cancel&7指令取消玩家召集'
-    musterplayer-command-error: '召集指令错误，正确格式: &c/musterplayer <参数>'
+    musterplayer-apply-error: '&c没有需要处理的召集请求'
+    musterplayer-player-leave-convenor: '召集者&3%player%&6已离开服务器，已取消此次召集'
+    musterplayer-player-leave-callee: '被召集者&3%player%&6已离开服务器，已在被召集列表中移除该玩家'
+    musterplayer-console-error: '&c控制台仅能使用&6musterplayer cancel&c指令取消玩家召集'
+    musterplayer-command-error: '&c召集指令错误，正确格式: &6/musterplayer <参数>'
 
 #重生后自动回到死亡位置
 autorespawnback:
   message:
-    autorespawnback-apply-open: '你已开启重生后自动回到死亡位置'
-    autorespawnback-apply-close: '你已关闭重生后自动回到死亡位置'
+    autorespawnback-apply-open: '&a你已开启重生后自动回到死亡位置'
+    autorespawnback-apply-close: '&a你已关闭重生后自动回到死亡位置'
     autorespawnback-apply: '你已重生，已自动传送回死亡位置'
-    autorespawnback-console-error: '控制台无法使用此命令'
+    autorespawnback-console-error: '&c控制台无法使用此命令'
 
 #自动重生
 autorespawn:
   message:
-    autorespawn-apply-open: '你已开启自动重生'
-    autorespawn-apply-close: '你已关闭自动重生'
+    autorespawn-apply-open: '&a你已开启自动重生'
+    autorespawn-apply-close: '&a你已关闭自动重生'
     autorespawn-apply: '你已自动跳过死亡结算界面'
-    autorespawn-console-error: '控制台无法使用此命令'
+    autorespawn-console-error: '&c控制台无法使用此命令'

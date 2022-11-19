@@ -57,7 +57,7 @@ public class FeedCommand implements TabExecutor {
                 //判断参数指向的是否是自己
                 if (!playerName.equals(othersPlayerName)) {
                     //判断执行恢复他人指令的玩家权限
-                    if (!player.hasPermission(FeedEnum.FEED_OTHERS_PERMISSION.getCommand())) {
+                    if (!player.hasPermission(FeedEnum.FEED_OTHERS_PERMISSION.getCommand()) && !player.isOp()) {
                         player.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + feedMessage.getString("feed-others-no-permission")));
                         return true;
                     }

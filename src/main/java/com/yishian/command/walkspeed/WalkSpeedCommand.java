@@ -85,7 +85,7 @@ public class WalkSpeedCommand implements TabExecutor {
                     //判断参数指向的是否是自己
                     if (!playerName.equals(othersPlayerName)) {
                         //判断执行修改他人移动速度指令的玩家权限
-                        if (!player.hasPermission(WalkSpeedEnum.WALK_SPEED_OTHERS_PERMISSION.getCommand())) {
+                        if (!player.hasPermission(WalkSpeedEnum.WALK_SPEED_OTHERS_PERMISSION.getCommand()) && !player.isOp()) {
                             player.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + walkSpeedMessage.getString("walk-speed-others-no-permission")));
                             return true;
                         }
@@ -124,7 +124,7 @@ public class WalkSpeedCommand implements TabExecutor {
                 //判断参数指向的是否是自己
                 if (!playerName.equals(othersPlayerName)) {
                     //判断执行修改他人移动速度指令的玩家权限
-                    if (!player.hasPermission(WalkSpeedEnum.WALK_SPEED_OTHERS_PERMISSION.getCommand())) {
+                    if (!player.hasPermission(WalkSpeedEnum.WALK_SPEED_OTHERS_PERMISSION.getCommand()) && !player.isOp()) {
                         player.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + walkSpeedMessage.getString("walk-speed-others-no-permission")));
                         return true;
                     }

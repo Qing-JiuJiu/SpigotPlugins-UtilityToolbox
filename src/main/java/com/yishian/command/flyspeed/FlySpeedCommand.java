@@ -87,7 +87,7 @@ public class FlySpeedCommand implements TabExecutor {
                     //判断参数指向的是否是自己
                     if (!playerName.equals(othersPlayerName)) {
                         //判断执行修改他人飞行速度指令的玩家权限
-                        if (!player.hasPermission(FlySpeedEnum.FLY_SPEED_OTHERS_PERMISSION.getCommand())) {
+                        if (!player.hasPermission(FlySpeedEnum.FLY_SPEED_OTHERS_PERMISSION.getCommand()) && !player.isOp()) {
                             player.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + flySpeedMessage.getString("fly-speed-others-no-permission")));
                             return true;
                         }
@@ -126,7 +126,7 @@ public class FlySpeedCommand implements TabExecutor {
                 //判断参数指向的是否是自己
                 if (!playerName.equals(othersPlayerName)) {
                     //判断执行修改他人飞行速度指令的玩家权限
-                    if (!player.hasPermission(FlySpeedEnum.FLY_SPEED_OTHERS_PERMISSION.getCommand())) {
+                    if (!player.hasPermission(FlySpeedEnum.FLY_SPEED_OTHERS_PERMISSION.getCommand()) && !player.isOp()) {
                         player.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + flySpeedMessage.getString("fly-speed-others-no-permission")));
                         return true;
                     }
