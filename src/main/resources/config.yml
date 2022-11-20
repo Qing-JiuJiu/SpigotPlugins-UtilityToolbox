@@ -67,10 +67,6 @@ limit-high-altitude-fluid:
   message:
     destroy-message: "玩家&3%player%&6附近存在高空流体，坐标&cx:%x% y:%y% z:%z%&6，已限制"
 
-#玩家无死亡掉落
-no-death-drop:
-  enable: false
-
 #服务器列表显示
 server-list-display-modification:
   enable: false
