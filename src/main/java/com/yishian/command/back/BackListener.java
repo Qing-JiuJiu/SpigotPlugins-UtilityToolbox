@@ -50,7 +50,11 @@ public class BackListener implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void playerDeath(PlayerDeathEvent playerDeathEvent) {
         Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getProvidingPlugin(Main.class), () -> {
+            //记录玩家死亡位置
             Player player = playerDeathEvent.getEntity();
+            UUID playerUniqueId = player.getUniqueId();
+            BackCommand.playerBackMap.put(playerUniqueId, player.getLocation());
+
             //判断玩家是否有back的指令权限
             if (player.hasPermission(BackEnum.BACK_PERMISSION.getCommand())) {
                 //获取配置文件里该指令的消息提示
@@ -59,10 +63,8 @@ public class BackListener implements Listener {
                 ConfigurationSection backMessage = configurationSection.getConfigurationSection(backCommand).getConfigurationSection(CommonEnum.MESSAGE.getCommand());
 
                 //判断服务器是否允许传送，如果允许且玩家没有开启自动重生死亡返回则提醒玩家可以使用/back指令返回到死亡位置
-                UUID playerUniqueId = player.getUniqueId();
-                BackCommand.playerBackMap.put(playerUniqueId, player.getLocation());
                 if (TeleportCommand.allowTp) {
-                    if (!AutoRespawnBackCommand.autoRespawnBackList.contains(playerUniqueId)){
+                    if (!AutoRespawnBackCommand.autoRespawnBackList.contains(playerUniqueId)) {
                         player.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + backMessage.getString("back-died-tips")));
                     }
                 } else {

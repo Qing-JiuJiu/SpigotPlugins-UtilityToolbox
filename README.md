@@ -6,7 +6,7 @@
 
 适用版本：1.7，1.8，1.9，1.10，1.11，1.12，1.13，1.14，1.15，1.16，1.17，1.18，1.19
 
-最新版本：2.2.1
+最新版本：2.4.1
 
 下载链接：[https://www.spigotmc.org/resources/utilitytoolbox-add-common-commands-and-server-functions-1-7-1-19x.104791/](https://www.spigotmc.org/resources/utilitytoolbox-add-common-commands-and-server-functions-1-7-1-19x.104791/)
 
@@ -85,6 +85,9 @@
 添加sendconsole指令，用于在客户端发送指令给控制台
 添加了部分功能日志输出
 修复了高频红石可能出现的玩家名字错误的问题
+删除无死亡掉落功能
+#2.4.1
+修复在未开启back权限时使用自动重生返回会导致无法获取重生前位置的异常
 ```
 
 ## 配置文件
@@ -158,10 +161,6 @@ limit-high-altitude-fluid:
     - 'world'
   message:
     destroy-message: "玩家&3%player%&6附近存在高空流体，坐标&cx:%x% y:%y% z:%z%&6，已限制"
-
-#玩家无死亡掉落
-no-death-drop:
-  enable: false
 
 #服务器列表显示
 server-list-display-modification:
