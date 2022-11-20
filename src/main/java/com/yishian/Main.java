@@ -64,7 +64,7 @@ import com.yishian.function.autosendservermessage.AutoSendServerMessageRunnable;
 import com.yishian.function.customjoinandleave.CustomJoinAndLeaveListener;
 import com.yishian.function.joinserverwelcome.JoinServerWelcomeListener;
 import com.yishian.function.limithighaltitudefluids.LimitHighAltitudeFluidListener;
-import com.yishian.function.nodeathdrop.NoDeathDropListener;
+
 import com.yishian.function.preventhighfrequencyattacks.PreventHighFrequencyAttacksListener;
 import com.yishian.function.preventhighfrequencyattacks.PreventHighFrequencyAttacksRunnable;
 import com.yishian.function.serverlistdisplaymodification.ServerListDisplayModificationListener;
@@ -288,12 +288,6 @@ public final class Main extends JavaPlugin {
         if (config.getConfigurationSection("limit-high-altitude-fluid").getBoolean(CommonEnum.FUNCTION_IS_ENABLE.getCommand())) {
             pluginManager.registerEvents(new LimitHighAltitudeFluidListener(), this);
             consoleSender.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + "已开启限制高空流体"));
-        }
-
-        //玩家死亡无掉落
-        if (config.getConfigurationSection("no-death-drop").getBoolean(CommonEnum.FUNCTION_IS_ENABLE.getCommand())) {
-            pluginManager.registerEvents(new NoDeathDropListener(), this);
-            consoleSender.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + "已开启玩家无死亡掉落"));
         }
 
         //离开服务器删除tpa相关信息
