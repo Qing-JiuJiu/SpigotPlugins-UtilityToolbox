@@ -4,8 +4,11 @@ import com.google.common.collect.Lists;
 import com.yishian.Main;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.ConsoleCommandSender;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
@@ -25,6 +28,21 @@ public class PluginUtils {
     public static FileConfiguration getServerConfig() {
         return Main.getProvidingPlugin(Main.class).getConfig();
     }
+
+    /**
+     * 控制台
+     */
+    public static ConsoleCommandSender consoleCommandSender = Bukkit.getConsoleSender();
+
+    /**
+     * 配置文件
+     */
+    public static ConfigurationSection configurationSection = PluginUtils.getServerConfig();
+
+    /**
+     * 消息前缀
+     */
+    public static String messagePrefix = configurationSection.getConfigurationSection(CommonEnum.PLUGIN_MESSAGE.getCommand()).getString(CommonEnum.MESSAGE_PREFIX.getCommand());
 
     /**
      * 参数数量最大为0-1时玩家通用提示
@@ -244,5 +262,12 @@ public class PluginUtils {
         stringReplace = stringReplace.replace("&o", "§o");
         stringReplace = stringReplace.replace("&r", "§r");
         return stringReplace;
+    }
+
+    /**
+     * 向控制台发送消息
+     */
+    public static void sendConsoleMessage(String message) {
+        Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&',messagePrefix + message));
     }
 }

@@ -77,6 +77,9 @@ public class LimitHighAltitudeFluidListener implements Listener {
                         ArrayList<Player> players = PluginUtils.hasPermissionPlayerList(LimitHighAltitudeFluidEnum.LIMIT_FLOW_MESSAGE_PERMISSION.getCommand());
                         players.forEach(player -> player.sendMessage(messageTemplate));
                     }
+
+                    //发送控制台消息
+                    PluginUtils.consoleCommandSender.sendMessage(messageTemplate);
                 }
             }
         }

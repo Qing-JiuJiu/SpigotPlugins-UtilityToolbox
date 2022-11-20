@@ -47,7 +47,7 @@ anti-high-frequency-red-stone:
     - 'minecraft:redstone_wire'
     - 'minecraft:lever'
   message:
-    destroy-message: "玩家&3%player%&6附近存在高频红石，坐标&3x:%x% y:%y% z:%z%&6，已摧毁"
+    destroy-message: "玩家&3%player%&6附近存在高频红石，坐标&cx:%x% y:%y% z:%z%&6，已摧毁"
 
 #限制高空流体
 limit-high-altitude-fluid:
@@ -55,7 +55,7 @@ limit-high-altitude-fluid:
   #是否所有玩家都能看到流体被限制的消息，否则只有拥有UtilityToolbox.LimitFlowMessage权限的用户才能看到
   is-broadcast-message: true
   #限制高度
-  limit-high: 100
+  limit-high: 80
   limit-fluid-list:
     #默认水和岩浆，该名字为流动液体的名字
     - 'minecraft:water'
@@ -65,7 +65,7 @@ limit-high-altitude-fluid:
     #*为限制所有世界
     - 'world'
   message:
-    destroy-message: "玩家&3%player%&6附近存在高空流体，坐标&3x:%x% y:%y% z:%z%&6，已限制"
+    destroy-message: "玩家&3%player%&6附近存在高空流体，坐标&cx:%x% y:%y% z:%z%&6，已限制"
 
 #玩家无死亡掉落
 no-death-drop:
@@ -414,3 +414,9 @@ autorespawn:
     autorespawn-apply-close: '&a你已关闭自动重生'
     autorespawn-apply: '你已自动跳过死亡结算界面'
     autorespawn-console-error: '&c控制台无法使用此命令'
+
+#发送控制台指令
+sendconsole:
+  message:
+    sendconsole-apply: '&a已让服务器执行&6%command%&a指令，请注意核实指令'
+    sendconsole-command-error: '&c发送控制台指令格式错误，正确格式: &6/sendconsole <arg...>'

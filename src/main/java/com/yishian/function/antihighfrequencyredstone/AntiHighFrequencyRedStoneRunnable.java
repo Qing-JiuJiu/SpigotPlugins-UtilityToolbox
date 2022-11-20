@@ -52,7 +52,9 @@ public class AntiHighFrequencyRedStoneRunnable extends BukkitRunnable {
                         recentPlayerDistanceName = playerDistanceTreeMap.pollFirstEntry().getValue().getName();
                     }
                     //广播消息
-                    Bukkit.getServer().broadcastMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + destroyMessage.replaceAll("%player%", recentPlayerDistanceName).replaceAll("%x%", String.valueOf(location.getBlockX())).replaceAll("%y%", String.valueOf(location.getBlockY())).replaceAll("%z%", String.valueOf(location.getBlockZ()))));
+                    String message = destroyMessage.replaceAll("%player%", recentPlayerDistanceName).replaceAll("%x%", String.valueOf(location.getBlockX())).replaceAll("%y%", String.valueOf(location.getBlockY())).replaceAll("%z%", String.valueOf(location.getBlockZ()));
+                    Bukkit.getServer().broadcastMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + message));
+                    PluginUtils.sendConsoleMessage(message);
                 }
             });
         } else {
@@ -73,6 +75,10 @@ public class AntiHighFrequencyRedStoneRunnable extends BukkitRunnable {
                     //发送消息给有权限的用户
                     String finalRecentPlayerDistanceName = recentPlayerDistanceName;
                     players.forEach(player -> player.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + destroyMessage.replaceAll("%player%", finalRecentPlayerDistanceName).replaceAll("%x%", String.valueOf(location.getBlockX())).replaceAll("%y%", String.valueOf(location.getBlockY())).replaceAll("%z%", String.valueOf(location.getBlockZ())))));
+
+                    //发送控制台
+                    String message = destroyMessage.replaceAll("%player%", recentPlayerDistanceName).replaceAll("%x%", String.valueOf(location.getBlockX())).replaceAll("%y%", String.valueOf(location.getBlockY())).replaceAll("%z%", String.valueOf(location.getBlockZ()));
+                    PluginUtils.sendConsoleMessage(message);
                 }
             });
         }

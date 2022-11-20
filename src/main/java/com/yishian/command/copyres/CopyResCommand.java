@@ -82,6 +82,9 @@ public class CopyResCommand implements CommandExecutor {
         playerInventory.addItem(cloneItemStack);
         player.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + copyResMessage.getString("copyres-apply").replaceAll("%res%", itemName)));
 
+        //控制台输出信息
+        PluginUtils.sendConsoleMessage("玩家" + player.getName() + "复制了物品：" + itemName);
+
         //执行成功
         return true;
     }

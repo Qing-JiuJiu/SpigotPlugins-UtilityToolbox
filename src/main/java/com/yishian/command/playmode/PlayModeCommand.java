@@ -85,6 +85,8 @@ public class PlayModeCommand implements TabExecutor {
         server.dispatchCommand(server.getConsoleSender(), "gamemode " + gameModeString + " " + player.getName());
         player.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + playModeMessage.getString("playmode-apply")));
 
+        PluginUtils.sendConsoleMessage("玩家" + player.getName() + "切换了模式：" + gameModeString);
+
         return true;
     }
 

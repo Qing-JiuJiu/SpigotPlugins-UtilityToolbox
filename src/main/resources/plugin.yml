@@ -52,6 +52,8 @@ commands:
     description: 自动重生后回到死亡位置
   autorespawn:
     description: 自动重生
+  sendconsole:
+    description: 向控制台发送指令
 
 permissions:
   UtilityToolbox.heal:
