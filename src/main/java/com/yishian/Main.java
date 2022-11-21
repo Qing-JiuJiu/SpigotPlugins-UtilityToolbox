@@ -37,7 +37,6 @@ import com.yishian.command.sethome.SetHomeConfig;
 import com.yishian.command.sethome.SetHomeEnum;
 import com.yishian.command.setsnaptp.SetSnapTpCommand;
 import com.yishian.command.setsnaptp.SetSnapTpEnum;
-import com.yishian.command.setsnaptp.SetSnapTpListener;
 import com.yishian.command.showtextcolor.ShowTextCodeCommand;
 import com.yishian.command.showtextcolor.ShowTextCodeEnum;
 import com.yishian.command.snaptp.SnapTpCommand;
@@ -298,9 +297,6 @@ public final class Main extends JavaPlugin {
 
         //检测是否允许传送
         pluginManager.registerEvents(new TeleportListener(), this);
-
-        //离开服务器删除临时传送点
-        pluginManager.registerEvents(new SetSnapTpListener(), this);
 
         //离开服务器删除临时传送点
         pluginManager.registerEvents(new MusterPlayerListener(), this);
