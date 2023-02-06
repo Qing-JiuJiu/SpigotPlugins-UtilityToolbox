@@ -55,54 +55,57 @@ commands:
   sendconsole:
     description: 向控制台发送指令
 
+#设置权限的一些特殊属性，无法在代码中设置的属性可以在这里设置
+##设置权限默认值
+##设置权限的子权限与子权限的描述
 permissions:
   UtilityToolbox.heal:
-    default: op
+    #设置子权限
     children:
+      #设置子权限是否跟随父权限，true为跟随，false为相反
       UtilityToolbox.heal.others: false
-    description: 恢复生命值
+    #设置权限的描述
+    description: 恢复生命值的权限
 
   UtilityToolbox.feed:
-    default: op
     children:
       UtilityToolbox.feed.others: false
-    description: 恢复饱食度
+    description: 恢复饱食度的权限
 
   UtilityToolbox.fly:
-    default: op
     children:
       UtilityToolbox.fly.others: false
-    description: 开关飞行
+    description: 开关飞行的权限
 
   UtilityToolbox.flyspeed:
-    default: op
     children:
       UtilityToolbox.flyspeed.others: false
-    description: 修改飞行速度
+    description: 修改飞行速度的权限
 
   UtilityToolbox.walkspeed:
-    default: op
     children:
       UtilityToolbox.walkspeed.others: false
-    description: 修改移动速度
+    description: 修改移动速度的权限
+
+  UtilityToolbox.sethome:
+    default: true
+    description: 设置家的权限的权限
 
   UtilityToolbox.tpa:
-    default: op
-    description: 申请传送至该玩家位置
+    #默认是op，true为默认拥有该权限，false为默认没有该权限
+    default: true
+    description: 申请传送至该玩家位置的权限
 
   UtilityToolbox.AntiRedStoneMessage:
-    default: op
-    description: 是否能看到高频红石被销毁的消息
+    description: 是否能看到高频红石被销毁的消息的权限
 
   UtilityToolbox.LimitFlowMessage:
-    default: op
-    description: 是否能看到流体被限制的消息
+    description: 是否能看到流体被限制的消息的权限
 
   UtilityToolbox.playmode:
-    default: op
     children:
       UtilityToolbox.playmode.creative: false
       UtilityToolbox.playmode.survival: false
       UtilityToolbox.playmode.adventure: false
       UtilityToolbox.playmode.spectator: false
-    description: 切换游戏模式
+    description: 切换游戏模式的权限

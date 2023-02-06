@@ -10,8 +10,15 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.*;
 
 
@@ -238,7 +245,7 @@ public class PluginUtils {
     /**
      * &替换成$,用于特殊颜色演示
      */
-    public static String replaceColorCode(String stringReplace){
+    public static String replaceColorCode(String stringReplace) {
         stringReplace = stringReplace.replace("&0", "§0");
         stringReplace = stringReplace.replace("&1", "§1");
         stringReplace = stringReplace.replace("&2", "§2");
@@ -268,6 +275,23 @@ public class PluginUtils {
      * 向控制台发送消息
      */
     public static void sendConsoleMessage(String message) {
-        Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&',messagePrefix + message));
+        Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + message));
+    }
+
+    /**
+     * 向配置文件写入内容
+     *
+     * @param yamlContent        需要写入的yaml内容
+     * @param path 需要写入的文件路径
+     */
+    public static void saveYamlConfig(YamlConfiguration yamlContent, Path path) {
+        try {
+            Writer writer = new OutputStreamWriter(Files.newOutputStream(path), StandardCharsets.UTF_8);
+            writer.write(yamlContent.saveToString());
+            writer.flush();
+            writer.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

@@ -11,9 +11,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
-import java.io.*;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
+
 import java.util.List;
 
 /**
@@ -62,7 +60,7 @@ public class SetHomeCommand implements CommandExecutor {
             float playerLocationYaw = playerLocation.getYaw();
             float playerLocationPitch = playerLocation.getPitch();
 
-            //写入家数据文件，用于重启服务器后读取
+            //写入家数据文件，用于重启服务器后能读取，也防止内存泄露想象
             String playerName = player.getName();
             YamlConfiguration homeFileYaml = SetHomeConfig.homeFileYaml;
             homeFileYaml.set(playerName + ".world", worldName);
@@ -71,15 +69,7 @@ public class SetHomeCommand implements CommandExecutor {
             homeFileYaml.set(playerName + ".z", playerLocationZ);
             homeFileYaml.set(playerName + ".yaw", playerLocationYaw);
             homeFileYaml.set(playerName + ".pitch", playerLocationPitch);
-            try {
-                Writer writer = new OutputStreamWriter(Files.newOutputStream(SetHomeConfig.file.toPath()), StandardCharsets.UTF_8);
-                writer.write(homeFileYaml.saveToString());
-                writer.flush();
-                writer.close();
-            } catch (IOException e) {
-                player.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + setHomeMessage.getString("sethome-apply").replaceAll("%world%", worldName).replaceAll("%x%", String.valueOf((int) playerLocationX)).replaceAll("%y%", String.valueOf((int) playerLocationY)).replaceAll("%z%", String.valueOf((int) playerLocationZ))));
-                throw new RuntimeException(e);
-            }
+            PluginUtils.saveYamlConfig(homeFileYaml, SetHomeConfig.file.toPath());
 
             //发送设置家成功消息
             player.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + setHomeMessage.getString("sethome-apply").replaceAll("%world%", worldName).replaceAll("%x%", String.valueOf((int) playerLocationX)).replaceAll("%y%", String.valueOf((int) playerLocationY)).replaceAll("%z%", String.valueOf((int) playerLocationZ))));

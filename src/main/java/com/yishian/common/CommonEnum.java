@@ -19,16 +19,11 @@ public enum CommonEnum {
     MESSAGE("message","用于获取配置文件消息"),
     TIME("time","用于获取定时器时间的英语"),
 
-
     /**
      * 重载配置文件
      */
     RELOAD_CONFIG_COMMAND("reload", "重载配置文件的指令"),
     RELOAD_CONFIG_PERMISSION(PLUGHIN_NAME.getCommand() + "." + RELOAD_CONFIG_COMMAND.getCommand(), "重载配置文件的权限");
-
-    /**
-     * 功能名称
-     */
 
     private final String command;
     private final String msg;

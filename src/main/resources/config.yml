@@ -1,5 +1,6 @@
 #这是一个配置文件，所有主功能的开启和关闭都必须重启服务器/重新加载插件
 plugin-message:
+  #插件消息前缀
   message-prefix: '&e[UtilityToolbox] &6'
   reload-message: '&a配置文件重载成功'
   command-args-error: '&c子指令无效或无子指令，正确格式: &6/UtilityToolbox <子指令>'
@@ -7,6 +8,7 @@ plugin-message:
 #自定义加入和离开服务器消息
 join-and-leave-server-message:
   enable: true
+  #是否开启第一次加入服务器的服务器消息内容
   first-join-server-message-enable: false
   message:
     player-join-server-message: '&a%player% join server'
@@ -16,6 +18,7 @@ join-and-leave-server-message:
 #加入服务器欢迎
 join-server-welcome:
   enable: true
+  #是否开启第一次加入服务器的加入欢迎
   first-join-server-welcome-enable: false
   message:
     join-server-welcome-message:
@@ -26,7 +29,7 @@ join-server-welcome:
 #自动发送服务器消息，类似公告
 auto-send-server-messages:
   enable: false
-  #默认秒
+  #间隔发送时间：默认秒
   time: 600
   message:
     send-messages:
@@ -56,13 +59,13 @@ limit-high-altitude-fluid:
   is-broadcast-message: true
   #限制高度
   limit-high: 80
+  #限制的流体列表
   limit-fluid-list:
     #默认水和岩浆，该名字为流动液体的名字
     - 'minecraft:water'
     - 'minecraft:lava'
-  #限制的世界
+  #限制的世界，可使用 * 通配符为限制所有世界
   limit-world-list:
-    #*为限制所有世界
     - 'world'
   message:
     destroy-message: "玩家&3%player%&6附近存在高空流体，坐标&cx:%x% y:%y% z:%z%&6，已限制"
@@ -240,8 +243,9 @@ tpadeny:
 
 #设置家
 sethome:
+  #允许设置家的世界，默认 * 为所有世界都允许设置家
   allow-world:
-    - 'world'
+    - '*'
   message:
     sethome-apply: '&a已将此位置设为家'
     sethome-world-error: '&c世界&3%world%&c禁止设置家'
@@ -342,7 +346,7 @@ playmode:
 
 #设置临时传送点
 setsnaptp:
-  #允许设置的世界
+  #允许设置的世界，默认 * 通配符为全世界都允许设置
   allow-world:
     - '*'
   message:

@@ -35,6 +35,7 @@ import com.yishian.command.sendconsole.SendConsoleEnum;
 import com.yishian.command.sethome.SetHomeCommand;
 import com.yishian.command.sethome.SetHomeConfig;
 import com.yishian.command.sethome.SetHomeEnum;
+import com.yishian.command.setsnaptp.SetSnapTpConfig;
 import com.yishian.command.setsnaptp.SetSnapTpCommand;
 import com.yishian.command.setsnaptp.SetSnapTpEnum;
 import com.yishian.command.showtextcolor.ShowTextCodeCommand;
@@ -84,7 +85,7 @@ import java.io.IOException;
 public final class Main extends JavaPlugin {
 
     /**
-     * 通用字符串
+     * 通用字符串 time
      */
     String timeString = CommonEnum.TIME.getCommand();
 
@@ -351,9 +352,12 @@ public final class Main extends JavaPlugin {
      * 注册指令配置
      */
     public void registerCommandConfig() {
-        //创建home配置文件
+        //创建各项配置文件
         try {
+            //创建home配置文件
             SetHomeConfig.loadHomeConfigFile();
+            //创建snap配置文件
+            SetSnapTpConfig.loadSnapConfigFile();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
