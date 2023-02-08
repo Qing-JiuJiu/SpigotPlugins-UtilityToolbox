@@ -2,7 +2,7 @@ package com.yishian.command.tpacancel;
 
 import com.yishian.command.tpa.TpaCommand;
 import com.yishian.common.CommonEnum;
-import com.yishian.common.PluginUtils;
+import com.yishian.common.CommonUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -12,16 +12,15 @@ import org.bukkit.entity.Player;
 
 import java.util.Set;
 
-
 /**
  * @author XinQi
  */
 public class TpaCancelCommand implements CommandExecutor {
 
     /**
-     * 指令
+     * 获取配置文件里该指令的消息提示
      */
-    String tpaCancelCommand = TpaCancelEnum.TPA_CANCEL_COMMAND.getCommand();
+    static ConfigurationSection tpaCancelMessage = CommonUtils.ServerConfig.getConfigurationSection(TpaCancelEnum.TPA_CANCEL_COMMAND.getCommand()).getConfigurationSection(CommonEnum.MESSAGE.getCommand());
 
     /**
      * 指令设置
@@ -34,27 +33,25 @@ public class TpaCancelCommand implements CommandExecutor {
      */
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        //获取配置文件里该指令的消息提示
-        ConfigurationSection configurationSection = PluginUtils.getServerConfig();
-        String messagePrefix = configurationSection.getConfigurationSection(CommonEnum.PLUGIN_MESSAGE.getCommand()).getString(CommonEnum.MESSAGE_PREFIX.getCommand());
-        ConfigurationSection tpaCancelMessage = configurationSection.getConfigurationSection(tpaCancelCommand).getConfigurationSection(CommonEnum.MESSAGE.getCommand());
-
         //判断执行指令是用户还是控制台
         if (!(sender instanceof Player)) {
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + tpaCancelMessage.getString("tpacancel-console-error")));
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + tpaCancelMessage.getString("tpacancel-console-error")));
             return true;
         }
+
+        //移出传送记录
         Player othersPlayer = TpaCommand.transfeRecordMap.remove(sender);
         if (othersPlayer == null) {
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + tpaCancelMessage.getString("tpacancel-no-tpa-error")));
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + tpaCancelMessage.getString("tpacancel-no-tpa-error")));
             return true;
         }
+
         //删除对应的传送信息
         Set<Player> playerSet = TpaCommand.transfeMap.get(othersPlayer);
         playerSet.removeIf(player -> player == sender);
         //发送提示信息
-        othersPlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + tpaCancelMessage.getString("tpacancel-others").replaceAll("%player%", sender.getName())));
-        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + tpaCancelMessage.getString("tpacancel-apply").replaceAll("%others-player%", othersPlayer.getName())));
+        othersPlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + tpaCancelMessage.getString("tpacancel-others").replaceAll("%player%", sender.getName())));
+        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + tpaCancelMessage.getString("tpacancel-apply").replaceAll("%others-player%", othersPlayer.getName())));
 
         return true;
     }

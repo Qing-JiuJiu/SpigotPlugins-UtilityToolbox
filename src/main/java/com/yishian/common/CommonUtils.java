@@ -8,7 +8,6 @@ import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
-import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -25,31 +24,17 @@ import java.util.*;
 /**
  * @author XinQi
  */
-public class PluginUtils {
+public class CommonUtils {
 
     /**
-     * 得到服务器配置文件
-     *
-     * @return 返回配置文件
+     * 服务器配置文件
      */
-    public static FileConfiguration getServerConfig() {
-        return Main.getProvidingPlugin(Main.class).getConfig();
-    }
+    public static FileConfiguration ServerConfig = Main.getProvidingPlugin(Main.class).getConfig();
 
     /**
      * 控制台
      */
     public static ConsoleCommandSender consoleCommandSender = Bukkit.getConsoleSender();
-
-    /**
-     * 配置文件
-     */
-    public static ConfigurationSection configurationSection = PluginUtils.getServerConfig();
-
-    /**
-     * 消息前缀
-     */
-    public static String messagePrefix = configurationSection.getConfigurationSection(CommonEnum.PLUGIN_MESSAGE.getCommand()).getString(CommonEnum.MESSAGE_PREFIX.getCommand());
 
     /**
      * 参数数量最大为0-1时玩家通用提示
@@ -122,20 +107,6 @@ public class PluginUtils {
             });
         }
         return tips;
-    }
-
-    /**
-     * @param oneX 第一个位置的x坐标
-     * @param oneY 第一个位置的y坐标
-     * @param oneZ 第一个位置的z坐标
-     * @param twoX 第二个位置的x坐标
-     * @param twoY 第二个位置的y坐标
-     * @param twoZ 第二个位置的z坐标
-     * @return 返回计算后的距离
-     * 该方案被移除，location提供了方法来计算距离
-     */
-    public static Double calculateDistance(Integer oneX, Integer oneY, Integer oneZ, Integer twoX, Integer twoY, Integer twoZ) {
-        return (Math.pow((oneX - twoX), 2) + Math.pow((oneY - twoY), 2) + Math.pow((oneZ - twoZ), 2)) / 2;
     }
 
     /**
@@ -275,7 +246,7 @@ public class PluginUtils {
      * 向控制台发送消息
      */
     public static void sendConsoleMessage(String message) {
-        Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + message));
+        Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX + message));
     }
 
     /**

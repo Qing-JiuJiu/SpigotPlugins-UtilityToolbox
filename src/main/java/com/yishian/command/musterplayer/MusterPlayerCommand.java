@@ -3,13 +3,11 @@ package com.yishian.command.musterplayer;
 import com.yishian.Main;
 import com.yishian.command.teleport.TeleportCommand;
 import com.yishian.common.CommonEnum;
-import com.yishian.common.PluginUtils;
-
+import com.yishian.common.CommonUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
-
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
 import org.bukkit.configuration.ConfigurationSection;
@@ -25,11 +23,18 @@ import java.util.List;
  * @author XinQi
  */
 public class MusterPlayerCommand implements TabExecutor {
-
     /**
-     * 指令
+     * 获取配置文件里该指令的配置信息
      */
-    String musterPlayerCommand = MusterPlayerEnum.MUSTER_PLAYER_COMMAND.getCommand();
+    static ConfigurationSection musterPlayerConfig = CommonUtils.ServerConfig.getConfigurationSection(MusterPlayerEnum.MUSTER_PLAYER_COMMAND.getCommand());
+    /**
+     * 获取配置文件里该指令的消息提示
+     */
+    static ConfigurationSection musterPlayerMessage = musterPlayerConfig.getConfigurationSection(CommonEnum.MESSAGE.getCommand());
+    /**
+     * 传送等待时间
+     */
+    static Integer time = musterPlayerConfig.getInt(CommonEnum.TIME.getCommand());
 
     /**
      * 此次召集的玩家列表(所有召集列表)
@@ -85,17 +90,9 @@ public class MusterPlayerCommand implements TabExecutor {
     @Override
 
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        //获取配置文件里该指令的消息提示
-        ConfigurationSection configurationSection = PluginUtils.getServerConfig();
-        String messagePrefix = configurationSection.getConfigurationSection(CommonEnum.PLUGIN_MESSAGE.getCommand()).getString(CommonEnum.MESSAGE_PREFIX.getCommand());
-        ConfigurationSection musterPlayerConfig = configurationSection.getConfigurationSection(musterPlayerCommand);
-        ConfigurationSection musterPlayerMessage = musterPlayerConfig.getConfigurationSection(CommonEnum.MESSAGE.getCommand());
-        //等待时间
-        int time = musterPlayerConfig.getInt(CommonEnum.TIME.getCommand());
-
         //判断指令参数长度是否不为0，否则报指令错误
         if (args.length == 0) {
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + musterPlayerMessage.getString("musterplayer-command-error")));
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + musterPlayerMessage.getString("musterplayer-command-error")));
             return true;
         }
 
@@ -107,13 +104,13 @@ public class MusterPlayerCommand implements TabExecutor {
 
         //判断是否是控制台发出的指令、是的话判断是否是控制台能执行的cancel指令
         if (!isPlayer && !"cancel".equalsIgnoreCase(parameter)) {
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + musterPlayerMessage.getString("musterplayer-console-error")));
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + musterPlayerMessage.getString("musterplayer-console-error")));
             return true;
         }
 
         //如果参数为2个，但却不是start 那就提醒报错
         if (args.length == 2 && !"start".equalsIgnoreCase(parameter)) {
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + musterPlayerMessage.getString("musterplayer-command-error")));
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + musterPlayerMessage.getString("musterplayer-command-error")));
             return true;
         }
 
@@ -124,19 +121,19 @@ public class MusterPlayerCommand implements TabExecutor {
         if ("start".equalsIgnoreCase(parameter)) {
             //判断目前是否有玩家正在召集，否则提示玩家正在召集
             if (musterPlayer != null) {
-                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + musterPlayerMessage.getString("musterplayer-apply-start-repeat").replaceAll("%player%", playerName)));
+                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + musterPlayerMessage.getString("musterplayer-apply-start-repeat").replaceAll("%player%", playerName)));
                 return true;
             }
 
             //判断玩家人数
             Collection<? extends Player> onlinePlayers = Bukkit.getOnlinePlayers();
             if (onlinePlayers.size() == 1) {
-                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + musterPlayerMessage.getString("musterplayer-apply-start-error")));
+                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + musterPlayerMessage.getString("musterplayer-apply-start-error")));
                 return true;
             }
 
             //正式开始召集
-            musterPlayerStart((Player) sender, args, messagePrefix, musterPlayerMessage, onlinePlayers, false);
+            musterPlayerStart((Player) sender, args, musterPlayerMessage, onlinePlayers, false);
             return true;
         }
 
@@ -144,22 +141,22 @@ public class MusterPlayerCommand implements TabExecutor {
         if ("cancel".equalsIgnoreCase(parameter)) {
             //判断是否有召集请求取消
             if (musterPlayer == null) {
-                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + musterPlayerMessage.getString("musterplayer-apply-error")));
+                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + musterPlayerMessage.getString("musterplayer-apply-error")));
                 return true;
             }
 
-            //判断是否是玩家发起者，玩家则取消是发起者才能取消
+            //判断是否是玩家发起者，玩家则是发起者/管理员才能取消，控制台可直接取消
             if (isPlayer) {
-                //判断是否是发起者
-                if (musterPlayer != sender) {
-                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + musterPlayerMessage.getString("musterplayer-apply-error")));
+                //判断发送指令的人是否是召集发起者/管理员
+                if (sender != musterPlayer && !sender.isOp()) {
+                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + musterPlayerMessage.getString("musterplayer-apply-error")));
                     return true;
                 }
                 //广播传送者取消的消息
-                musterPlayers.forEach(player -> player.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + musterPlayerMessage.getString("musterplayer-apply-cancel-player-others").replaceAll("%player%", playerName))));
+                musterPlayers.forEach(player -> player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + musterPlayerMessage.getString("musterplayer-apply-cancel-player-others").replaceAll("%player%", playerName))));
             } else {
-                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + musterPlayerMessage.getString("musterplayer-apply-cancel-consloe")));
-                musterPlayers.forEach(player -> player.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + musterPlayerMessage.getString("musterplayer-apply-cancel-consloe"))));
+                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + musterPlayerMessage.getString("musterplayer-apply-cancel-consloe")));
+                musterPlayers.forEach(player -> player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + musterPlayerMessage.getString("musterplayer-apply-cancel-consloe"))));
             }
 
             //清除本次召集信息
@@ -171,20 +168,20 @@ public class MusterPlayerCommand implements TabExecutor {
         if ("end".equalsIgnoreCase(parameter)) {
             //判断是否有召集请求结束
             if (musterPlayer == null) {
-                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + musterPlayerMessage.getString("musterplayer-apply-error")));
+                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + musterPlayerMessage.getString("musterplayer-apply-error")));
                 return true;
             }
 
             //判断是否是发起者
             if (musterPlayer != sender) {
-                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + musterPlayerMessage.getString("musterplayer-apply-error")));
+                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + musterPlayerMessage.getString("musterplayer-apply-error")));
                 return true;
             }
 
             //判断传送时间
             if (time == 0) {
                 //发送广播消息
-                musterPlayers.forEach(player -> player.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + musterPlayerMessage.getString("musterplayer-apply-end").replaceAll("%player%", musterPlayer.getName()))));
+                musterPlayers.forEach(player -> player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + musterPlayerMessage.getString("musterplayer-apply-end").replaceAll("%player%", musterPlayer.getName()))));
 
                 //传送所有同意的玩家
                 playersMap.forEach((judgePlayer, isAllow) -> {
@@ -196,7 +193,7 @@ public class MusterPlayerCommand implements TabExecutor {
                 clearMusterMessage();
             } else {
                 //发送广播消息
-                musterPlayers.forEach(player -> player.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + musterPlayerMessage.getString("musterplayer-apply-end-time").replaceAll("%player%", musterPlayer.getName()).replaceAll("%time%", String.valueOf(time)))));
+                musterPlayers.forEach(player -> player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + musterPlayerMessage.getString("musterplayer-apply-end-time").replaceAll("%player%", musterPlayer.getName()).replaceAll("%time%", String.valueOf(time)))));
 
                 //延迟传送
                 Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getProvidingPlugin(Main.class), () -> {
@@ -218,20 +215,20 @@ public class MusterPlayerCommand implements TabExecutor {
         if ("ccept".equalsIgnoreCase(parameter)) {
             //判断处理列表是否有自己
             if (!notProcessedPlayers.contains(sender)) {
-                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + musterPlayerMessage.getString("musterplayer-apply-error")));
+                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + musterPlayerMessage.getString("musterplayer-apply-error")));
                 return true;
             }
 
             //广播同意信息
-            musterPlayers.forEach(musterPlayer -> musterPlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + musterPlayerMessage.getString("musterplayer-apply-ccept").replaceAll("%player%", sender.getName()))));
+            musterPlayers.forEach(musterPlayer -> musterPlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + musterPlayerMessage.getString("musterplayer-apply-ccept").replaceAll("%player%", sender.getName()))));
 
             //设置自己的传送信息
             playersMap.put((Player) sender, true);
             notProcessedPlayers.remove(sender);
 
             //判断是否已经结束了召集
-            if (PluginUtils.collectionIsEmpty(notProcessedPlayers)) {
-                endMuster(time, messagePrefix, musterPlayerMessage);
+            if (CommonUtils.collectionIsEmpty(notProcessedPlayers)) {
+                endMuster(time, musterPlayerMessage);
             }
             return true;
         }
@@ -240,20 +237,20 @@ public class MusterPlayerCommand implements TabExecutor {
         if ("deny".equalsIgnoreCase(parameter)) {
             //判断处理列表是否有自己
             if (!notProcessedPlayers.contains(sender)) {
-                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + musterPlayerMessage.getString("musterplayer-apply-error")));
+                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + musterPlayerMessage.getString("musterplayer-apply-error")));
                 return true;
             }
 
             //广播拒绝信息
-            musterPlayers.forEach(musterPlayer -> musterPlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + musterPlayerMessage.getString("musterplayer-apply-deny").replaceAll("%player%", sender.getName()))));
+            musterPlayers.forEach(musterPlayer -> musterPlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + musterPlayerMessage.getString("musterplayer-apply-deny").replaceAll("%player%", sender.getName()))));
 
             //设置自己的传送信息
             playersMap.put((Player) sender, false);
             notProcessedPlayers.remove(sender);
 
             //判断是否已经结束了召集
-            if (PluginUtils.collectionIsEmpty(notProcessedPlayers)) {
-                endMuster(time, messagePrefix, musterPlayerMessage);
+            if (CommonUtils.collectionIsEmpty(notProcessedPlayers)) {
+                endMuster(time, musterPlayerMessage);
             }
             return true;
         }
@@ -262,25 +259,25 @@ public class MusterPlayerCommand implements TabExecutor {
         if ("again".equalsIgnoreCase(parameter)) {
             //判断目前是否有玩家正在召集，否则提示玩家正在召集
             if (musterPlayer != null) {
-                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + musterPlayerMessage.getString("musterplayer-apply-start-repeat").replaceAll("%player%", playerName)));
+                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + musterPlayerMessage.getString("musterplayer-apply-start-repeat").replaceAll("%player%", playerName)));
                 return true;
             }
 
             //判断是否有之前召集的位置
             if (musterLocation == null) {
-                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + musterPlayerMessage.getString("musterplayer-apply-again-error")));
+                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + musterPlayerMessage.getString("musterplayer-apply-again-error")));
                 return true;
             }
 
             //判断玩家数量
             Collection<? extends Player> onlinePlayers = Bukkit.getOnlinePlayers();
             if (onlinePlayers.size() == 1) {
-                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + musterPlayerMessage.getString("musterplayer-apply-start-error")));
+                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + musterPlayerMessage.getString("musterplayer-apply-start-error")));
                 return true;
             }
 
             //正式开始召集
-            musterPlayerStart((Player) sender, args, messagePrefix, musterPlayerMessage, onlinePlayers, true);
+            musterPlayerStart((Player) sender, args, musterPlayerMessage, onlinePlayers, true);
             return true;
         }
 
@@ -288,7 +285,7 @@ public class MusterPlayerCommand implements TabExecutor {
         if ("list".equalsIgnoreCase(parameter)) {
             //判断是否有召集
             if (musterPlayer == null) {
-                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + musterPlayerMessage.getString("musterplayer-apply-error")));
+                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + musterPlayerMessage.getString("musterplayer-apply-error")));
                 return true;
             }
 
@@ -304,48 +301,48 @@ public class MusterPlayerCommand implements TabExecutor {
             });
 
             //已同意召集列表的玩家
-            if (!PluginUtils.collectionIsEmpty(allowPlayers)) {
+            if (!CommonUtils.collectionIsEmpty(allowPlayers)) {
                 StringBuilder allowPlayersString = new StringBuilder();
                 allowPlayers.forEach(player -> allowPlayersString.append(player.getName()).append(" "));
                 allowPlayersString.deleteCharAt(allowPlayersString.lastIndexOf(" "));
-                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + musterPlayerMessage.getString("musterplayer-apply-list-allow").replaceAll("%player-list%", allowPlayersString.toString())));
+                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + musterPlayerMessage.getString("musterplayer-apply-list-allow").replaceAll("%player-list%", allowPlayersString.toString())));
             }
 
             //已拒绝召集列表的玩家
-            if (!PluginUtils.collectionIsEmpty(denyPlayers)) {
+            if (!CommonUtils.collectionIsEmpty(denyPlayers)) {
                 StringBuilder denyPlayersString = new StringBuilder();
                 denyPlayers.forEach(player -> denyPlayersString.append(player.getName()).append(" "));
                 denyPlayersString.deleteCharAt(denyPlayersString.lastIndexOf(" "));
-                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + musterPlayerMessage.getString("musterplayer-apply-list-deny").replaceAll("%player-list%", denyPlayersString.toString())));
+                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + musterPlayerMessage.getString("musterplayer-apply-list-deny").replaceAll("%player-list%", denyPlayersString.toString())));
             }
 
             //还未处理召集请求的玩家
-            if (!PluginUtils.collectionIsEmpty(notProcessedPlayers)) {
+            if (!CommonUtils.collectionIsEmpty(notProcessedPlayers)) {
                 StringBuilder notProcessedPlayersString = new StringBuilder();
                 notProcessedPlayers.forEach(player -> notProcessedPlayersString.append(player.getName()).append(" "));
                 notProcessedPlayersString.deleteCharAt(notProcessedPlayersString.lastIndexOf(" "));
-                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + musterPlayerMessage.getString("musterplayer-apply-list-deal-with").replaceAll("%player-list%", notProcessedPlayersString.toString())));
+                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + musterPlayerMessage.getString("musterplayer-apply-list-deal-with").replaceAll("%player-list%", notProcessedPlayersString.toString())));
             }
             return true;
         }
 
         //到这还没return发送指令错误信息
-        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + musterPlayerMessage.getString("musterplayer-command-error")));
+        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + musterPlayerMessage.getString("musterplayer-command-error")));
         return true;
     }
 
     /**
      * 开始召集
      */
-    private void musterPlayerStart(Player player, String[] args, String messagePrefix, ConfigurationSection musterPlayerMessage, Collection<? extends Player> onlinePlayers, Boolean isAgain) {
+    private void musterPlayerStart(Player player, String[] args, ConfigurationSection musterPlayerMessage, Collection<? extends Player> onlinePlayers, Boolean isAgain) {
         //发送相关召集信息
         if (isAgain) {
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + musterPlayerMessage.getString("musterplayer-apply-again")));
+            player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + musterPlayerMessage.getString("musterplayer-apply-again")));
         } else {
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + musterPlayerMessage.getString("musterplayer-apply-start")));
+            player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + musterPlayerMessage.getString("musterplayer-apply-start")));
         }
-        player.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + musterPlayerMessage.getString("musterplayer-end-tips")));
-        player.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + musterPlayerMessage.getString("musterplayer-cancel-tips")));
+        player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + musterPlayerMessage.getString("musterplayer-end-tips")));
+        player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + musterPlayerMessage.getString("musterplayer-cancel-tips")));
 
         //设置本次召集信息
         musterPlayer = player;
@@ -360,19 +357,19 @@ public class MusterPlayerCommand implements TabExecutor {
         if (isAgain) {
             //重复上一次召集
             if (musterReason != null) {
-                sendMusterMessageHaveReason(messagePrefix, musterPlayerMessage, playerName);
+                sendMusterMessageHaveReason(musterPlayerMessage, playerName);
             } else {
-                sendMusterMessageNoReason(messagePrefix, musterPlayerMessage, playerName);
+                sendMusterMessageNoReason(musterPlayerMessage, playerName);
             }
         } else {
             //重新发起召集
             musterLocation = player.getLocation();
             if (args.length == 2) {
                 musterReason = args[1];
-                sendMusterMessageHaveReason(messagePrefix, musterPlayerMessage, playerName);
+                sendMusterMessageHaveReason(musterPlayerMessage, playerName);
             } else {
                 musterReason = null;
-                sendMusterMessageNoReason(messagePrefix, musterPlayerMessage, playerName);
+                sendMusterMessageNoReason(musterPlayerMessage, playerName);
             }
         }
     }
@@ -380,42 +377,42 @@ public class MusterPlayerCommand implements TabExecutor {
     /**
      * 发送召集信息没原因
      */
-    private void sendMusterMessageNoReason(String messagePrefix, ConfigurationSection musterPlayerMessage, String playerName) {
+    private void sendMusterMessageNoReason(ConfigurationSection musterPlayerMessage, String playerName) {
         notProcessedPlayers.forEach(onlinePlayer -> {
-            onlinePlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + musterPlayerMessage.getString("musterplayer-apply-start-others").replaceAll("%player%", playerName)));
-            onlinePlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + musterPlayerMessage.getString("musterplayer-accept-tips")));
-            onlinePlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + musterPlayerMessage.getString("musterplayer-deny-tips")));
-            onlinePlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + musterPlayerMessage.getString("musterplayer-others-tips")));
+            onlinePlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + musterPlayerMessage.getString("musterplayer-apply-start-others").replaceAll("%player%", playerName)));
+            onlinePlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + musterPlayerMessage.getString("musterplayer-accept-tips")));
+            onlinePlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + musterPlayerMessage.getString("musterplayer-deny-tips")));
+            onlinePlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + musterPlayerMessage.getString("musterplayer-others-tips")));
         });
     }
 
     /**
      * 发送召集信息有原因
      */
-    private void sendMusterMessageHaveReason(String messagePrefix, ConfigurationSection musterPlayerMessage, String playerName) {
+    private void sendMusterMessageHaveReason(ConfigurationSection musterPlayerMessage, String playerName) {
         notProcessedPlayers.forEach(onlinePlayer -> {
-            onlinePlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + musterPlayerMessage.getString("musterplayer-apply-start-others-reason").replaceAll("%player%", playerName).replaceAll("%reason%", musterReason)));
-            onlinePlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + musterPlayerMessage.getString("musterplayer-accept-tips")));
-            onlinePlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + musterPlayerMessage.getString("musterplayer-deny-tips")));
-            onlinePlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + musterPlayerMessage.getString("musterplayer-others-tips")));
+            onlinePlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + musterPlayerMessage.getString("musterplayer-apply-start-others-reason").replaceAll("%player%", playerName).replaceAll("%reason%", musterReason)));
+            onlinePlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + musterPlayerMessage.getString("musterplayer-accept-tips")));
+            onlinePlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + musterPlayerMessage.getString("musterplayer-deny-tips")));
+            onlinePlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + musterPlayerMessage.getString("musterplayer-others-tips")));
         });
     }
 
     /**
      * 结束召集进行传送
      */
-    protected static void endMuster(int time, String messagePrefix, ConfigurationSection musterPlayerMessage) {
+    protected static void endMuster(int time, ConfigurationSection musterPlayerMessage) {
         //判断传送时间
         if (time == 0) {
             //发送召集完成信息
-            musterPlayers.forEach(player -> player.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + musterPlayerMessage.getString("musterplayer-end"))));
+            musterPlayers.forEach(player -> player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + musterPlayerMessage.getString("musterplayer-end"))));
 
             //传送所有同意的玩家
             playersMap.forEach((judgePlayer, isAllow) -> {
                 if (isAllow) {
                     judgePlayer.teleport(musterLocation);
                     if (TeleportCommand.allowTp) {
-                        judgePlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + musterPlayerMessage.getString("musterplayer-apply-end-tp")));
+                        judgePlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + musterPlayerMessage.getString("musterplayer-apply-end-tp")));
                     }
                 }
             });
@@ -423,7 +420,7 @@ public class MusterPlayerCommand implements TabExecutor {
             clearMusterMessage();
         } else {
             //发送广播消息
-            musterPlayers.forEach(player -> player.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + musterPlayerMessage.getString("musterplayer-end-time").replaceAll("%player%", musterPlayer.getName()).replaceAll("%time%", String.valueOf(time)))));
+            musterPlayers.forEach(player -> player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + musterPlayerMessage.getString("musterplayer-end-time").replaceAll("%player%", musterPlayer.getName()).replaceAll("%time%", String.valueOf(time)))));
 
             //延迟传送
             Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getProvidingPlugin(Main.class), () -> {
@@ -432,7 +429,7 @@ public class MusterPlayerCommand implements TabExecutor {
                     if (isAllow) {
                         judgePlayer.teleport(musterLocation);
                         if (TeleportCommand.allowTp) {
-                            judgePlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + musterPlayerMessage.getString("musterplayer-apply-end-tp")));
+                            judgePlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + musterPlayerMessage.getString("musterplayer-apply-end-tp")));
                         }
                     }
                 });
@@ -458,11 +455,9 @@ public class MusterPlayerCommand implements TabExecutor {
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
         //判断指令是否是上面执行的指令
-        if (musterPlayerCommand.equalsIgnoreCase(label)) {
-            return PluginUtils.tipsListToTips(args, tipList);
+        if (MusterPlayerEnum.MUSTER_PLAYER_COMMAND.getCommand().equalsIgnoreCase(label)) {
+            return CommonUtils.tipsListToTips(args, tipList);
         }
         return null;
     }
-
-
 }

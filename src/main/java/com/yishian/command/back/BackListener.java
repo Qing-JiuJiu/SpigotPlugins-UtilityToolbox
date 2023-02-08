@@ -3,12 +3,9 @@ package com.yishian.command.back;
 import com.yishian.Main;
 import com.yishian.command.autodeathback.AutoRespawnBackCommand;
 import com.yishian.command.teleport.TeleportCommand;
-
 import com.yishian.common.CommonEnum;
-import com.yishian.common.PluginUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -22,9 +19,6 @@ import java.util.UUID;
  * @author XinQi
  */
 public class BackListener implements Listener {
-
-    String backCommand = BackEnum.BACK_COMMAND.getCommand();
-
     /**
      * 记录Back的位置
      *
@@ -57,18 +51,13 @@ public class BackListener implements Listener {
 
             //判断玩家是否有back的指令权限
             if (player.hasPermission(BackEnum.BACK_PERMISSION.getCommand())) {
-                //获取配置文件里该指令的消息提示
-                ConfigurationSection configurationSection = PluginUtils.getServerConfig();
-                String messagePrefix = configurationSection.getConfigurationSection(CommonEnum.PLUGIN_MESSAGE.getCommand()).getString(CommonEnum.MESSAGE_PREFIX.getCommand());
-                ConfigurationSection backMessage = configurationSection.getConfigurationSection(backCommand).getConfigurationSection(CommonEnum.MESSAGE.getCommand());
-
                 //判断服务器是否允许传送，如果允许且玩家没有开启自动重生死亡返回则提醒玩家可以使用/back指令返回到死亡位置
                 if (TeleportCommand.allowTp) {
                     if (!AutoRespawnBackCommand.autoRespawnBackList.contains(playerUniqueId)) {
-                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + backMessage.getString("back-died-tips")));
+                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + BackCommand.backMessage.getString("back-died-tips")));
                     }
                 } else {
-                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + backMessage.getString("back-died-no-tp-tips")));
+                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + BackCommand.backMessage.getString("back-died-no-tp-tips")));
                 }
             }
         });

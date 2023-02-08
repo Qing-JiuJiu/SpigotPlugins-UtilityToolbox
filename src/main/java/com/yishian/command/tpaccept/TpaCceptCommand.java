@@ -1,10 +1,8 @@
 package com.yishian.command.tpaccept;
 
-
 import com.yishian.command.tpa.TpaCommand;
 import com.yishian.common.CommonEnum;
-import com.yishian.common.PluginUtils;
-
+import com.yishian.common.CommonUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -16,31 +14,24 @@ import org.bukkit.entity.Player;
 import java.util.List;
 import java.util.Set;
 
-
 /**
  * @author XinQi
  */
 public class TpaCceptCommand implements TabExecutor {
 
     /**
-     * 指令
+     * 获取配置文件里该指令的消息提示
      */
-    String tpaCceptCommand = TpaCceptEnum.TPA_CCEPT_COMMAND.getCommand();
-
+    static ConfigurationSection tpaCceptMessage = CommonUtils.ServerConfig.getConfigurationSection(TpaCceptEnum.TPA_CCEPT_COMMAND.getCommand()).getConfigurationSection(CommonEnum.MESSAGE.getCommand());
 
     /**
      * 指令设置
      */
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        //获取配置文件里该指令的消息提示
-        ConfigurationSection configurationSection = PluginUtils.getServerConfig();
-        String messagePrefix = configurationSection.getConfigurationSection(CommonEnum.PLUGIN_MESSAGE.getCommand()).getString(CommonEnum.MESSAGE_PREFIX.getCommand());
-        ConfigurationSection tpaCceptMessage = configurationSection.getConfigurationSection(tpaCceptCommand).getConfigurationSection(CommonEnum.MESSAGE.getCommand());
-
         //判断参数是否大于1
         if (args.length > 1) {
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + tpaCceptMessage.getString("tpaccept-command-error")));
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + tpaCceptMessage.getString("tpaccept-command-error")));
             return true;
         }
 
@@ -48,7 +39,7 @@ public class TpaCceptCommand implements TabExecutor {
         if (args.length == 0) {
             //判断执行指令是用户还是控制台
             if (!(sender instanceof Player)) {
-                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + tpaCceptMessage.getString("tpaccept-console-error")));
+                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + tpaCceptMessage.getString("tpaccept-console-error")));
                 return true;
             }
 
@@ -56,8 +47,8 @@ public class TpaCceptCommand implements TabExecutor {
             Player player = (Player) sender;
             String playerName = player.getName();
             Set<Player> tpaPlayers = TpaCommand.transfeMap.get(player);
-            if (PluginUtils.collectionIsEmpty(tpaPlayers)) {
-                player.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + tpaCceptMessage.getString("tpaccept-no-tpa-error")));
+            if (CommonUtils.collectionIsEmpty(tpaPlayers)) {
+                player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + tpaCceptMessage.getString("tpaccept-no-tpa-error")));
                 return true;
             }
 
@@ -65,8 +56,8 @@ public class TpaCceptCommand implements TabExecutor {
             tpaPlayers.forEach(tpaPlayer -> {
                 tpaPlayer.teleport(player);
                 TpaCommand.transfeRecordMap.remove(tpaPlayer);
-                player.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + tpaCceptMessage.getString("tpaccept-apply")).replaceAll("%others-player%", tpaPlayer.getName()));
-                tpaPlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + tpaCceptMessage.getString("tpaccept-apply-others")).replaceAll("%player%", playerName));
+                player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + tpaCceptMessage.getString("tpaccept-apply")).replaceAll("%others-player%", tpaPlayer.getName()));
+                tpaPlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + tpaCceptMessage.getString("tpaccept-apply-others")).replaceAll("%player%", playerName));
             });
 
             //传送完后删除自己所有传送信息
@@ -77,7 +68,7 @@ public class TpaCceptCommand implements TabExecutor {
         } else {
             //判断执行的是用户还是控制台
             if (!(sender instanceof Player)) {
-                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + tpaCceptMessage.getString("tpaccept-console-error")));
+                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + tpaCceptMessage.getString("tpaccept-console-error")));
                 return true;
             }
 
@@ -86,14 +77,14 @@ public class TpaCceptCommand implements TabExecutor {
             String playerName = player.getName();
             String othersPlayerName = args[0];
             if (playerName.equals(othersPlayerName)) {
-                player.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + tpaCceptMessage.getString("tpaccept-apply-is-self")));
+                player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + tpaCceptMessage.getString("tpaccept-apply-is-self")));
                 return true;
             }
 
             //判断玩家是否存在
             Player othersPlayer = Bukkit.getPlayerExact(othersPlayerName);
             if (othersPlayer == null) {
-                player.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + tpaCceptMessage.getString("tpaccept-others-no-exist").replaceAll("%others-player%", othersPlayerName)));
+                player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + tpaCceptMessage.getString("tpaccept-others-no-exist").replaceAll("%others-player%", othersPlayerName)));
                 return true;
             }
 
@@ -108,27 +99,27 @@ public class TpaCceptCommand implements TabExecutor {
                     tpaPlayers.remove(tpaPlayer);
                     TpaCommand.transfeMap.put(player, tpaPlayers);
                     //发送相关信息提示并结束
-                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + tpaCceptMessage.getString("tpaccept-apply")).replaceAll("%others-player%", tpaPlayer.getName()));
-                    tpaPlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + tpaCceptMessage.getString("tpaccept-apply-others")).replaceAll("%player%", playerName));
+                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + tpaCceptMessage.getString("tpaccept-apply")).replaceAll("%others-player%", tpaPlayer.getName()));
+                    tpaPlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + tpaCceptMessage.getString("tpaccept-apply-others")).replaceAll("%player%", playerName));
                     return true;
                 }
             }
             //到这里还没结束就发送没有待处理的请求
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + tpaCceptMessage.getString("tpaccept-no-others-player-tpa-error")).replaceAll("%others-player%", othersPlayerName));
+            player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + tpaCceptMessage.getString("tpaccept-no-others-player-tpa-error")).replaceAll("%others-player%", othersPlayerName));
         }
         return true;
     }
 
     /**
-     * 指令补全提示
+     * 指令提示
      *
      * @return 返回的提示内容
      */
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
         //判断指令是否是上面执行的指令
-        if (tpaCceptCommand.equalsIgnoreCase(label) && sender instanceof Player) {
-            return PluginUtils.playerSetToTips(args, TpaCommand.transfeMap.get((Player) sender));
+        if (TpaCceptEnum.TPA_CCEPT_COMMAND.getCommand().equalsIgnoreCase(label) && sender instanceof Player) {
+            return CommonUtils.playerSetToTips(args, TpaCommand.transfeMap.get((Player) sender));
         }
         return null;
     }

@@ -2,7 +2,7 @@ package com.yishian.command.sendconsole;
 
 
 import com.yishian.common.CommonEnum;
-import com.yishian.common.PluginUtils;
+import com.yishian.common.CommonUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Server;
@@ -17,20 +17,15 @@ import org.bukkit.configuration.ConfigurationSection;
 public class SendConsoleCommand implements CommandExecutor {
 
     /**
-     * 发送控制台指令
+     * 获取配置文件里该指令的消息提示
      */
-    String sendConsoleCommand = SendConsoleEnum.SEND_CONSOLE_COMMAND.getCommand();
+    static ConfigurationSection sendConsoleMessage = CommonUtils.ServerConfig.getConfigurationSection(SendConsoleEnum.SEND_CONSOLE_COMMAND.getCommand()).getConfigurationSection(CommonEnum.MESSAGE.getCommand());
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        //获取配置文件里该指令的消息提示
-        ConfigurationSection configurationSection = PluginUtils.getServerConfig();
-        String messagePrefix = configurationSection.getConfigurationSection(CommonEnum.PLUGIN_MESSAGE.getCommand()).getString(CommonEnum.MESSAGE_PREFIX.getCommand());
-        ConfigurationSection sendConsoleMessage = configurationSection.getConfigurationSection(sendConsoleCommand).getConfigurationSection(CommonEnum.MESSAGE.getCommand());
-
         //判断指令是否带参数
         if (args.length == 0) {
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + sendConsoleMessage.getString("sendconsole-command-error")));
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + sendConsoleMessage.getString("sendconsole-command-error")));
             return true;
         }
 
@@ -45,7 +40,7 @@ public class SendConsoleCommand implements CommandExecutor {
 
         //打包成字符串并发送消息给用户
         String argString = stringBuilder.toString();
-        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + sendConsoleMessage.getString("sendconsole-apply").replaceAll("%command%", argString)));
+        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + sendConsoleMessage.getString("sendconsole-apply").replaceAll("%command%", argString)));
 
         //控制台执行指令
         Server server = Bukkit.getServer();

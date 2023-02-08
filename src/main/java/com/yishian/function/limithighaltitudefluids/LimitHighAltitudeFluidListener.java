@@ -1,7 +1,7 @@
 package com.yishian.function.limithighaltitudefluids;
 
 import com.yishian.common.CommonEnum;
-import com.yishian.common.PluginUtils;
+import com.yishian.common.CommonUtils;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -9,7 +9,6 @@ import org.bukkit.Location;
 import org.bukkit.block.Block;
 
 import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -24,11 +23,13 @@ import java.util.TreeMap;
  */
 public class LimitHighAltitudeFluidListener implements Listener {
 
+    /**
+     * 得到配置文件
+     */
+    static ConfigurationSection functionConfiguration = CommonUtils.ServerConfig.getConfigurationSection("limit-high-altitude-fluid");
+
     @EventHandler
     public void onWaterLavaTo(BlockFromToEvent blockFromToEvent) {
-        //得到配置文件
-        FileConfiguration serverConfig = PluginUtils.getServerConfig();
-        ConfigurationSection functionConfiguration = serverConfig.getConfigurationSection("limit-high-altitude-fluid");
         //被限制的世界
         List<String> limitWorldList = functionConfiguration.getStringList("limit-world-list");
         //被限制的流体
@@ -38,8 +39,7 @@ public class LimitHighAltitudeFluidListener implements Listener {
         //获取是否要广播消息
         boolean isBroadcastMessage = functionConfiguration.getBoolean(CommonEnum.IS_BROADCAST_MESSAGE.getCommand());
 
-        //得到消息前缀和后缀
-        String messagePrefix = serverConfig.getConfigurationSection(CommonEnum.PLUGIN_MESSAGE.getCommand()).getString(CommonEnum.MESSAGE_PREFIX.getCommand());
+        //得到消息后缀
         String destroyMessage = functionConfiguration.getConfigurationSection(CommonEnum.MESSAGE.getCommand()).getString("destroy-message");
 
         //得到物品类
@@ -60,26 +60,26 @@ public class LimitHighAltitudeFluidListener implements Listener {
                     //禁止该方块的事件
                     blockFromToEvent.setCancelled(true);
                     //得到距离这个流体最近的玩家
-                    TreeMap<Double, Player> playerDistanceTreeMap = PluginUtils.calculatePlayerAroundTheItem(blockLocation);
+                    TreeMap<Double, Player> playerDistanceTreeMap = CommonUtils.calculatePlayerAroundTheItem(blockLocation);
                     String recentPlayerDistanceName = "&c(未找到)";
                     //判断是否附近有玩家
-                    if (!PluginUtils.mapIsEmpty(playerDistanceTreeMap)){
+                    if (!CommonUtils.mapIsEmpty(playerDistanceTreeMap)){
                         recentPlayerDistanceName = playerDistanceTreeMap.pollFirstEntry().getValue().getName();
                     }
                     //发送消息内容模板
-                    String messageTemplate = ChatColor.translateAlternateColorCodes('&', messagePrefix + destroyMessage.replaceAll("%player%", recentPlayerDistanceName).replaceAll("%x%", String.valueOf(blockX)).replaceAll("%y%", String.valueOf(blockY)).replaceAll("%z%", String.valueOf(blockZ)));
+                    String messageTemplate = ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + destroyMessage.replaceAll("%player%", recentPlayerDistanceName).replaceAll("%x%", String.valueOf(blockX)).replaceAll("%y%", String.valueOf(blockY)).replaceAll("%z%", String.valueOf(blockZ)));
                     //判断是否要广播消息
                     if (isBroadcastMessage) {
                         //广播消息
                         Bukkit.getServer().broadcastMessage(messageTemplate);
                     } else {
                         //获取拥有能收到限制流体消息的玩家,并发送消息
-                        ArrayList<Player> players = PluginUtils.hasPermissionPlayerList(LimitHighAltitudeFluidEnum.LIMIT_FLOW_MESSAGE_PERMISSION.getCommand());
+                        ArrayList<Player> players = CommonUtils.hasPermissionPlayerList(LimitHighAltitudeFluidEnum.LIMIT_FLOW_MESSAGE_PERMISSION.getCommand());
                         players.forEach(player -> player.sendMessage(messageTemplate));
                     }
 
                     //发送控制台消息
-                    PluginUtils.consoleCommandSender.sendMessage(messageTemplate);
+                    CommonUtils.consoleCommandSender.sendMessage(messageTemplate);
                 }
             }
         }

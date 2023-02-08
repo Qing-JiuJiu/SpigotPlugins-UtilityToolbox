@@ -1,7 +1,7 @@
 package com.yishian.function.customjoinandleave;
 
 import com.yishian.common.CommonEnum;
-import com.yishian.common.PluginUtils;
+import com.yishian.common.CommonUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
@@ -16,20 +16,21 @@ import org.bukkit.event.player.PlayerQuitEvent;
 public class CustomJoinAndLeaveListener implements Listener {
 
     /**
+     * 得到该功能的配置文件坐标
+     */
+    static ConfigurationSection functionConfigurationSection = CommonUtils.ServerConfig.getConfigurationSection("join-and-leave-server-message");
+    /**
+     * 得到消息列表
+     */
+    static ConfigurationSection messageConfigurationSection = functionConfigurationSection.getConfigurationSection(CommonEnum.MESSAGE.getCommand());
+
+    /**
      * 当玩家加入服务器时触发的方法
      *
      * @param playerJoinEvent 玩家加入服务器监听
      */
     @EventHandler
     public void playerOnJoin(PlayerJoinEvent playerJoinEvent) {
-        //得到配置文件
-        ConfigurationSection configurationSection = PluginUtils.getServerConfig();
-        //得到插件名称前缀
-        String messagePrefix = configurationSection.getConfigurationSection(CommonEnum.PLUGIN_MESSAGE.getCommand()).getString(CommonEnum.MESSAGE_PREFIX.getCommand());
-        //得到该功能的配置文件坐标
-        ConfigurationSection functionConfigurationSection = configurationSection.getConfigurationSection("join-and-leave-server-message");
-        //得到消息列表
-        ConfigurationSection messageConfigurationSection = functionConfigurationSection.getConfigurationSection(CommonEnum.MESSAGE.getCommand());
         //得到玩家
         Player player = playerJoinEvent.getPlayer();
         String playerDisplayName = player.getDisplayName();
@@ -38,13 +39,13 @@ public class CustomJoinAndLeaveListener implements Listener {
             //判断玩家是否第一次加入服务器
             if (player.hasPlayedBefore()) {
                 //后续来到服务器
-                playerJoinEvent.setJoinMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + messageConfigurationSection.getString("player-join-server-message").replaceAll("%player%", playerDisplayName)));
+                playerJoinEvent.setJoinMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + messageConfigurationSection.getString("player-join-server-message").replaceAll("%player%", playerDisplayName)));
             } else {
                 //第一次加入服务器
-                playerJoinEvent.setJoinMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + messageConfigurationSection.getString("player-first-join-server-message").replaceAll("%player%", playerDisplayName)));
+                playerJoinEvent.setJoinMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + messageConfigurationSection.getString("player-first-join-server-message").replaceAll("%player%", playerDisplayName)));
             }
         } else {
-            playerJoinEvent.setJoinMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + messageConfigurationSection.getString("player-join-server-message").replaceAll("%player%", playerDisplayName)));
+            playerJoinEvent.setJoinMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + messageConfigurationSection.getString("player-join-server-message").replaceAll("%player%", playerDisplayName)));
         }
     }
 
@@ -55,15 +56,7 @@ public class CustomJoinAndLeaveListener implements Listener {
      */
     @EventHandler
     public void playerOnLeave(PlayerQuitEvent playerQuitEvent) {
-        //得到配置文件
-        ConfigurationSection configurationSection = PluginUtils.getServerConfig();
-        //得到插件名称前缀
-        String messagePrefix = configurationSection.getConfigurationSection("plugin-message").getString("message-prefix");
-        //得到该功能的配置文件坐标
-        ConfigurationSection joinAndLeaveServerConfigurationSection = configurationSection.getConfigurationSection("join-and-leave-server-message");
-        //得到消息列表
-        ConfigurationSection customJoinAndLeaveMessage = joinAndLeaveServerConfigurationSection.getConfigurationSection("message");
         //发送离开服务器消息
-        playerQuitEvent.setQuitMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + customJoinAndLeaveMessage.getString("player-leave-server-message").replaceAll("%player%", playerQuitEvent.getPlayer().getDisplayName())));
+        playerQuitEvent.setQuitMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + messageConfigurationSection.getString("player-leave-server-message").replaceAll("%player%", playerQuitEvent.getPlayer().getDisplayName())));
     }
 }

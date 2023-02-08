@@ -83,12 +83,6 @@ import java.io.IOException;
  * @author XinQi
  */
 public final class Main extends JavaPlugin {
-
-    /**
-     * 通用字符串 time
-     */
-    String timeString = CommonEnum.TIME.getCommand();
-
     /**
      * 得到配置文件
      */
@@ -102,9 +96,13 @@ public final class Main extends JavaPlugin {
      */
     ConsoleCommandSender consoleSender = getServer().getConsoleSender();
     /**
-     * 得到插件名称
+     * 插件名称
      */
-    String messagePrefix = "&e[" + CommonEnum.PLUGHIN_NAME.getCommand() + "] &7";
+    String messagePrefix;
+    /**
+     * 通用字符串 time
+     */
+    String timeString;
 
     /**
      * 这是插件启动时执行的方法
@@ -113,6 +111,9 @@ public final class Main extends JavaPlugin {
     public void onEnable() {
         //如果插件目录下没配置文件，保存默认配置文件到插件目录
         saveDefaultConfig();
+        //保存配置文件后初始化一些跟配置文件相关的变量
+        timeString = CommonEnum.TIME.getCommand();
+        messagePrefix = "&e[" + CommonEnum.PLUGHIN_NAME.getCommand() + "] &7";
 
         //启动服务器时发送插件消息
         consoleSender.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + "欢迎使用UtilityToolbox，插件主页：http://www.utilitytoolbox.cn"));

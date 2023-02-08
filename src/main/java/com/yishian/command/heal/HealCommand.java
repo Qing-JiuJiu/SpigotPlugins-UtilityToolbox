@@ -1,7 +1,7 @@
 package com.yishian.command.heal;
 
 import com.yishian.common.CommonEnum;
-import com.yishian.common.PluginUtils;
+import com.yishian.common.CommonUtils;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -20,7 +20,10 @@ import java.util.List;
  */
 public class HealCommand implements TabExecutor {
 
-    String healCommand = HealEnum.HEAL_COMMAND.getCommand();
+    /**
+     * 消息列表
+     */
+    static ConfigurationSection healMessage = CommonUtils.ServerConfig.getConfigurationSection(HealEnum.HEAL_COMMAND.getCommand()).getConfigurationSection(CommonEnum.MESSAGE.getCommand());
 
     /**
      * 指令设置
@@ -33,13 +36,9 @@ public class HealCommand implements TabExecutor {
      */
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        //获取配置文件里该指令的消息提示
-        ConfigurationSection configurationSection = PluginUtils.getServerConfig();
-        String messagePrefix = configurationSection.getConfigurationSection(CommonEnum.PLUGIN_MESSAGE.getCommand()).getString(CommonEnum.MESSAGE_PREFIX.getCommand());
-        ConfigurationSection healMessage = configurationSection.getConfigurationSection(healCommand).getConfigurationSection(CommonEnum.MESSAGE.getCommand());
-
+        //判断参数数量是否大于1，大于1则提示错误
         if (args.length > 1) {
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + healMessage.getString("heal-command-error")));
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + healMessage.getString("heal-command-error")));
             return true;
         }
 
@@ -47,15 +46,15 @@ public class HealCommand implements TabExecutor {
         if (args.length == 0) {
             //判断执行恢复自己指令的是用户还是控制台
             if (!(sender instanceof Player)) {
-                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + healMessage.getString("heal-console-error")));
+                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + healMessage.getString("heal-console-error")));
                 return true;
             }
             Player player = (Player) sender;
             double maxHealth = player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue();
             player.setHealth(maxHealth);
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + healMessage.getString("heal-self").replaceAll("%player%", player.getName())));
+            player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + healMessage.getString("heal-self").replaceAll("%player%", player.getName())));
 
-            //判断参数数量是否为1
+            //如果参数不为0，那么参数数量就是1
         } else {
             //判断执行的是用户还是控制台
             if (sender instanceof Player) {
@@ -66,39 +65,39 @@ public class HealCommand implements TabExecutor {
                 if (!playerName.equals(othersPlayerName)) {
                     //判断执行恢复他人指令的玩家权限
                     if (!player.hasPermission(HealEnum.HEAL_OTHERS_PERMISSION.getCommand()) && !player.isOp()) {
-                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + healMessage.getString("heal-others-no-permission")));
+                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + healMessage.getString("heal-others-no-permission")));
                         return true;
                     }
-                    Player othersPlayer = healOthersPlayer(sender, messagePrefix, healMessage, othersPlayerName);
+                    Player othersPlayer = healOthersPlayer(sender,  healMessage, othersPlayerName);
                     if (othersPlayer == null) {
                         return true;
                     }
-                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + healMessage.getString("heal-others").replaceAll("%others-player%", othersPlayerName)));
-                    othersPlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + healMessage.getString("heal-by-others").replaceAll("%player%", playerName)));
+                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + healMessage.getString("heal-others").replaceAll("%others-player%", othersPlayerName)));
+                    othersPlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + healMessage.getString("heal-by-others").replaceAll("%player%", playerName)));
                 } else {
                     //参数指向的是自己，恢复自己，并给出对应提示
                     double maxHealth = player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue();
                     player.setHealth(maxHealth);
-                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + healMessage.getString("heal-others-is-self").replaceAll("%player%", player.getName())));
+                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + healMessage.getString("heal-others-is-self").replaceAll("%player%", player.getName())));
                 }
             } else {
                 String othersPlayerName = args[0];
-                Player othersPlayer = healOthersPlayer(sender, messagePrefix, healMessage, othersPlayerName);
+                Player othersPlayer = healOthersPlayer(sender,  healMessage, othersPlayerName);
                 if (othersPlayer == null) {
                     return true;
                 }
-                othersPlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + healMessage.getString("heal-by-console")));
-                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + healMessage.getString("heal-others").replaceAll("%others-player%", othersPlayerName)));
+                othersPlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + healMessage.getString("heal-by-console")));
+                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + healMessage.getString("heal-others").replaceAll("%others-player%", othersPlayerName)));
             }
         }
         return true;
     }
 
-    private static Player healOthersPlayer(CommandSender sender, String messagePrefix, ConfigurationSection healMessage, String othersPlayerName) {
+    private static Player healOthersPlayer(CommandSender sender, ConfigurationSection healMessage, String othersPlayerName) {
         Player othersPlayer = Bukkit.getPlayerExact(othersPlayerName);
         //判断该玩家是否存在
         if (othersPlayer == null) {
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + healMessage.getString("heal-others-no-exist").replaceAll("%others-player%", othersPlayerName)));
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + healMessage.getString("heal-others-no-exist").replaceAll("%others-player%", othersPlayerName)));
             return null;
         }
         othersPlayer.setHealth(othersPlayer.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue());
@@ -113,8 +112,8 @@ public class HealCommand implements TabExecutor {
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
         //判断指令是否是上面执行的指令
-        if (healCommand.equalsIgnoreCase(label)) {
-            return PluginUtils.arg1CommandPlayerTip(args);
+        if (HealEnum.HEAL_COMMAND.getCommand().equalsIgnoreCase(label)) {
+            return CommonUtils.arg1CommandPlayerTip(args);
         }
         return null;
     }

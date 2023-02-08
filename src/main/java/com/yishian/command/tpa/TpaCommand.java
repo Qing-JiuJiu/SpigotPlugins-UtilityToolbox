@@ -1,7 +1,7 @@
 package com.yishian.command.tpa;
 
 import com.yishian.common.CommonEnum;
-import com.yishian.common.PluginUtils;
+import com.yishian.common.CommonUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -22,9 +22,9 @@ import java.util.Set;
 public class TpaCommand implements TabExecutor {
 
     /**
-     * 指令
+     * 获取配置文件里该指令的消息提示
      */
-    String tpaCommand = TpaEnum.TPA_COMMAND.getCommand();
+    static ConfigurationSection tpaMessage = CommonUtils.ServerConfig.getConfigurationSection(TpaEnum.TPA_COMMAND.getCommand()).getConfigurationSection(CommonEnum.MESSAGE.getCommand());
 
     /**
      * 用于存储每个玩家自身被别人传送列表信息
@@ -41,14 +41,9 @@ public class TpaCommand implements TabExecutor {
      */
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        //获取配置文件里该指令的消息提示
-        ConfigurationSection configurationSection = PluginUtils.getServerConfig();
-        String messagePrefix = configurationSection.getConfigurationSection(CommonEnum.PLUGIN_MESSAGE.getCommand()).getString(CommonEnum.MESSAGE_PREFIX.getCommand());
-        ConfigurationSection tpaMessage = configurationSection.getConfigurationSection(tpaCommand).getConfigurationSection(CommonEnum.MESSAGE.getCommand());
-
         //判断参数是否大于1
         if (args.length > 1) {
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + tpaMessage.getString("tpa-command-error")));
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + tpaMessage.getString("tpa-command-error")));
             return true;
         }
 
@@ -56,15 +51,15 @@ public class TpaCommand implements TabExecutor {
         if (args.length == 0) {
             //判断执行指令是用户还是控制台
             if (sender instanceof Player) {
-                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + tpaMessage.getString("tpa-command-error")));
+                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + tpaMessage.getString("tpa-command-error")));
             } else {
-                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + tpaMessage.getString("tpa-console-error")));
+                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + tpaMessage.getString("tpa-console-error")));
             }
             //判断参数数量是否为1
         } else {
             //判断执行的是用户还是控制台
             if (!(sender instanceof Player)) {
-                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + tpaMessage.getString("tpa-console-error")));
+                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + tpaMessage.getString("tpa-console-error")));
                 return true;
             }
             Player player = (Player) sender;
@@ -72,13 +67,13 @@ public class TpaCommand implements TabExecutor {
             String othersPlayerName = args[0];
             //判断传送的名字是否是自己
             if (playerName.equals(othersPlayerName)) {
-                player.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + tpaMessage.getString("tpa-command-error")));
+                player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + tpaMessage.getString("tpa-command-error")));
                 return true;
             }
             Player othersPlayer = Bukkit.getPlayerExact(othersPlayerName);
             //判断玩家是否存在
             if (othersPlayer == null) {
-                player.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + tpaMessage.getString("tpa-others-no-exist").replaceAll("%others-player%", othersPlayerName)));
+                player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + tpaMessage.getString("tpa-others-no-exist").replaceAll("%others-player%", othersPlayerName)));
                 return true;
             }
             //添加传送信息
@@ -94,12 +89,12 @@ public class TpaCommand implements TabExecutor {
             Player recordPlayer = transfeRecordMap.get(player);
             //如果相同将不重复发送，如果不相同将自动取消上一个传送请求
             if (recordPlayer == othersPlayer) {
-                player.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + tpaMessage.getString("tpa-others-identical")));
+                player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + tpaMessage.getString("tpa-others-identical")));
                 return true;
             } else if (recordPlayer != null) {
                 transfeMap.get(recordPlayer).removeIf(judgePlayer -> player == judgePlayer);
-                recordPlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + tpaMessage.getString("tpa-auto-tpacancel")));
-                othersPlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + tpaMessage.getString("tpa-auto-tpacancel-others").replaceAll("%player%", playerName)));
+                recordPlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + tpaMessage.getString("tpa-auto-tpacancel")));
+                othersPlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + tpaMessage.getString("tpa-auto-tpacancel-others").replaceAll("%player%", playerName)));
             }
 
             //添加至传送列表
@@ -107,11 +102,11 @@ public class TpaCommand implements TabExecutor {
             //添加自身传送信息
             transfeRecordMap.put(player, othersPlayer);
             //发送相关提醒
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + tpaMessage.getString("tpa-apply").replaceAll("%others-player%", othersPlayerName)));
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + tpaMessage.getString("tpa-apply-tpacancel-tips")));
-            othersPlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + tpaMessage.getString("tpa-apply-others").replaceAll("%player%", playerName)));
-            othersPlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + tpaMessage.getString("tpa-apply-accept-tips")));
-            othersPlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + tpaMessage.getString("tpa-apply-deny-tips")));
+            player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + tpaMessage.getString("tpa-apply").replaceAll("%others-player%", othersPlayerName)));
+            player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + tpaMessage.getString("tpa-apply-tpacancel-tips")));
+            othersPlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + tpaMessage.getString("tpa-apply-others").replaceAll("%player%", playerName)));
+            othersPlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + tpaMessage.getString("tpa-apply-accept-tips")));
+            othersPlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + tpaMessage.getString("tpa-apply-deny-tips")));
 
 
         }
@@ -119,15 +114,15 @@ public class TpaCommand implements TabExecutor {
     }
 
     /**
-     * 指令补全提示
+     * 指令提示
      *
      * @return 返回的提示内容
      */
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
         //判断指令是否是上面执行的指令
-        if (tpaCommand.equalsIgnoreCase(label)) {
-            return PluginUtils.arg1CommandPlayerTip(args, sender);
+        if (TpaEnum.TPA_COMMAND.getCommand().equalsIgnoreCase(label)) {
+            return CommonUtils.arg1CommandPlayerTip(args, sender);
         }
         return null;
     }
