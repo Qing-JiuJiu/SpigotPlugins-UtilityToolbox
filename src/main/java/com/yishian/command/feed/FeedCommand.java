@@ -1,5 +1,6 @@
 package com.yishian.command.feed;
 
+import com.yishian.common.CommonConfigLoad;
 import com.yishian.common.CommonEnum;
 import com.yishian.common.CommonUtils;
 import org.bukkit.Bukkit;
@@ -20,7 +21,7 @@ public class FeedCommand implements TabExecutor {
     /**
      * 获取配置文件里该指令的消息提示
      */
-    static ConfigurationSection feedMessage = CommonUtils.ServerConfig.getConfigurationSection(FeedEnum.FEED_COMMAND.getCommand()).getConfigurationSection(CommonEnum.MESSAGE.getCommand());
+    static ConfigurationSection feedMessage = CommonConfigLoad.ServerConfig.getConfigurationSection(FeedEnum.FEED_COMMAND.getCommand()).getConfigurationSection(CommonEnum.MESSAGE.getCommand());
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {

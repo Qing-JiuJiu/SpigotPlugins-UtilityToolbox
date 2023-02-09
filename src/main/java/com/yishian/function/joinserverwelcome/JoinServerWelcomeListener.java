@@ -1,6 +1,7 @@
 package com.yishian.function.joinserverwelcome;
 
 import com.yishian.Main;
+import com.yishian.common.CommonConfigLoad;
 import com.yishian.common.CommonEnum;
 import com.yishian.common.CommonUtils;
 import org.bukkit.Bukkit;
@@ -21,7 +22,7 @@ public class JoinServerWelcomeListener implements Listener {
     /**
      * 得到配置文件
      */
-   static ConfigurationSection functionConfigurationSection = CommonUtils.ServerConfig.getConfigurationSection("join-server-welcome");
+   static ConfigurationSection functionConfigurationSection = CommonConfigLoad.ServerConfig.getConfigurationSection("join-server-welcome");
     /**
      * 得到消息列表
      */

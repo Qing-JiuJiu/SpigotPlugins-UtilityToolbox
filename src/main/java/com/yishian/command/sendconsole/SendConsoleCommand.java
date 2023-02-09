@@ -1,8 +1,7 @@
 package com.yishian.command.sendconsole;
 
-
+import com.yishian.common.CommonConfigLoad;
 import com.yishian.common.CommonEnum;
-import com.yishian.common.CommonUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Server;
@@ -19,7 +18,7 @@ public class SendConsoleCommand implements CommandExecutor {
     /**
      * 获取配置文件里该指令的消息提示
      */
-    static ConfigurationSection sendConsoleMessage = CommonUtils.ServerConfig.getConfigurationSection(SendConsoleEnum.SEND_CONSOLE_COMMAND.getCommand()).getConfigurationSection(CommonEnum.MESSAGE.getCommand());
+    static ConfigurationSection sendConsoleMessage = CommonConfigLoad.ServerConfig.getConfigurationSection(SendConsoleEnum.SEND_CONSOLE_COMMAND.getCommand()).getConfigurationSection(CommonEnum.MESSAGE.getCommand());
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {

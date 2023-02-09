@@ -1,13 +1,10 @@
 package com.yishian.command.autodeathback;
 
-
 import com.yishian.common.CommonEnum;
-import com.yishian.common.CommonUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
@@ -23,16 +20,11 @@ public class AutoRespawnBackCommand implements CommandExecutor {
      */
     public static ArrayList<UUID> autoRespawnBackList = new ArrayList<>();
 
-    /**
-     * 获取配置文件里该指令的消息提示
-     */
-    static ConfigurationSection autoRespawnBackMessage = CommonUtils.ServerConfig.getConfigurationSection(AutoRespawnBackEnum.AUTO_RESPAWN_BACK_COMMAND.getCommand()).getConfigurationSection(CommonEnum.MESSAGE.getCommand());
-
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         //判断执行指令的是用户还是控制台
         if (!(sender instanceof Player)) {
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + autoRespawnBackMessage.getString("autorespawnback-console-error")));
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + AutoRespawnBackConfigEnum.AUTORESPAWNBACK_CONSOLE_ERROR.getMsg()));
             return true;
         }
 
@@ -40,10 +32,10 @@ public class AutoRespawnBackCommand implements CommandExecutor {
         //如果包含该玩家的UUID则移除，否则添加
         if (autoRespawnBackList.contains(player.getUniqueId())) {
             autoRespawnBackList.remove(player.getUniqueId());
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + autoRespawnBackMessage.getString("autorespawnback-apply-close")));
+            player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + AutoRespawnBackConfigEnum.AUTORESPAWNBACK_APPLY_OPEN.getMsg()));
         } else {
             autoRespawnBackList.add(player.getUniqueId());
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + autoRespawnBackMessage.getString("autorespawnback-apply-open")));
+            player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + AutoRespawnBackConfigEnum.AUTORESPAWNBACK_APPLY_CLOSE.getMsg()));
         }
         return true;
     }

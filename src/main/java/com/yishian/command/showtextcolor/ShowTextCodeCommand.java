@@ -1,7 +1,7 @@
 package com.yishian.command.showtextcolor;
 
+import com.yishian.common.CommonConfigLoad;
 import com.yishian.common.CommonEnum;
-import com.yishian.common.CommonUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -16,7 +16,7 @@ public class ShowTextCodeCommand implements CommandExecutor {
     /**
      * 获取配置文件里该指令的消息提示
      */
-    static ConfigurationSection showTextCodeMessage = CommonUtils.ServerConfig.getConfigurationSection(ShowTextCodeEnum.SHOW_TEXT_CODE_COMMAND.getCommand()).getConfigurationSection(CommonEnum.MESSAGE.getCommand());
+    static ConfigurationSection showTextCodeMessage = CommonConfigLoad.ServerConfig.getConfigurationSection(ShowTextCodeEnum.SHOW_TEXT_CODE_COMMAND.getCommand()).getConfigurationSection(CommonEnum.MESSAGE.getCommand());
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {

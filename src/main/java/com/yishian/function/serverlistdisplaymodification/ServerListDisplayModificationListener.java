@@ -1,6 +1,7 @@
 package com.yishian.function.serverlistdisplaymodification;
 
 import com.yishian.Main;
+import com.yishian.common.CommonConfigLoad;
 import com.yishian.common.CommonEnum;
 import com.yishian.common.CommonUtils;
 import org.bukkit.Bukkit;
@@ -20,7 +21,7 @@ public class ServerListDisplayModificationListener implements Listener {
     /**
      * 获取配置文件
      */
-    static ConfigurationSection functionConfiguration = CommonUtils.ServerConfig.getConfigurationSection("server-list-display-modification");
+    static ConfigurationSection functionConfiguration = CommonConfigLoad.ServerConfig.getConfigurationSection("server-list-display-modification");
     /**
      * 获取配置文件里消息列表
      */

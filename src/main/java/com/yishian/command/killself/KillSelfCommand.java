@@ -1,7 +1,7 @@
 package com.yishian.command.killself;
 
+import com.yishian.common.CommonConfigLoad;
 import com.yishian.common.CommonEnum;
-import com.yishian.common.CommonUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Server;
@@ -19,7 +19,7 @@ public class KillSelfCommand implements CommandExecutor {
     /**
      * 获取配置文件里该指令的消息提示
      */
-    ConfigurationSection homeMessage = CommonUtils.ServerConfig.getConfigurationSection(KillSelfEnum.KILL_SELF_COMMAND.getCommand()).getConfigurationSection(CommonEnum.MESSAGE.getCommand());
+    ConfigurationSection homeMessage = CommonConfigLoad.ServerConfig.getConfigurationSection(KillSelfEnum.KILL_SELF_COMMAND.getCommand()).getConfigurationSection(CommonEnum.MESSAGE.getCommand());
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {

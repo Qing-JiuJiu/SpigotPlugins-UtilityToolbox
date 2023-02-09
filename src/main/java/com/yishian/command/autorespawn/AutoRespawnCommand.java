@@ -1,15 +1,13 @@
 package com.yishian.command.autorespawn;
 
-
+import com.yishian.common.CommonConfigLoad;
 import com.yishian.common.CommonEnum;
-import com.yishian.common.CommonUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
-
 import java.util.ArrayList;
 import java.util.UUID;
 
@@ -25,7 +23,7 @@ public class AutoRespawnCommand implements CommandExecutor {
     /**
      * 获取配置文件里该指令的消息提示
      */
-    static ConfigurationSection autoRespawnMessage = CommonUtils.ServerConfig.getConfigurationSection(AutoRespawnEnum.AUTO_RESPAWN_COMMAND.getCommand()).getConfigurationSection(CommonEnum.MESSAGE.getCommand());
+    static ConfigurationSection autoRespawnMessage = CommonConfigLoad.ServerConfig.getConfigurationSection(AutoRespawnEnum.AUTO_RESPAWN_COMMAND.getCommand()).getConfigurationSection(CommonEnum.MESSAGE.getCommand());
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {

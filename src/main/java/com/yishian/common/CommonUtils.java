@@ -8,9 +8,9 @@ import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.IOException;
 import java.io.OutputStreamWriter;
@@ -27,14 +27,13 @@ import java.util.*;
 public class CommonUtils {
 
     /**
-     * 服务器配置文件
-     */
-    public static FileConfiguration ServerConfig = Main.getProvidingPlugin(Main.class).getConfig();
-
-    /**
      * 控制台
      */
     public static ConsoleCommandSender consoleCommandSender = Bukkit.getConsoleSender();
+    /**
+     * 主线程
+     */
+    public static JavaPlugin javaPlugin =Main.getProvidingPlugin(Main.class);
 
     /**
      * 参数数量最大为0-1时玩家通用提示

@@ -1,5 +1,6 @@
 package com.yishian.function.preventhighfrequencyattacks;
 
+import com.yishian.common.CommonConfigLoad;
 import com.yishian.common.CommonEnum;
 import com.yishian.common.CommonUtils;
 import org.bukkit.Bukkit;
@@ -8,7 +9,9 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.UUID;
 
 /**
  * @author XinQi
@@ -18,7 +21,7 @@ public class PreventHighFrequencyAttacksRunnable extends BukkitRunnable {
     /**
      * 得到配置文件相关信息
      */
-    static ConfigurationSection functionConfiguration = CommonUtils.ServerConfig.getConfigurationSection("prevent-high-hrequency-attacks");
+    static ConfigurationSection functionConfiguration = CommonConfigLoad.ServerConfig.getConfigurationSection("prevent-high-hrequency-attacks");
 
     /**
      * Key为玩家的UUID，Value为左键的次数

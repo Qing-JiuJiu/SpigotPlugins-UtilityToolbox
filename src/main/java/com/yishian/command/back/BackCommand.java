@@ -1,18 +1,14 @@
 package com.yishian.command.back;
 
-
 import com.yishian.command.teleport.TeleportCommand;
-
+import com.yishian.common.CommonConfigLoad;
 import com.yishian.common.CommonEnum;
-import com.yishian.common.CommonUtils;
-
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.ConfigurationSection;
-
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
@@ -26,7 +22,7 @@ public class BackCommand implements CommandExecutor {
     /**
      * 获取配置文件里该指令的消息提示
      */
-    static ConfigurationSection backMessage = CommonUtils.ServerConfig.getConfigurationSection(BackEnum.BACK_COMMAND.getCommand()).getConfigurationSection(CommonEnum.MESSAGE.getCommand());
+    static ConfigurationSection backMessage = CommonConfigLoad.ServerConfig.getConfigurationSection(BackEnum.BACK_COMMAND.getCommand()).getConfigurationSection(CommonEnum.MESSAGE.getCommand());
 
     /**
      * 记录玩家返回的位置

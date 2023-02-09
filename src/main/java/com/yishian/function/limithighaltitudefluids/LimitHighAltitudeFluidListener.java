@@ -1,19 +1,17 @@
 package com.yishian.function.limithighaltitudefluids;
 
+import com.yishian.common.CommonConfigLoad;
 import com.yishian.common.CommonEnum;
 import com.yishian.common.CommonUtils;
-
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
-
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockFromToEvent;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeMap;
@@ -26,7 +24,7 @@ public class LimitHighAltitudeFluidListener implements Listener {
     /**
      * 得到配置文件
      */
-    static ConfigurationSection functionConfiguration = CommonUtils.ServerConfig.getConfigurationSection("limit-high-altitude-fluid");
+    static ConfigurationSection functionConfiguration = CommonConfigLoad.ServerConfig.getConfigurationSection("limit-high-altitude-fluid");
 
     @EventHandler
     public void onWaterLavaTo(BlockFromToEvent blockFromToEvent) {

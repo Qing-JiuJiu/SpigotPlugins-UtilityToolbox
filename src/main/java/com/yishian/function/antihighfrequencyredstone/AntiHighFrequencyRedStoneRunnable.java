@@ -1,5 +1,6 @@
 package com.yishian.function.antihighfrequencyredstone;
 
+import com.yishian.common.CommonConfigLoad;
 import com.yishian.common.CommonEnum;
 import com.yishian.common.CommonUtils;
 import org.bukkit.Bukkit;
@@ -9,7 +10,11 @@ import org.bukkit.block.Block;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
-import java.util.*;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.TreeMap;
 
 /**
  * @author XinQi
@@ -19,7 +24,7 @@ public class AntiHighFrequencyRedStoneRunnable extends BukkitRunnable {
     /**
      * 得到配置文件相关信息
      */
-    static ConfigurationSection functionConfiguration = CommonUtils.ServerConfig.getConfigurationSection("anti-high-frequency-red-stone");
+    static ConfigurationSection functionConfiguration = CommonConfigLoad.ServerConfig.getConfigurationSection("anti-high-frequency-red-stone");
     /**
      * 得到限制次数
      */

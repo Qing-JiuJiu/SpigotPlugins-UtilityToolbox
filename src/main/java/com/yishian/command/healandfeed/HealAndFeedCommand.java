@@ -2,6 +2,7 @@ package com.yishian.command.healandfeed;
 
 import com.yishian.command.feed.FeedEnum;
 import com.yishian.command.heal.HealEnum;
+import com.yishian.common.CommonConfigLoad;
 import com.yishian.common.CommonEnum;
 import com.yishian.common.CommonUtils;
 import org.bukkit.Bukkit;
@@ -23,7 +24,7 @@ public class HealAndFeedCommand implements TabExecutor {
     /**
      * 获取配置文件里该指令的消息提示
      */
-    ConfigurationSection healAndFeedMessage = CommonUtils.ServerConfig.getConfigurationSection(HealAndFeedEnum.HEAL_AND_FEED_COMMAND.getCommand()).getConfigurationSection(CommonEnum.MESSAGE.getCommand());
+    ConfigurationSection healAndFeedMessage = CommonConfigLoad.ServerConfig.getConfigurationSection(HealAndFeedEnum.HEAL_AND_FEED_COMMAND.getCommand()).getConfigurationSection(CommonEnum.MESSAGE.getCommand());
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {

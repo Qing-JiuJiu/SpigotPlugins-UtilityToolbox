@@ -1,6 +1,7 @@
 package com.yishian.command.tpaccept;
 
 import com.yishian.command.tpa.TpaCommand;
+import com.yishian.common.CommonConfigLoad;
 import com.yishian.common.CommonEnum;
 import com.yishian.common.CommonUtils;
 import org.bukkit.Bukkit;
@@ -22,7 +23,7 @@ public class TpaCceptCommand implements TabExecutor {
     /**
      * 获取配置文件里该指令的消息提示
      */
-    static ConfigurationSection tpaCceptMessage = CommonUtils.ServerConfig.getConfigurationSection(TpaCceptEnum.TPA_CCEPT_COMMAND.getCommand()).getConfigurationSection(CommonEnum.MESSAGE.getCommand());
+    static ConfigurationSection tpaCceptMessage = CommonConfigLoad.ServerConfig.getConfigurationSection(TpaCceptEnum.TPA_CCEPT_COMMAND.getCommand()).getConfigurationSection(CommonEnum.MESSAGE.getCommand());
 
     /**
      * 指令设置

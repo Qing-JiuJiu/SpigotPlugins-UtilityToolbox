@@ -1,8 +1,8 @@
 package com.yishian.command.tpacancel;
 
 import com.yishian.command.tpa.TpaCommand;
+import com.yishian.common.CommonConfigLoad;
 import com.yishian.common.CommonEnum;
-import com.yishian.common.CommonUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -20,7 +20,7 @@ public class TpaCancelCommand implements CommandExecutor {
     /**
      * 获取配置文件里该指令的消息提示
      */
-    static ConfigurationSection tpaCancelMessage = CommonUtils.ServerConfig.getConfigurationSection(TpaCancelEnum.TPA_CANCEL_COMMAND.getCommand()).getConfigurationSection(CommonEnum.MESSAGE.getCommand());
+    static ConfigurationSection tpaCancelMessage = CommonConfigLoad.ServerConfig.getConfigurationSection(TpaCancelEnum.TPA_CANCEL_COMMAND.getCommand()).getConfigurationSection(CommonEnum.MESSAGE.getCommand());
 
     /**
      * 指令设置

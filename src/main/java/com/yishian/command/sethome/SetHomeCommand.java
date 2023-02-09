@@ -1,6 +1,6 @@
 package com.yishian.command.sethome;
 
-
+import com.yishian.common.CommonConfigLoad;
 import com.yishian.common.CommonEnum;
 import com.yishian.common.CommonUtils;
 import org.bukkit.ChatColor;
@@ -22,7 +22,7 @@ public class SetHomeCommand implements CommandExecutor {
     /**
      * 获取配置文件里该指令的配置内容
      */
-    static ConfigurationSection setHomeconfigurationSection = CommonUtils.ServerConfig.getConfigurationSection(SetHomeEnum.SET_HOME_COMMAND.getCommand());
+    static ConfigurationSection setHomeconfigurationSection = CommonConfigLoad.ServerConfig.getConfigurationSection(SetHomeEnum.SET_HOME_COMMAND.getCommand());
     /**
      * 获取配置文件里该指令的消息提示
      */

@@ -1,5 +1,6 @@
 package com.yishian.command.flyspeed;
 
+import com.yishian.common.CommonConfigLoad;
 import com.yishian.common.CommonEnum;
 import com.yishian.common.CommonUtils;
 
@@ -15,7 +16,6 @@ import java.math.BigDecimal;
 
 import java.util.List;
 
-
 /**
  * @author XinQi
  */
@@ -24,7 +24,7 @@ public class FlySpeedCommand implements TabExecutor {
     /**
      * 获取配置文件里该指令的消息提示
      */
-    static ConfigurationSection flySpeedMessage = CommonUtils.ServerConfig.getConfigurationSection(FlySpeedEnum.FLY_SPEED_COMMAND.getCommand()).getConfigurationSection(CommonEnum.MESSAGE.getCommand());
+    static ConfigurationSection flySpeedMessage = CommonConfigLoad.ServerConfig.getConfigurationSection(FlySpeedEnum.FLY_SPEED_COMMAND.getCommand()).getConfigurationSection(CommonEnum.MESSAGE.getCommand());
 
     /**
      * 指令设置

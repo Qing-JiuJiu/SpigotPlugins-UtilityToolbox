@@ -54,9 +54,11 @@ import com.yishian.command.tpaccept.TpaCceptCommand;
 import com.yishian.command.tpaccept.TpaCceptEnum;
 import com.yishian.command.tpadeny.TpaDenyCommand;
 import com.yishian.command.tpadeny.TpaDenyEnum;
+import com.yishian.command.utilitytoolbox.UtilityToolboxEnum;
 import com.yishian.command.walkspeed.WalkSpeedCommand;
 import com.yishian.command.walkspeed.WalkSpeedEnum;
-import com.yishian.common.CommonCommand;
+import com.yishian.command.utilitytoolbox.UtilityToolboxCommand;
+import com.yishian.common.CommonConfigLoad;
 import com.yishian.common.CommonEnum;
 import com.yishian.function.antihighfrequencyredstone.AntiHighFrequencyRedStoneListener;
 import com.yishian.function.antihighfrequencyredstone.AntiHighFrequencyRedStoneRunnable;
@@ -77,7 +79,6 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.IOException;
-
 
 /**
  * @author XinQi
@@ -115,6 +116,9 @@ public final class Main extends JavaPlugin {
         timeString = CommonEnum.TIME.getCommand();
         messagePrefix = "&e[" + CommonEnum.PLUGHIN_NAME.getCommand() + "] &7";
 
+        //读取配置文件内容，初始化一些跟配置文件相关的变量
+        CommonConfigLoad.loadConfig();
+
         //启动服务器时发送插件消息
         consoleSender.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + "欢迎使用UtilityToolbox，插件主页：http://www.utilitytoolbox.cn"));
 
@@ -138,8 +142,8 @@ public final class Main extends JavaPlugin {
     public void registerCommand() {
         //重载配置文件
         PluginCommand reloadCommand = getCommand(CommonEnum.PLUGHIN_NAME.getCommand());
-        reloadCommand.setPermission(CommonEnum.RELOAD_CONFIG_PERMISSION.getCommand());
-        reloadCommand.setExecutor(new CommonCommand());
+        reloadCommand.setPermission(UtilityToolboxEnum.RELOAD_CONFIG_PERMISSION.getCommand());
+        reloadCommand.setExecutor(new UtilityToolboxCommand());
 
         //恢复生命值注册
         PluginCommand healCommand = getCommand(HealEnum.HEAL_COMMAND.getCommand());

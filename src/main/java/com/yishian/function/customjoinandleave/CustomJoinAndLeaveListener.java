@@ -1,7 +1,7 @@
 package com.yishian.function.customjoinandleave;
 
+import com.yishian.common.CommonConfigLoad;
 import com.yishian.common.CommonEnum;
-import com.yishian.common.CommonUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
@@ -18,7 +18,7 @@ public class CustomJoinAndLeaveListener implements Listener {
     /**
      * 得到该功能的配置文件坐标
      */
-    static ConfigurationSection functionConfigurationSection = CommonUtils.ServerConfig.getConfigurationSection("join-and-leave-server-message");
+    static ConfigurationSection functionConfigurationSection = CommonConfigLoad.ServerConfig.getConfigurationSection("join-and-leave-server-message");
     /**
      * 得到消息列表
      */

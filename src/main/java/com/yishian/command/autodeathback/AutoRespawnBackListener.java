@@ -31,7 +31,7 @@ public class AutoRespawnBackListener implements Listener {
             Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getProvidingPlugin(Main.class), () -> {
                 Location location = BackCommand.playerBackMap.get(playerUniqueId);
                 player.teleport(location);
-                player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + AutoRespawnBackCommand.autoRespawnBackMessage.getString("autorespawnback-apply")));
+                player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + AutoRespawnBackConfigEnum.AUTORESPAWNBACK_APPLY.getMsg()));
             });
         }
     }

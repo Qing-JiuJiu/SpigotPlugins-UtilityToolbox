@@ -1,5 +1,6 @@
 package com.yishian.command.walkspeed;
 
+import com.yishian.common.CommonConfigLoad;
 import com.yishian.common.CommonEnum;
 import com.yishian.common.CommonUtils;
 import org.bukkit.Bukkit;
@@ -21,7 +22,7 @@ public class WalkSpeedCommand implements TabExecutor {
     /**
      * 获取配置文件里该指令的消息提示
      */
-    static ConfigurationSection walkSpeedMessage = CommonUtils.ServerConfig.getConfigurationSection(WalkSpeedEnum.WALK_SPEED_COMMAND.getCommand()).getConfigurationSection(CommonEnum.MESSAGE.getCommand());
+    static ConfigurationSection walkSpeedMessage = CommonConfigLoad.ServerConfig.getConfigurationSection(WalkSpeedEnum.WALK_SPEED_COMMAND.getCommand()).getConfigurationSection(CommonEnum.MESSAGE.getCommand());
 
     /**
      * 指令设置
@@ -157,7 +158,6 @@ public class WalkSpeedCommand implements TabExecutor {
 
     /**
      * 校验原始速度数值是否正确
-     *
      * @return 原始速度
      */
     private static Float checkOriginalWalkSpeed(CommandSender sender, String[] args, ConfigurationSection walkSpeedMessage) {
@@ -179,7 +179,7 @@ public class WalkSpeedCommand implements TabExecutor {
     }
 
     /**
-     * 指令补全提示
+     * 指令提示
      *
      * @param sender  Source of the command.  For players tab-completing a
      *                command inside a command block, this will be the player, not

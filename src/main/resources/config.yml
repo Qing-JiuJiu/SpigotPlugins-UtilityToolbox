@@ -418,5 +418,5 @@ autorespawn:
 #发送控制台指令
 sendconsole:
   message:
-    sendconsole-apply: '&a已让服务器执行&6%command%&a指令，请注意核实指令'
+    sendconsole-apply: '&a已让服务器执行&6%command%&a指令，若指令未生效，请核实指令是否正确'
     sendconsole-command-error: '&c发送控制台指令格式错误，正确格式: &6/sendconsole <arg...>'

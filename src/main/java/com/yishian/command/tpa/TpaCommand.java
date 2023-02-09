@@ -1,5 +1,6 @@
 package com.yishian.command.tpa;
 
+import com.yishian.common.CommonConfigLoad;
 import com.yishian.common.CommonEnum;
 import com.yishian.common.CommonUtils;
 import org.bukkit.Bukkit;
@@ -24,7 +25,7 @@ public class TpaCommand implements TabExecutor {
     /**
      * 获取配置文件里该指令的消息提示
      */
-    static ConfigurationSection tpaMessage = CommonUtils.ServerConfig.getConfigurationSection(TpaEnum.TPA_COMMAND.getCommand()).getConfigurationSection(CommonEnum.MESSAGE.getCommand());
+    static ConfigurationSection tpaMessage = CommonConfigLoad.ServerConfig.getConfigurationSection(TpaEnum.TPA_COMMAND.getCommand()).getConfigurationSection(CommonEnum.MESSAGE.getCommand());
 
     /**
      * 用于存储每个玩家自身被别人传送列表信息

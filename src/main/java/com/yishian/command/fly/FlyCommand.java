@@ -1,5 +1,6 @@
 package com.yishian.command.fly;
 
+import com.yishian.common.CommonConfigLoad;
 import com.yishian.common.CommonEnum;
 import com.yishian.common.CommonUtils;
 import org.bukkit.Bukkit;
@@ -12,7 +13,6 @@ import org.bukkit.entity.Player;
 
 import java.util.List;
 
-
 /**
  * @author XinQi
  */
@@ -21,7 +21,7 @@ public class FlyCommand implements TabExecutor {
     /**
      * 获取配置文件里该指令的消息提示
      */
-    static ConfigurationSection flyMessage = CommonUtils.ServerConfig.getConfigurationSection(FlyEnum.FLY_COMMAND.getCommand()).getConfigurationSection(CommonEnum.MESSAGE.getCommand());
+    static ConfigurationSection flyMessage = CommonConfigLoad.ServerConfig.getConfigurationSection(FlyEnum.FLY_COMMAND.getCommand()).getConfigurationSection(CommonEnum.MESSAGE.getCommand());
 
     /**
      * 指令设置

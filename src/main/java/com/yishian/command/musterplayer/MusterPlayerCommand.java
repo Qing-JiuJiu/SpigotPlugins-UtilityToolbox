@@ -2,6 +2,7 @@ package com.yishian.command.musterplayer;
 
 import com.yishian.Main;
 import com.yishian.command.teleport.TeleportCommand;
+import com.yishian.common.CommonConfigLoad;
 import com.yishian.common.CommonEnum;
 import com.yishian.common.CommonUtils;
 import org.bukkit.Bukkit;
@@ -18,7 +19,6 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
-
 /**
  * @author XinQi
  */
@@ -26,7 +26,7 @@ public class MusterPlayerCommand implements TabExecutor {
     /**
      * 获取配置文件里该指令的配置信息
      */
-    static ConfigurationSection musterPlayerConfig = CommonUtils.ServerConfig.getConfigurationSection(MusterPlayerEnum.MUSTER_PLAYER_COMMAND.getCommand());
+    static ConfigurationSection musterPlayerConfig = CommonConfigLoad.ServerConfig.getConfigurationSection(MusterPlayerEnum.MUSTER_PLAYER_COMMAND.getCommand());
     /**
      * 获取配置文件里该指令的消息提示
      */

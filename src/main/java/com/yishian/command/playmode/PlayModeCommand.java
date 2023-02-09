@@ -1,6 +1,6 @@
 package com.yishian.command.playmode;
 
-
+import com.yishian.common.CommonConfigLoad;
 import com.yishian.common.CommonEnum;
 import com.yishian.common.CommonUtils;
 import org.bukkit.Bukkit;
@@ -15,7 +15,6 @@ import org.bukkit.entity.Player;
 import java.util.ArrayList;
 import java.util.List;
 
-
 /**
  * @author XinQi
  */
@@ -24,7 +23,7 @@ public class PlayModeCommand implements TabExecutor {
     /**
      * 获取配置文件里该指令的消息提示
      */
-    static ConfigurationSection playModeMessage = CommonUtils.ServerConfig.getConfigurationSection(PlayModeEnum.PLAY_MODE_COMMAND.getCommand()).getConfigurationSection(CommonEnum.MESSAGE.getCommand());
+    static ConfigurationSection playModeMessage = CommonConfigLoad.ServerConfig.getConfigurationSection(PlayModeEnum.PLAY_MODE_COMMAND.getCommand()).getConfigurationSection(CommonEnum.MESSAGE.getCommand());
 
 
     /**

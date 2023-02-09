@@ -1,6 +1,6 @@
 package com.yishian.command.copyres;
 
-
+import com.yishian.common.CommonConfigLoad;
 import com.yishian.common.CommonEnum;
 import com.yishian.common.CommonUtils;
 import org.bukkit.ChatColor;
@@ -11,9 +11,7 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
-
 import java.util.List;
-
 
 /**
  * @author XinQi
@@ -23,7 +21,7 @@ public class CopyResCommand implements CommandExecutor {
     /**
      * 获取配置文件里该指令的配置文件
      */
-    static ConfigurationSection copyResConfigurationSection = CommonUtils.ServerConfig.getConfigurationSection(CopyResEnum.COPY_RES_COMMAND.getCommand());
+    static ConfigurationSection copyResConfigurationSection = CommonConfigLoad.ServerConfig.getConfigurationSection(CopyResEnum.COPY_RES_COMMAND.getCommand());
     /**
      * 获取配置文件里该指令的消息提示
      */

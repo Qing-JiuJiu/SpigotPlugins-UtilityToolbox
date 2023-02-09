@@ -1,7 +1,7 @@
 package com.yishian.command.tpadeny;
 
-
 import com.yishian.command.tpa.TpaCommand;
+import com.yishian.common.CommonConfigLoad;
 import com.yishian.common.CommonEnum;
 import com.yishian.common.CommonUtils;
 import org.bukkit.Bukkit;
@@ -15,7 +15,6 @@ import org.bukkit.entity.Player;
 import java.util.List;
 import java.util.Set;
 
-
 /**
  * @author XinQi
  */
@@ -23,7 +22,7 @@ public class TpaDenyCommand implements TabExecutor {
     /**
      * 获取配置文件里该指令的消息提示
      */
-    static ConfigurationSection tpaDenyMessage = CommonUtils.ServerConfig.getConfigurationSection(TpaDenyEnum.TPA_DENY_COMMAND.getCommand()).getConfigurationSection(CommonEnum.MESSAGE.getCommand());
+    static ConfigurationSection tpaDenyMessage = CommonConfigLoad.ServerConfig.getConfigurationSection(TpaDenyEnum.TPA_DENY_COMMAND.getCommand()).getConfigurationSection(CommonEnum.MESSAGE.getCommand());
 
     /**
      * 指令设置
