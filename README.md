@@ -8,7 +8,7 @@
 
 最新版本：3.0.0
 
-官网：[http://www.utilitytoolbox.cn/)
+官网：[http://www.utilitytoolbox.cn/](http://www.utilitytoolbox.cn/)
 
 下载链接：[https://www.spigotmc.org/resources/utilitytoolbox-add-common-commands-and-server-functions-1-7-1-19x.104791/](https://www.spigotmc.org/resources/utilitytoolbox-add-common-commands-and-server-functions-1-7-1-19x.104791/)
 
