@@ -1,7 +1,6 @@
 package com.yishian.command.tpadeny;
 
 import com.yishian.command.tpa.TpaCommand;
-import com.yishian.common.CommonConfigLoad;
 import com.yishian.common.CommonEnum;
 import com.yishian.common.CommonUtils;
 import org.bukkit.Bukkit;
@@ -9,7 +8,6 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
-import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 
 import java.util.List;
@@ -20,18 +18,13 @@ import java.util.Set;
  */
 public class TpaDenyCommand implements TabExecutor {
     /**
-     * 获取配置文件里该指令的消息提示
-     */
-    static ConfigurationSection tpaDenyMessage = CommonConfigLoad.ServerConfig.getConfigurationSection(TpaDenyEnum.TPA_DENY_COMMAND.getCommand()).getConfigurationSection(CommonEnum.MESSAGE.getCommand());
-
-    /**
      * 指令设置
      */
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         //判断参数数量是否大于1
         if (args.length > 1) {
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + tpaDenyMessage.getString("tpadeny-command-error")));
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + TpaDenyConfigEnum.TPADENY_COMMAND_ERROR.getMsg()));
             return true;
         }
 
@@ -39,7 +32,7 @@ public class TpaDenyCommand implements TabExecutor {
         if (args.length == 0) {
             //判断执行指令是用户还是控制台
             if (!(sender instanceof Player)) {
-                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + tpaDenyMessage.getString("tpadeny-console-error")));
+                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + TpaDenyConfigEnum.TPADENY_CONSOLE_ERROR.getMsg()));
                 return true;
             }
 
@@ -48,15 +41,15 @@ public class TpaDenyCommand implements TabExecutor {
             String playerName = player.getName();
             Set<Player> tpaPlayers = TpaCommand.transfeMap.get(player);
             if (CommonUtils.collectionIsEmpty(tpaPlayers)) {
-                player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + tpaDenyMessage.getString("tpadeny-no-tpa-error")));
+                player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + TpaDenyConfigEnum.TPADENY_NO_TPA_ERROR.getMsg()));
                 return true;
             }
 
             //主功能拒绝传送-----------------------
             tpaPlayers.forEach(tpaPlayer -> {
                 TpaCommand.transfeRecordMap.remove(tpaPlayer);
-                player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + tpaDenyMessage.getString("tpadeny-apply")).replaceAll("%others-player%", tpaPlayer.getName()));
-                tpaPlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + tpaDenyMessage.getString("tpadeny-apply-others")).replaceAll("%player%", playerName));
+                player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + TpaDenyConfigEnum.TPADENY_APPLY.getMsg()).replaceAll("%others-player%", tpaPlayer.getName()));
+                tpaPlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + TpaDenyConfigEnum.TPADENY_APPLY_OTHERS.getMsg()).replaceAll("%player%", playerName));
             });
             //传送完后删除自己所有传送信息
             tpaPlayers.clear();
@@ -66,7 +59,7 @@ public class TpaDenyCommand implements TabExecutor {
         } else {
             //判断执行的是用户还是控制台
             if (!(sender instanceof Player)) {
-                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + tpaDenyMessage.getString("tpadeny-console-error")));
+                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + TpaDenyConfigEnum.TPADENY_CONSOLE_ERROR.getMsg()));
                 return true;
             }
 
@@ -75,14 +68,14 @@ public class TpaDenyCommand implements TabExecutor {
             String othersPlayerName = args[0];
             //判断传送的名字是否是自己
             if (playerName.equals(othersPlayerName)) {
-                player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + tpaDenyMessage.getString("tpadeny-apply-is-self")));
+                player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + TpaDenyConfigEnum.TPADENY_APPLY_IS_SELF.getMsg()));
                 return true;
             }
 
             //判断玩家是否存在
             Player othersPlayer = Bukkit.getPlayerExact(othersPlayerName);
             if (othersPlayer == null) {
-                player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + tpaDenyMessage.getString("tpadeny-others-no-exist").replaceAll("%others-player%", othersPlayerName)));
+                player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + TpaDenyConfigEnum.TPADENY_OTHERS_NO_EXIST.getMsg().toString().replaceAll("%others-player%", othersPlayerName)));
                 return true;
             }
 
@@ -95,13 +88,13 @@ public class TpaDenyCommand implements TabExecutor {
                     tpaPlayers.remove(tpaPlayer);
                     TpaCommand.transfeMap.put(player, tpaPlayers);
                     //发送相关信息提示并结束
-                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + tpaDenyMessage.getString("tpadeny-apply")).replaceAll("%others-player%", tpaPlayer.getName()));
-                    tpaPlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + tpaDenyMessage.getString("tpadeny-apply-others")).replaceAll("%player%", playerName));
+                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + TpaDenyConfigEnum.TPADENY_APPLY.getMsg()).replaceAll("%others-player%", tpaPlayer.getName()));
+                    tpaPlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + TpaDenyConfigEnum.TPADENY_APPLY_OTHERS.getMsg()).replaceAll("%player%", playerName));
                     return true;
                 }
             }
             //到这里还没结束就发送没有待处理的请求
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + tpaDenyMessage.getString("tpadeny-no-others-player-tpa-error")).replaceAll("%others-player%", othersPlayerName));
+            player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + TpaDenyConfigEnum.TPADENY_NO_OTHERS_PLAYER_TPA_ERROR.getMsg()).replaceAll("%others-player%", othersPlayerName));
         }
         return true;
     }

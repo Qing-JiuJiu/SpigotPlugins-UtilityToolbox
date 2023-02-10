@@ -1,13 +1,11 @@
 package com.yishian.command.tpacancel;
 
 import com.yishian.command.tpa.TpaCommand;
-import com.yishian.common.CommonConfigLoad;
 import com.yishian.common.CommonEnum;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 
 import java.util.Set;
@@ -16,11 +14,6 @@ import java.util.Set;
  * @author XinQi
  */
 public class TpaCancelCommand implements CommandExecutor {
-
-    /**
-     * 获取配置文件里该指令的消息提示
-     */
-    static ConfigurationSection tpaCancelMessage = CommonConfigLoad.ServerConfig.getConfigurationSection(TpaCancelEnum.TPA_CANCEL_COMMAND.getCommand()).getConfigurationSection(CommonEnum.MESSAGE.getCommand());
 
     /**
      * 指令设置
@@ -35,14 +28,14 @@ public class TpaCancelCommand implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         //判断执行指令是用户还是控制台
         if (!(sender instanceof Player)) {
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + tpaCancelMessage.getString("tpacancel-console-error")));
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + TpaCancelConfigEnum.TPACANCEL_CONSOLE_ERROR.getMsg()));
             return true;
         }
 
         //移出传送记录
         Player othersPlayer = TpaCommand.transfeRecordMap.remove(sender);
         if (othersPlayer == null) {
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + tpaCancelMessage.getString("tpacancel-no-tpa-error")));
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + TpaCancelConfigEnum.TPACANCEL_NO_TPA_ERROR.getMsg()));
             return true;
         }
 
@@ -50,8 +43,8 @@ public class TpaCancelCommand implements CommandExecutor {
         Set<Player> playerSet = TpaCommand.transfeMap.get(othersPlayer);
         playerSet.removeIf(player -> player == sender);
         //发送提示信息
-        othersPlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + tpaCancelMessage.getString("tpacancel-others").replaceAll("%player%", sender.getName())));
-        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + tpaCancelMessage.getString("tpacancel-apply").replaceAll("%others-player%", othersPlayer.getName())));
+        othersPlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + TpaCancelConfigEnum.TPACANCEL_OTHERS.getMsg().toString().replaceAll("%player%", sender.getName())));
+        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + TpaCancelConfigEnum.TPACANCEL_APPLY.getMsg().toString().replaceAll("%others-player%", othersPlayer.getName())));
 
         return true;
     }

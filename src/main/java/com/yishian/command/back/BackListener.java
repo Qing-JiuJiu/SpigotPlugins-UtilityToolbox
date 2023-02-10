@@ -54,10 +54,10 @@ public class BackListener implements Listener {
                 //判断服务器是否允许传送，如果允许且玩家没有开启自动重生死亡返回则提醒玩家可以使用/back指令返回到死亡位置
                 if (TeleportCommand.allowTp) {
                     if (!AutoRespawnBackCommand.autoRespawnBackList.contains(playerUniqueId)) {
-                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + BackCommand.backMessage.getString("back-died-tips")));
+                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + BackConfigEnum.BACK_DIED_TIPS.getMsg()));
                     }
                 } else {
-                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + BackCommand.backMessage.getString("back-died-no-tp-tips")));
+                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + BackConfigEnum.BACK_DIED_NO_TP_TIPS.getMsg()));
                 }
             }
         });

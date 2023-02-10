@@ -27,7 +27,7 @@ public class AutoRespawnListener implements Listener {
             Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getProvidingPlugin(Main.class), () -> {
                 //玩家重生
                 player.spigot().respawn();
-                player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + AutoRespawnCommand.autoRespawnMessage.getString("autorespawn-apply")));
+                player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + AutoRespawnConfigEnum.AUTORESPAWN_APPLY.getMsg()));
             });
         }
     }

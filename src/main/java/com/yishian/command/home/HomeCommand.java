@@ -2,7 +2,6 @@ package com.yishian.command.home;
 
 import com.yishian.command.sethome.SetHomeConfig;
 import com.yishian.command.teleport.TeleportCommand;
-import com.yishian.common.CommonConfigLoad;
 import com.yishian.common.CommonEnum;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -19,22 +18,17 @@ import org.bukkit.entity.Player;
  */
 public class HomeCommand implements CommandExecutor {
 
-    /**
-     * 获取配置文件里该指令的消息提示
-     */
-    static ConfigurationSection homeMessage = CommonConfigLoad.ServerConfig.getConfigurationSection(HomeEnum.HOME_COMMAND.getCommand()).getConfigurationSection(CommonEnum.MESSAGE.getCommand());
-
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         //判断指令是否带参数
         if (args.length != 0) {
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + homeMessage.getString("home-command-error")));
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + HomeConfigEnum.HOME_COMMAND_ERROR.getMsg()));
             return true;
         }
 
         //判断执行指令的是用户还是控制台
         if (!(sender instanceof Player)) {
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + homeMessage.getString("home-console-error")));
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + HomeConfigEnum.HOME_CONSOLE_ERROR.getMsg()));
             return true;
         }
 
@@ -46,14 +40,14 @@ public class HomeCommand implements CommandExecutor {
 
         //判断该用户是否有家
         if (playerConfig == null) {
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + homeMessage.getString("home-no-exist")));
+            player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + HomeConfigEnum.HOME_NO_EXIST.getMsg()));
             return true;
         }
 
         //传送玩家并发送对应消息
         player.teleport(new Location(Bukkit.getWorld(playerConfig.getString("world")), playerConfig.getDouble("x"), playerConfig.getDouble("y"), playerConfig.getDouble("z"), Float.parseFloat(playerConfig.getString("yaw")), Float.parseFloat(playerConfig.getString("pitch"))));
         if (TeleportCommand.allowTp) {
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + homeMessage.getString("home-apply")));
+            player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + HomeConfigEnum.HOME_APPLY.getMsg()));
         }
 
         return true;

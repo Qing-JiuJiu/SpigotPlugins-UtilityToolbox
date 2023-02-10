@@ -1,6 +1,5 @@
 package com.yishian.command.setsnaptp;
 
-import com.yishian.common.CommonConfigLoad;
 import com.yishian.common.CommonEnum;
 import com.yishian.common.CommonUtils;
 import org.bukkit.ChatColor;
@@ -8,7 +7,6 @@ import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
@@ -19,30 +17,17 @@ import java.util.List;
  */
 public class SetSnapTpCommand implements CommandExecutor {
 
-    /**
-     * 获取配置文件里该指令的配置内容
-     */
-    ConfigurationSection setSnapTpconfigurationSection = CommonConfigLoad.ServerConfig.getConfigurationSection(SetSnapTpEnum.SET_SNAP_TP_COMMAND.getCommand());
-    /**
-     * 获取配置文件里该指令的消息提示
-     */
-    ConfigurationSection setSnapTpMessage = setSnapTpconfigurationSection.getConfigurationSection(CommonEnum.MESSAGE.getCommand());
-    /**
-     * 同意设置为临时传送点的列表
-     */
-    List<String> allowWorldList = setSnapTpconfigurationSection.getStringList("allow-world");
-
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         //判断指令是否带参数
         if (args.length != 0) {
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + setSnapTpMessage.getString("setsnaptp-command-error")));
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + SetSnapTpConfigEnum.SETSNAPTP_COMMAND_ERROR.getMsg()));
             return true;
         }
 
         //判断执行指令的是用户还是控制台
         if (!(sender instanceof Player)) {
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + setSnapTpMessage.getString("setsnaptp-console-error")));
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + SetSnapTpConfigEnum.SETSNAPTP_CONSOLE_ERROR.getMsg()));
             return true;
         }
 
@@ -52,8 +37,10 @@ public class SetSnapTpCommand implements CommandExecutor {
 
         //判断是否是允许在当前世界设置临时传送点
         String worldName = playerLocation.getWorld().getName();
+        //获得允许设置临时传送点的世界列表
+        List<?> allowWorldList = CommonUtils.objectToList(SetSnapTpConfigEnum.ALLOW_WORLD.getMsg());
         if (!allowWorldList.contains(worldName) && !allowWorldList.contains(CommonEnum.ALL.getCommand())) {
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + setSnapTpMessage.getString("setsnaptp-world-error").replaceAll("%world%", worldName)));
+            player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + SetSnapTpConfigEnum.SETSNAPTP_WORLD_ERROR.getMsg().toString().replaceAll("%world%", worldName)));
             return true;
         }
 
@@ -76,7 +63,7 @@ public class SetSnapTpCommand implements CommandExecutor {
         CommonUtils.saveYamlConfig(snapFileYaml, SetSnapTpConfig.file.toPath());
 
         //发送设置临时传送点消息成功消息
-        player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + setSnapTpMessage.getString("setsnaptp-apply")));
+        player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + SetSnapTpConfigEnum.SETSNAPTP_APPLY.getMsg()));
         return true;
     }
 }

@@ -1,6 +1,5 @@
 package com.yishian.command.playmode;
 
-import com.yishian.common.CommonConfigLoad;
 import com.yishian.common.CommonEnum;
 import com.yishian.common.CommonUtils;
 import org.bukkit.Bukkit;
@@ -9,7 +8,6 @@ import org.bukkit.Server;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
-import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
@@ -19,12 +17,6 @@ import java.util.List;
  * @author XinQi
  */
 public class PlayModeCommand implements TabExecutor {
-
-    /**
-     * 获取配置文件里该指令的消息提示
-     */
-    static ConfigurationSection playModeMessage = CommonConfigLoad.ServerConfig.getConfigurationSection(PlayModeEnum.PLAY_MODE_COMMAND.getCommand()).getConfigurationSection(CommonEnum.MESSAGE.getCommand());
-
 
     /**
      * 指令提示
@@ -46,13 +38,13 @@ public class PlayModeCommand implements TabExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         //判断执行指令是用户还是控制台
         if (!(sender instanceof Player)) {
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + playModeMessage.getString("playmode-console-error")));
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + PlayModeConfigEnum.PLAYMODE_CONSOLE_ERROR.getMsg()));
             return true;
         }
 
         //判断指令是否带参数，否则发送指令格式错误提示
         if (args.length != 1) {
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + playModeMessage.getString("playmode-command-error")));
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + PlayModeConfigEnum.PLAYMODE_COMMAND_ERROR.getMsg()));
             return true;
         }
         //得到模式
@@ -68,7 +60,7 @@ public class PlayModeCommand implements TabExecutor {
 
         //判断参数是否正确
         if (!modeList.contains(gameModeString)) {
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + playModeMessage.getString("playmode-command-error")));
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + PlayModeConfigEnum.PLAYMODE_COMMAND_ERROR.getMsg()));
             return true;
         }
 
@@ -82,14 +74,14 @@ public class PlayModeCommand implements TabExecutor {
 
         //判断玩家切换的模式是否拥有权限，没权限就报没权限的提示
         if (!CommonUtils.collectionIsEmpty(playHavePermissionList) && !playHavePermissionList.contains(gameModeString)) {
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + playModeMessage.getString("playmode-no-permission-error").replaceAll("%gamemode%", gameModeString)));
+            player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + PlayModeConfigEnum.PLAYMODE_NO_PERMISSION_ERROR.getMsg().toString().replaceAll("%gamemode%", gameModeString)));
             return true;
         }
 
         //使用服务器官方指令切换模式
         Server server = Bukkit.getServer();
         server.dispatchCommand(server.getConsoleSender(), "gamemode " + gameModeString + " " + player.getName());
-        player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + playModeMessage.getString("playmode-apply")));
+        player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + PlayModeConfigEnum.PLAYMODE_APPLY.getMsg()));
 
         CommonUtils.sendConsoleMessage("玩家" + player.getName() + "切换了模式：" + gameModeString);
 

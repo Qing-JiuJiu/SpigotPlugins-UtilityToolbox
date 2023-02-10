@@ -8,7 +8,6 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
-import org.bukkit.configuration.ConfigurationSection;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,12 +16,6 @@ import java.util.List;
  * @author XinQi
  */
 public class UtilityToolboxCommand implements TabExecutor {
-
-    /**
-     * 获取配置文件对应的提示消息
-     */
-    static ConfigurationSection pluginMessage = CommonConfigLoad.ServerConfig.getConfigurationSection("plugin-message");
-
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         //判断执行的指令内容
@@ -32,10 +25,10 @@ public class UtilityToolboxCommand implements TabExecutor {
                 //重载配置文件;
                 CommonUtils.javaPlugin.reloadConfig();
                 CommonConfigLoad.loadConfig();
-                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + pluginMessage.getString("reload-message")));
+                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + UtilityToolboxConfigEnum.UTILITYTOOLBOX_APPLY_RELOAD.getMsg()));
             } else {
                 //提示参数错误
-                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + pluginMessage.getString("command-args-error")));
+                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + UtilityToolboxConfigEnum.UTILITYTOOLBOX_COMMAND_ERROR.getMsg()));
             }
             return true;
         }

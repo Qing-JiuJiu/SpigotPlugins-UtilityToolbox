@@ -110,14 +110,18 @@ public final class Main extends JavaPlugin {
      */
     @Override
     public void onEnable() {
-        //如果插件目录下没配置文件，保存默认配置文件到插件目录
-        saveDefaultConfig();
+        //检查是否有配置文件
+        if (!getDataFolder().exists()) {
+            //如果插件目录下没配置文件，保存默认配置文件到插件目录
+            saveDefaultConfig();
+        }else {
+            //直接加载配置文件里的内容
+            CommonConfigLoad.loadConfig();
+        }
+
         //保存配置文件后初始化一些跟配置文件相关的变量
         timeString = CommonEnum.TIME.getCommand();
         messagePrefix = "&e[" + CommonEnum.PLUGHIN_NAME.getCommand() + "] &7";
-
-        //读取配置文件内容，初始化一些跟配置文件相关的变量
-        CommonConfigLoad.loadConfig();
 
         //启动服务器时发送插件消息
         consoleSender.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + "欢迎使用UtilityToolbox，插件主页：http://www.utilitytoolbox.cn"));

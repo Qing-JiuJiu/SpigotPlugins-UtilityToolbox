@@ -14,9 +14,9 @@ public enum AutoRespawnBackEnum {
     AUTO_RESPAWN_BACK_PERMISSION(CommonEnum.PLUGHIN_NAME.getCommand() + "." + AUTO_RESPAWN_BACK_COMMAND.getCommand(), "自动重生后回到死亡位置权限");
 
     private final String command;
-    private final String msg;
+    private final Object msg;
 
-    AutoRespawnBackEnum(String command, String msg) {
+    AutoRespawnBackEnum(String command, Object msg) {
         this.command = command;
         this.msg = msg;
     }
@@ -25,7 +25,7 @@ public enum AutoRespawnBackEnum {
         return command;
     }
 
-    public String getMsg() {
+    public Object getMsg() {
         return msg;
     }
 }

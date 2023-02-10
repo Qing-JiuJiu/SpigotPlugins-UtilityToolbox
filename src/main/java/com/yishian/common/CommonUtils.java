@@ -245,7 +245,7 @@ public class CommonUtils {
      * 向控制台发送消息
      */
     public static void sendConsoleMessage(String message) {
-        Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX + message));
+        Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getMsg() + message));
     }
 
     /**
@@ -263,5 +263,17 @@ public class CommonUtils {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    /**
+     * object转list
+     * @param object 需要被转的对象
+     * @return list对象
+     */
+    public static List<?> objectToList(Object object) {
+        if (object instanceof List) {
+            return (List<?>) object;
+        }
+        return null;
     }
 }

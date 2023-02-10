@@ -19,9 +19,9 @@ public enum HealConfigEnum{
     HEAL_COMMAND_ERROR("heal-command-error", "&c恢复生命值指令格式错误，正确格式: &6/heal [玩家名称]");
 
     private final String tag;
-    private String msg;
+    private Object msg;
 
-    public void setMsg(String msg) {
+    public void setMsg(Object msg) {
         this.msg = msg;
     }
 
@@ -34,7 +34,7 @@ public enum HealConfigEnum{
         return tag;
     }
 
-    public String getMsg() {
+    public Object getMsg() {
         return msg;
     }
 }

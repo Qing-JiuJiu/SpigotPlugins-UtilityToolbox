@@ -8,6 +8,10 @@ import com.yishian.common.CommonEnum;
 public enum UtilityToolboxEnum {
 
     /**
+     * 插件主指令
+     */
+    UTILITYTOOLBOX_COMMAND("utilitytoolbox", "插件主指令"),
+    /**
      * 重载配置文件
      */
     RELOAD_CONFIG_COMMAND("reload", "重载配置文件的指令"),

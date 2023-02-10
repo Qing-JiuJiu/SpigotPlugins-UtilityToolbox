@@ -2,8 +2,6 @@
 plugin-message:
   #插件消息前缀
   message-prefix: '&e[UtilityToolbox] &6'
-  reload-message: '&a配置文件重载成功'
-  command-args-error: '&c子指令无效或无子指令，正确格式: &6/UtilityToolbox <子指令>'
 
 #自定义加入和离开服务器消息
 join-and-leave-server-message:
@@ -97,6 +95,12 @@ prevent-high-hrequency-attacks:
     broadcast-kick-message: "&c玩家&3%player%&c疑似使用连点器，已踢出服务器，CPS:%cps%"
     broadcast-no-kick-message: "&c玩家&3%player%&c疑似使用连点器，CPS:%cps%"
 
+#主指令
+utilitytoolbox:
+  message:
+    utilitytoolbox-command-error: '&c子指令无效或无子指令，正确格式: &6/UtilityToolbox <子指令>'
+    utilitytoolbox-apply-reload: '&a配置文件重载成功'
+
 #恢复生命值
 heal:
   message:
@@ -167,10 +171,10 @@ flyspeed:
     fly-speed-others-is-self: '你已修改飞行速度为%fly-speed%，修改自己可以不输入玩家名称'
     fly-speed-others-no-exist: '&c玩家&3%others-player%&c不存在，请检查玩家名字'
     fly-speed-others-no-permission: '&c你没有修改他人飞行速度指令的权限'
-    fly-speed-by-others-reset: '你已被&3%player%&6重置飞行速度'
-    fly-speed-by-console-reset: '你已被服务器重置飞行速度'
     fly-speed-by-others: '你已被&3%player%&6修改飞行速度为%fly-speed%'
+    fly-speed-by-others-reset: '你已被&3%player%&6重置飞行速度'
     fly-speed-by-console: '你已被服务器修改飞行速度为%fly-speed%'
+    fly-speed-by-console-reset: '你已被服务器重置飞行速度'
     fly-speed-console-error: '&c控制台请执行修改他人飞行速度的指令: &6flyspeed [速度] <玩家名称>'
     fly-speed-command-error: '&c修改飞行速度指令格式错误，格式: &6/flyspeed [速度] [玩家名称]'
 
@@ -412,7 +416,7 @@ autorespawn:
   message:
     autorespawn-apply-open: '&a你已开启自动重生'
     autorespawn-apply-close: '&a你已关闭自动重生'
-    autorespawn-apply: '你已自动跳过死亡结算界面'
+    autorespawn-apply: '已自动跳过死亡结算界面'
     autorespawn-console-error: '&c控制台无法使用此命令'
 
 #发送控制台指令

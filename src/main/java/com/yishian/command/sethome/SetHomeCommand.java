@@ -1,6 +1,5 @@
 package com.yishian.command.sethome;
 
-import com.yishian.common.CommonConfigLoad;
 import com.yishian.common.CommonEnum;
 import com.yishian.common.CommonUtils;
 import org.bukkit.ChatColor;
@@ -8,7 +7,6 @@ import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
@@ -19,30 +17,17 @@ import java.util.List;
  */
 public class SetHomeCommand implements CommandExecutor {
 
-    /**
-     * 获取配置文件里该指令的配置内容
-     */
-    static ConfigurationSection setHomeconfigurationSection = CommonConfigLoad.ServerConfig.getConfigurationSection(SetHomeEnum.SET_HOME_COMMAND.getCommand());
-    /**
-     * 获取配置文件里该指令的消息提示
-     */
-    static ConfigurationSection setHomeMessage = setHomeconfigurationSection.getConfigurationSection(CommonEnum.MESSAGE.getCommand());
-    /**
-     * 同意设置为家的世界列表名称列表
-     */
-    static List<String> allowHomeWorldList = setHomeconfigurationSection.getStringList("allow-world");
-
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         //判断指令是否带参数
         if (args.length != 0) {
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + setHomeMessage.getString("sethome-command-error")));
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + SetHomeConfigEnum.SETHOME_COMMAND_ERROR.getMsg()));
             return true;
         }
 
         //判断执行指令的是用户还是控制台
         if (!(sender instanceof Player)) {
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + setHomeMessage.getString("sethome-console-error")));
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + SetHomeConfigEnum.SETHOME_CONSOLE_ERROR.getMsg()));
             return true;
         }
 
@@ -52,8 +37,10 @@ public class SetHomeCommand implements CommandExecutor {
 
         //判断是否是允许在当前世界设置家
         String worldName = playerLocation.getWorld().getName();
+        //获得允许设置家的世界列表
+        List<?> allowHomeWorldList = CommonUtils.objectToList(SetHomeConfigEnum.ALLOW_WORLD.getMsg());
         if (!allowHomeWorldList.contains(worldName) && !allowHomeWorldList.contains(CommonEnum.ALL.getCommand())) {
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + setHomeMessage.getString("sethome-world-error").replaceAll("%world%", worldName)));
+            player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + SetHomeConfigEnum.SETHOME_WORLD_ERROR.getMsg().toString().replaceAll("%world%", worldName)));
             return true;
         }
 
@@ -76,7 +63,7 @@ public class SetHomeCommand implements CommandExecutor {
         CommonUtils.saveYamlConfig(homeFileYaml, SetHomeConfig.file.toPath());
 
         //发送设置家成功消息
-        player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + setHomeMessage.getString("sethome-apply").replaceAll("%world%", worldName).replaceAll("%x%", String.valueOf((int) playerLocationX)).replaceAll("%y%", String.valueOf((int) playerLocationY)).replaceAll("%z%", String.valueOf((int) playerLocationZ))));
+        player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + SetHomeConfigEnum.SETHOME_APPLY.getMsg().toString().replaceAll("%world%", worldName).replaceAll("%x%", String.valueOf((int) playerLocationX)).replaceAll("%y%", String.valueOf((int) playerLocationY)).replaceAll("%z%", String.valueOf((int) playerLocationZ))));
         return true;
     }
 }

@@ -14,13 +14,13 @@ public enum AutoRespawnBackConfigEnum {
     AUTORESPAWNBACK_CONSOLE_ERROR("autorespawnback-console-error", "&c控制台无法使用此命令");
 
     private final String tag;
-    private String msg;
+    private Object msg;
 
-    public void setMsg(String msg) {
+    public void setMsg(Object msg) {
         this.msg = msg;
     }
 
-    AutoRespawnBackConfigEnum(String tag, String msg) {
+    AutoRespawnBackConfigEnum(String tag, Object msg) {
         this.tag = tag;
         this.msg = msg;
     }
@@ -29,7 +29,7 @@ public enum AutoRespawnBackConfigEnum {
         return tag;
     }
 
-    public String getMsg() {
+    public Object getMsg() {
         return msg;
     }
 }

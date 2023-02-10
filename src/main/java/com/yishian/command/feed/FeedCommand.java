@@ -1,6 +1,5 @@
 package com.yishian.command.feed;
 
-import com.yishian.common.CommonConfigLoad;
 import com.yishian.common.CommonEnum;
 import com.yishian.common.CommonUtils;
 import org.bukkit.Bukkit;
@@ -8,7 +7,6 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
-import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 
 import java.util.List;
@@ -18,17 +16,12 @@ import java.util.List;
  */
 public class FeedCommand implements TabExecutor {
 
-    /**
-     * 获取配置文件里该指令的消息提示
-     */
-    static ConfigurationSection feedMessage = CommonConfigLoad.ServerConfig.getConfigurationSection(FeedEnum.FEED_COMMAND.getCommand()).getConfigurationSection(CommonEnum.MESSAGE.getCommand());
-
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
         //判断指令参数是否超过2个
         if (args.length > 1) {
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + feedMessage.getString("feed-command-error")));
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + FeedConfigEnum.FEED_COMMAND_ERROR.getMsg()));
             return true;
         }
 
@@ -36,13 +29,13 @@ public class FeedCommand implements TabExecutor {
         if (args.length == 0) {
             //判断执行恢复自己指令的是用户还是控制台
             if (!(sender instanceof Player)) {
-                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + feedMessage.getString("feed-console-error")));
+                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + FeedConfigEnum.FEED_CONSOLE_ERROR.getMsg()));
                 return true;
             }
             //恢复自己饱食度
             Player player = (Player) sender;
             player.setFoodLevel(20);
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + feedMessage.getString("feed-self").replaceAll("%player%", player.getName())));
+            player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + FeedConfigEnum.FEED_SELF.getMsg().toString().replaceAll("%player%", player.getName())));
             //否则参数数量是为1，得到这个参数
         } else {
             //判断执行的是用户还是控制台
@@ -54,34 +47,34 @@ public class FeedCommand implements TabExecutor {
                 if (!playerName.equals(othersPlayerName)) {
                     //判断执行恢复他人指令的玩家权限
                     if (!player.hasPermission(FeedEnum.FEED_OTHERS_PERMISSION.getCommand()) && !player.isOp()) {
-                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + feedMessage.getString("feed-others-no-permission")));
+                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + FeedConfigEnum.FEED_OTHERS_NO_PERMISSION.getMsg()));
                         return true;
                     }
                     Player othersPlayer = Bukkit.getPlayerExact(othersPlayerName);
                     //判断玩家是否存在
                     if (othersPlayer == null) {
-                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + feedMessage.getString("feed-others-no-exist").replaceAll("%others-player%", othersPlayerName)));
+                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + FeedConfigEnum.FEED_OTHERS_NO_EXIST.getMsg().toString().replaceAll("%others-player%", othersPlayerName)));
                         return true;
                     }
                     othersPlayer.setFoodLevel(20);
-                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + feedMessage.getString("feed-others").replaceAll("%others-player%", othersPlayerName)));
-                    othersPlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + feedMessage.getString("feed-by-others").replaceAll("%player%", playerName)));
+                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + FeedConfigEnum.FEED_OTHERS.getMsg().toString().replaceAll("%others-player%", othersPlayerName)));
+                    othersPlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + FeedConfigEnum.FEED_BY_OTHERS.getMsg().toString().replaceAll("%player%", playerName)));
                 } else {
                     //参数指向的是自己，恢复自己，并给出对应提示
                     player.setFoodLevel(20);
-                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + feedMessage.getString("feed-others-is-self").replaceAll("%player%", player.getName())));
+                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + FeedConfigEnum.FEED_OTHERS_IS_SELF.getMsg().toString().replaceAll("%player%", player.getName())));
                 }
             } else {
                 String othersPlayerName = args[0];
                 Player othersPlayer = Bukkit.getPlayerExact(othersPlayerName);
                 //判断玩家是否存在
                 if (othersPlayer == null) {
-                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + feedMessage.getString("feed-others-no-exist").replaceAll("%others-player%", othersPlayerName)));
+                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + FeedConfigEnum.FEED_OTHERS_NO_EXIST.getMsg().toString().replaceAll("%others-player%", othersPlayerName)));
                     return true;
                 }
                 othersPlayer.setFoodLevel(20);
-                othersPlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + feedMessage.getString("feed-by-console")));
-                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + feedMessage.getString("feed-others").replaceAll("%others-player%", othersPlayerName)));
+                othersPlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + FeedConfigEnum.FEED_BY_CONSOLE.getMsg()));
+                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + FeedConfigEnum.FEED_OTHERS.getMsg().toString().replaceAll("%others-player%", othersPlayerName)));
             }
         }
         return true;
