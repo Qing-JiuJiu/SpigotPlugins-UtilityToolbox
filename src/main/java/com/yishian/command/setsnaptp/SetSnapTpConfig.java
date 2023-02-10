@@ -19,7 +19,7 @@ public class SetSnapTpConfig {
 
     public static void loadSnapConfigFile() throws IOException {
         //得到插件配置目录下的snaps.yml文件
-        file = new File(JavaPlugin.getPlugin(Main.class).getDataFolder(), "snaps.yml");
+        file = new File(JavaPlugin.getPlugin(Main.class).getDataFolder(), "snaptps.yml");
         //判断文件是否存在
         if (!file.exists()) {
             //创建文件并加载该文件
