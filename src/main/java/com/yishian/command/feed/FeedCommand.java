@@ -35,7 +35,7 @@ public class FeedCommand implements TabExecutor {
             //恢复自己饱食度
             Player player = (Player) sender;
             player.setFoodLevel(20);
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + FeedConfigEnum.FEED_SELF.getMsg().toString().replaceAll("%player%", player.getName())));
+            player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + FeedConfigEnum.FEED_SELF.getMsg()).replaceAll("%player%", player.getName()));
             //否则参数数量是为1，得到这个参数
         } else {
             //判断执行的是用户还是控制台
@@ -53,28 +53,28 @@ public class FeedCommand implements TabExecutor {
                     Player othersPlayer = Bukkit.getPlayerExact(othersPlayerName);
                     //判断玩家是否存在
                     if (othersPlayer == null) {
-                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + FeedConfigEnum.FEED_OTHERS_NO_EXIST.getMsg().toString().replaceAll("%others-player%", othersPlayerName)));
+                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + FeedConfigEnum.FEED_OTHERS_NO_EXIST.getMsg()).replaceAll("%others-player%", othersPlayerName));
                         return true;
                     }
                     othersPlayer.setFoodLevel(20);
-                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + FeedConfigEnum.FEED_OTHERS.getMsg().toString().replaceAll("%others-player%", othersPlayerName)));
-                    othersPlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + FeedConfigEnum.FEED_BY_OTHERS.getMsg().toString().replaceAll("%player%", playerName)));
+                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + FeedConfigEnum.FEED_OTHERS.getMsg()).replaceAll("%others-player%", othersPlayerName));
+                    othersPlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + FeedConfigEnum.FEED_BY_OTHERS.getMsg()).replaceAll("%player%", playerName));
                 } else {
                     //参数指向的是自己，恢复自己，并给出对应提示
                     player.setFoodLevel(20);
-                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + FeedConfigEnum.FEED_OTHERS_IS_SELF.getMsg().toString().replaceAll("%player%", player.getName())));
+                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + FeedConfigEnum.FEED_OTHERS_IS_SELF.getMsg()).replaceAll("%player%", player.getName()));
                 }
             } else {
                 String othersPlayerName = args[0];
                 Player othersPlayer = Bukkit.getPlayerExact(othersPlayerName);
                 //判断玩家是否存在
                 if (othersPlayer == null) {
-                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + FeedConfigEnum.FEED_OTHERS_NO_EXIST.getMsg().toString().replaceAll("%others-player%", othersPlayerName)));
+                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + FeedConfigEnum.FEED_OTHERS_NO_EXIST.getMsg()).replaceAll("%others-player%", othersPlayerName));
                     return true;
                 }
                 othersPlayer.setFoodLevel(20);
                 othersPlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + FeedConfigEnum.FEED_BY_CONSOLE.getMsg()));
-                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + FeedConfigEnum.FEED_OTHERS.getMsg().toString().replaceAll("%others-player%", othersPlayerName)));
+                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + FeedConfigEnum.FEED_OTHERS.getMsg()).replaceAll("%others-player%", othersPlayerName));
             }
         }
         return true;

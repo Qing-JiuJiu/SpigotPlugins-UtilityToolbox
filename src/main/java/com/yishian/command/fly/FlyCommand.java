@@ -44,10 +44,10 @@ public class FlyCommand implements TabExecutor {
             //判断玩家是否目前是飞行状态
             if (!player.getAllowFlight()) {
                 player.setAllowFlight(true);
-                player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + FlyConfigEnum.FLY_SELF_OPEN.getMsg().toString().replaceAll("%player%", player.getName())));
+                player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + FlyConfigEnum.FLY_SELF_OPEN.getMsg()).replaceAll("%player%", player.getName()));
             } else {
                 player.setAllowFlight(false);
-                player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + FlyConfigEnum.FLY_SELF_CLOSE.getMsg().toString().replaceAll("%player%", player.getName())));
+                player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + FlyConfigEnum.FLY_SELF_CLOSE.getMsg()).replaceAll("%player%", player.getName()));
             }
             //判断参数数量是否为1
         } else {
@@ -66,27 +66,27 @@ public class FlyCommand implements TabExecutor {
                     Player othersPlayer = Bukkit.getPlayerExact(othersPlayerName);
                     //判断玩家是否存在
                     if (othersPlayer == null) {
-                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + FlyConfigEnum.FLY_OTHERS_NO_EXIST.getMsg().toString().replaceAll("%others-player%", othersPlayerName)));
+                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + FlyConfigEnum.FLY_OTHERS_NO_EXIST.getMsg()).replaceAll("%others-player%", othersPlayerName));
                         return true;
                     }
                     //判断该玩家是否在飞行
                     if (!othersPlayer.getAllowFlight()) {
                         othersPlayer.setAllowFlight(true);
-                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + FlyConfigEnum.FLY_OTHERS_OPEN.getMsg().toString().replaceAll("%others-player%", othersPlayerName)));
-                        othersPlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + FlyConfigEnum.FLY_BY_OTHERS_OPEN.getMsg().toString().replaceAll("%player%", playerName)));
+                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + FlyConfigEnum.FLY_OTHERS_OPEN.getMsg()).replaceAll("%others-player%", othersPlayerName));
+                        othersPlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + FlyConfigEnum.FLY_BY_OTHERS_OPEN.getMsg()).replaceAll("%player%", playerName));
                     } else {
                         othersPlayer.setAllowFlight(false);
-                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + FlyConfigEnum.FLY_OTHERS_CLOSE.getMsg().toString().replaceAll("%others-player%", othersPlayerName)));
-                        othersPlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + FlyConfigEnum.FLY_BY_OTHERS_CLOSE.getMsg().toString().replaceAll("%player%", playerName)));
+                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + FlyConfigEnum.FLY_OTHERS_CLOSE.getMsg()).replaceAll("%others-player%", othersPlayerName));
+                        othersPlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + FlyConfigEnum.FLY_BY_OTHERS_CLOSE.getMsg()).replaceAll("%player%", playerName));
                     }
                 } else {
                     //判断玩家是否在飞行状态
                     if (!player.getAllowFlight()) {
                         player.setAllowFlight(true);
-                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + FlyConfigEnum.FLY_OTHERS_IS_SELF_OPEN.getMsg().toString().replaceAll("%player%", player.getName())));
+                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + FlyConfigEnum.FLY_OTHERS_IS_SELF_OPEN.getMsg()).replaceAll("%player%", player.getName()));
                     } else {
                         player.setAllowFlight(false);
-                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + FlyConfigEnum.FLY_OTHERS_IS_SELF_CLOSE.getMsg().toString().replaceAll("%player%", player.getName())));
+                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + FlyConfigEnum.FLY_OTHERS_IS_SELF_CLOSE.getMsg()).replaceAll("%player%", player.getName()));
                     }
                 }
             } else {
@@ -94,18 +94,18 @@ public class FlyCommand implements TabExecutor {
                 Player othersPlayer = Bukkit.getPlayerExact(othersPlayerName);
                 //判断玩家存不存在
                 if (othersPlayer == null) {
-                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + FlyConfigEnum.FLY_OTHERS_NO_EXIST.getMsg().toString().replaceAll("%others-player%", othersPlayerName)));
+                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + FlyConfigEnum.FLY_OTHERS_NO_EXIST.getMsg()).replaceAll("%others-player%", othersPlayerName));
                     return true;
                 }
                 //判断玩家是否在飞行状态
                 if (!othersPlayer.getAllowFlight()) {
                     othersPlayer.setAllowFlight(true);
                     othersPlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + FlyConfigEnum.FLY_BY_CONSOLE_OPEN.getMsg()));
-                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + FlyConfigEnum.FLY_OTHERS_OPEN.getMsg().toString().replaceAll("%others-player%", othersPlayerName)));
+                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + FlyConfigEnum.FLY_OTHERS_OPEN.getMsg()).replaceAll("%others-player%", othersPlayerName));
                 } else {
                     othersPlayer.setAllowFlight(false);
                     othersPlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + FlyConfigEnum.FLY_BY_CONSOLE_CLOSE.getMsg()));
-                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + FlyConfigEnum.FLY_OTHERS_CLOSE.getMsg().toString().replaceAll("%others-player%", othersPlayerName)));
+                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + FlyConfigEnum.FLY_OTHERS_CLOSE.getMsg()).replaceAll("%others-player%", othersPlayerName));
                 }
 
             }

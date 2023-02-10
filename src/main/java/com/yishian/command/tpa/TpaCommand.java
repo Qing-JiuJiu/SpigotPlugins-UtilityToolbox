@@ -66,7 +66,7 @@ public class TpaCommand implements TabExecutor {
             Player othersPlayer = Bukkit.getPlayerExact(othersPlayerName);
             //判断玩家是否存在
             if (othersPlayer == null) {
-                player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + TpaConfigEnum.TPA_OTHERS_NO_EXIST.getMsg().toString().replaceAll("%others-player%", othersPlayerName)));
+                player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + TpaConfigEnum.TPA_OTHERS_NO_EXIST.getMsg()).replaceAll("%others-player%", othersPlayerName));
                 return true;
             }
             //添加传送信息
@@ -87,7 +87,7 @@ public class TpaCommand implements TabExecutor {
             } else if (recordPlayer != null) {
                 transfeMap.get(recordPlayer).removeIf(judgePlayer -> player == judgePlayer);
                 recordPlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + TpaConfigEnum.TPA_AUTO_TPACANCEL.getMsg()));
-                othersPlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + TpaConfigEnum.TPA_AUTO_TPACANCEL_OTHERS.getMsg().toString().replaceAll("%player%", playerName)));
+                othersPlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + TpaConfigEnum.TPA_AUTO_TPACANCEL_OTHERS.getMsg()).replaceAll("%player%", playerName));
             }
 
             //添加至传送列表
@@ -95,9 +95,9 @@ public class TpaCommand implements TabExecutor {
             //添加自身传送信息
             transfeRecordMap.put(player, othersPlayer);
             //发送相关提醒
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + TpaConfigEnum.TPA_APPLY.getMsg().toString().replaceAll("%others-player%", othersPlayerName)));
+            player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + TpaConfigEnum.TPA_APPLY.getMsg()).replaceAll("%others-player%", othersPlayerName));
             player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + TpaConfigEnum.TPA_APPLY_TPACANCEL_TIPS.getMsg()));
-            othersPlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + TpaConfigEnum.TPA_APPLY_OTHERS.getMsg().toString().replaceAll("%player%", playerName)));
+            othersPlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + TpaConfigEnum.TPA_APPLY_OTHERS.getMsg()).replaceAll("%player%", playerName));
             othersPlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + TpaConfigEnum.TPA_APPLY_ACCEPT_TIPS.getMsg()));
             othersPlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + TpaConfigEnum.TPA_APPLY_DENY_TIPS.getMsg()));
 

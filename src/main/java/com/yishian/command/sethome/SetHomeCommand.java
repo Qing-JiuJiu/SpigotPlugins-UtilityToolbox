@@ -40,7 +40,7 @@ public class SetHomeCommand implements CommandExecutor {
         //获得允许设置家的世界列表
         List<?> allowHomeWorldList = CommonUtils.objectToList(SetHomeConfigEnum.ALLOW_WORLD.getMsg());
         if (!allowHomeWorldList.contains(worldName) && !allowHomeWorldList.contains(CommonEnum.ALL.getCommand())) {
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + SetHomeConfigEnum.SETHOME_WORLD_ERROR.getMsg().toString().replaceAll("%world%", worldName)));
+            player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + SetHomeConfigEnum.SETHOME_WORLD_ERROR.getMsg()).replaceAll("%world%", worldName));
             return true;
         }
 
@@ -63,7 +63,7 @@ public class SetHomeCommand implements CommandExecutor {
         CommonUtils.saveYamlConfig(homeFileYaml, SetHomeConfig.file.toPath());
 
         //发送设置家成功消息
-        player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + SetHomeConfigEnum.SETHOME_APPLY.getMsg().toString().replaceAll("%world%", worldName).replaceAll("%x%", String.valueOf((int) playerLocationX)).replaceAll("%y%", String.valueOf((int) playerLocationY)).replaceAll("%z%", String.valueOf((int) playerLocationZ))));
+        player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + SetHomeConfigEnum.SETHOME_APPLY.getMsg()).replaceAll("%world%", worldName).replaceAll("%x%", String.valueOf((int) playerLocationX)).replaceAll("%y%", String.valueOf((int) playerLocationY)).replaceAll("%z%", String.valueOf((int) playerLocationZ)));
         return true;
     }
 }

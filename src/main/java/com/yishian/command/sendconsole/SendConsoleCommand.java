@@ -32,7 +32,7 @@ public class SendConsoleCommand implements CommandExecutor {
 
         //打包成字符串并发送消息给用户
         String argString = stringBuilder.toString();
-        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + SendConsoleConfigEnum.SENDCONSOLE_APPLY.getMsg().toString().replaceAll("%command%", argString)));
+        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + SendConsoleConfigEnum.SENDCONSOLE_APPLY.getMsg()).replaceAll("%command%", argString));
 
         //控制台执行指令
         Server server = Bukkit.getServer();

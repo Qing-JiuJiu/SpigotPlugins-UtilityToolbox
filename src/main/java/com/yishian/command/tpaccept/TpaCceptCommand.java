@@ -78,7 +78,7 @@ public class TpaCceptCommand implements TabExecutor {
             //判断玩家是否存在
             Player othersPlayer = Bukkit.getPlayerExact(othersPlayerName);
             if (othersPlayer == null) {
-                player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + TpaCceptConfigEnum.TPACCEPT_OTHERS_NO_EXIST.getMsg().toString().replaceAll("%others-player%", othersPlayerName)));
+                player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + TpaCceptConfigEnum.TPACCEPT_OTHERS_NO_EXIST.getMsg()).replaceAll("%others-player%", othersPlayerName));
                 return true;
             }
 

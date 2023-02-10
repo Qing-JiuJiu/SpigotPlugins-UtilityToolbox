@@ -8,6 +8,10 @@ import com.yishian.common.CommonEnum;
 public enum LimitHighAltitudeFluidEnum {
 
     /**
+     * 功能名称
+     */
+    LIMIT_HIGH_ALTITUDE_FLUID("limit-high-altitude-fluid","限制高空流体的功能名称"),
+    /**
      * 限制流体信息权限
      */
     LIMIT_FLOW_MESSAGE_PERMISSION(CommonEnum.PLUGHIN_NAME.getCommand() + ".LimitFlowMessage", "限制流体信息");

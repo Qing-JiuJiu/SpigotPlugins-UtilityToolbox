@@ -47,7 +47,7 @@ public class CopyResCommand implements CommandExecutor {
         if (!itemExcludeList.contains(itemName)) {
             //判断黑名单
             if (itemBlackList.contains(itemName)) {
-                player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + CopyResConfigEnum.COPYRES_DENY.getMsg().toString().replaceAll("%res%", itemName)));
+                player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + CopyResConfigEnum.COPYRES_DENY.getMsg()).replaceAll("%res%", itemName));
                 return true;
             }
 
@@ -58,7 +58,7 @@ public class CopyResCommand implements CommandExecutor {
             if (!CommonUtils.collectionIsEmpty(itemWildcardList)) {
                 for (Object itemWildcard : itemWildcardList) {
                     if (itemName.startsWith(itemWildcard.toString())) {
-                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + CopyResConfigEnum.COPYRES_DENY.getMsg().toString().replaceAll("%res%", itemName)));
+                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + CopyResConfigEnum.COPYRES_DENY.getMsg()).replaceAll("%res%", itemName));
                         return true;
                     }
                 }
@@ -69,7 +69,7 @@ public class CopyResCommand implements CommandExecutor {
         ItemStack cloneItemStack = itemInMainHand.clone();
         cloneItemStack.setAmount(cloneItemStack.getMaxStackSize());
         playerInventory.addItem(cloneItemStack);
-        player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + CopyResConfigEnum.COPYRES_APPLY.getMsg().toString().replaceAll("%res%", itemName)));
+        player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + CopyResConfigEnum.COPYRES_APPLY.getMsg()).replaceAll("%res%", itemName));
 
         //控制台输出信息
         CommonUtils.sendConsoleMessage("玩家" + player.getName() + "复制了物品：" + itemName);

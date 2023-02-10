@@ -8,6 +8,11 @@ import com.yishian.common.CommonEnum;
 public enum PreventHighFrequencyAttacksEnum {
 
     /**
+     * 防止高频攻击的功能名称
+     */
+    PREVENT_HIGH_FREQUENCY_ATTACKS("prevent-high-frequency-attacks", "防止高频攻击的功能名称"),
+
+    /**
      * 玩家高频攻击被提出服务器信息权限
      */
     CPS_MESSAGE_PERMISSION(CommonEnum.PLUGHIN_NAME.getCommand() + ".PlayerFrequencyAttacksKickMessage", "玩家高频攻击被提出服务器信息");

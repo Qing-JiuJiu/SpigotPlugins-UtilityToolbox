@@ -22,7 +22,7 @@ join-server-welcome:
     join-server-welcome-message:
       - '&e[UtilityToolbox] &6欢迎使用本插件'
     first-join-server-welcome-message:
-      - '&e[UtilityToolbox] &6欢迎第一次使用本插件'
+      - '&e[UtilityToolbox] &6欢迎使用本插件'
 
 #自动发送服务器消息，类似公告
 auto-send-server-messages:
@@ -80,7 +80,7 @@ server-list-display-modification:
     second-line: '&e[UtilityToolbox] &6欢迎使用本插件'
 
 #连点左键限制
-prevent-high-hrequency-attacks:
+prevent-high-frequency-attacks:
   enable: false
   #是否所有玩家都能看到因高频左键被踢出服务器的消息，否则只有拥有UtilityToolbox.PlayerFrequencyAttacksKickMessage权限的用户才能看到
   is-broadcast-message: true

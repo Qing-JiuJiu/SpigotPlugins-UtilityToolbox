@@ -35,8 +35,8 @@ import com.yishian.command.sendconsole.SendConsoleEnum;
 import com.yishian.command.sethome.SetHomeCommand;
 import com.yishian.command.sethome.SetHomeConfig;
 import com.yishian.command.sethome.SetHomeEnum;
-import com.yishian.command.setsnaptp.SetSnapTpConfig;
 import com.yishian.command.setsnaptp.SetSnapTpCommand;
+import com.yishian.command.setsnaptp.SetSnapTpConfig;
 import com.yishian.command.setsnaptp.SetSnapTpEnum;
 import com.yishian.command.showtextcolor.ShowTextCodeCommand;
 import com.yishian.command.showtextcolor.ShowTextCodeEnum;
@@ -54,27 +54,31 @@ import com.yishian.command.tpaccept.TpaCceptCommand;
 import com.yishian.command.tpaccept.TpaCceptEnum;
 import com.yishian.command.tpadeny.TpaDenyCommand;
 import com.yishian.command.tpadeny.TpaDenyEnum;
+import com.yishian.command.utilitytoolbox.UtilityToolboxCommand;
 import com.yishian.command.utilitytoolbox.UtilityToolboxEnum;
 import com.yishian.command.walkspeed.WalkSpeedCommand;
 import com.yishian.command.walkspeed.WalkSpeedEnum;
-import com.yishian.command.utilitytoolbox.UtilityToolboxCommand;
 import com.yishian.common.CommonConfigLoad;
 import com.yishian.common.CommonEnum;
+import com.yishian.function.antihighfrequencyredstone.AntiHighFrequencyRedStoneConfigEnum;
 import com.yishian.function.antihighfrequencyredstone.AntiHighFrequencyRedStoneListener;
 import com.yishian.function.antihighfrequencyredstone.AntiHighFrequencyRedStoneRunnable;
+import com.yishian.function.autosendservermessage.AutoSendServerMessageConfigEnum;
 import com.yishian.function.autosendservermessage.AutoSendServerMessageRunnable;
+import com.yishian.function.customjoinandleave.CustomJoinAndLeaveConfigEnum;
 import com.yishian.function.customjoinandleave.CustomJoinAndLeaveListener;
+import com.yishian.function.joinserverwelcome.JoinServerWelcomeConfigEnum;
 import com.yishian.function.joinserverwelcome.JoinServerWelcomeListener;
+import com.yishian.function.limithighaltitudefluids.LimitHighAltitudeFluidConfigEnum;
 import com.yishian.function.limithighaltitudefluids.LimitHighAltitudeFluidListener;
-
+import com.yishian.function.preventhighfrequencyattacks.PreventHighFrequencyAttacksConfigEnum;
 import com.yishian.function.preventhighfrequencyattacks.PreventHighFrequencyAttacksListener;
 import com.yishian.function.preventhighfrequencyattacks.PreventHighFrequencyAttacksRunnable;
+import com.yishian.function.serverlistdisplaymodification.ServerListDisplayModificationConfigEnum;
 import com.yishian.function.serverlistdisplaymodification.ServerListDisplayModificationListener;
 import org.bukkit.ChatColor;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.command.PluginCommand;
-import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -84,10 +88,6 @@ import java.io.IOException;
  * @author XinQi
  */
 public final class Main extends JavaPlugin {
-    /**
-     * 得到配置文件
-     */
-    FileConfiguration config = getConfig();
     /**
      * 得到插件管理器
      */
@@ -100,10 +100,6 @@ public final class Main extends JavaPlugin {
      * 插件名称
      */
     String messagePrefix;
-    /**
-     * 通用字符串 time
-     */
-    String timeString;
 
     /**
      * 这是插件启动时执行的方法
@@ -114,13 +110,12 @@ public final class Main extends JavaPlugin {
         if (!getDataFolder().exists()) {
             //如果插件目录下没配置文件，保存默认配置文件到插件目录
             saveDefaultConfig();
-        }else {
+        } else {
             //直接加载配置文件里的内容
             CommonConfigLoad.loadConfig();
         }
 
         //保存配置文件后初始化一些跟配置文件相关的变量
-        timeString = CommonEnum.TIME.getCommand();
         messagePrefix = "&e[" + CommonEnum.PLUGHIN_NAME.getCommand() + "] &7";
 
         //启动服务器时发送插件消息
@@ -276,25 +271,25 @@ public final class Main extends JavaPlugin {
      */
     public void registerListener() {
         //加入/离开服务器提醒消息
-        if (config.getConfigurationSection("join-and-leave-server-message").getBoolean(CommonEnum.FUNCTION_IS_ENABLE.getCommand())) {
+        if ((Boolean) CustomJoinAndLeaveConfigEnum.ENABLE.getMsg()) {
             pluginManager.registerEvents(new CustomJoinAndLeaveListener(), this);
             consoleSender.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + "已开启自定义加入和离开服务器消息"));
         }
 
         //加入欢迎
-        if (config.getConfigurationSection("join-server-welcome").getBoolean(CommonEnum.FUNCTION_IS_ENABLE.getCommand())) {
+        if ((Boolean) JoinServerWelcomeConfigEnum.ENABLE.getMsg()) {
             pluginManager.registerEvents(new JoinServerWelcomeListener(), this);
             consoleSender.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + "已开启加入服务器欢迎"));
         }
 
         //检测高频红石
-        if (config.getConfigurationSection("anti-high-frequency-red-stone").getBoolean(CommonEnum.FUNCTION_IS_ENABLE.getCommand())) {
+        if ((Boolean) AntiHighFrequencyRedStoneConfigEnum.ENABLE.getMsg()) {
             pluginManager.registerEvents(new AntiHighFrequencyRedStoneListener(), this);
             consoleSender.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + "已开启防止高频红石"));
         }
 
         //检测高空流水
-        if (config.getConfigurationSection("limit-high-altitude-fluid").getBoolean(CommonEnum.FUNCTION_IS_ENABLE.getCommand())) {
+        if ((Boolean) LimitHighAltitudeFluidConfigEnum.ENABLE.getMsg()) {
             pluginManager.registerEvents(new LimitHighAltitudeFluidListener(), this);
             consoleSender.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + "已开启限制高空流体"));
         }
@@ -312,13 +307,13 @@ public final class Main extends JavaPlugin {
         pluginManager.registerEvents(new MusterPlayerListener(), this);
 
         //设置服务器列表
-        if (config.getConfigurationSection("server-list-display-modification").getBoolean(CommonEnum.FUNCTION_IS_ENABLE.getCommand())) {
+        if ((Boolean) ServerListDisplayModificationConfigEnum.ENABLE.getMsg()) {
             pluginManager.registerEvents(new ServerListDisplayModificationListener(), this);
             consoleSender.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + "已开启修改服务器列表显示"));
         }
 
         //限制高频攻击
-        if (config.getConfigurationSection("prevent-high-hrequency-attacks").getBoolean(CommonEnum.FUNCTION_IS_ENABLE.getCommand())) {
+        if ((Boolean) PreventHighFrequencyAttacksConfigEnum.ENABLE.getMsg()) {
             pluginManager.registerEvents(new PreventHighFrequencyAttacksListener(), this);
             consoleSender.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + "已开启限制高频攻击"));
         }
@@ -335,25 +330,22 @@ public final class Main extends JavaPlugin {
      */
     public void registerTask() {
         //自动发送服务器消息
-        ConfigurationSection configurationSection = config.getConfigurationSection("auto-send-server-messages");
-        if (configurationSection.getBoolean(CommonEnum.FUNCTION_IS_ENABLE.getCommand())) {
+        if ((Boolean) AutoSendServerMessageConfigEnum.ENABLE.getMsg()) {
             //按照tick时间计算，1tick=0.05s，20tick=1s
-            new AutoSendServerMessageRunnable().runTaskTimer(this, 0, configurationSection.getInt(timeString) * 20L);
+            new AutoSendServerMessageRunnable().runTaskTimer(this, 0, (Integer) AutoSendServerMessageConfigEnum.TIME.getMsg() * 20L);
             consoleSender.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + "已开启自动发送服务器消息"));
         }
 
         //高频红石定时检测
-        configurationSection = config.getConfigurationSection("anti-high-frequency-red-stone");
-        if (configurationSection.getBoolean(CommonEnum.FUNCTION_IS_ENABLE.getCommand())) {
+        if ((Boolean) AntiHighFrequencyRedStoneConfigEnum.ENABLE.getMsg()) {
             //按照tick时间计算，1tick=0.05s，20tick=1s
-            new AntiHighFrequencyRedStoneRunnable().runTaskTimer(this, 0, configurationSection.getInt(timeString) * 20L);
+            new AntiHighFrequencyRedStoneRunnable().runTaskTimer(this, 0, (Integer) AntiHighFrequencyRedStoneConfigEnum.TIME.getMsg() * 20L);
         }
 
         //限制高频攻击定时检测
-        configurationSection = config.getConfigurationSection("prevent-high-hrequency-attacks");
-        if (configurationSection.getBoolean(CommonEnum.FUNCTION_IS_ENABLE.getCommand())) {
+        if ((Boolean) PreventHighFrequencyAttacksConfigEnum.ENABLE.getMsg()) {
             //按照tick时间计算，1tick=0.05s，20tick=1s
-            new PreventHighFrequencyAttacksRunnable().runTaskTimer(this, 0, configurationSection.getInt(timeString) * 20L);
+            new PreventHighFrequencyAttacksRunnable().runTaskTimer(this, 0, (Integer) PreventHighFrequencyAttacksConfigEnum.TIME.getMsg() * 20L);
         }
     }
 

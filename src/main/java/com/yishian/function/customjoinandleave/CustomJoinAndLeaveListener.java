@@ -1,9 +1,7 @@
 package com.yishian.function.customjoinandleave;
 
-import com.yishian.common.CommonConfigLoad;
 import com.yishian.common.CommonEnum;
 import org.bukkit.ChatColor;
-import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -14,16 +12,6 @@ import org.bukkit.event.player.PlayerQuitEvent;
  * @author XinQi
  */
 public class CustomJoinAndLeaveListener implements Listener {
-
-    /**
-     * 得到该功能的配置文件坐标
-     */
-    static ConfigurationSection functionConfigurationSection = CommonConfigLoad.ServerConfig.getConfigurationSection("join-and-leave-server-message");
-    /**
-     * 得到消息列表
-     */
-    static ConfigurationSection messageConfigurationSection = functionConfigurationSection.getConfigurationSection(CommonEnum.MESSAGE.getCommand());
-
     /**
      * 当玩家加入服务器时触发的方法
      *
@@ -35,17 +23,17 @@ public class CustomJoinAndLeaveListener implements Listener {
         Player player = playerJoinEvent.getPlayer();
         String playerDisplayName = player.getDisplayName();
         //判断是否开启第一次加入服务器功能
-        if (functionConfigurationSection.getBoolean("first-join-server-message-enable")) {
+        if ((Boolean) CustomJoinAndLeaveConfigEnum.FIRST_JOIN_SERVER_MESSAGE_ENABLE.getMsg()) {
             //判断玩家是否第一次加入服务器
             if (player.hasPlayedBefore()) {
                 //后续来到服务器
-                playerJoinEvent.setJoinMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + messageConfigurationSection.getString("player-join-server-message").replaceAll("%player%", playerDisplayName)));
+                playerJoinEvent.setJoinMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + CustomJoinAndLeaveConfigEnum.PLAYER_JOIN_SERVER_MESSAGE.getMsg()).replaceAll("%player%", playerDisplayName));
             } else {
                 //第一次加入服务器
-                playerJoinEvent.setJoinMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + messageConfigurationSection.getString("player-first-join-server-message").replaceAll("%player%", playerDisplayName)));
+                playerJoinEvent.setJoinMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + CustomJoinAndLeaveConfigEnum.PLAYER_FIRST_JOIN_SERVER_MESSAGE.getMsg()).replaceAll("%player%", playerDisplayName));
             }
         } else {
-            playerJoinEvent.setJoinMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + messageConfigurationSection.getString("player-join-server-message").replaceAll("%player%", playerDisplayName)));
+            playerJoinEvent.setJoinMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + CustomJoinAndLeaveConfigEnum.PLAYER_JOIN_SERVER_MESSAGE.getMsg()).replaceAll("%player%", playerDisplayName));
         }
     }
 
@@ -57,6 +45,6 @@ public class CustomJoinAndLeaveListener implements Listener {
     @EventHandler
     public void playerOnLeave(PlayerQuitEvent playerQuitEvent) {
         //发送离开服务器消息
-        playerQuitEvent.setQuitMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + messageConfigurationSection.getString("player-leave-server-message").replaceAll("%player%", playerQuitEvent.getPlayer().getDisplayName())));
+        playerQuitEvent.setQuitMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + CustomJoinAndLeaveConfigEnum.PLAYER_LEAVE_SERVER_MESSAGE.getMsg()).replaceAll("%player%", playerQuitEvent.getPlayer().getDisplayName()));
     }
 }

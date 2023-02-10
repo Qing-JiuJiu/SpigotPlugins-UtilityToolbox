@@ -27,7 +27,7 @@ public class TpaPlayerLeaveServerListener implements Listener {
             if (transfeRecordPlayer != null) {
                 Set<Player> playerSet = TpaCommand.transfeMap.get(transfeRecordPlayer);
                 playerSet.removeIf(judgmentPlayer -> judgmentPlayer == player);
-                transfeRecordPlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + TpaConfigEnum.TPA_OTHERS_LEAVE_SERVER.getMsg().toString().replaceAll("%others-player%", player.getName())));
+                transfeRecordPlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + TpaConfigEnum.TPA_OTHERS_LEAVE_SERVER.getMsg()).replaceAll("%others-player%", player.getName()));
             }
         });
     }

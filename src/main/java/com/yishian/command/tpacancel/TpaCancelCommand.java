@@ -43,8 +43,8 @@ public class TpaCancelCommand implements CommandExecutor {
         Set<Player> playerSet = TpaCommand.transfeMap.get(othersPlayer);
         playerSet.removeIf(player -> player == sender);
         //发送提示信息
-        othersPlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + TpaCancelConfigEnum.TPACANCEL_OTHERS.getMsg().toString().replaceAll("%player%", sender.getName())));
-        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + TpaCancelConfigEnum.TPACANCEL_APPLY.getMsg().toString().replaceAll("%others-player%", othersPlayer.getName())));
+        othersPlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + TpaCancelConfigEnum.TPACANCEL_OTHERS.getMsg()).replaceAll("%player%", sender.getName()));
+        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + TpaCancelConfigEnum.TPACANCEL_APPLY.getMsg()).replaceAll("%others-player%", othersPlayer.getName()));
 
         return true;
     }

@@ -51,6 +51,20 @@ import com.yishian.command.utilitytoolbox.UtilityToolboxConfigEnum;
 import com.yishian.command.utilitytoolbox.UtilityToolboxEnum;
 import com.yishian.command.walkspeed.WalkSpeedConfigEnum;
 import com.yishian.command.walkspeed.WalkSpeedEnum;
+import com.yishian.function.antihighfrequencyredstone.AntiHighFrequencyRedStoneConfigEnum;
+import com.yishian.function.antihighfrequencyredstone.AntiHighFrequencyRedStoneEnum;
+import com.yishian.function.autosendservermessage.AutoSendServerMessageConfigEnum;
+import com.yishian.function.autosendservermessage.AutoSendServerMessageEnum;
+import com.yishian.function.customjoinandleave.CustomJoinAndLeaveConfigEnum;
+import com.yishian.function.customjoinandleave.CustomJoinAndLeaveEnum;
+import com.yishian.function.joinserverwelcome.JoinServerWelcomeConfigEnum;
+import com.yishian.function.joinserverwelcome.JoinServerWelcomeEnum;
+import com.yishian.function.limithighaltitudefluids.LimitHighAltitudeFluidConfigEnum;
+import com.yishian.function.limithighaltitudefluids.LimitHighAltitudeFluidEnum;
+import com.yishian.function.preventhighfrequencyattacks.PreventHighFrequencyAttacksConfigEnum;
+import com.yishian.function.preventhighfrequencyattacks.PreventHighFrequencyAttacksEnum;
+import com.yishian.function.serverlistdisplaymodification.ServerListDisplayModificationConfigEnum;
+import com.yishian.function.serverlistdisplaymodification.ServerListDisplayModificationEnum;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 
@@ -108,8 +122,14 @@ public class CommonConfigLoad {
         tpaDenyConfigLoad();
         utilityToolboxConfigLoad();
 
-
         //功能相关
+        antiHighFrequencyRedStoneConfigLoad();
+        autoSendServerMessageConfigLoad();
+        customJoinAndLeaveConfigLoad();
+        joinServerWelcomeConfigLoad();
+        limitHighAltitudeFluidConfigLoad();
+        preventHighFrequencyAttacksConfigLoad();
+        serverListDisplayModificationConfigLoad();
 
         //输出所有未定义的标签
         if (undefinedTagList.size() > 0) {
@@ -226,8 +246,7 @@ public class CommonConfigLoad {
                 copyresConfigNodeEnum.setMsg(copyresConfigurationSection.get(copyresConfigNodeEnumTag));
             }
             //判断是否拥有该节点，没有就添加进列表用于输出警告
-            if (!copyresMessage.contains(copyresConfigNodeEnumTag, true) &&
-                    !copyresConfigurationSection.contains(copyresConfigNodeEnumTag, true)) {
+            if (!copyresMessage.contains(copyresConfigNodeEnumTag, true) && !copyresConfigurationSection.contains(copyresConfigNodeEnumTag, true)) {
                 undefinedTagList.add(copyresConfigNodeEnumTag);
             }
         }
@@ -401,8 +420,7 @@ public class CommonConfigLoad {
                 setHomeConfigNodeEnum.setMsg(setHomeConfigurationSection.get(setHomeConfigNodeEnumTag));
             }
             //判断是否拥有该节点，没有就添加进列表用于输出警告
-            if (!setHomeMessage.contains(setHomeConfigNodeEnumTag, true) &&
-                    !setHomeConfigurationSection.contains(setHomeConfigNodeEnumTag, true)) {
+            if (!setHomeMessage.contains(setHomeConfigNodeEnumTag, true) && !setHomeConfigurationSection.contains(setHomeConfigNodeEnumTag, true)) {
                 undefinedTagList.add(setHomeConfigNodeEnumTag);
             }
         }
@@ -450,8 +468,7 @@ public class CommonConfigLoad {
                 musterPlayerConfigNodeEnum.setMsg(musterPlayerConfigurationSection.get(musterPlayerConfigNodeEnumTag));
             }
             //判断是否拥有该节点，没有就添加进列表用于输出警告
-            if (!musterPlayerMessage.contains(musterPlayerConfigNodeEnumTag, true) &&
-                    !musterPlayerConfigurationSection.contains(musterPlayerConfigNodeEnumTag, true)) {
+            if (!musterPlayerMessage.contains(musterPlayerConfigNodeEnumTag, true) && !musterPlayerConfigurationSection.contains(musterPlayerConfigNodeEnumTag, true)) {
                 undefinedTagList.add(musterPlayerConfigNodeEnumTag);
             }
         }
@@ -519,8 +536,7 @@ public class CommonConfigLoad {
                 setSnapTpConfigNodeEnum.setMsg(setSnapTpConfigurationSection.get(setSnapTpConfigNodeEnumTag));
             }
             //判断是否拥有该节点，没有就添加进列表用于输出警告
-            if (!setSnapTpMessage.contains(setSnapTpConfigNodeEnumTag, true) &&
-                    !setSnapTpConfigurationSection.contains(setSnapTpConfigNodeEnumTag, true)) {
+            if (!setSnapTpMessage.contains(setSnapTpConfigNodeEnumTag, true) && !setSnapTpConfigurationSection.contains(setSnapTpConfigNodeEnumTag, true)) {
                 undefinedTagList.add(setSnapTpConfigNodeEnumTag);
             }
         }
@@ -669,6 +685,196 @@ public class CommonConfigLoad {
             //判断是否拥有该节点，没有就添加进列表用于输出警告
             if (!utilityToolboxMessage.contains(utilityToolboxConfigNodeEnumTag, true)) {
                 undefinedTagList.add(utilityToolboxConfigNodeEnumTag);
+            }
+        }
+    }
+
+
+    /**
+     * AntiHighFrequencyRedStone功能的配置加载
+     */
+    public static void antiHighFrequencyRedStoneConfigLoad() {
+        //AntiHighFrequencyRedStone功能的配置内容
+        ConfigurationSection antiHighFrequencyRedStoneConfig = ServerConfig.getConfigurationSection(AntiHighFrequencyRedStoneEnum.ANTI_HIGH_FREQUENCY_RED_STONE.getCommand());
+        //AntiHighFrequencyRedStone的消息内容
+        ConfigurationSection antiHighFrequencyRedStoneMessage = antiHighFrequencyRedStoneConfig.getConfigurationSection(CommonEnum.MESSAGE.getCommand());
+        //得到所有枚举的值
+        AntiHighFrequencyRedStoneConfigEnum[] antiHighFrequencyRedStoneConfigEnums = AntiHighFrequencyRedStoneConfigEnum.values();
+        //循环判断每个节点是否存在，存在就替换枚举里的内容，不存在就添加到未定义的标签列表并恢复原内容
+        for (AntiHighFrequencyRedStoneConfigEnum antiHighFrequencyRedStoneConfigNodeEnum : antiHighFrequencyRedStoneConfigEnums) {
+            //得到配置文件标签
+            String antiHighFrequencyRedStoneConfigNodeEnumTag = antiHighFrequencyRedStoneConfigNodeEnum.getTag();
+            //直接设置消息内容，如果存在该节点就会设置节点内容，如果不存在就会使用源配置文件里的内容
+            if (antiHighFrequencyRedStoneMessage.get(antiHighFrequencyRedStoneConfigNodeEnumTag) != null) {
+                antiHighFrequencyRedStoneConfigNodeEnum.setMsg(antiHighFrequencyRedStoneMessage.get(antiHighFrequencyRedStoneConfigNodeEnumTag));
+            } else {
+                antiHighFrequencyRedStoneConfigNodeEnum.setMsg(antiHighFrequencyRedStoneConfig.get(antiHighFrequencyRedStoneConfigNodeEnumTag));
+            }
+            //判断是否拥有该节点，没有就添加进列表用于输出警告
+            if (!antiHighFrequencyRedStoneMessage.contains(antiHighFrequencyRedStoneConfigNodeEnumTag, true) && !antiHighFrequencyRedStoneConfig.contains(antiHighFrequencyRedStoneConfigNodeEnumTag, true)) {
+                undefinedTagList.add(antiHighFrequencyRedStoneConfigNodeEnumTag);
+            }
+        }
+    }
+
+    /**
+     * AutoSendServerMessage功能的配置加载
+     */
+    public static void autoSendServerMessageConfigLoad() {
+        //AutoSendServerMessage功能的配置内容
+        ConfigurationSection autoSendServerMessageConfig = ServerConfig.getConfigurationSection(AutoSendServerMessageEnum.AUTO_SEND_SERVER_MESSAGE.getCommand());
+        //AutoSendServerMessage的消息内容
+        ConfigurationSection autoSendServerMessageMessage = autoSendServerMessageConfig.getConfigurationSection(CommonEnum.MESSAGE.getCommand());
+        //得到所有枚举的值
+        AutoSendServerMessageConfigEnum[] autoSendServerMessageConfigEnums = AutoSendServerMessageConfigEnum.values();
+        //循环判断每个节点是否存在，存在就替换枚举里的内容，不存在就添加到未定义的标签列表并恢复原内容
+        for (AutoSendServerMessageConfigEnum autoSendServerMessageConfigNodeEnum : autoSendServerMessageConfigEnums) {
+            //得到配置文件标签
+            String autoSendServerMessageConfigNodeEnumTag = autoSendServerMessageConfigNodeEnum.getTag();
+            //直接设置消息内容，如果存在该节点就会设置节点内容，如果不存在就会使用源配置文件里的内容
+            if (autoSendServerMessageMessage.get(autoSendServerMessageConfigNodeEnumTag) != null) {
+                autoSendServerMessageConfigNodeEnum.setMsg(autoSendServerMessageMessage.get(autoSendServerMessageConfigNodeEnumTag));
+            } else {
+                autoSendServerMessageConfigNodeEnum.setMsg(autoSendServerMessageConfig.get(autoSendServerMessageConfigNodeEnumTag));
+            }
+            //判断是否拥有该节点，没有就添加进列表用于输出警告
+            if (!autoSendServerMessageMessage.contains(autoSendServerMessageConfigNodeEnumTag, true) && !autoSendServerMessageConfig.contains(autoSendServerMessageConfigNodeEnumTag, true)) {
+                undefinedTagList.add(autoSendServerMessageConfigNodeEnumTag);
+            }
+        }
+    }
+
+    /**
+     * CustomJoinAndLeave功能的配置加载
+     */
+    public static void customJoinAndLeaveConfigLoad() {
+        //CustomJoinAndLeave功能的配置内容
+        ConfigurationSection customJoinAndLeaveConfig = ServerConfig.getConfigurationSection(CustomJoinAndLeaveEnum.CUSTOM_JOIN_AND_LEAVE.getCommand());
+        //CustomJoinAndLeave的消息内容
+        ConfigurationSection customJoinAndLeaveMessage = customJoinAndLeaveConfig.getConfigurationSection(CommonEnum.MESSAGE.getCommand());
+        //得到所有枚举的值
+        CustomJoinAndLeaveConfigEnum[] customJoinAndLeaveConfigEnums = CustomJoinAndLeaveConfigEnum.values();
+        //循环判断每个节点是否存在，存在就替换枚举里的内容，不存在就添加到未定义的标签列表并恢复原内容
+        for (CustomJoinAndLeaveConfigEnum customJoinAndLeaveConfigNodeEnum : customJoinAndLeaveConfigEnums) {
+            //得到配置文件标签
+            String customJoinAndLeaveConfigNodeEnumTag = customJoinAndLeaveConfigNodeEnum.getTag();
+            //直接设置消息内容，如果存在该节点就会设置节点内容，如果不存在就会使用源配置文件里的内容
+            if (customJoinAndLeaveMessage.get(customJoinAndLeaveConfigNodeEnumTag) != null) {
+                customJoinAndLeaveConfigNodeEnum.setMsg(customJoinAndLeaveMessage.get(customJoinAndLeaveConfigNodeEnumTag));
+            } else {
+                customJoinAndLeaveConfigNodeEnum.setMsg(customJoinAndLeaveConfig.get(customJoinAndLeaveConfigNodeEnumTag));
+            }
+            //判断是否拥有该节点，没有就添加进列表用于输出警告
+            if (!customJoinAndLeaveMessage.contains(customJoinAndLeaveConfigNodeEnumTag, true) && !customJoinAndLeaveConfig.contains(customJoinAndLeaveConfigNodeEnumTag, true)) {
+                undefinedTagList.add(customJoinAndLeaveConfigNodeEnumTag);
+            }
+        }
+    }
+
+    /**
+     * JoinServerWelcome功能的配置加载
+     */
+    public static void joinServerWelcomeConfigLoad() {
+        //JoinServerWelcome功能的配置内容
+        ConfigurationSection joinServerWelcomeConfig = ServerConfig.getConfigurationSection(JoinServerWelcomeEnum.JOIN_SERVER_WELCOME.getCommand());
+        //JoinServerWelcome的消息内容
+        ConfigurationSection joinServerWelcomeMessage = joinServerWelcomeConfig.getConfigurationSection(CommonEnum.MESSAGE.getCommand());
+        //得到所有枚举的值
+        JoinServerWelcomeConfigEnum[] joinServerWelcomeConfigEnums = JoinServerWelcomeConfigEnum.values();
+        //循环判断每个节点是否存在，存在就替换枚举里的内容，不存在就添加到未定义的标签列表并恢复原内容
+        for (JoinServerWelcomeConfigEnum joinServerWelcomeConfigNodeEnum : joinServerWelcomeConfigEnums) {
+            //得到配置文件标签
+            String joinServerWelcomeConfigNodeEnumTag = joinServerWelcomeConfigNodeEnum.getTag();
+            //直接设置消息内容，如果存在该节点就会设置节点内容，如果不存在就会使用源配置文件里的内容
+            if (joinServerWelcomeMessage.get(joinServerWelcomeConfigNodeEnumTag) != null) {
+                joinServerWelcomeConfigNodeEnum.setMsg(joinServerWelcomeMessage.get(joinServerWelcomeConfigNodeEnumTag));
+            } else {
+                joinServerWelcomeConfigNodeEnum.setMsg(joinServerWelcomeConfig.get(joinServerWelcomeConfigNodeEnumTag));
+            }
+            //判断是否拥有该节点，没有就添加进列表用于输出警告
+            if (!joinServerWelcomeMessage.contains(joinServerWelcomeConfigNodeEnumTag, true) && !joinServerWelcomeConfig.contains(joinServerWelcomeConfigNodeEnumTag, true)) {
+                undefinedTagList.add(joinServerWelcomeConfigNodeEnumTag);
+            }
+        }
+    }
+
+    /**
+     * LimitHighAltitudeFluid功能的配置加载
+     */
+    public static void limitHighAltitudeFluidConfigLoad() {
+        //LimitHighAltitudeFluid功能的配置内容
+        ConfigurationSection limitHighAltitudeFluidConfig = ServerConfig.getConfigurationSection(LimitHighAltitudeFluidEnum.LIMIT_HIGH_ALTITUDE_FLUID.getCommand());
+        //LimitHighAltitudeFluid的消息内容
+        ConfigurationSection limitHighAltitudeFluidMessage = limitHighAltitudeFluidConfig.getConfigurationSection(CommonEnum.MESSAGE.getCommand());
+        //得到所有枚举的值
+        LimitHighAltitudeFluidConfigEnum[] limitHighAltitudeFluidConfigEnums = LimitHighAltitudeFluidConfigEnum.values();
+        //循环判断每个节点是否存在，存在就替换枚举里的内容，不存在就添加到未定义的标签列表并恢复原内容
+        for (LimitHighAltitudeFluidConfigEnum limitHighAltitudeFluidConfigNodeEnum : limitHighAltitudeFluidConfigEnums) {
+            //得到配置文件标签
+            String limitHighAltitudeFluidConfigNodeEnumTag = limitHighAltitudeFluidConfigNodeEnum.getTag();
+            //直接设置消息内容，如果存在该节点就会设置节点内容，如果不存在就会使用源配置文件里的内容
+            if (limitHighAltitudeFluidMessage.get(limitHighAltitudeFluidConfigNodeEnumTag) != null) {
+                limitHighAltitudeFluidConfigNodeEnum.setMsg(limitHighAltitudeFluidMessage.get(limitHighAltitudeFluidConfigNodeEnumTag));
+            } else {
+                limitHighAltitudeFluidConfigNodeEnum.setMsg(limitHighAltitudeFluidConfig.get(limitHighAltitudeFluidConfigNodeEnumTag));
+            }
+            //判断是否拥有该节点，没有就添加进列表用于输出警告
+            if (!limitHighAltitudeFluidMessage.contains(limitHighAltitudeFluidConfigNodeEnumTag, true) && !limitHighAltitudeFluidConfig.contains(limitHighAltitudeFluidConfigNodeEnumTag, true)) {
+                undefinedTagList.add(limitHighAltitudeFluidConfigNodeEnumTag);
+            }
+        }
+    }
+
+    /**
+     * PreventHighFrequencyAttacks功能的配置加载
+     */
+    public static void preventHighFrequencyAttacksConfigLoad() {
+        //PreventHighFrequencyAttacks功能的配置内容
+        ConfigurationSection preventHighFrequencyAttacksConfig = ServerConfig.getConfigurationSection(PreventHighFrequencyAttacksEnum.PREVENT_HIGH_FREQUENCY_ATTACKS.getCommand());
+        //PreventHighFrequencyAttacks的消息内容
+        ConfigurationSection preventHighFrequencyAttacksMessage = preventHighFrequencyAttacksConfig.getConfigurationSection(CommonEnum.MESSAGE.getCommand());
+        //得到所有枚举的值
+        PreventHighFrequencyAttacksConfigEnum[] preventHighFrequencyAttacksConfigEnums = PreventHighFrequencyAttacksConfigEnum.values();
+        //循环判断每个节点是否存在，存在就替换枚举里的内容，不存在就添加到未定义的标签列表并恢复原内容
+        for (PreventHighFrequencyAttacksConfigEnum preventHighFrequencyAttacksConfigNodeEnum : preventHighFrequencyAttacksConfigEnums) {
+            //得到配置文件标签
+            String preventHighFrequencyAttacksConfigNodeEnumTag = preventHighFrequencyAttacksConfigNodeEnum.getTag();
+            //直接设置消息内容，如果存在该节点就会设置节点内容，如果不存在就会使用源配置文件里的内容
+            if (preventHighFrequencyAttacksMessage.get(preventHighFrequencyAttacksConfigNodeEnumTag) != null) {
+                preventHighFrequencyAttacksConfigNodeEnum.setMsg(preventHighFrequencyAttacksMessage.get(preventHighFrequencyAttacksConfigNodeEnumTag));
+            } else {
+                preventHighFrequencyAttacksConfigNodeEnum.setMsg(preventHighFrequencyAttacksConfig.get(preventHighFrequencyAttacksConfigNodeEnumTag));
+            }
+            //判断是否拥有该节点，没有就添加进列表用于输出警告
+            if (!preventHighFrequencyAttacksMessage.contains(preventHighFrequencyAttacksConfigNodeEnumTag, true) && !preventHighFrequencyAttacksConfig.contains(preventHighFrequencyAttacksConfigNodeEnumTag, true)) {
+                undefinedTagList.add(preventHighFrequencyAttacksConfigNodeEnumTag);
+            }
+        }
+    }
+
+    /**
+     * ServerListDisplayModification功能的配置加载
+     */
+    public static void serverListDisplayModificationConfigLoad() {
+        //ServerListDisplayModification功能的配置内容
+        ConfigurationSection serverListDisplayModificationConfig = ServerConfig.getConfigurationSection(ServerListDisplayModificationEnum.SERVER_LIST_DISPLAY_MODIFICATION.getCommand());
+        //ServerListDisplayModification的消息内容
+        ConfigurationSection serverListDisplayModificationMessage = serverListDisplayModificationConfig.getConfigurationSection(CommonEnum.MESSAGE.getCommand());
+        //得到所有枚举的值
+        ServerListDisplayModificationConfigEnum[] serverListDisplayModificationConfigEnums = ServerListDisplayModificationConfigEnum.values();
+        //循环判断每个节点是否存在，存在就替换枚举里的内容，不存在就添加到未定义的标签列表并恢复原内容
+        for (ServerListDisplayModificationConfigEnum serverListDisplayModificationConfigNodeEnum : serverListDisplayModificationConfigEnums) {
+            //得到配置文件标签
+            String serverListDisplayModificationConfigNodeEnumTag = serverListDisplayModificationConfigNodeEnum.getTag();
+            //直接设置消息内容，如果存在该节点就会设置节点内容，如果不存在就会使用源配置文件里的内容
+            if (serverListDisplayModificationMessage.get(serverListDisplayModificationConfigNodeEnumTag) != null) {
+                serverListDisplayModificationConfigNodeEnum.setMsg(serverListDisplayModificationMessage.get(serverListDisplayModificationConfigNodeEnumTag));
+            } else {
+                serverListDisplayModificationConfigNodeEnum.setMsg(serverListDisplayModificationConfig.get(serverListDisplayModificationConfigNodeEnumTag));
+            }
+            //判断是否拥有该节点，没有就添加进列表用于输出警告
+            if (!serverListDisplayModificationMessage.contains(serverListDisplayModificationConfigNodeEnumTag, true) && !serverListDisplayModificationConfig.contains(serverListDisplayModificationConfigNodeEnumTag, true)) {
+                undefinedTagList.add(serverListDisplayModificationConfigNodeEnumTag);
             }
         }
     }

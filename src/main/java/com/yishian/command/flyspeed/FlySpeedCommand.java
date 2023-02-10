@@ -44,7 +44,7 @@ public class FlySpeedCommand implements TabExecutor {
             Player player = (Player) sender;
             //默认飞行速度为0.1
             player.setFlySpeed(0.1F);
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + FlySpeedConfigEnum.FLY_SPEED_SELF_RESET.getMsg().toString().replaceAll("%player%", player.getName())));
+            player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + FlySpeedConfigEnum.FLY_SPEED_SELF_RESET.getMsg()).replaceAll("%player%", player.getName()));
 
             //判断参数数量是否为1
         } else if (args.length == 1) {
@@ -66,7 +66,7 @@ public class FlySpeedCommand implements TabExecutor {
                 properFlySpeed = (float) (Math.round(properFlySpeed * 100)) / 100;
                 Player player = (Player) sender;
                 player.setFlySpeed(properFlySpeed);
-                player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + FlySpeedConfigEnum.FLY_SPEED_SELF.getMsg().toString().replaceAll("%fly-speed%", Float.toString(originalFlySpeed))));
+                player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + FlySpeedConfigEnum.FLY_SPEED_SELF.getMsg()).replaceAll("%fly-speed%", Float.toString(originalFlySpeed)));
             } else {
                 //第一个参数是玩家
                 if (sender instanceof Player) {
@@ -81,8 +81,8 @@ public class FlySpeedCommand implements TabExecutor {
                             return true;
                         }
                         othersPlayer.setFlySpeed(0.1F);
-                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + FlySpeedConfigEnum.FLY_SPEED_OTHERS_RESET.getMsg().toString().replaceAll("%others-player%", othersPlayerName)));
-                        othersPlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + FlySpeedConfigEnum.FLY_SPEED_BY_OTHERS_RESET.getMsg().toString().replaceAll("%player%", playerName)));
+                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + FlySpeedConfigEnum.FLY_SPEED_OTHERS_RESET.getMsg()).replaceAll("%others-player%", othersPlayerName));
+                        othersPlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + FlySpeedConfigEnum.FLY_SPEED_BY_OTHERS_RESET.getMsg()).replaceAll("%player%", playerName));
 
                     } else {
                         //参数指向的是自己，修改自己，并给出对应提示
@@ -94,7 +94,7 @@ public class FlySpeedCommand implements TabExecutor {
                     String othersPlayerName = args[0];
                     othersPlayer.setFlySpeed(0.1F);
                     othersPlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + FlySpeedConfigEnum.FLY_SPEED_BY_CONSOLE_RESET.getMsg()));
-                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + FlySpeedConfigEnum.FLY_SPEED_OTHERS_RESET.getMsg().toString().replaceAll("%others-player%", othersPlayerName)));
+                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + FlySpeedConfigEnum.FLY_SPEED_OTHERS_RESET.getMsg()).replaceAll("%others-player%", othersPlayerName));
                 }
             }
         } else {
@@ -122,28 +122,28 @@ public class FlySpeedCommand implements TabExecutor {
                     Player othersPlayer = Bukkit.getPlayerExact(othersPlayerName);
                     //判断玩家是否存在
                     if (othersPlayer == null) {
-                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + FlySpeedConfigEnum.FLY_SPEED_OTHERS_NO_EXIST.getMsg().toString().replaceAll("%others-player%", othersPlayerName)));
+                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + FlySpeedConfigEnum.FLY_SPEED_OTHERS_NO_EXIST.getMsg()).replaceAll("%others-player%", othersPlayerName));
                         return true;
                     }
                     othersPlayer.setFlySpeed(properFlySpeed);
-                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + FlySpeedConfigEnum.FLY_SPEED_OTHERS.getMsg().toString().replaceAll("%others-player%", othersPlayerName).replaceAll("%fly-speed%", originalFlySpeedString)));
-                    othersPlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + FlySpeedConfigEnum.FLY_SPEED_BY_OTHERS.getMsg().toString().replaceAll("%player%", playerName).replaceAll("%fly-speed%", originalFlySpeedString)));
+                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + FlySpeedConfigEnum.FLY_SPEED_OTHERS.getMsg()).replaceAll("%others-player%", othersPlayerName).replaceAll("%fly-speed%", originalFlySpeedString));
+                    othersPlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + FlySpeedConfigEnum.FLY_SPEED_BY_OTHERS.getMsg()).replaceAll("%player%", playerName).replaceAll("%fly-speed%", originalFlySpeedString));
                 } else {
                     //参数指向的是自己，修改自己，并给出对应提示
                     player.setFlySpeed(properFlySpeed);
-                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + FlySpeedConfigEnum.FLY_SPEED_OTHERS_IS_SELF.getMsg().toString().replaceAll("%fly-speed%", originalFlySpeedString)));
+                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + FlySpeedConfigEnum.FLY_SPEED_OTHERS_IS_SELF.getMsg()).replaceAll("%fly-speed%", originalFlySpeedString));
                 }
             } else {
                 String othersPlayerName = args[1];
                 Player othersPlayer = Bukkit.getPlayerExact(othersPlayerName);
                 //判断该玩家是否存在
                 if (othersPlayer == null) {
-                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + FlySpeedConfigEnum.FLY_SPEED_OTHERS_NO_EXIST.getMsg().toString().replaceAll("%others-player%", othersPlayerName)));
+                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + FlySpeedConfigEnum.FLY_SPEED_OTHERS_NO_EXIST.getMsg()).replaceAll("%others-player%", othersPlayerName));
                     return true;
                 }
                 othersPlayer.setFlySpeed(properFlySpeed);
-                othersPlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + FlySpeedConfigEnum.FLY_SPEED_BY_CONSOLE.getMsg().toString().replaceAll("%fly-speed%", originalFlySpeedString)));
-                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + FlySpeedConfigEnum.FLY_SPEED_OTHERS.getMsg().toString().replaceAll("%others-player%", othersPlayerName).replaceAll("%fly-speed%", originalFlySpeedString)));
+                othersPlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + FlySpeedConfigEnum.FLY_SPEED_BY_CONSOLE.getMsg()).replaceAll("%fly-speed%", originalFlySpeedString));
+                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + FlySpeedConfigEnum.FLY_SPEED_OTHERS.getMsg()).replaceAll("%others-player%", othersPlayerName).replaceAll("%fly-speed%", originalFlySpeedString));
             }
         }
         return true;

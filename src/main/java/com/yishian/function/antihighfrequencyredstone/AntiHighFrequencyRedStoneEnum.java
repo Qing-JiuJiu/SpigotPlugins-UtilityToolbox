@@ -8,6 +8,10 @@ import com.yishian.common.CommonEnum;
 public enum AntiHighFrequencyRedStoneEnum {
 
     /**
+     * 高频红石功能的名称
+     */
+    ANTI_HIGH_FREQUENCY_RED_STONE("anti-high-frequency-red-stone", "高频红石功能名称"),
+    /**
      * 高频红石信息权限
      */
     RED_STONE_MESSAGE_PERMISSION(CommonEnum.PLUGHIN_NAME.getCommand() + ".RedStoneDestroyMessage", "高频红石信息");
