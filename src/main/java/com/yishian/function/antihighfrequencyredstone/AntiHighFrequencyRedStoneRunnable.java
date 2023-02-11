@@ -41,7 +41,7 @@ public class AntiHighFrequencyRedStoneRunnable extends BukkitRunnable {
 
                     String recentPlayerDistanceName = "&c(未找到)";
                     //判断是否附近有玩家
-                    if (CommonUtils.mapIsEmpty(playerDistanceTreeMap)) {
+                    if (!CommonUtils.mapIsEmpty(playerDistanceTreeMap)) {
                         recentPlayerDistanceName = playerDistanceTreeMap.pollFirstEntry().getValue().getName();
                     }
                     //广播消息
