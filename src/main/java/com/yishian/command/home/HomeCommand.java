@@ -10,7 +10,6 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
 /**
@@ -34,9 +33,7 @@ public class HomeCommand implements CommandExecutor {
 
         //获取玩家家的配置信息
         Player player = (Player) sender;
-        String playerName = player.getName();
-        YamlConfiguration homeFileYaml = SetHomeConfig.homeFileYaml;
-        ConfigurationSection playerConfig = homeFileYaml.getConfigurationSection(playerName);
+        ConfigurationSection playerConfig = SetHomeConfig.homeFileYaml.getConfigurationSection(player.getName());
 
         //判断该用户是否有家
         if (playerConfig == null) {

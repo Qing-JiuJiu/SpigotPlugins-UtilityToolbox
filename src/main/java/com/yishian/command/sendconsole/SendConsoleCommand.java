@@ -1,6 +1,7 @@
 package com.yishian.command.sendconsole;
 
 import com.yishian.common.CommonEnum;
+import com.yishian.common.CommonUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Server;
@@ -38,6 +39,8 @@ public class SendConsoleCommand implements CommandExecutor {
         Server server = Bukkit.getServer();
         server.dispatchCommand(server.getConsoleSender(), argString);
 
+        //打印警告日志
+        CommonUtils.javaPlugin.getLogger().warning("玩家" + sender.getName() + "向控制台执行指令：" + argString);
         return true;
     }
 }

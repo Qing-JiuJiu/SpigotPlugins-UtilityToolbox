@@ -1,24 +1,18 @@
 package com.yishian.command.autodeathback;
 
 import com.yishian.common.CommonEnum;
+import com.yishian.common.CommonUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
-
-import java.util.ArrayList;
-import java.util.UUID;
 
 /**
  * @author XinQi
  */
 public class AutoRespawnBackCommand implements CommandExecutor {
-
-    /**
-     * 允许自动死亡返回列表
-     */
-    public static ArrayList<UUID> autoRespawnBackList = new ArrayList<>();
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -28,15 +22,20 @@ public class AutoRespawnBackCommand implements CommandExecutor {
             return true;
         }
 
-        Player player = (Player) sender;
-        //如果包含该玩家的UUID则移除，否则添加
-        if (autoRespawnBackList.contains(player.getUniqueId())) {
-            autoRespawnBackList.remove(player.getUniqueId());
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + AutoRespawnBackConfigEnum.AUTORESPAWNBACK_APPLY_OPEN.getMsg()));
+        //写入家数据文件，用于重启服务器后能读取，也防止内存泄露想象
+        YamlConfiguration autoRespawnBackFileYaml = AutoRespawnBackConfig.autoRespawnBackFileYaml;
+        String path = sender.getName() + "." + CommonEnum.FUNCTION_IS_ENABLE.getCommand();
+        //判断玩家是否写入过记录，没写入过或本身为false则写入true，否则写入false
+        if (autoRespawnBackFileYaml.getBoolean(path)) {
+            autoRespawnBackFileYaml.set(path, false);
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + AutoRespawnBackConfigEnum.AUTORESPAWNBACK_APPLY_CLOSE.getMsg()));
         } else {
-            autoRespawnBackList.add(player.getUniqueId());
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + AutoRespawnBackConfigEnum.AUTORESPAWNBACK_APPLY_CLOSE.getMsg()));
+            autoRespawnBackFileYaml.set(path, true);
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + AutoRespawnBackConfigEnum.AUTORESPAWNBACK_APPLY_OPEN.getMsg()));
         }
+        //保存记录文件
+        CommonUtils.saveYamlConfig(autoRespawnBackFileYaml, AutoRespawnBackConfig.file.toPath());
+
         return true;
     }
 }

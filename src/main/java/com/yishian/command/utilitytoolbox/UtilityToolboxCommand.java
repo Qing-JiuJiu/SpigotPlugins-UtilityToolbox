@@ -25,7 +25,12 @@ public class UtilityToolboxCommand implements TabExecutor {
                 //重载配置文件;
                 CommonUtils.javaPlugin.reloadConfig();
                 CommonConfigLoad.loadConfig();
-                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + UtilityToolboxConfigEnum.UTILITYTOOLBOX_APPLY_RELOAD.getMsg()));
+
+                //发送成功信息和打印日志
+                String message = CommonEnum.MESSAGE_PREFIX.getCommand() + UtilityToolboxConfigEnum.UTILITYTOOLBOX_APPLY_RELOAD.getMsg();
+                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', message));
+                //发送控制台日志
+                CommonUtils.javaPlugin.getLogger().info(message);
             } else {
                 //提示参数错误
                 sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + UtilityToolboxConfigEnum.UTILITYTOOLBOX_COMMAND_ERROR.getMsg()));

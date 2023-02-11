@@ -60,8 +60,8 @@ public class LimitHighAltitudeFluidListener implements Listener {
                         players.forEach(player -> player.sendMessage(messageTemplate));
                     }
 
-                    //发送控制台消息
-                    CommonUtils.consoleCommandSender.sendMessage(messageTemplate);
+                    //打印日志
+                    CommonUtils.javaPlugin.getLogger().warning(messageTemplate);
                 }
             }
         }

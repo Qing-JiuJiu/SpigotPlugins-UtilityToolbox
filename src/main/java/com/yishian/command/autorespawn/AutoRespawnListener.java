@@ -22,7 +22,7 @@ public class AutoRespawnListener implements Listener {
     public void autoRespawn(PlayerDeathEvent playerDeathEvent) {
         Player player = playerDeathEvent.getEntity();
         //判断是否要自动重生
-        if (AutoRespawnCommand.autoRespawnList.contains(player.getUniqueId())){
+        if (AutoRespawnConfig.autoRespawnFileYaml.getBoolean(player.getName() + "." + CommonEnum.FUNCTION_IS_ENABLE.getCommand())){
             //在事件结束后发送玩家重生信息
             Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getProvidingPlugin(Main.class), () -> {
                 //玩家重生

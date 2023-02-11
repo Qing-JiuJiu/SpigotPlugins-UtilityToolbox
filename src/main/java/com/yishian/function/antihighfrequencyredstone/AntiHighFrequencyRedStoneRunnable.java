@@ -48,8 +48,8 @@ public class AntiHighFrequencyRedStoneRunnable extends BukkitRunnable {
                     String message = AntiHighFrequencyRedStoneConfigEnum.DESTROY_MESSAGE.getMsg().toString().replaceAll("%player%", recentPlayerDistanceName).replaceAll("%x%", String.valueOf(location.getBlockX())).replaceAll("%y%", String.valueOf(location.getBlockY())).replaceAll("%z%", String.valueOf(location.getBlockZ()));
                     Bukkit.getServer().broadcastMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + message));
 
-                    //发送控制台消息
-                    CommonUtils.sendConsoleMessage(message);
+                    //打印警告日志
+                    CommonUtils.javaPlugin.getLogger().warning(message);
                 }
             });
         } else {

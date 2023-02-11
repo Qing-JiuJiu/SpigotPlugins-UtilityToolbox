@@ -1,12 +1,15 @@
 package com.yishian;
 
 import com.yishian.command.autodeathback.AutoRespawnBackCommand;
+import com.yishian.command.autodeathback.AutoRespawnBackConfig;
 import com.yishian.command.autodeathback.AutoRespawnBackEnum;
 import com.yishian.command.autodeathback.AutoRespawnBackListener;
 import com.yishian.command.autorespawn.AutoRespawnCommand;
+import com.yishian.command.autorespawn.AutoRespawnConfig;
 import com.yishian.command.autorespawn.AutoRespawnEnum;
 import com.yishian.command.autorespawn.AutoRespawnListener;
 import com.yishian.command.back.BackCommand;
+import com.yishian.command.back.BackConfig;
 import com.yishian.command.back.BackEnum;
 import com.yishian.command.back.BackListener;
 import com.yishian.command.copyres.CopyResCommand;
@@ -355,10 +358,16 @@ public final class Main extends JavaPlugin {
     public void registerCommandConfig() {
         //创建各项配置文件
         try {
-            //创建home配置文件
+            //创建home记录文件
             SetHomeConfig.loadHomeConfigFile();
-            //创建snap配置文件
+            //创建snap记录文件
             SetSnapTpConfig.loadSnapConfigFile();
+            //创建AutoRespawnBack记录文件
+            AutoRespawnBackConfig.loadAutoRespawnBackConfigFile();
+            //创建AutoRespawn记录文件
+            AutoRespawnConfig.loadAutoRespawnConfigFile();
+            //创建back记录文件
+            BackConfig.loadBackConfigFile();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

@@ -39,9 +39,9 @@ public class PreventHighFrequencyAttacksRunnable extends BukkitRunnable {
                     //判断是否要踢出服务器，并给出对应消息
                     String message = isKick(isKick, frequency, player);
 
-                    //广播消息并发送控制台消息
+                    //广播消息并打印日志
                     Bukkit.getServer().broadcastMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + message));
-                    CommonUtils.consoleCommandSender.sendMessage(message);
+                    CommonUtils.javaPlugin.getLogger().warning(message);
                 }
             });
         } else {
