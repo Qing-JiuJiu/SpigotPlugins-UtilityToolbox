@@ -391,7 +391,7 @@ musterplayer:
     musterplayer-apply-deny: '玩家&c%player%&6已拒绝召集'
     musterplayer-apply-list-allow: '已同意召集的玩家: &a%player-list%'
     musterplayer-apply-list-deny: '已拒绝召集的玩家: &c%player-list%'
-    musterplayer-apply-list-deal-with: '还未处理召集的玩家: &6%player-list%'
+    musterplayer-apply-list-deal-with: '还未处理召集的玩家: &7%player-list%'
     musterplayer-cancel-tips: '取消召集输入: &c/musterplayer cancel'
     musterplayer-end-tips: '结束召集输入: &c/musterplayer end'
     musterplayer-accept-tips: '同意召集输入: &a/musterplayer ccept'
