@@ -31,7 +31,7 @@ public enum MusterPlayerConfigEnum {
     MUSTERPLAYER_APPLY_DENY("musterplayer-apply-deny", "玩家&c%player%&6已拒绝召集"),
     MUSTERPLAYER_APPLY_LIST_ALLOW("musterplayer-apply-list-allow", "已同意召集的玩家: &a%player-list%"),
     MUSTERPLAYER_APPLY_LIST_DENY("musterplayer-apply-list-deny", "已拒绝召集的玩家: &c%player-list%"),
-    MUSTERPLAYER_APPLY_LIST_DEAL_WITH("musterplayer-apply-list-deal-with", "还未处理召集的玩家: &6%player-list%"),
+    MUSTERPLAYER_APPLY_LIST_DEAL_WITH("musterplayer-apply-list-deal-with", "还未处理召集的玩家: &7%player-list%"),
     MUSTERPLAYER_CANCEL_TIPS("musterplayer-cancel-tips", "取消召集输入: &c/musterplayer cancel"),
     MUSTERPLAYER_END_TIPS("musterplayer-end-tips", "结束召集输入: &c/musterplayer end"),
     MUSTERPLAYER_ACCEPT_TIPS("musterplayer-accept-tips", "同意召集输入: &a/musterplayer ccept"),
