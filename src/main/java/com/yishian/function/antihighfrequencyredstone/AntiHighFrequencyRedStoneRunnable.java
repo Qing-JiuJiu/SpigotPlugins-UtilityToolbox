@@ -39,7 +39,7 @@ public class AntiHighFrequencyRedStoneRunnable extends BukkitRunnable {
                     //得到距离该位置最近的玩家
                     TreeMap<Double, Player> playerDistanceTreeMap = getDoublePlayerTreeMap(anitList, location);
 
-                    String recentPlayerDistanceName = "&c(未找到)";
+                    String recentPlayerDistanceName = "(未找到)";
                     //判断是否附近有玩家
                     if (!CommonUtils.mapIsEmpty(playerDistanceTreeMap)) {
                         recentPlayerDistanceName = playerDistanceTreeMap.pollFirstEntry().getValue().getName();
@@ -62,7 +62,7 @@ public class AntiHighFrequencyRedStoneRunnable extends BukkitRunnable {
                     //识别是否还是红石列表，如果是就摧毁
                     TreeMap<Double, Player> playerDistanceTreeMap = getDoublePlayerTreeMap(anitList, location);
                     //初始最近的玩家字符串
-                    String recentPlayerDistanceName = "&c(未找到)";
+                    String recentPlayerDistanceName = "(未找到)";
                     //判断是否附近有玩家
                     if (!CommonUtils.mapIsEmpty(playerDistanceTreeMap)) {
                         recentPlayerDistanceName = playerDistanceTreeMap.pollFirstEntry().getValue().getName();

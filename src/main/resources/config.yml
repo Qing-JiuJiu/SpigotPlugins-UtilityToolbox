@@ -56,7 +56,7 @@ limit-high-altitude-fluid:
   #是否所有玩家都能看到流体被限制的消息，否则只有拥有UtilityToolbox.LimitFlowMessage权限的用户才能看到
   is-broadcast-message: true
   #限制高度
-  limit-high: 80
+  limit-high: 120
   #限制的流体列表
   limit-fluid-list:
     #默认水和岩浆，该名字为流动液体的名字
