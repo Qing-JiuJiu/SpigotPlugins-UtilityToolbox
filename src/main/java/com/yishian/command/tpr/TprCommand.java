@@ -1,7 +1,9 @@
 package com.yishian.command.tpr;
 
+import com.yishian.Main;
 import com.yishian.common.CommonEnum;
 import com.yishian.common.CommonUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -21,6 +23,9 @@ public class TprCommand implements CommandExecutor {
 
     //新建一个随机数
     Random rand = new Random();
+
+    //传送位置
+    Location newLocation;
 
     //危险方块列表
     List<?> dangerousBlockList = CommonUtils.objectToList(TprConfigEnum.DANGEROUS_BLOCK.getMsg());
@@ -52,29 +57,37 @@ public class TprCommand implements CommandExecutor {
         int tprx = Integer.parseInt(TprConfigEnum.RANDOM_X.getMsg().toString());
         int tprz = Integer.parseInt(TprConfigEnum.RANDOM_Z.getMsg().toString());
 
-        Location newLocation;
+        //因随机传送获取安全位置开销很大，使用异步任务进行
+        Bukkit.getScheduler().runTaskAsynchronously(Main.getProvidingPlugin(Main.class), () -> {
+            //判断是否以用户为中心进行随机传送
+            if ((Boolean) TprConfigEnum.RESPAWN_CENTER.getMsg()) {
+                //获取世界的重生点
+                Location spawnLocation = world.getSpawnLocation();
 
-        //判断是否以世界出生点为中心，否则以玩家为中心
-        if ((Boolean) TprConfigEnum.RESPAWN_CENTER.getMsg()) {
-            Location spawnLocation = world.getSpawnLocation();
+                //重置底值，防止出现边缘撞到例如仙人掌之类的物品
+                spawnLocation.setX(spawnLocation.getBlockX());
+                spawnLocation.setY(spawnLocation.getBlockY());
+                spawnLocation.setZ(spawnLocation.getBlockZ());
 
-            //重置底值，防止出现边缘撞到例如仙人掌之类的物品
-            spawnLocation.setX(spawnLocation.getBlockX());
-            spawnLocation.setY(spawnLocation.getBlockY());
-            spawnLocation.setZ(spawnLocation.getBlockZ());
-            newLocation = newLocation(spawnLocation, world, tprx, tprz);
+                //获取传送位置
+                newLocation = newLocation(spawnLocation, world, tprx, tprz);
+            } else {
+                //重置底值，防止出现边缘撞到例如仙人掌之类的物品
+                playerLocation.setX(playerLocation.getBlockX());
+                playerLocation.setY(playerLocation.getBlockY());
+                playerLocation.setZ(playerLocation.getBlockZ());
 
-        } else {
-            //重置底值，防止出现边缘撞到例如仙人掌之类的物品
-            playerLocation.setX(playerLocation.getBlockX());
-            playerLocation.setY(playerLocation.getBlockY());
-            playerLocation.setZ(playerLocation.getBlockZ());
-            //获取新的位置
-            newLocation = newLocation(playerLocation, world, tprx, tprz);
-        }
+                //获取新的位置
+                newLocation = newLocation(playerLocation, world, tprx, tprz);
+            }
 
-        player.teleport(newLocation);
-        player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + TprConfigEnum.TPR_APPLY.getMsg()).replaceAll("%x%", String.valueOf(newLocation.getBlockX())).replaceAll("%y%", String.valueOf(newLocation.getBlockY())).replaceAll("%z%", String.valueOf(newLocation.getBlockZ())));
+            //创建同步任务以传送玩家
+            Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getProvidingPlugin(Main.class), () -> {
+                //传送玩家
+                player.teleport(newLocation);
+                player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + TprConfigEnum.TPR_APPLY.getMsg()).replaceAll("%x%", String.valueOf(newLocation.getBlockX())).replaceAll("%y%", String.valueOf(newLocation.getBlockY())).replaceAll("%z%", String.valueOf(newLocation.getBlockZ())));
+            });
+        });
 
         return true;
     }
