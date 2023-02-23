@@ -26,6 +26,8 @@ commands:
     description: 同意传送请求
   tpadeny:
     description: 拒绝传送请求
+  tpr:
+    description: 随机传送
   sethome:
     description: 设置家
   home:
@@ -95,6 +97,10 @@ permissions:
     #默认是op，true为默认拥有该权限，false为默认没有该权限
     default: true
     description: 申请传送至该玩家位置的权限
+
+  UtilityToolbox.tpr:
+    default: true
+    description: 随机传送的权限
 
   UtilityToolbox.playmode:
     children:

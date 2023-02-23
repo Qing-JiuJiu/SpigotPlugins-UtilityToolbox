@@ -245,6 +245,31 @@ tpadeny:
     tpadeny-no-tpa-error: '&c你没有待处理的传送请求'
     tpadeny-no-others-player-tpa-error: '&c你没有玩家&3%others-player%&c的传送请求'
 
+#随机传送
+tpr:
+  #是否以世界出生点为中心，否则就以玩家为中心
+  respawn-center: true
+  #同意随机传送列表
+  allow-world:
+    - '*'
+  #危险的方块，不会传送到该方块上
+  dangerous-block:
+    - 'minecraft:water'
+    - 'minecraft:lava'
+    - 'minecraft:cactus'
+    - 'minecraft:magma_block'
+    - 'minecraft:spawner'
+    - 'minecraft:fire'
+    - 'minecraft:soul_fire'
+  #最大随机的x范围
+  random-x: 10000
+  #最大随机的z范围
+  random-z: 10000
+  message:
+    tpr-searching: "&6正在定位安全的传送位置，请不要连续使用随机传送"
+    tpr-apply: "&a你已随机传送，当前坐标&6 x:%x% y:%y% z:%z%"
+    tpr-world-error: "&c世界&3%world%&c禁止随机传送"
+
 #设置家
 sethome:
   #允许设置家的世界，默认 * 为所有世界都允许设置家

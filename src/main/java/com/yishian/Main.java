@@ -57,6 +57,8 @@ import com.yishian.command.tpaccept.TpaCceptCommand;
 import com.yishian.command.tpaccept.TpaCceptEnum;
 import com.yishian.command.tpadeny.TpaDenyCommand;
 import com.yishian.command.tpadeny.TpaDenyEnum;
+import com.yishian.command.tpr.TprCommand;
+import com.yishian.command.tpr.TprEnum;
 import com.yishian.command.utilitytoolbox.UtilityToolboxCommand;
 import com.yishian.command.utilitytoolbox.UtilityToolboxEnum;
 import com.yishian.command.walkspeed.WalkSpeedCommand;
@@ -198,6 +200,11 @@ public final class Main extends JavaPlugin {
         PluginCommand tpaDenyCommand = getCommand(TpaDenyEnum.TPA_DENY_COMMAND.getCommand());
         tpaDenyCommand.setPermission(TpaEnum.TPA_PERMISSION.getCommand());
         tpaDenyCommand.setExecutor(new TpaDenyCommand());
+
+        //随机传送
+        PluginCommand tprCommand = getCommand(TprEnum.TPR_COMMAND.getCommand());
+        tprCommand.setPermission(TprEnum.TPR_PERMISSION.getCommand());
+        tprCommand.setExecutor(new TprCommand());
 
         //设置家
         PluginCommand setHomeCommand = getCommand(SetHomeEnum.SET_HOME_COMMAND.getCommand());

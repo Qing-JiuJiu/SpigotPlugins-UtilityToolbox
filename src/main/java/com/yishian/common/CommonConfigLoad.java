@@ -47,6 +47,8 @@ import com.yishian.command.tpaccept.TpaCceptConfigEnum;
 import com.yishian.command.tpaccept.TpaCceptEnum;
 import com.yishian.command.tpadeny.TpaDenyConfigEnum;
 import com.yishian.command.tpadeny.TpaDenyEnum;
+import com.yishian.command.tpr.TprConfigEnum;
+import com.yishian.command.tpr.TprEnum;
 import com.yishian.command.utilitytoolbox.UtilityToolboxConfigEnum;
 import com.yishian.command.utilitytoolbox.UtilityToolboxEnum;
 import com.yishian.command.walkspeed.WalkSpeedConfigEnum;
@@ -121,6 +123,7 @@ public class CommonConfigLoad {
         tpaCceptConfigLoad();
         tpaDenyConfigLoad();
         utilityToolboxConfigLoad();
+        tprConfigLoad();
 
         //功能相关
         antiHighFrequencyRedStoneConfigLoad();
@@ -689,6 +692,32 @@ public class CommonConfigLoad {
         }
     }
 
+    /**
+     * tpr指令的配置加载
+     */
+    public static void tprConfigLoad(){
+        //获得tpr指令的配置根目录
+        ConfigurationSection tprConfig = ServerConfig.getConfigurationSection(TprEnum.TPR_COMMAND.getCommand());
+        //获得tpr指令的消息内容
+        ConfigurationSection tprMessage = tprConfig.getConfigurationSection(CommonEnum.MESSAGE.getCommand());
+        //得到所有枚举的值
+        TprConfigEnum[] tprConfigEnums = TprConfigEnum.values();
+        //循环判断每个节点是否存在，存在就替换枚举里的内容，不存在就添加到未定义的标签列表并恢复原内容
+        for (TprConfigEnum tprConfigNodeEnum : tprConfigEnums) {
+            //得到配置文件标签
+            String tprConfigNodeEnumTag = tprConfigNodeEnum.getTag();
+            //直接设置消息内容，如果存在该节点就会设置节点内容，如果不存在就会使用源配置文件里的内容
+            if (tprMessage.get(tprConfigNodeEnumTag) != null) {
+                tprConfigNodeEnum.setMsg(tprMessage.get(tprConfigNodeEnumTag));
+            } else {
+                tprConfigNodeEnum.setMsg(tprConfig.get(tprConfigNodeEnumTag));
+            }
+            //判断是否拥有该节点，没有就添加进列表用于输出警告
+            if (!tprMessage.contains(tprConfigNodeEnumTag, true) && !tprConfig.contains(tprConfigNodeEnumTag, true)) {
+                undefinedTagList.add(tprConfigNodeEnumTag);
+            }
+        }
+    }
 
     /**
      * AntiHighFrequencyRedStone功能的配置加载

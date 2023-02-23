@@ -14,6 +14,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
    该方案有一定的问题：
    1，PlayerDropItemEvent事件只有看空气时才会触发PlayerInteractEvent事件，如果PlayerDropItemEvent看地上触发，在下一次PlayerInteractEvent事件会因为isDropItem判定导致丢失一次登记
    2，对着空中右键丢药水时会触发一次左键登记
+   3，快速挖矿会导致登记次数过多
    暂定可能能解决的方案：
    1，PlayerDropItemEvent触发时判断玩家准星准星是否是空气
    2，添加使用物品事件监听，添加识别字段

@@ -7,7 +7,7 @@ import java.util.Collections;
  */
 public enum SetHomeConfigEnum {
     /**
-     * 排除列表
+     * 允许列表
      */
     ALLOW_WORLD("allow-world", Collections.singletonList("*")),
 
