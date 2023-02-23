@@ -31,13 +31,18 @@ public class SendConsoleCommand implements CommandExecutor {
             }
         }
 
-        //打包成字符串并发送消息给用户
         String argString = stringBuilder.toString();
-        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + SendConsoleConfigEnum.SENDCONSOLE_APPLY.getMsg()).replaceAll("%command%", argString));
 
         //控制台执行指令
         Server server = Bukkit.getServer();
-        server.dispatchCommand(server.getConsoleSender(), argString);
+        boolean isSuccess = server.dispatchCommand(server.getConsoleSender(), argString);
+
+        //判断是否执行成功
+        if (isSuccess) {
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + SendConsoleConfigEnum.SENDCONSOLE_APPLY_SUCCESS.getMsg()).replaceAll("%command%", argString));
+        }else {
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + SendConsoleConfigEnum.SENDCONSOLE_APPLY_FAIL.getMsg()).replaceAll("%command%", argString));
+        }
 
         //打印警告日志
         CommonUtils.javaPlugin.getLogger().warning("玩家" + sender.getName() + "向控制台执行指令：" + argString);
