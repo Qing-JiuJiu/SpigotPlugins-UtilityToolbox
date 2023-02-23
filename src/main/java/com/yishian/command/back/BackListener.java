@@ -43,6 +43,7 @@ public class BackListener implements Listener {
      */
     @EventHandler(priority = EventPriority.LOWEST)
     public void playerDeath(PlayerDeathEvent playerDeathEvent) {
+        //使用同步任务让消息显示在死亡消息后面
         Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getProvidingPlugin(Main.class), () -> {
             //记录玩家死亡位置
             Player player = playerDeathEvent.getEntity();

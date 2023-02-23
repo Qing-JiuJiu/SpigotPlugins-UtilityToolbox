@@ -26,7 +26,7 @@ public class TeleportListener implements Listener {
             playerTeleportEvent.setCancelled(true);
 
             //发送消息，让消息显示在最后一行
-            Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getProvidingPlugin(Main.class),()-> playerTeleportEvent.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + TeleportCommand.teleportMessage.getString("teleport-deny-apply"))));
+            Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getProvidingPlugin(Main.class),()-> playerTeleportEvent.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + TeleportConfigEnum.TELEPORT_DENY_APPLY.getMsg())));
         }
     }
 

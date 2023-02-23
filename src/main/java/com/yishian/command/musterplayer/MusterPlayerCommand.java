@@ -409,7 +409,7 @@ public class MusterPlayerCommand implements TabExecutor {
             //发送广播消息
             musterPlayers.forEach(player -> player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + MusterPlayerConfigEnum.MUSTERPLAYER_END_TIME.getMsg()).replaceAll("%player%", musterPlayer.getName()).replaceAll("%time%", String.valueOf(time))));
 
-            //延迟传送
+            //添加一个同步任务延迟传送
             Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getProvidingPlugin(Main.class), () -> {
                 //传送所有同意的玩家
                 playersMap.forEach((judgePlayer, isAllow) -> {

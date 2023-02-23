@@ -1,6 +1,8 @@
 package com.yishian.command.autodeathback;
 
 import com.yishian.command.back.BackConfig;
+import com.yishian.command.teleport.TeleportCommand;
+import com.yishian.command.teleport.TeleportConfigEnum;
 import com.yishian.common.CommonEnum;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -30,8 +32,12 @@ public class AutoRespawnBackListener implements Listener {
         if (AutoRespawnBackConfig.autoRespawnBackFileYaml.getBoolean(playerName + "." + CommonEnum.FUNCTION_IS_ENABLE.getCommand())) {
             //玩家重生后，获得玩家back信息并设置玩家重生位置和发送消息
             ConfigurationSection playerConfig = BackConfig.BackFileYaml.getConfigurationSection(playerName);
-            playerRespawnEvent.setRespawnLocation(new Location(Bukkit.getWorld(playerConfig.getString("world")), playerConfig.getDouble("x"), playerConfig.getDouble("y"), playerConfig.getDouble("z"), Float.parseFloat(playerConfig.getString("yaw")), Float.parseFloat(playerConfig.getString("pitch"))));
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + AutoRespawnBackConfigEnum.AUTORESPAWNBACK_APPLY.getMsg()));
+            if (TeleportCommand.allowTp) {
+                playerRespawnEvent.setRespawnLocation(new Location(Bukkit.getWorld(playerConfig.getString("world")), playerConfig.getDouble("x"), playerConfig.getDouble("y"), playerConfig.getDouble("z"), Float.parseFloat(playerConfig.getString("yaw")), Float.parseFloat(playerConfig.getString("pitch"))));
+                player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + AutoRespawnBackConfigEnum.AUTORESPAWNBACK_APPLY.getMsg()));
+            }else {
+                player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + TeleportConfigEnum.TELEPORT_DENY_APPLY.getMsg()));
+            }
         }
     }
 }

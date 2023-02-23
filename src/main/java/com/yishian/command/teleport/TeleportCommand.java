@@ -1,13 +1,11 @@
 package com.yishian.command.teleport;
 
-import com.yishian.common.CommonConfigLoad;
 import com.yishian.common.CommonEnum;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.configuration.ConfigurationSection;
 
 /**
  * @author XinQi
@@ -19,21 +17,16 @@ public class TeleportCommand implements CommandExecutor {
      */
     public static boolean allowTp = true;
 
-    /**
-     * 获取配置文件里该指令的消息提示
-     */
-    static ConfigurationSection teleportMessage = CommonConfigLoad.ServerConfig.getConfigurationSection(TeleportEnum.TELEPORT_COMMAND.getCommand()).getConfigurationSection(CommonEnum.MESSAGE.getCommand());
-
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         //判断指令是否带参数
         if (args.length == 0) {
             if (allowTp) {
                 allowTp = false;
-                Bukkit.getServer().broadcastMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + teleportMessage.getString("teleport-deny")));
+                Bukkit.getServer().broadcastMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + TeleportConfigEnum.TELEPORT_DENY.getMsg()));
             } else {
                 allowTp = true;
-                Bukkit.getServer().broadcastMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + teleportMessage.getString("teleport-allow")));
+                Bukkit.getServer().broadcastMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + TeleportConfigEnum.TELEPORT_ALLOW.getMsg()));
             }
 
             //判断指令是否带一个参数，这个参数就是原因
@@ -41,15 +34,15 @@ public class TeleportCommand implements CommandExecutor {
             String reason = args[0];
             if (allowTp) {
                 allowTp = false;
-                Bukkit.getServer().broadcastMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + teleportMessage.getString("teleport-deny-reason").replaceAll("%reason%", reason)));
+                Bukkit.getServer().broadcastMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + TeleportConfigEnum.TELEPORT_DENY_REASON.getMsg()).replaceAll("%reason%", reason));
             } else {
                 allowTp = true;
-                Bukkit.getServer().broadcastMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + teleportMessage.getString("teleport-allow-reason").replaceAll("%reason%", reason)));
+                Bukkit.getServer().broadcastMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + TeleportConfigEnum.TELEPORT_ALLOW_REASON.getMsg()).replaceAll("%reason%", reason));
             }
 
             //携带过多参数，无法识别。
         } else {
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + teleportMessage.getString("teleport-command-error")));
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + TeleportConfigEnum.TELEPORT_COMMAND_ERROR.getMsg()));
         }
 
         return true;

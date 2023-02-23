@@ -336,7 +336,7 @@ teleport:
     teleport-deny: '&c服务器已临时禁止指令传送'
     teleport-deny-apply: '&c服务器已临时禁止指令传送，传送失败'
     teleport-deny-reason: '&c服务器已临时禁止指令传送，原因: &6%reason%'
-    teleport-command-error: '&c服务器是否允许指令传送格式错误，正确格式: &6/teleport [原因]'
+    teleport-command-error: '&c服务器是否允许指令传送格式错误，正确格式: &6/teleport [reason]'
 
 #复制物品
 copyres:
