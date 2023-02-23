@@ -96,12 +96,6 @@ permissions:
     default: true
     description: 申请传送至该玩家位置的权限
 
-  UtilityToolbox.AntiRedStoneMessage:
-    description: 是否能看到高频红石被销毁的消息的权限
-
-  UtilityToolbox.LimitFlowMessage:
-    description: 是否能看到流体被限制的消息的权限
-
   UtilityToolbox.playmode:
     children:
       UtilityToolbox.playmode.creative: false
@@ -109,3 +103,44 @@ permissions:
       UtilityToolbox.playmode.adventure: false
       UtilityToolbox.playmode.spectator: false
     description: 切换游戏模式的权限
+
+  UtilityToolbox.back:
+    default: true
+    description: 返回的权限
+
+  UtilityToolbox.copyres:
+    description: 复制主手上的物品的权限
+
+  UtilityToolbox.killself:
+    default: true
+    description: 自杀的权限
+
+  UtilityToolbox.teleport:
+    description: 切换服务器是否允许传送的权限
+
+  UtilityToolbox.setsnaptp:
+    default: true
+    description: 设置临时传送点的权限
+
+  UtilityToolbox.musterplayer:
+    description: 召集玩家的权限
+
+  UtilityToolbox.autorespawnback:
+    default: true
+    description: 自动重生后回到死亡位置的权限
+
+  UtilityToolbox.autorespawn:
+    default: true
+    description: 自动重生的权限
+
+  UtilityToolbox.sendconsole:
+    description: 向控制台发送指令的权限
+
+  UtilityToolbox.RedStoneDestroyMessage:
+    description: 是否能看到红石被销毁的消息的权限
+
+  UtilityToolbox.LimitFlowMessage:
+    description: 是否能看到流体被限制的消息的权限
+
+  UtilityToolbox.PlayerFrequencyAttacksKickMessage:
+    description: 是否能看到玩家频繁攻击的消息的权限

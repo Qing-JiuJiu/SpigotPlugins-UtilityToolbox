@@ -2,7 +2,6 @@ package com.yishian.function.limithighaltitudefluids;
 
 import com.yishian.common.CommonEnum;
 import com.yishian.common.CommonUtils;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
@@ -11,7 +10,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockFromToEvent;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeMap;
 
@@ -45,7 +43,7 @@ public class LimitHighAltitudeFluidListener implements Listener {
                     TreeMap<Double, Player> playerDistanceTreeMap = CommonUtils.calculatePlayerAroundTheItem(blockLocation);
                     String recentPlayerDistanceName = "(未找到)";
                     //判断是否附近有玩家
-                    if (!CommonUtils.mapIsEmpty(playerDistanceTreeMap)) {
+                    if (CommonUtils.mapIsNotEmpty(playerDistanceTreeMap)) {
                         recentPlayerDistanceName = playerDistanceTreeMap.pollFirstEntry().getValue().getName();
                     }
                     //发送消息内容模板
@@ -53,15 +51,14 @@ public class LimitHighAltitudeFluidListener implements Listener {
                     //判断是否要广播消息
                     if ((Boolean) LimitHighAltitudeFluidConfigEnum.IS_BROADCAST_MESSAGE.getMsg()) {
                         //广播消息
-                        Bukkit.getServer().broadcastMessage(messageTemplate);
+                        CommonUtils.server.broadcastMessage(messageTemplate);
                     } else {
                         //获取拥有能收到限制流体消息的玩家,并发送消息
-                        ArrayList<Player> players = CommonUtils.hasPermissionPlayerList(LimitHighAltitudeFluidEnum.LIMIT_FLOW_MESSAGE_PERMISSION.getCommand());
-                        players.forEach(player -> player.sendMessage(messageTemplate));
+                        CommonUtils.server.broadcast(messageTemplate, LimitHighAltitudeFluidEnum.LIMIT_FLOW_MESSAGE_PERMISSION.getCommand());
                     }
 
                     //打印日志
-                    CommonUtils.javaPlugin.getLogger().warning(messageTemplate);
+                    CommonUtils.logger.warning(messageTemplate);
                 }
             }
         }

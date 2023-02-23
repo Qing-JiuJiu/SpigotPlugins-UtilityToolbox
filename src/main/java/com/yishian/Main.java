@@ -63,6 +63,7 @@ import com.yishian.command.walkspeed.WalkSpeedCommand;
 import com.yishian.command.walkspeed.WalkSpeedEnum;
 import com.yishian.common.CommonConfigLoad;
 import com.yishian.common.CommonEnum;
+import com.yishian.common.CommonUtils;
 import com.yishian.function.antihighfrequencyredstone.AntiHighFrequencyRedStoneConfigEnum;
 import com.yishian.function.antihighfrequencyredstone.AntiHighFrequencyRedStoneListener;
 import com.yishian.function.antihighfrequencyredstone.AntiHighFrequencyRedStoneRunnable;
@@ -122,7 +123,7 @@ public final class Main extends JavaPlugin {
         messagePrefix = "&e[" + CommonEnum.PLUGHIN_NAME.getCommand() + "] &7";
 
         //启动服务器时发送插件消息
-        consoleSender.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + "欢迎使用UtilityToolbox，插件主页：http://www.utilitytoolbox.cn"));
+        consoleSender.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + "&6欢迎使用UtilityToolbox，插件主页：http://www.utilitytoolbox.cn"));
 
         //注册相关功能
         registerCommand();
@@ -259,9 +260,13 @@ public final class Main extends JavaPlugin {
         autoRespawnBackCommand.setExecutor(new AutoRespawnBackCommand());
 
         //开关自动重生
-        PluginCommand autoRespawnCommand = getCommand(AutoRespawnEnum.AUTO_RESPAWN_COMMAND.getCommand());
-        autoRespawnCommand.setPermission(AutoRespawnEnum.AUTO_RESPAWN_PERMISSION.getCommand());
-        autoRespawnCommand.setExecutor(new AutoRespawnCommand());
+        try {
+            Class.forName("org.bukkit.Server$Spigot");
+            PluginCommand autoRespawnCommand = getCommand(AutoRespawnEnum.AUTO_RESPAWN_COMMAND.getCommand());
+            autoRespawnCommand.setPermission(AutoRespawnEnum.AUTO_RESPAWN_PERMISSION.getCommand());
+            autoRespawnCommand.setExecutor(new AutoRespawnCommand());
+        } catch (ClassNotFoundException ignored) {
+        }
 
         //向控制台发送指令
         PluginCommand sendConsoleCommand = getCommand(SendConsoleEnum.SEND_CONSOLE_COMMAND.getCommand());
@@ -319,13 +324,19 @@ public final class Main extends JavaPlugin {
         if ((Boolean) PreventHighFrequencyAttacksConfigEnum.ENABLE.getMsg()) {
             pluginManager.registerEvents(new PreventHighFrequencyAttacksListener(), this);
             consoleSender.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + "已开启限制高频攻击"));
+            CommonUtils.logger.warning("限制高频攻击功能目前还存在缺陷，特殊场景会出现CPS统计异常的情况，建议不要开启此功能");
         }
-
-        //玩家死亡自动重生
-        pluginManager.registerEvents(new AutoRespawnListener(), this);
 
         //玩家死亡自动回到死亡位置
         pluginManager.registerEvents(new AutoRespawnBackListener(), this);
+
+        //玩家死亡自动重生
+        try {
+            Class.forName("org.bukkit.Server$Spigot");
+            pluginManager.registerEvents(new AutoRespawnListener(), this);
+        } catch (ClassNotFoundException ignored) {
+            CommonUtils.logger.warning("Bukkit服务器不支持自动重生功能，请使用Spigot服务端及以上服务端");
+        }
     }
 
     /**

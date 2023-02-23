@@ -6,8 +6,8 @@ import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.Server;
 import org.bukkit.command.CommandSender;
-import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -19,6 +19,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
+import java.util.logging.Logger;
 
 
 /**
@@ -27,13 +28,19 @@ import java.util.*;
 public class CommonUtils {
 
     /**
-     * 控制台
-     */
-    public static ConsoleCommandSender consoleCommandSender = Bukkit.getConsoleSender();
-    /**
-     * 主线程
+     * 插件管理器
      */
     public static JavaPlugin javaPlugin =Main.getProvidingPlugin(Main.class);
+
+    /**
+     * 服务器
+     */
+    public static Server server =  Bukkit.getServer();
+
+    /**
+     * 日志
+     */
+    public static Logger logger = CommonUtils.javaPlugin.getLogger();
 
     /**
      * 参数数量最大为0-1时玩家通用提示
@@ -141,22 +148,6 @@ public class CommonUtils {
     }
 
     /**
-     * 获取拥有该权限的所有玩家列表
-     *
-     * @param permission 权限
-     * @return 返回拥有该权限的玩家列表
-     */
-    public static ArrayList<Player> hasPermissionPlayerList(String permission) {
-        ArrayList<Player> players = new ArrayList<>();
-        Bukkit.getServer().getOnlinePlayers().forEach(player -> {
-            if (player.hasPermission(permission)) {
-                players.add(player);
-            }
-        });
-        return players;
-    }
-
-    /**
      * 判断集合是否为空
      */
     public static boolean collectionIsEmpty(Collection<?> list) {
@@ -169,8 +160,8 @@ public class CommonUtils {
     /**
      * 判断Map是否为空
      */
-    public static boolean mapIsEmpty(Map<?, ?> map) {
-        return map == null || map.isEmpty();
+    public static boolean mapIsNotEmpty(Map<?, ?> map) {
+        return map != null && !map.isEmpty();
     }
 
     /**

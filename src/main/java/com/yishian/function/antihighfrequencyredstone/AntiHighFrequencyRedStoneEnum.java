@@ -14,7 +14,7 @@ public enum AntiHighFrequencyRedStoneEnum {
     /**
      * 高频红石信息权限
      */
-    RED_STONE_MESSAGE_PERMISSION(CommonEnum.PLUGHIN_NAME.getCommand() + ".RedStoneDestroyMessage", "高频红石信息");
+    RED_STONE_MESSAGE_PERMISSION(CommonEnum.PLUGHIN_NAME.getCommand() + ".RedStoneDestroyMessage", "高频红石信息权限");
 
     private final String command;
     private final String msg;
