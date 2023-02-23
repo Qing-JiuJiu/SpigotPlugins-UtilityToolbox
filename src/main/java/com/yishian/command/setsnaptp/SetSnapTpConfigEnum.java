@@ -14,10 +14,10 @@ public enum SetSnapTpConfigEnum {
     /**
      * 提示消息列表
      */
-    SETSNAPTP_APPLY("setsnaptp-apply", "&a已将此位置设为临时传送点"),
-    SETSNAPTP_WORLD_ERROR("setsnaptp-world-error", "&c世界&3%world%&c禁止设置临时传送点"),
-    SETSNAPTP_CONSOLE_ERROR("setsnaptp-console-error", "&c控制台无法使用临时传送点相关指令"),
-    SETSNAPTP_COMMAND_ERROR("setsnaptp-command-error", "&c设置临时传送点指令格式错误，正确格式: &6/setsnaptp");
+    SETSNAPTP_APPLY("setsnaptp-apply", "&a已将此位置设为&3%tp-name%&a传送点"),
+    SETSNAPTP_WORLD_ERROR("setsnaptp-world-error", "&c世界&3%world%&c禁止设置传送点"),
+    SETSNAPTP_CONSOLE_ERROR("setsnaptp-console-error", "&c控制台无法使用传送点相关指令"),
+    SETSNAPTP_COMMAND_ERROR("setsnaptp-command-error", "&c设置传送点指令格式错误，正确格式: &6/setsnaptp [tpname]");
 
     private final String tag;
     private Object msg;

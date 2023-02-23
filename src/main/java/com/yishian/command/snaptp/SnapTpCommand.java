@@ -20,8 +20,8 @@ public class SnapTpCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        //判断指令是否带参数
-        if (args.length != 0) {
+        //判断指令是否携带过多参数
+        if (args.length > 1) {
             sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + SnapTpConfigEnum.SNAPTP_COMMAND_ERROR.getMsg()));
             return true;
         }
@@ -34,20 +34,27 @@ public class SnapTpCommand implements CommandExecutor {
 
         //获取玩家临时传送点的配置信息
         Player player = (Player) sender;
-        String playerName = player.getName();
-        YamlConfiguration snapFileYaml = SetSnapTpConfig.snapFileYaml;
-        ConfigurationSection playerConfig = snapFileYaml.getConfigurationSection(playerName);
 
-        //判断该用户是否有临时传送点
+        //读取临时传送点数据文件
+        String playName = player.getName();
+        String tpName = "default";
+        //获得参数值，也就是坐标名称，否则当默认处理
+        if (args.length == 1) {
+            tpName = args[0];
+        }
+        YamlConfiguration snapFileYaml = SetSnapTpConfig.snapFileYaml;
+        ConfigurationSection playerConfig = snapFileYaml.getConfigurationSection(playName + "." + tpName);
+
+        //判断该用户是否有传送点
         if (playerConfig == null) {
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + SnapTpConfigEnum.SNAPTP_NO_EXIST.getMsg()));
+            player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + SnapTpConfigEnum.SNAPTP_NO_EXIST.getMsg()).replaceAll("%tp-name%", tpName));
             return true;
         }
 
         //传送玩家并发送对应消息
         player.teleport(new Location(Bukkit.getWorld(playerConfig.getString("world")), playerConfig.getDouble("x"), playerConfig.getDouble("y"), playerConfig.getDouble("z"), Float.parseFloat(playerConfig.getString("yaw")), Float.parseFloat(playerConfig.getString("pitch"))));
         if (TeleportCommand.allowTp) {
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + SnapTpConfigEnum.SNAPTP_APPLY.getMsg()));
+            player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + SnapTpConfigEnum.SNAPTP_APPLY.getMsg()).replaceAll("%tp-name%", tpName));
         }
 
         return true;

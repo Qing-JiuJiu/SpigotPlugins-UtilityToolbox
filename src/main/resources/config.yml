@@ -354,18 +354,18 @@ setsnaptp:
   allow-world:
     - '*'
   message:
-    setsnaptp-apply: '&a已将此位置设为临时传送点'
-    setsnaptp-world-error: '&c世界&3%world%&c禁止设置临时传送点'
-    setsnaptp-console-error: '&c控制台无法使用临时传送点相关指令'
-    setsnaptp-command-error: '&c设置临时传送点指令格式错误，正确格式: &6/setsnaptp'
+    setsnaptp-apply: '&a已将此位置设为&3%tp-name%&a传送点'
+    setsnaptp-world-error: '&c世界&3%world%&c禁止设置传送点'
+    setsnaptp-console-error: '&c控制台无法使用传送点相关指令'
+    setsnaptp-command-error: '&c设置传送点指令格式错误，正确格式: &6/setsnaptp [tpname]'
 
 #传送到临时传送点
 snaptp:
   message:
-    snaptp-apply: '&a你已传送回临时传送点'
-    snaptp-no-exist: '&c暂无临时传送点，请使用&6/setsnaptp&c指令设置'
-    snaptp-console-error: '&c控制台无法使用临时传送点相关指令'
-    snaptp-command-error: '&c传送回临时传送点指令错误，正确格式: &6/snaptp'
+    snaptp-apply: '&a你已传送到&3%tp-name%&a传送点'
+    snaptp-no-exist: '&c传送点&3%tp-name%&c不存在，请检查传送点名称是否正确'
+    snaptp-console-error: '&c控制台无法使用传送点相关指令'
+    snaptp-command-error: '&c传送点指令错误，正确格式: &6/snaptp [tpname]'
 
 #召集玩家
 musterplayer:

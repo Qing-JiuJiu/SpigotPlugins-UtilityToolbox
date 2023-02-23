@@ -19,8 +19,8 @@ public class SetSnapTpCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        //判断指令是否带参数
-        if (args.length != 0) {
+        //判断指令是否携带过多参数
+        if (args.length > 1) {
             sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + SetSnapTpConfigEnum.SETSNAPTP_COMMAND_ERROR.getMsg()));
             return true;
         }
@@ -53,17 +53,22 @@ public class SetSnapTpCommand implements CommandExecutor {
 
         //写入临时传送点数据文件，用于重启服务器后能读取
         String playerName = player.getName();
+        String tpName = "default";
+
+        if (args.length == 1) {
+            tpName = args[0];
+        }
         YamlConfiguration snapFileYaml = SetSnapTpConfig.snapFileYaml;
-        snapFileYaml.set(playerName + ".world", worldName);
-        snapFileYaml.set(playerName + ".x", playerLocationX);
-        snapFileYaml.set(playerName + ".y", playerLocationY);
-        snapFileYaml.set(playerName + ".z", playerLocationZ);
-        snapFileYaml.set(playerName + ".yaw", playerLocationYaw);
-        snapFileYaml.set(playerName + ".pitch", playerLocationPitch);
+        snapFileYaml.set(playerName + "." + tpName + ".world", worldName);
+        snapFileYaml.set(playerName + "." + tpName + ".x", playerLocationX);
+        snapFileYaml.set(playerName + "." + tpName + ".y", playerLocationY);
+        snapFileYaml.set(playerName + "." + tpName + ".z", playerLocationZ);
+        snapFileYaml.set(playerName + "." + tpName + ".yaw", playerLocationYaw);
+        snapFileYaml.set(playerName + "." + tpName + ".pitch", playerLocationPitch);
         CommonUtils.saveYamlConfig(snapFileYaml, SetSnapTpConfig.file.toPath());
 
         //发送设置临时传送点消息成功消息
-        player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + SetSnapTpConfigEnum.SETSNAPTP_APPLY.getMsg()));
+        player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + SetSnapTpConfigEnum.SETSNAPTP_APPLY.getMsg()).replaceAll("%tp-name%", tpName));
         return true;
     }
 }
