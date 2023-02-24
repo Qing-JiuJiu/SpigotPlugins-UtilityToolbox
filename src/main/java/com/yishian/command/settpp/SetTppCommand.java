@@ -1,4 +1,4 @@
-package com.yishian.command.setsnaptp;
+package com.yishian.command.settpp;
 
 import com.yishian.common.CommonEnum;
 import com.yishian.common.CommonUtils;
@@ -15,19 +15,19 @@ import java.util.List;
 /**
  * @author XinQi
  */
-public class SetSnapTpCommand implements CommandExecutor {
+public class SetTppCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         //判断指令是否携带过多参数
         if (args.length > 1) {
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + SetSnapTpConfigEnum.SETSNAPTP_COMMAND_ERROR.getMsg()));
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + SetTppConfigEnum.SETTPP_COMMAND_ERROR.getMsg()));
             return true;
         }
 
         //判断执行指令的是用户还是控制台
         if (!(sender instanceof Player)) {
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + SetSnapTpConfigEnum.SETSNAPTP_CONSOLE_ERROR.getMsg()));
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + SetTppConfigEnum.SETTPP_CONSOLE_ERROR.getMsg()));
             return true;
         }
 
@@ -38,9 +38,9 @@ public class SetSnapTpCommand implements CommandExecutor {
         //判断是否是允许在当前世界设置临时传送点
         String worldName = playerLocation.getWorld().getName();
         //获得允许设置临时传送点的世界列表
-        List<?> allowWorldList = CommonUtils.objectToList(SetSnapTpConfigEnum.ALLOW_WORLD.getMsg());
+        List<?> allowWorldList = CommonUtils.objectToList(SetTppConfigEnum.ALLOW_WORLD.getMsg());
         if (!allowWorldList.contains(worldName) && !allowWorldList.contains(CommonEnum.ALL.getCommand())) {
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + SetSnapTpConfigEnum.SETSNAPTP_WORLD_ERROR.getMsg().toString().replaceAll("%world%", worldName)));
+            player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + SetTppConfigEnum.SETTPP_WORLD_ERROR.getMsg().toString().replaceAll("%world%", worldName)));
             return true;
         }
 
@@ -58,17 +58,17 @@ public class SetSnapTpCommand implements CommandExecutor {
         if (args.length == 1) {
             tpName = args[0];
         }
-        YamlConfiguration snapFileYaml = SetSnapTpConfig.snapFileYaml;
+        YamlConfiguration snapFileYaml = SetTppConfig.snapFileYaml;
         snapFileYaml.set(playerName + "." + tpName + ".world", worldName);
         snapFileYaml.set(playerName + "." + tpName + ".x", playerLocationX);
         snapFileYaml.set(playerName + "." + tpName + ".y", playerLocationY);
         snapFileYaml.set(playerName + "." + tpName + ".z", playerLocationZ);
         snapFileYaml.set(playerName + "." + tpName + ".yaw", playerLocationYaw);
         snapFileYaml.set(playerName + "." + tpName + ".pitch", playerLocationPitch);
-        CommonUtils.saveYamlConfig(snapFileYaml, SetSnapTpConfig.file.toPath());
+        CommonUtils.saveYamlConfig(snapFileYaml, SetTppConfig.file.toPath());
 
         //发送设置临时传送点消息成功消息
-        player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + SetSnapTpConfigEnum.SETSNAPTP_APPLY.getMsg()).replaceAll("%tp-name%", tpName));
+        player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + SetTppConfigEnum.SETTPP_APPLY.getMsg()).replaceAll("%tp-name%", tpName));
         return true;
     }
 }

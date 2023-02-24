@@ -373,24 +373,24 @@ playmode:
     playmode-command-error: '&c切换模式指令格式错误，正确格式: &6/playmode <游戏模式>'
     playmode-no-permission-error: '&c你没有切换到模式&3%gamemode%&c的权限'
 
-#设置临时传送点
-setsnaptp:
+#设置传送点
+settpp:
   #允许设置的世界，默认 * 通配符为全世界都允许设置
   allow-world:
     - '*'
   message:
-    setsnaptp-apply: '&a已将此位置设为&3%tp-name%&a传送点'
-    setsnaptp-world-error: '&c世界&3%world%&c禁止设置传送点'
-    setsnaptp-console-error: '&c控制台无法使用传送点相关指令'
-    setsnaptp-command-error: '&c设置传送点指令格式错误，正确格式: &6/setsnaptp [tpname]'
+    settpp-apply: '&a已将此位置设为&3%tp-name%&a传送点'
+    settpp-world-error: '&c世界&3%world%&c禁止设置传送点'
+    settpp-console-error: '&c控制台无法使用传送点相关指令'
+    settpp-command-error: '&c设置传送点指令格式错误，正确格式: &6/settpp [tpname]'
 
-#传送到临时传送点
-snaptp:
+#传送到传送点
+tpp:
   message:
-    snaptp-apply: '&a你已传送到&3%tp-name%&a传送点'
-    snaptp-no-exist: '&c传送点&3%tp-name%&c不存在，请检查传送点名称是否正确'
-    snaptp-console-error: '&c控制台无法使用传送点相关指令'
-    snaptp-command-error: '&c传送点指令错误，正确格式: &6/snaptp [tpname]'
+    tpp-apply: '&a你已传送到&3%tp-name%&a传送点'
+    tpp-no-exist: '&c传送点&3%tp-name%&c不存在，请检查传送点名称是否正确'
+    tpp-console-error: '&c控制台无法使用传送点相关指令'
+    tpp-command-error: '&c回到传送点指令错误，正确格式: &6/tpp [tpname]'
 
 #召集玩家
 musterplayer:

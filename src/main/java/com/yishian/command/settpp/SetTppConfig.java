@@ -1,4 +1,4 @@
-package com.yishian.command.setsnaptp;
+package com.yishian.command.settpp;
 
 
 import com.yishian.Main;
@@ -11,7 +11,7 @@ import java.io.IOException;
 /**
  * @author XinQi
  */
-public class SetSnapTpConfig {
+public class SetTppConfig {
 
     public static YamlConfiguration snapFileYaml;
 
@@ -19,7 +19,7 @@ public class SetSnapTpConfig {
 
     public static void loadSnapConfigFile() throws IOException {
         //得到插件配置目录下的snaps.yml文件
-        file = new File(JavaPlugin.getPlugin(Main.class).getDataFolder(), "snaptps.yml");
+        file = new File(JavaPlugin.getPlugin(Main.class).getDataFolder(), "tpp.yml");
         //判断文件是否存在
         if (!file.exists()) {
             //创建文件并加载该文件

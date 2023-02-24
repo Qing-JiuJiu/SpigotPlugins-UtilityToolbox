@@ -44,10 +44,10 @@ commands:
     description: 复制主手上的物品
   playmode:
     description: 模式切换
-  setsnaptp:
-    description: 设置临时传送点
-  snaptp:
-    description: 回到临时传送点
+  settpp:
+    description: 设置传送点
+  tpp:
+    description: 回到传送点
   musterplayer:
     description: 召集玩家
   autorespawnback:
@@ -124,9 +124,9 @@ permissions:
   UtilityToolbox.teleport:
     description: 切换服务器是否允许传送的权限
 
-  UtilityToolbox.setsnaptp:
+  UtilityToolbox.settpp:
     default: true
-    description: 设置临时传送点的权限
+    description: 设置传送点的权限
 
   UtilityToolbox.musterplayer:
     description: 召集玩家的权限

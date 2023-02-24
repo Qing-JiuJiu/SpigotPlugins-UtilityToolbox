@@ -24,9 +24,6 @@ public class TprCommand implements CommandExecutor {
     //新建一个随机数
     Random rand = new Random();
 
-    //传送位置
-    Location newLocation;
-
     //危险方块列表
     List<?> dangerousBlockList = CommonUtils.objectToList(TprConfigEnum.DANGEROUS_BLOCK.getMsg());
 
@@ -59,6 +56,9 @@ public class TprCommand implements CommandExecutor {
 
         //因随机传送获取安全位置开销很大，使用异步任务进行
         Bukkit.getScheduler().runTaskAsynchronously(Main.getProvidingPlugin(Main.class), () -> {
+            //传送位置
+            Location newLocation;
+
             //判断是否以用户为中心进行随机传送
             if ((Boolean) TprConfigEnum.RESPAWN_CENTER.getMsg()) {
                 //获取世界的重生点

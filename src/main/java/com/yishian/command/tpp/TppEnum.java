@@ -1,19 +1,19 @@
-package com.yishian.command.snaptp;
+package com.yishian.command.tpp;
 
 /**
  * @author XinQi
  */
-public enum SnapTpEnum {
+public enum TppEnum {
 
     /**
      * 临时传送点传送
      */
-    SNAP_TP_COMMAND("snaptp", "传送回临时传送点");
+    TPP_COMMAND("tpp", "回到传送点");
 
     private final String command;
     private final String msg;
 
-    SnapTpEnum(String command, String msg) {
+    TppEnum(String command, String msg) {
         this.command = command;
         this.msg = msg;
     }

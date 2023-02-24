@@ -38,13 +38,13 @@ import com.yishian.command.sendconsole.SendConsoleEnum;
 import com.yishian.command.sethome.SetHomeCommand;
 import com.yishian.command.sethome.SetHomeConfig;
 import com.yishian.command.sethome.SetHomeEnum;
-import com.yishian.command.setsnaptp.SetSnapTpCommand;
-import com.yishian.command.setsnaptp.SetSnapTpConfig;
-import com.yishian.command.setsnaptp.SetSnapTpEnum;
+import com.yishian.command.settpp.SetTppCommand;
+import com.yishian.command.settpp.SetTppConfig;
+import com.yishian.command.settpp.SetTppEnum;
 import com.yishian.command.showtextcolor.ShowTextCodeCommand;
 import com.yishian.command.showtextcolor.ShowTextCodeEnum;
-import com.yishian.command.snaptp.SnapTpCommand;
-import com.yishian.command.snaptp.SnapTpEnum;
+import com.yishian.command.tpp.TppCommand;
+import com.yishian.command.tpp.TppEnum;
 import com.yishian.command.teleport.TeleportCommand;
 import com.yishian.command.teleport.TeleportEnum;
 import com.yishian.command.teleport.TeleportListener;
@@ -247,14 +247,14 @@ public final class Main extends JavaPlugin {
         playModeCommand.setExecutor(new PlayModeCommand());
 
         //设置临时传送点
-        PluginCommand setSnapTpCommand = getCommand(SetSnapTpEnum.SET_SNAP_TP_COMMAND.getCommand());
-        setSnapTpCommand.setPermission(SetSnapTpEnum.SET_SNAP_TP_PERMISSION.getCommand());
-        setSnapTpCommand.setExecutor(new SetSnapTpCommand());
+        PluginCommand setSnapTpCommand = getCommand(SetTppEnum.SET_TPP_COMMAND.getCommand());
+        setSnapTpCommand.setPermission(SetTppEnum.SET_TPP_PERMISSION.getCommand());
+        setSnapTpCommand.setExecutor(new SetTppCommand());
 
         //回临时传送点
-        PluginCommand snapTpCommand = getCommand(SnapTpEnum.SNAP_TP_COMMAND.getCommand());
-        snapTpCommand.setPermission(SetSnapTpEnum.SET_SNAP_TP_PERMISSION.getCommand());
-        snapTpCommand.setExecutor(new SnapTpCommand());
+        PluginCommand snapTpCommand = getCommand(TppEnum.TPP_COMMAND.getCommand());
+        snapTpCommand.setPermission(SetTppEnum.SET_TPP_PERMISSION.getCommand());
+        snapTpCommand.setExecutor(new TppCommand());
 
         //召集玩家
         PluginCommand musterPlayerCommand = getCommand(MusterPlayerEnum.MUSTER_PLAYER_COMMAND.getCommand());
@@ -379,7 +379,7 @@ public final class Main extends JavaPlugin {
             //创建home记录文件
             SetHomeConfig.loadHomeConfigFile();
             //创建snap记录文件
-            SetSnapTpConfig.loadSnapConfigFile();
+            SetTppConfig.loadSnapConfigFile();
             //创建AutoRespawnBack记录文件
             AutoRespawnBackConfig.loadAutoRespawnBackConfigFile();
             //创建AutoRespawn记录文件

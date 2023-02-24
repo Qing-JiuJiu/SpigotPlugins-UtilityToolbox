@@ -31,12 +31,12 @@ import com.yishian.command.sendconsole.SendConsoleConfigEnum;
 import com.yishian.command.sendconsole.SendConsoleEnum;
 import com.yishian.command.sethome.SetHomeConfigEnum;
 import com.yishian.command.sethome.SetHomeEnum;
-import com.yishian.command.setsnaptp.SetSnapTpConfigEnum;
-import com.yishian.command.setsnaptp.SetSnapTpEnum;
+import com.yishian.command.settpp.SetTppConfigEnum;
+import com.yishian.command.settpp.SetTppEnum;
 import com.yishian.command.showtextcolor.ShowTextCodeConfigEnum;
 import com.yishian.command.showtextcolor.ShowTextCodeEnum;
-import com.yishian.command.snaptp.SnapTpConfigEnum;
-import com.yishian.command.snaptp.SnapTpEnum;
+import com.yishian.command.tpp.TppConfigEnum;
+import com.yishian.command.tpp.TppEnum;
 import com.yishian.command.teleport.TeleportConfigEnum;
 import com.yishian.command.teleport.TeleportEnum;
 import com.yishian.command.tpa.TpaConfigEnum;
@@ -520,16 +520,16 @@ public class CommonConfigLoad {
     }
 
     /**
-     * setsnaptp指令的配置加载
+     * setsnaptp指令的配置加载，已经改成settpp
      */
     public static void setSnapTpConfigLoad() {
-        ConfigurationSection setSnapTpConfigurationSection = ServerConfig.getConfigurationSection(SetSnapTpEnum.SET_SNAP_TP_COMMAND.getCommand());
+        ConfigurationSection setSnapTpConfigurationSection = ServerConfig.getConfigurationSection(SetTppEnum.SET_TPP_COMMAND.getCommand());
         //setsnaptp消息内容
         ConfigurationSection setSnapTpMessage = setSnapTpConfigurationSection.getConfigurationSection(CommonEnum.MESSAGE.getCommand());
         //得到所有枚举的值
-        SetSnapTpConfigEnum[] setSnapTpConfigEnums = SetSnapTpConfigEnum.values();
+        SetTppConfigEnum[] setTppConfigEnums = SetTppConfigEnum.values();
         //循环判断每个节点是否存在，存在就替换枚举里的内容，不存在就添加到未定义的标签列表并恢复原内容
-        for (SetSnapTpConfigEnum setSnapTpConfigNodeEnum : setSnapTpConfigEnums) {
+        for (SetTppConfigEnum setSnapTpConfigNodeEnum : setTppConfigEnums) {
             //得到配置文件标签
             String setSnapTpConfigNodeEnumTag = setSnapTpConfigNodeEnum.getTag();
             //直接设置消息内容，如果存在该节点就会设置节点内容，如果不存在就会使用源配置文件里的内容
@@ -571,11 +571,11 @@ public class CommonConfigLoad {
      */
     public static void snapTpConfigLoad() {
         //snaptp消息内容
-        ConfigurationSection snapTpMessage = ServerConfig.getConfigurationSection(SnapTpEnum.SNAP_TP_COMMAND.getCommand()).getConfigurationSection(CommonEnum.MESSAGE.getCommand());
+        ConfigurationSection snapTpMessage = ServerConfig.getConfigurationSection(TppEnum.TPP_COMMAND.getCommand()).getConfigurationSection(CommonEnum.MESSAGE.getCommand());
         //得到所有枚举的值
-        SnapTpConfigEnum[] snapTpConfigEnums = SnapTpConfigEnum.values();
+        TppConfigEnum[] tppConfigEnums = TppConfigEnum.values();
         //循环判断每个节点是否存在，存在就替换枚举里的内容，不存在就添加到未定义的标签列表并恢复原内容
-        for (SnapTpConfigEnum snapTpConfigNodeEnum : snapTpConfigEnums) {
+        for (TppConfigEnum snapTpConfigNodeEnum : tppConfigEnums) {
             //得到配置文件标签
             String snapTpConfigNodeEnumTag = snapTpConfigNodeEnum.getTag();
             //直接设置消息内容，如果存在该节点就会设置节点内容，如果不存在就会使用源配置文件里的内容
