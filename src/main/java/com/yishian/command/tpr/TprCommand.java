@@ -31,6 +31,7 @@ public class TprCommand implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         //判断执行指令的是用户还是控制台
         if (!(sender instanceof Player)) {
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + TprConfigEnum.TPR_CONSOLE_ERROR.getMsg()));
             return true;
         }
 
@@ -50,12 +51,12 @@ public class TprCommand implements CommandExecutor {
             return true;
         }
 
-        //得到配置文件里设置的数值
-        int tprx = Integer.parseInt(TprConfigEnum.RANDOM_X.getMsg().toString());
-        int tprz = Integer.parseInt(TprConfigEnum.RANDOM_Z.getMsg().toString());
-
         //因随机传送获取安全位置开销很大，使用异步任务进行
         Bukkit.getScheduler().runTaskAsynchronously(Main.getProvidingPlugin(Main.class), () -> {
+            //得到配置文件里设置的数值
+            int tprx = Integer.parseInt(TprConfigEnum.RANDOM_X.getMsg().toString());
+            int tprz = Integer.parseInt(TprConfigEnum.RANDOM_Z.getMsg().toString());
+
             //传送位置
             Location newLocation;
 

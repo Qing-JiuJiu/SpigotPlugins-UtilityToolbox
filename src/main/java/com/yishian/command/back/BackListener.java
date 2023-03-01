@@ -1,7 +1,7 @@
 package com.yishian.command.back;
 
 import com.yishian.Main;
-import com.yishian.command.autodeathback.AutoRespawnBackConfig;
+import com.yishian.command.rebirthinplace.RebirthInPlaceConfig;
 import com.yishian.command.teleport.TeleportCommand;
 import com.yishian.common.CommonEnum;
 import com.yishian.common.CommonUtils;
@@ -53,7 +53,7 @@ public class BackListener implements Listener {
             if (player.hasPermission(BackEnum.BACK_PERMISSION.getCommand())) {
                 //判断服务器是否允许传送，如果允许且玩家没有开启自动重生死亡返回则提醒玩家可以使用/back指令返回到死亡位置
                 if (TeleportCommand.allowTp) {
-                    if (!AutoRespawnBackConfig.autoRespawnBackFileYaml.getBoolean(player.getName() + "." + CommonEnum.FUNCTION_IS_ENABLE.getCommand())) {
+                    if (!RebirthInPlaceConfig.rebirthInPlaceFileYaml.getBoolean(player.getName() + "." + CommonEnum.FUNCTION_IS_ENABLE.getCommand())) {
                         player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + BackConfigEnum.BACK_DIED_TIPS.getMsg()));
                     }
                 } else {

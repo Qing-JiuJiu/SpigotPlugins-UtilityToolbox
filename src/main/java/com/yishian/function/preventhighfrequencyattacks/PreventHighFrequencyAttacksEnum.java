@@ -15,7 +15,7 @@ public enum PreventHighFrequencyAttacksEnum {
     /**
      * 玩家高频攻击被提出服务器信息权限
      */
-    CPS_MESSAGE_PERMISSION(CommonEnum.PLUGHIN_NAME.getCommand() + ".PlayerFrequencyAttacksKickMessage", "玩家高频攻击被提出服务器信息");
+    CPS_MESSAGE_PERMISSION(CommonEnum.PLUGHIN_NAME.getCommand() + ".PlayerFrequencyAttacksMessage", "玩家高频攻击被提出服务器信息");
 
     private final String command;
     private final String msg;

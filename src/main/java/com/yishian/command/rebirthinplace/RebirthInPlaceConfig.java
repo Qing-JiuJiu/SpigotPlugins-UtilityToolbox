@@ -1,4 +1,4 @@
-package com.yishian.command.autodeathback;
+package com.yishian.command.rebirthinplace;
 
 
 import com.yishian.Main;
@@ -11,24 +11,24 @@ import java.io.IOException;
 /**
  * @author XinQi
  */
-public class AutoRespawnBackConfig {
+public class RebirthInPlaceConfig {
 
-    public static YamlConfiguration autoRespawnBackFileYaml;
+    public static YamlConfiguration rebirthInPlaceFileYaml;
 
     public static File file;
 
-    public static void loadAutoRespawnBackConfigFile() throws IOException {
+    public static void loadRebirthInPlaceConfigFile() throws IOException {
         //得到插件配置目录下的homes.yml文件
-        file = new File(JavaPlugin.getPlugin(Main.class).getDataFolder(), "AutoRespawnBack.yml");
+        file = new File(JavaPlugin.getPlugin(Main.class).getDataFolder(), "RebirthInPlace.yml");
         //判断文件是否存在
         if (!file.exists()) {
             //创建文件并加载该文件
             if (file.createNewFile()) {
-                autoRespawnBackFileYaml = YamlConfiguration.loadConfiguration(file);
+                rebirthInPlaceFileYaml = YamlConfiguration.loadConfiguration(file);
             }
         } else {
             //直接加载文件
-            autoRespawnBackFileYaml = YamlConfiguration.loadConfiguration(file);
+            rebirthInPlaceFileYaml = YamlConfiguration.loadConfiguration(file);
         }
     }
 

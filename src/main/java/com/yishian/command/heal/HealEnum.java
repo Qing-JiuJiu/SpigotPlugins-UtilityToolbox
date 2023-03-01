@@ -8,11 +8,11 @@ import com.yishian.common.CommonEnum;
 public enum HealEnum {
 
     /**
-     * 恢复生命值
+     * 恢复状态
      */
-    HEAL_COMMAND("heal", "恢复生命值的指令"),
-    HEAL_PERMISSION(CommonEnum.PLUGHIN_NAME.getCommand() + "." + HEAL_COMMAND.getCommand(), "恢复自己生命值的权限"),
-    HEAL_OTHERS_PERMISSION(HEAL_PERMISSION.getCommand() + "." + CommonEnum.OTHERS.getCommand(), "恢复他人生命值的权限");
+    HEAL_COMMAND("heal", "恢复状态的指令"),
+    HEAL_PERMISSION(CommonEnum.PLUGHIN_NAME.getCommand() + "." + HEAL_COMMAND.getCommand(), "恢复状态的权限"),
+    HEAL_OTHERS_PERMISSION(HEAL_PERMISSION.getCommand() + "." + CommonEnum.OTHERS.getCommand(), "恢复他人状态的权限");
 
     private final String command;
     private final String msg;

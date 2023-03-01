@@ -51,20 +51,19 @@ public class SetTppCommand implements CommandExecutor {
         float playerLocationYaw = playerLocation.getYaw();
         float playerLocationPitch = playerLocation.getPitch();
 
-        //写入临时传送点数据文件，用于重启服务器后能读取
-        String playerName = player.getName();
+        //写入传送点数据文件，用于重启服务器后能读取
         String tpName = "default";
-
         if (args.length == 1) {
             tpName = args[0];
         }
+        String prefix = player.getName() + "." + tpName + ".";
         YamlConfiguration snapFileYaml = SetTppConfig.snapFileYaml;
-        snapFileYaml.set(playerName + "." + tpName + ".world", worldName);
-        snapFileYaml.set(playerName + "." + tpName + ".x", playerLocationX);
-        snapFileYaml.set(playerName + "." + tpName + ".y", playerLocationY);
-        snapFileYaml.set(playerName + "." + tpName + ".z", playerLocationZ);
-        snapFileYaml.set(playerName + "." + tpName + ".yaw", playerLocationYaw);
-        snapFileYaml.set(playerName + "." + tpName + ".pitch", playerLocationPitch);
+        snapFileYaml.set(prefix + "world", worldName);
+        snapFileYaml.set(prefix + "x", playerLocationX);
+        snapFileYaml.set(prefix + "y", playerLocationY);
+        snapFileYaml.set(prefix + "z", playerLocationZ);
+        snapFileYaml.set(prefix + "yaw", playerLocationYaw);
+        snapFileYaml.set(prefix + "pitch", playerLocationPitch);
         CommonUtils.saveYamlConfig(snapFileYaml, SetTppConfig.file.toPath());
 
         //发送设置临时传送点消息成功消息

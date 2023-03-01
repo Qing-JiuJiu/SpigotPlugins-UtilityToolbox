@@ -45,6 +45,7 @@ public class HealCommand implements TabExecutor {
             Player player = (Player) sender;
             double maxHealth = player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue();
             player.setHealth(maxHealth);
+            player.setFoodLevel(20);
             player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + HealConfigEnum.HEAL_SELF.getMsg()).replaceAll("%player%", player.getName()));
 
             //如果参数不为0，那么参数数量就是1
@@ -71,6 +72,7 @@ public class HealCommand implements TabExecutor {
                     //参数指向的是自己，恢复自己，并给出对应提示
                     double maxHealth = player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue();
                     player.setHealth(maxHealth);
+                    player.setFoodLevel(20);
                     player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + HealConfigEnum.HEAL_OTHERS_IS_SELF.getMsg()).replaceAll("%player%", player.getName()));
                 }
             } else {
@@ -94,6 +96,7 @@ public class HealCommand implements TabExecutor {
             return null;
         }
         othersPlayer.setHealth(othersPlayer.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue());
+        othersPlayer.setFoodLevel(20);
         return othersPlayer;
     }
 

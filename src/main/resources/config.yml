@@ -104,42 +104,15 @@ utilitytoolbox:
 #恢复生命值
 heal:
   message:
-    heal-self: '&a你已恢复生命值'
-    heal-others: '&a你已恢复&3%others-player%&a的生命值'
+    heal-self: '&a你已恢复状态'
+    heal-others: '&a你已恢复&3%others-player%&a状态'
     heal-others-no-exist: '&c玩家&3%others-player%&c不存在，请检查玩家名字'
-    heal-others-is-self: '你已恢复生命值，你可以使用不带参数的指令来恢复自己'
-    heal-others-no-permission: '&c你没有执行恢复他人生命值指令的权限'
-    heal-by-others: '你已被&3%player%&6恢复生命值'
-    heal-by-console: '你已被服务器恢复生命值'
-    heal-console-error: '&c控制台请执行恢复他人生命值的指令: &6heal <玩家名称>'
-    heal-command-error: '&c恢复生命值指令格式错误，正确格式: &6/heal [玩家名称]'
-
-#恢复饱食度
-feed:
-  message:
-    feed-self: '&a你已恢复饱食度'
-    feed-others: '&a你已恢复&3%others-player%&a的饱食度'
-    feed-others-no-exist: '&c玩家&3%others-player%&c不存在，请检查玩家名字'
-    feed-others-is-self: '你已恢复饱食度，你可以使用不带参数的指令来恢复自己'
-    feed-others-no-permission: '&c你没有执行恢复他人饱食度指令的权限'
-    feed-by-others: '你已被&3%player%&6恢复饱食度'
-    feed-by-console: '你已被服务器恢复饱食度'
-    feed-console-error: '&c控制台请执行恢复他人饱食度的指令: &6feed <玩家名称>'
-    feed-command-error: '&c恢复饱食度指令格式错误，正确格式: &6/feed [玩家名称]'
-
-#恢复生命值和饱食度
-#当拥有恢复生命值和饱食度指令时该指令可使用
-healandfeed:
-  message:
-    heal-and-feed-self: '&a你已恢复生命值和饱食度'
-    heal-and-feed-others: '&a你已恢复&3%others-player%&a的生命值和饱食度'
-    heal-and-feed-others-no-exist: '&c玩家&3%others-player%&c不存在，请检查玩家名字'
-    heal-and-feed-others-is-self: '你已恢复生命值和饱食度，可以使用不带参数的指令来恢复自己'
-    heal-and-feed-others-no-permission: '&c你没有执行恢复他人生命值和饱食度指令的权限'
-    heal-and-feed-by-others: '你已被&3%player%&6恢复生命值和饱食度'
-    heal-and-feed-by-console: '你已被服务器恢复生命值和饱食度'
-    heal-and-feed-console-error: '&c控制台请执行恢复他人生命值和饱食度的指令: &6healandfeed <玩家名称>'
-    heal-and-feed-command-error: '&c恢复生命值和饱食度指令格式错误，正确格式: &6/healandfeed [玩家名称]'
+    heal-others-is-self: '你已恢复状态，你可以使用不带参数的指令来恢复自己'
+    heal-others-no-permission: '&c你没有执行恢复他人状态指令的权限'
+    heal-by-others: '你已被&3%player%&6恢复状态'
+    heal-by-console: '你已被服务器恢复状态'
+    heal-console-error: '&c控制台请执行恢复他人状态的指令: &6heal <玩家名称>'
+    heal-command-error: '&c恢复状态指令格式错误，正确格式: &6/heal [玩家名称]'
 
 #飞行
 fly:
@@ -269,6 +242,7 @@ tpr:
     tpr-searching: "&6正在定位安全的传送位置，请不要连续使用随机传送"
     tpr-apply: "&a你已随机传送，当前坐标&6 x:%x% y:%y% z:%z%"
     tpr-world-error: "&c世界&3%world%&c禁止随机传送"
+    tpr-console-error: "&c控制台无法使用随机传送相关指令"
 
 #设置家
 sethome:
@@ -276,18 +250,18 @@ sethome:
   allow-world:
     - '*'
   message:
-    sethome-apply: '&a已将此位置设为家'
+    sethome-apply: '&a已将此位置设为&3%name%&a家'
     sethome-world-error: '&c世界&3%world%&c禁止设置家'
     sethome-console-error: '&c控制台无法使用家相关指令'
-    sethome-command-error: '&c设置家指令格式错误，正确格式: &6/sethome'
+    sethome-command-error: '&c设置家指令格式错误，正确格式: &6/sethome [name]'
 
 #回家
 home:
   message:
-    home-apply: '&a你已传送回家'
-    home-no-exist: '&c暂无家，请使用&6/sethome&c指令设置家的位置'
+    home-apply: '&a你已传送回&3%name%&a家'
+    home-no-exist: '&c暂无&3%name%&c家，请使用&6/sethome [name]&c指令设置家的位置'
     home-console-error: '&c控制台无法使用家相关指令'
-    home-command-error: '&c设置家指令格式错误，正确格式: &6/sethome'
+    home-command-error: '&c回家指令格式错误，正确格式: &6/sethome [name]'
 
 #展示文本代码
 showtextcode:
@@ -333,9 +307,9 @@ teleport:
   message:
     teleport-allow: '&a服务器已恢复使用指令传送'
     teleport-allow-reason: '&a服务器已恢复使用指令传送，原因: &6%reason%'
-    teleport-deny: '&c服务器已临时禁止指令传送'
-    teleport-deny-apply: '&c服务器已临时禁止指令传送，传送失败'
-    teleport-deny-reason: '&c服务器已临时禁止指令传送，原因: &6%reason%'
+    teleport-deny: '&c服务器已禁止指令传送'
+    teleport-deny-apply: '&c服务器已禁止指令传送，传送失败'
+    teleport-deny-reason: '&c服务器已禁止指令传送，原因: &6%reason%'
     teleport-command-error: '&c服务器是否允许指令传送格式错误，正确格式: &6/teleport [reason]'
 
 #复制物品
@@ -429,12 +403,12 @@ musterplayer:
     musterplayer-command-error: '&c召集指令错误，正确格式: &6/musterplayer <参数>'
 
 #重生后自动回到死亡位置
-autorespawnback:
+rebirthinplace:
   message:
-    autorespawnback-apply-open: '&a你已开启重生后自动回到死亡位置'
-    autorespawnback-apply-close: '&a你已关闭重生后自动回到死亡位置'
-    autorespawnback-apply: '你已重生，已自动传送回死亡位置'
-    autorespawnback-console-error: '&c控制台无法使用此命令'
+    rebirthinplace-apply-open: '&a你已开启原地重生'
+    rebirthinplace-apply-close: '&a你已关闭原地重生'
+    rebirthinplace-apply: '你已原地重生'
+    rebirthinplace-console-error: '&c控制台无法使用此命令'
 
 #自动重生
 autorespawn:

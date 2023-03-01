@@ -1,9 +1,9 @@
 package com.yishian;
 
-import com.yishian.command.autodeathback.AutoRespawnBackCommand;
-import com.yishian.command.autodeathback.AutoRespawnBackConfig;
-import com.yishian.command.autodeathback.AutoRespawnBackEnum;
-import com.yishian.command.autodeathback.AutoRespawnBackListener;
+import com.yishian.command.rebirthinplace.RebirthInPlaceCommand;
+import com.yishian.command.rebirthinplace.RebirthInPlaceConfig;
+import com.yishian.command.rebirthinplace.RebirthInPlaceEnum;
+import com.yishian.command.rebirthinplace.RebirthInPlaceListener;
 import com.yishian.command.autorespawn.AutoRespawnCommand;
 import com.yishian.command.autorespawn.AutoRespawnConfig;
 import com.yishian.command.autorespawn.AutoRespawnEnum;
@@ -14,16 +14,12 @@ import com.yishian.command.back.BackEnum;
 import com.yishian.command.back.BackListener;
 import com.yishian.command.copyres.CopyResCommand;
 import com.yishian.command.copyres.CopyResEnum;
-import com.yishian.command.feed.FeedCommand;
-import com.yishian.command.feed.FeedEnum;
 import com.yishian.command.fly.FlyCommand;
 import com.yishian.command.fly.FlyEnum;
 import com.yishian.command.flyspeed.FlySpeedCommand;
 import com.yishian.command.flyspeed.FlySpeedEnum;
 import com.yishian.command.heal.HealCommand;
 import com.yishian.command.heal.HealEnum;
-import com.yishian.command.healandfeed.HealAndFeedCommand;
-import com.yishian.command.healandfeed.HealAndFeedEnum;
 import com.yishian.command.home.HomeCommand;
 import com.yishian.command.home.HomeEnum;
 import com.yishian.command.killself.KillSelfCommand;
@@ -155,17 +151,6 @@ public final class Main extends JavaPlugin {
         healCommand.setPermission(HealEnum.HEAL_PERMISSION.getCommand());
         healCommand.setExecutor(new HealCommand());
 
-        //恢复饱食度注册
-        PluginCommand feedCommand = getCommand(FeedEnum.FEED_COMMAND.getCommand());
-        feedCommand.setPermission(FeedEnum.FEED_PERMISSION.getCommand());
-        feedCommand.setExecutor(new FeedCommand());
-
-        //恢复生命值和饱食度完全恢复
-        PluginCommand healAndFeedCommand = getCommand(HealAndFeedEnum.HEAL_AND_FEED_COMMAND.getCommand());
-        healAndFeedCommand.setPermission(HealEnum.HEAL_PERMISSION.getCommand());
-        healAndFeedCommand.setPermission(FeedEnum.FEED_PERMISSION.getCommand());
-        healAndFeedCommand.setExecutor(new HealAndFeedCommand());
-
         //开关飞行
         PluginCommand flyCommand = getCommand(FlyEnum.FLY_COMMAND.getCommand());
         flyCommand.setPermission(FlyEnum.FLY_PERMISSION.getCommand());
@@ -262,9 +247,9 @@ public final class Main extends JavaPlugin {
         musterPlayerCommand.setExecutor(new MusterPlayerCommand());
 
         //开关自动死亡回到死亡位置
-        PluginCommand autoRespawnBackCommand = getCommand(AutoRespawnBackEnum.AUTO_RESPAWN_BACK_COMMAND.getCommand());
-        autoRespawnBackCommand.setPermission(AutoRespawnBackEnum.AUTO_RESPAWN_BACK_PERMISSION.getCommand());
-        autoRespawnBackCommand.setExecutor(new AutoRespawnBackCommand());
+        PluginCommand autoRespawnBackCommand = getCommand(RebirthInPlaceEnum.REBIRTH_IN_PLACE_COMMAND.getCommand());
+        autoRespawnBackCommand.setPermission(RebirthInPlaceEnum.REBIRTH_IN_PLACE_PERMISSION.getCommand());
+        autoRespawnBackCommand.setExecutor(new RebirthInPlaceCommand());
 
         //开关自动重生
         try {
@@ -335,7 +320,7 @@ public final class Main extends JavaPlugin {
         }
 
         //玩家死亡自动回到死亡位置
-        pluginManager.registerEvents(new AutoRespawnBackListener(), this);
+        pluginManager.registerEvents(new RebirthInPlaceListener(), this);
 
         //玩家死亡自动重生
         try {
@@ -381,7 +366,7 @@ public final class Main extends JavaPlugin {
             //创建snap记录文件
             SetTppConfig.loadSnapConfigFile();
             //创建AutoRespawnBack记录文件
-            AutoRespawnBackConfig.loadAutoRespawnBackConfigFile();
+            RebirthInPlaceConfig.loadRebirthInPlaceConfigFile();
             //创建AutoRespawn记录文件
             AutoRespawnConfig.loadAutoRespawnConfigFile();
             //创建back记录文件

@@ -8,10 +8,6 @@ commands:
     description: 插件主指令
   heal:
     description: 恢复生命值
-  feed:
-    description: 恢复饱食度
-  healandfeed:
-    description: 恢复生命值和饱食度
   fly:
     description: 开关飞行
   flyspeed:
@@ -50,8 +46,8 @@ commands:
     description: 回到传送点
   musterplayer:
     description: 召集玩家
-  autorespawnback:
-    description: 自动重生后回到死亡位置
+  rebirthinplace:
+    description: 原地重生
   autorespawn:
     description: 自动重生
   sendconsole:
@@ -68,11 +64,6 @@ permissions:
       UtilityToolbox.heal.others: false
     #设置权限的描述
     description: 恢复生命值的权限
-
-  UtilityToolbox.feed:
-    children:
-      UtilityToolbox.feed.others: false
-    description: 恢复饱食度的权限
 
   UtilityToolbox.fly:
     children:
@@ -131,9 +122,9 @@ permissions:
   UtilityToolbox.musterplayer:
     description: 召集玩家的权限
 
-  UtilityToolbox.autorespawnback:
+  UtilityToolbox.rebirthinplace:
     default: true
-    description: 自动重生后回到死亡位置的权限
+    description: 原地重生
 
   UtilityToolbox.autorespawn:
     default: true
@@ -148,5 +139,5 @@ permissions:
   UtilityToolbox.LimitFlowMessage:
     description: 是否能看到流体被限制的消息的权限
 
-  UtilityToolbox.PlayerFrequencyAttacksKickMessage:
+  UtilityToolbox.PlayerFrequencyAttacksMessage:
     description: 是否能看到玩家频繁攻击的消息的权限

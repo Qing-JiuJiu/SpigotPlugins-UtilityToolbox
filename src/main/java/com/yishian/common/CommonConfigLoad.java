@@ -1,24 +1,20 @@
 package com.yishian.common;
 
 import com.yishian.Main;
-import com.yishian.command.autodeathback.AutoRespawnBackConfigEnum;
-import com.yishian.command.autodeathback.AutoRespawnBackEnum;
+import com.yishian.command.rebirthinplace.RebirthInPlaceConfigEnum;
+import com.yishian.command.rebirthinplace.RebirthInPlaceEnum;
 import com.yishian.command.autorespawn.AutoRespawnConfigEnum;
 import com.yishian.command.autorespawn.AutoRespawnEnum;
 import com.yishian.command.back.BackConfigEnum;
 import com.yishian.command.back.BackEnum;
 import com.yishian.command.copyres.CopyResConfigEnum;
 import com.yishian.command.copyres.CopyResEnum;
-import com.yishian.command.feed.FeedConfigEnum;
-import com.yishian.command.feed.FeedEnum;
 import com.yishian.command.fly.FlyConfigEnum;
 import com.yishian.command.fly.FlyEnum;
 import com.yishian.command.flyspeed.FlySpeedConfigEnum;
 import com.yishian.command.flyspeed.FlySpeedEnum;
 import com.yishian.command.heal.HealConfigEnum;
 import com.yishian.command.heal.HealEnum;
-import com.yishian.command.healandfeed.HealAndFeedConfigEnum;
-import com.yishian.command.healandfeed.HealAndFeedEnum;
 import com.yishian.command.home.HomeConfigEnum;
 import com.yishian.command.home.HomeEnum;
 import com.yishian.command.killself.KillSelfConfigEnum;
@@ -104,9 +100,7 @@ public class CommonConfigLoad {
         teleportConfigLoad();
         copyResConfigLoad();
         backConfigLoad();
-        feedConfigLoad();
         flyConfigLoad();
-        healAndFeedConfigLoad();
         flySpeedConfigLoad();
         walkSpeedConfigLoad();
         homeConfigLoad();
@@ -170,11 +164,11 @@ public class CommonConfigLoad {
      */
     public static void autoRespawnBackConfigLoad() {
         //autoRespawnBack消息内容
-        ConfigurationSection autoRespawnBackMessage = ServerConfig.getConfigurationSection(AutoRespawnBackEnum.AUTO_RESPAWN_BACK_COMMAND.getCommand()).getConfigurationSection(CommonEnum.MESSAGE.getCommand());
+        ConfigurationSection autoRespawnBackMessage = ServerConfig.getConfigurationSection(RebirthInPlaceEnum.REBIRTH_IN_PLACE_COMMAND.getCommand()).getConfigurationSection(CommonEnum.MESSAGE.getCommand());
         //得到所有枚举的值
-        AutoRespawnBackConfigEnum[] autoRespawnBackConfigEnums = AutoRespawnBackConfigEnum.values();
+        RebirthInPlaceConfigEnum[] rebirthInPlaceConfigEnums = RebirthInPlaceConfigEnum.values();
         //循环判断每个节点是否存在，存在就替换枚举里的内容，不存在就添加到未定义的标签列表并恢复原内容
-        for (AutoRespawnBackConfigEnum autoRespawnBackConfigNodeEnum : autoRespawnBackConfigEnums) {
+        for (RebirthInPlaceConfigEnum autoRespawnBackConfigNodeEnum : rebirthInPlaceConfigEnums) {
             //得到配置文件标签
             String autoRespawnBackConfigNodeEnumTag = autoRespawnBackConfigNodeEnum.getTag();
             //直接设置消息内容，如果存在该节点就会设置节点内容，如果不存在就会使用源配置文件里的内容
@@ -277,27 +271,6 @@ public class CommonConfigLoad {
     }
 
     /**
-     * feed指令的配置加载
-     */
-    public static void feedConfigLoad() {
-        //feed消息内容
-        ConfigurationSection feedMessage = ServerConfig.getConfigurationSection(FeedEnum.FEED_COMMAND.getCommand()).getConfigurationSection(CommonEnum.MESSAGE.getCommand());
-        //得到所有枚举的值
-        FeedConfigEnum[] feedConfigEnums = FeedConfigEnum.values();
-        //循环判断每个节点是否存在，存在就替换枚举里的内容，不存在就添加到未定义的标签列表并恢复原内容
-        for (FeedConfigEnum feedConfigNodeEnum : feedConfigEnums) {
-            //得到配置文件标签
-            String feedConfigNodeEnumTag = feedConfigNodeEnum.getTag();
-            //直接设置消息内容，如果存在该节点就会设置节点内容，如果不存在就会使用源配置文件里的内容
-            feedConfigNodeEnum.setMsg(feedMessage.get(feedConfigNodeEnumTag));
-            //判断是否拥有该节点，没有就添加进列表用于输出警告
-            if (!feedMessage.contains(feedConfigNodeEnumTag, true)) {
-                undefinedTagList.add(feedConfigNodeEnumTag);
-            }
-        }
-    }
-
-    /**
      * fly指令的配置加载
      */
     public static void flyConfigLoad() {
@@ -314,27 +287,6 @@ public class CommonConfigLoad {
             //判断是否拥有该节点，没有就添加进列表用于输出警告
             if (!flyMessage.contains(flyConfigNodeEnumTag, true)) {
                 undefinedTagList.add(flyConfigNodeEnumTag);
-            }
-        }
-    }
-
-    /**
-     * healandfeed指令的配置加载
-     */
-    public static void healAndFeedConfigLoad() {
-        //healandfeed消息内容
-        ConfigurationSection healAndFeedMessage = ServerConfig.getConfigurationSection(HealAndFeedEnum.HEAL_AND_FEED_COMMAND.getCommand()).getConfigurationSection(CommonEnum.MESSAGE.getCommand());
-        //得到所有枚举的值
-        HealAndFeedConfigEnum[] healAndFeedConfigEnums = HealAndFeedConfigEnum.values();
-        //循环判断每个节点是否存在，存在就替换枚举里的内容，不存在就添加到未定义的标签列表并恢复原内容
-        for (HealAndFeedConfigEnum healAndFeedConfigNodeEnum : healAndFeedConfigEnums) {
-            //得到配置文件标签
-            String healAndFeedConfigNodeEnumTag = healAndFeedConfigNodeEnum.getTag();
-            //直接设置消息内容，如果存在该节点就会设置节点内容，如果不存在就会使用源配置文件里的内容
-            healAndFeedConfigNodeEnum.setMsg(healAndFeedMessage.get(healAndFeedConfigNodeEnumTag));
-            //判断是否拥有该节点，没有就添加进列表用于输出警告
-            if (!healAndFeedMessage.contains(healAndFeedConfigNodeEnumTag, true)) {
-                undefinedTagList.add(healAndFeedConfigNodeEnumTag);
             }
         }
     }
