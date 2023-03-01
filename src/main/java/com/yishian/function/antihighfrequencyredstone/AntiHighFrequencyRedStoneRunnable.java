@@ -1,7 +1,7 @@
 package com.yishian.function.antihighfrequencyredstone;
 
-import com.yishian.common.CommonEnum;
 import com.yishian.common.CommonUtils;
+import com.yishian.common.PluginMessageConfigEnum;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
@@ -48,9 +48,9 @@ public class AntiHighFrequencyRedStoneRunnable extends BukkitRunnable {
 
                 //判断是否要广播消息
                 if ((Boolean) AntiHighFrequencyRedStoneConfigEnum.IS_BROADCAST_MESSAGE.getMsg()) {
-                    CommonUtils.server.broadcastMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + message));
+                    CommonUtils.server.broadcastMessage(ChatColor.translateAlternateColorCodes('&', PluginMessageConfigEnum.MESSAGE_PREFIX.getMsg() + message));
                 } else {
-                    CommonUtils.server.broadcast(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + message), AntiHighFrequencyRedStoneEnum.RED_STONE_MESSAGE_PERMISSION.getCommand());
+                    CommonUtils.server.broadcast(ChatColor.translateAlternateColorCodes('&', PluginMessageConfigEnum.MESSAGE_PREFIX.getMsg() + message), AntiHighFrequencyRedStoneEnum.RED_STONE_MESSAGE_PERMISSION.getCommand());
                 }
 
                 //打印警告日志

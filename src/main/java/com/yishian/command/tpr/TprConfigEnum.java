@@ -33,8 +33,7 @@ public enum TprConfigEnum {
      */
     TPR_SEARCHING("tpr-searching","&6正在定位安全的传送位置，请不要连续使用随机传送"),
     TPR_APPLY("tpr-apply", "&a你已随机传送，当前坐标 &cx:%x% y:%y% z:%z%"),
-    TPR_WORLD_ERROR("tpr-world-error", "&c世界&3%world%&c禁止随机传送"),
-    TPR_CONSOLE_ERROR("tpr-console-error", "&c控制台无法使用随机传送相关指令");
+    TPR_WORLD_ERROR("tpr-world-error", "&c世界&3%world%&c禁止随机传送");
 
 
     private final String tag;

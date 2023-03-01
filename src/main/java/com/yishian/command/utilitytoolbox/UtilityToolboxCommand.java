@@ -3,6 +3,7 @@ package com.yishian.command.utilitytoolbox;
 import com.yishian.common.CommonConfigLoad;
 import com.yishian.common.CommonEnum;
 import com.yishian.common.CommonUtils;
+import com.yishian.common.PluginMessageConfigEnum;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -27,13 +28,13 @@ public class UtilityToolboxCommand implements TabExecutor {
                 CommonConfigLoad.loadConfig();
 
                 //发送成功信息和打印日志
-                String message = CommonEnum.MESSAGE_PREFIX.getCommand() + UtilityToolboxConfigEnum.UTILITYTOOLBOX_APPLY_RELOAD.getMsg();
+                String message = PluginMessageConfigEnum.MESSAGE_PREFIX.getMsg() + UtilityToolboxConfigEnum.UTILITYTOOLBOX_APPLY_RELOAD.getMsg();
                 sender.sendMessage(ChatColor.translateAlternateColorCodes('&', message));
                 //发送控制台日志
                 CommonUtils.javaPlugin.getLogger().info(message);
             } else {
                 //提示参数错误
-                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + UtilityToolboxConfigEnum.UTILITYTOOLBOX_COMMAND_ERROR.getMsg()));
+                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', PluginMessageConfigEnum.MESSAGE_PREFIX.getMsg() + UtilityToolboxConfigEnum.UTILITYTOOLBOX_COMMAND_ERROR.getMsg()));
             }
             return true;
         }

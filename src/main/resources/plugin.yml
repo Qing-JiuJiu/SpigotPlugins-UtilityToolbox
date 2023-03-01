@@ -30,7 +30,7 @@ commands:
     description: 回家
   showtextcode:
     description: 展示文本代码
-  killself:
+  kills:
     description: 自杀
   back:
     description: 返回
@@ -58,21 +58,13 @@ commands:
 ##设置权限的子权限与子权限的描述
 permissions:
   UtilityToolbox.heal:
-    #设置子权限
-    children:
-      #设置子权限是否跟随父权限，true为跟随，false为相反
-      UtilityToolbox.heal.others: false
     #设置权限的描述
     description: 恢复生命值的权限
 
   UtilityToolbox.fly:
-    children:
-      UtilityToolbox.fly.others: false
     description: 开关飞行的权限
 
   UtilityToolbox.flyspeed:
-    children:
-      UtilityToolbox.flyspeed.others: false
     description: 修改飞行速度的权限
 
   UtilityToolbox.walkspeed:
@@ -80,7 +72,7 @@ permissions:
       UtilityToolbox.walkspeed.others: false
     description: 修改移动速度的权限
 
-  UtilityToolbox.sethome:
+  UtilityToolbox.home:
     default: true
     description: 设置家的权限的权限
 
@@ -108,14 +100,14 @@ permissions:
   UtilityToolbox.copyres:
     description: 复制主手上的物品的权限
 
-  UtilityToolbox.killself:
+  UtilityToolbox.kills:
     default: true
     description: 自杀的权限
 
   UtilityToolbox.teleport:
     description: 切换服务器是否允许传送的权限
 
-  UtilityToolbox.settpp:
+  UtilityToolbox.tpp:
     default: true
     description: 设置传送点的权限
 

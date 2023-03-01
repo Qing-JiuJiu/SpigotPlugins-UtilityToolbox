@@ -95,4 +95,17 @@
 #3.0.3
 删除限制高频红石、限制高空流水里默认未找到玩家时自带的颜色代码格式
 根据测试修改配置文件默认参数
+#3.1.0
+新增tpr随机传送指令
+删除feed、healandfeed指令，该指令功能合并到heal指令
+将autorespawnback指令修改为rebirthinplace
+将setsnaptp、snaptp指令修改为settpp、tpp
+将killself指令修改为kills
+将playmode指令修改为gm
+将sethome、home、settpp、tpp指令添加[name]参数，允许设置多个家、传送点
+将sethome、settpp指令权限设置分别设置为utilitytoolbox.home、utilitytoolbox.tpp
+删除flyspeed、walkspeed、heal指令的.other权限，只允许控制台对他人执行相关指令
+修改默认权限，玩家默认拥有权限：utilitytoolbox.home、utilitytoolbox.tpp、utilityToolbox.tpa、utilitytoolbox.tpr、utilitytoolbox.back、utilityToolbox.killself、utilityToolbox.rebirthinplace、utilityToolbox.autorespawn
+优化配置文件内容，减少重复的消息内容
+注意：该版本修改了大量的内容，会跟之前版本的配置文件有大量冲突，在此之前的版本更新到此版本请删除旧版本配置文件以自动保存最新的配置文件
 ```

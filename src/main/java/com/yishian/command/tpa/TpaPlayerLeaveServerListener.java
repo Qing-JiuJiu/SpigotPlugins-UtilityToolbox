@@ -1,7 +1,7 @@
 package com.yishian.command.tpa;
 
 import com.yishian.Main;
-import com.yishian.common.CommonEnum;
+import com.yishian.common.PluginMessageConfigEnum;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -27,7 +27,7 @@ public class TpaPlayerLeaveServerListener implements Listener {
             if (transfeRecordPlayer != null) {
                 Set<Player> playerSet = TpaCommand.transfeMap.get(transfeRecordPlayer);
                 playerSet.removeIf(judgmentPlayer -> judgmentPlayer == player);
-                transfeRecordPlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + TpaConfigEnum.TPA_OTHERS_LEAVE_SERVER.getMsg()).replaceAll("%others-player%", player.getName()));
+                transfeRecordPlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', PluginMessageConfigEnum.MESSAGE_PREFIX.getMsg() + TpaConfigEnum.TPA_OTHERS_LEAVE_SERVER.getMsg()).replaceAll("%others-player%", player.getName()));
             }
         });
     }

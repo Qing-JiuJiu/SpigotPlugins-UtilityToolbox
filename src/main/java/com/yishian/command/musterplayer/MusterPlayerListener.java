@@ -1,8 +1,8 @@
 package com.yishian.command.musterplayer;
 
 import com.yishian.Main;
-import com.yishian.common.CommonEnum;
 import com.yishian.common.CommonUtils;
+import com.yishian.common.PluginMessageConfigEnum;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -31,7 +31,7 @@ public class MusterPlayerListener implements Listener {
             Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(Main.class), () -> {
                 if (leavePlayer == musterPlayer) {
                     //发送相关召集取消信息
-                    MusterPlayerCommand.musterPlayers.forEach(messagePlayer -> messagePlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + MusterPlayerConfigEnum.MUSTERPLAYER_PLAYER_LEAVE_CONVENOR.getMsg()).replaceAll("%player%", leavePlayer.getName())));
+                    MusterPlayerCommand.musterPlayers.forEach(messagePlayer -> messagePlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', PluginMessageConfigEnum.MESSAGE_PREFIX.getMsg() + MusterPlayerConfigEnum.MUSTERPLAYER_PLAYER_LEAVE_CONVENOR.getMsg()).replaceAll("%player%", leavePlayer.getName())));
 
                     //取消召集事件
                     MusterPlayerCommand.clearMusterMessage();
@@ -39,7 +39,7 @@ public class MusterPlayerListener implements Listener {
                     //如果是被召集者还未处理请求，那移除被召集者，并发送相关信息
                     MusterPlayerCommand.notProcessedPlayers.remove(leavePlayer);
                     MusterPlayerCommand.musterPlayers.remove(leavePlayer);
-                    MusterPlayerCommand.musterPlayers.forEach(messagePlayer -> messagePlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + MusterPlayerConfigEnum.MUSTERPLAYER_PLAYER_LEAVE_CALLEE.getMsg()).replaceAll("%player%", leavePlayer.getName())));
+                    MusterPlayerCommand.musterPlayers.forEach(messagePlayer -> messagePlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', PluginMessageConfigEnum.MESSAGE_PREFIX.getMsg() + MusterPlayerConfigEnum.MUSTERPLAYER_PLAYER_LEAVE_CALLEE.getMsg()).replaceAll("%player%", leavePlayer.getName())));
                     //判断召集是否已经结束
                     if (CommonUtils.collectionIsEmpty(MusterPlayerCommand.notProcessedPlayers)) {
                         //结束召集事件

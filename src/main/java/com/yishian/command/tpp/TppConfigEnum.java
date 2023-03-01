@@ -10,7 +10,6 @@ public enum TppConfigEnum {
      */
     TPP_APPLY("tpp-apply", "&a你已传送到&3%tp-name%&a传送点"),
     TPP_NO_EXIST("tpp-no-exist", "&c传送点&3%tp-name%&c不存在，请检查传送点名称是否正确"),
-    TPP_CONSOLE_ERROR("tpp-console-error", "&c控制台无法使用传送点相关指令"),
     TPP_COMMAND_ERROR("tpp-command-error", "&c回到传送点指令错误，正确格式: &6/tpp [name]");
 
     private final String tag;

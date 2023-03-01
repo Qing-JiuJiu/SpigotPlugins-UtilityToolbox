@@ -1,7 +1,7 @@
 package com.yishian.command.tpacancel;
 
 import com.yishian.command.tpa.TpaCommand;
-import com.yishian.common.CommonEnum;
+import com.yishian.common.PluginMessageConfigEnum;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -28,14 +28,14 @@ public class TpaCancelCommand implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         //判断执行指令是用户还是控制台
         if (!(sender instanceof Player)) {
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + TpaCancelConfigEnum.TPACANCEL_CONSOLE_ERROR.getMsg()));
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', PluginMessageConfigEnum.MESSAGE_PREFIX.getMsg() + PluginMessageConfigEnum.CONSOLE_COMMAND_NO_USE.getMsg()));
             return true;
         }
 
         //移出传送记录
         Player othersPlayer = TpaCommand.transfeRecordMap.remove(sender);
         if (othersPlayer == null) {
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + TpaCancelConfigEnum.TPACANCEL_NO_TPA_ERROR.getMsg()));
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', PluginMessageConfigEnum.MESSAGE_PREFIX.getMsg() + TpaCancelConfigEnum.TPACANCEL_NO_TPA_ERROR.getMsg()));
             return true;
         }
 
@@ -43,8 +43,8 @@ public class TpaCancelCommand implements CommandExecutor {
         Set<Player> playerSet = TpaCommand.transfeMap.get(othersPlayer);
         playerSet.removeIf(player -> player == sender);
         //发送提示信息
-        othersPlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + TpaCancelConfigEnum.TPACANCEL_OTHERS.getMsg()).replaceAll("%player%", sender.getName()));
-        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + TpaCancelConfigEnum.TPACANCEL_APPLY.getMsg()).replaceAll("%others-player%", othersPlayer.getName()));
+        othersPlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', PluginMessageConfigEnum.MESSAGE_PREFIX.getMsg() + TpaCancelConfigEnum.TPACANCEL_OTHERS.getMsg()).replaceAll("%player%", sender.getName()));
+        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', PluginMessageConfigEnum.MESSAGE_PREFIX.getMsg() + TpaCancelConfigEnum.TPACANCEL_APPLY.getMsg()).replaceAll("%others-player%", othersPlayer.getName()));
 
         return true;
     }

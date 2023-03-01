@@ -1,7 +1,7 @@
 package com.yishian.command.gm;
 
-import com.yishian.common.CommonEnum;
 import com.yishian.common.CommonUtils;
+import com.yishian.common.PluginMessageConfigEnum;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Server;
@@ -38,13 +38,13 @@ public class GMCommand implements TabExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         //判断执行指令是用户还是控制台
         if (!(sender instanceof Player)) {
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + GMConfigEnum.GM_CONSOLE_ERROR.getMsg()));
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', PluginMessageConfigEnum.MESSAGE_PREFIX.getMsg() + PluginMessageConfigEnum.CONSOLE_USE_OFFICIAL_COMMAND_TIPS.getMsg()));
             return true;
         }
 
         //判断指令是否带参数，否则发送指令格式错误提示
         if (args.length != 1) {
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + GMConfigEnum.GM_COMMAND_ERROR.getMsg()));
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', PluginMessageConfigEnum.MESSAGE_PREFIX.getMsg() + GMConfigEnum.GM_COMMAND_ERROR.getMsg()));
             return true;
         }
         //得到模式
@@ -60,7 +60,7 @@ public class GMCommand implements TabExecutor {
 
         //判断参数是否正确
         if (!modeList.contains(gameModeString)) {
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + GMConfigEnum.GM_COMMAND_ERROR.getMsg()));
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', PluginMessageConfigEnum.MESSAGE_PREFIX.getMsg() + GMConfigEnum.GM_COMMAND_ERROR.getMsg()));
             return true;
         }
 
@@ -74,16 +74,19 @@ public class GMCommand implements TabExecutor {
 
         //判断玩家切换的模式是否拥有权限，没权限就报没权限的提示
         if (!CommonUtils.collectionIsEmpty(playHavePermissionList) && !playHavePermissionList.contains(gameModeString)) {
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + GMConfigEnum.GM_NO_PERMISSION_ERROR.getMsg().toString().replaceAll("%gamemode%", gameModeString)));
+            player.sendMessage(ChatColor.translateAlternateColorCodes('&', PluginMessageConfigEnum.MESSAGE_PREFIX.getMsg() + GMConfigEnum.GM_NO_PERMISSION_ERROR.getMsg().toString().replaceAll("%gamemode%", gameModeString)));
             return true;
         }
 
         //使用服务器官方指令切换模式
         Server server = Bukkit.getServer();
         server.dispatchCommand(server.getConsoleSender(), "gamemode " + gameModeString + " " + player.getName());
-        player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + GMConfigEnum.GM_APPLY.getMsg()));
 
-        CommonUtils.sendConsoleMessage("玩家" + player.getName() + "切换了模式：" + gameModeString);
+        //发送对应消息
+        player.sendMessage(ChatColor.translateAlternateColorCodes('&', PluginMessageConfigEnum.MESSAGE_PREFIX.getMsg() + GMConfigEnum.GM_APPLY.getMsg()));
+
+        //打印服务器日志
+        CommonUtils.logger.info("玩家" + player.getName() + "切换了模式：" + gameModeString);
 
         return true;
     }

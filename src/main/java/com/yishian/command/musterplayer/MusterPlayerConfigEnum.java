@@ -40,7 +40,7 @@ public enum MusterPlayerConfigEnum {
     MUSTERPLAYER_APPLY_ERROR("musterplayer-apply-error", "&c没有需要处理的召集请求"),
     MUSTERPLAYER_PLAYER_LEAVE_CONVENOR("musterplayer-player-leave-convenor", "召集者&3%player%&6已离开服务器，已取消此次召集"),
     MUSTERPLAYER_PLAYER_LEAVE_CALLEE("musterplayer-player-leave-callee", "被召集者&3%player%&6已离开服务器，已在被召集列表中移除该玩家"),
-    MUSTERPLAYER_CONSOLE_ERROR("musterplayer-console-error", "&c控制台仅能使用&6musterplayer cancel&c指令取消玩家召集"),
+    MUSTERPLAYER_CONSOLE_ERROR("musterplayer-console-error", "&c控制台仅能使用&6musterplayer cancel&c指令用于取消玩家召集"),
     MUSTERPLAYER_COMMAND_ERROR("musterplayer-command-error", "&c召集指令错误，正确格式: &6/musterplayer <参数>");
 
     private final String tag;

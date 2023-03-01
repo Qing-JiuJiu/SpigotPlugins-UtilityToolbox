@@ -10,8 +10,7 @@ public enum TpaCancelConfigEnum {
      */
     TPACANCEL_APPLY("tpacancel-apply", "&a已取消传送请求"),
     TPACANCEL_OTHERS("tpacancel-others", "玩家&3%player%&6已取消传送请求"),
-    TPACANCEL_NO_TPA_ERROR("tpacancel-no-tpa-error", "&c你没有待处理的传送请求"),
-    TPACANCEL_CONSOLE_ERROR("tpacancel-console-error", "&c控制台无法使用申请传送相关指令");
+    TPACANCEL_NO_TPA_ERROR("tpacancel-no-tpa-error", "&c你没有待处理的传送请求");
 
     private final String tag;
     private Object msg;

@@ -1,7 +1,7 @@
 package com.yishian.command.flyspeed;
 
-import com.yishian.common.CommonEnum;
 import com.yishian.common.CommonUtils;
+import com.yishian.common.PluginMessageConfigEnum;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -10,6 +10,7 @@ import org.bukkit.command.TabExecutor;
 import org.bukkit.entity.Player;
 
 import java.math.BigDecimal;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -28,146 +29,123 @@ public class FlySpeedCommand implements TabExecutor {
      */
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        //如果参数数量大于2个就报指令错误
-        if (args.length > 2) {
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + FlySpeedConfigEnum.FLY_SPEED_COMMAND_ERROR.getMsg()));
+        //如果参数为0，直接就是重置自己飞行速度，控制台则报错
+        if (args.length == 0) {
+            //判断执行该指令的是否是玩家
+            if (!(sender instanceof Player)) {
+                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', PluginMessageConfigEnum.MESSAGE_PREFIX.getMsg() + FlySpeedConfigEnum.FLYSPEED_CONSOLE_ERROR.getMsg()));
+                return true;
+            }
+
+            //重置玩家飞行速度
+            Player player = (Player) sender;
+            player.setFlySpeed(0.1F); //默认飞行速度为0.1
+
+            //发送对应消息
+            player.sendMessage(ChatColor.translateAlternateColorCodes('&', PluginMessageConfigEnum.MESSAGE_PREFIX.getMsg() + FlySpeedConfigEnum.FLYSPEED_SELF_RESET.getMsg()).replaceAll("%player%", player.getName()));
+
             return true;
         }
 
-        //判断指令是否带参数，没参数就是重置飞行
-        if (args.length == 0) {
-            //如果不是玩家
-            if (!(sender instanceof Player)) {
-                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + FlySpeedConfigEnum.FLY_SPEED_CONSOLE_ERROR.getMsg()));
-                return true;
-            }
-            Player player = (Player) sender;
-            //默认飞行速度为0.1
-            player.setFlySpeed(0.1F);
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + FlySpeedConfigEnum.FLY_SPEED_SELF_RESET.getMsg()).replaceAll("%player%", player.getName()));
-
-            //判断参数数量是否为1
-        } else if (args.length == 1) {
-            Player othersPlayer = Bukkit.getPlayerExact(args[0]);
-            //判断该参数是玩家还是速度
-            if (othersPlayer == null) {
-                //判断执行的是用户还是控制台
-                if (!(sender instanceof Player)) {
-                    //当只有一个参数，而且该参数是飞行速度，而且还是是控制台，则提示参数错误
-                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + FlySpeedConfigEnum.FLY_SPEED_CONSOLE_ERROR.getMsg()));
-                    return true;
-                }
-                Float originalFlySpeed = checkOriginalFlySpeed(sender, args);
-                if (originalFlySpeed == null) {
-                    return true;
-                }
-                //获得正确速度保留两位小数并判断范围是否在1-10
-                float properFlySpeed = (originalFlySpeed / 10);
-                properFlySpeed = (float) (Math.round(properFlySpeed * 100)) / 100;
-                Player player = (Player) sender;
-                player.setFlySpeed(properFlySpeed);
-                player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + FlySpeedConfigEnum.FLY_SPEED_SELF.getMsg()).replaceAll("%fly-speed%", Float.toString(originalFlySpeed)));
-            } else {
-                //第一个参数是玩家
-                if (sender instanceof Player) {
-                    Player player = (Player) sender;
-                    String playerName = player.getName();
-                    String othersPlayerName = args[0];
-                    //判断参数指向的是否是自己
-                    if (!playerName.equals(othersPlayerName)) {
-                        //判断执行修改他人飞行速度指令的玩家权限
-                        if (!player.hasPermission(FlySpeedEnum.FLY_SPEED_OTHERS_PERMISSION.getCommand()) && !player.isOp()) {
-                            player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + FlySpeedConfigEnum.FLY_SPEED_OTHERS_NO_PERMISSION.getMsg()));
-                            return true;
-                        }
-                        othersPlayer.setFlySpeed(0.1F);
-                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + FlySpeedConfigEnum.FLY_SPEED_OTHERS_RESET.getMsg()).replaceAll("%others-player%", othersPlayerName));
-                        othersPlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + FlySpeedConfigEnum.FLY_SPEED_BY_OTHERS_RESET.getMsg()).replaceAll("%player%", playerName));
-
-                    } else {
-                        //参数指向的是自己，修改自己，并给出对应提示
-                        player.setFlySpeed(0.1F);
-                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + FlySpeedConfigEnum.FLY_SPEED_OTHERS_RESET_IS_SELF.getMsg()));
-                    }
-                } else {
-                    //该指令是控制台发出
-                    String othersPlayerName = args[0];
-                    othersPlayer.setFlySpeed(0.1F);
-                    othersPlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + FlySpeedConfigEnum.FLY_SPEED_BY_CONSOLE_RESET.getMsg()));
-                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + FlySpeedConfigEnum.FLY_SPEED_OTHERS_RESET.getMsg()).replaceAll("%others-player%", othersPlayerName));
-                }
-            }
-        } else {
+        //如果是玩家直接当第一个参数是飞行速度，而且是就是设置飞行速度，控制台则要继续判断该参数是否为玩家，是该玩家就重置该玩家飞行速度，不是玩家则需要第二个参数当作是飞行速度
+        if (sender instanceof Player) {
+            //判断参数1飞行速度值是否正确
             Float originalFlySpeed = checkOriginalFlySpeed(sender, args);
             if (originalFlySpeed == null) {
                 return true;
             }
-            String originalFlySpeedString = Float.toString(originalFlySpeed);
-            //获得正确速度保留两位小鼠并判断范围是否在1-10 //判断参数是否正确
+
+            //获得游戏真正需要的飞行速度参数
             float properFlySpeed = (originalFlySpeed / 10);
             properFlySpeed = (float) (Math.round(properFlySpeed * 100)) / 100;
 
-            //判断执行的是用户还是控制台-----------------------------
-            if (sender instanceof Player) {
-                Player player = (Player) sender;
-                String playerName = player.getName();
-                String othersPlayerName = args[1];
-                //判断参数指向的是否是自己
-                if (!playerName.equals(othersPlayerName)) {
-                    //判断执行修改他人飞行速度指令的玩家权限
-                    if (!player.hasPermission(FlySpeedEnum.FLY_SPEED_OTHERS_PERMISSION.getCommand()) && !player.isOp()) {
-                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + FlySpeedConfigEnum.FLY_SPEED_OTHERS_NO_PERMISSION.getMsg()));
-                        return true;
-                    }
-                    Player othersPlayer = Bukkit.getPlayerExact(othersPlayerName);
-                    //判断玩家是否存在
-                    if (othersPlayer == null) {
-                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + FlySpeedConfigEnum.FLY_SPEED_OTHERS_NO_EXIST.getMsg()).replaceAll("%others-player%", othersPlayerName));
-                        return true;
-                    }
-                    othersPlayer.setFlySpeed(properFlySpeed);
-                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + FlySpeedConfigEnum.FLY_SPEED_OTHERS.getMsg()).replaceAll("%others-player%", othersPlayerName).replaceAll("%fly-speed%", originalFlySpeedString));
-                    othersPlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + FlySpeedConfigEnum.FLY_SPEED_BY_OTHERS.getMsg()).replaceAll("%player%", playerName).replaceAll("%fly-speed%", originalFlySpeedString));
-                } else {
-                    //参数指向的是自己，修改自己，并给出对应提示
-                    player.setFlySpeed(properFlySpeed);
-                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + FlySpeedConfigEnum.FLY_SPEED_OTHERS_IS_SELF.getMsg()).replaceAll("%fly-speed%", originalFlySpeedString));
-                }
-            } else {
-                String othersPlayerName = args[1];
-                Player othersPlayer = Bukkit.getPlayerExact(othersPlayerName);
-                //判断该玩家是否存在
-                if (othersPlayer == null) {
-                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + FlySpeedConfigEnum.FLY_SPEED_OTHERS_NO_EXIST.getMsg()).replaceAll("%others-player%", othersPlayerName));
-                    return true;
-                }
-                othersPlayer.setFlySpeed(properFlySpeed);
-                othersPlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + FlySpeedConfigEnum.FLY_SPEED_BY_CONSOLE.getMsg()).replaceAll("%fly-speed%", originalFlySpeedString));
-                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + FlySpeedConfigEnum.FLY_SPEED_OTHERS.getMsg()).replaceAll("%others-player%", othersPlayerName).replaceAll("%fly-speed%", originalFlySpeedString));
-            }
+            //设置玩家飞行速度
+            Player player = (Player) sender;
+            player.setFlySpeed(properFlySpeed);
+
+            //发送对应消息
+            player.sendMessage(ChatColor.translateAlternateColorCodes('&', PluginMessageConfigEnum.MESSAGE_PREFIX.getMsg() + FlySpeedConfigEnum.FLYSPEED_SELF.getMsg()).replaceAll("%fly-speed%", Float.toString(originalFlySpeed)));
+
+            return true;
         }
+
+        //如果控制台指令长度为1，则当作是玩家名字
+        if (args.length == 1) {
+            //得到该玩家
+            String otherPlayerName = args[0];
+            Player otherPlayer = Bukkit.getPlayerExact(otherPlayerName);
+
+            //判断用户存不存在
+            if (otherPlayer == null) {
+                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', PluginMessageConfigEnum.MESSAGE_PREFIX.getMsg() + PluginMessageConfigEnum.PLAYER_NO_EXIST.getMsg()).replaceAll("%others-player%", otherPlayerName));
+                return true;
+            }
+
+            //重置玩家飞行速度
+            otherPlayer.setFlySpeed(0.1F);
+            otherPlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', PluginMessageConfigEnum.MESSAGE_PREFIX.getMsg() + FlySpeedConfigEnum.FLYSPEED_BY_CONSOLE_RESET.getMsg()));
+
+            //发送对应消息
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', PluginMessageConfigEnum.MESSAGE_PREFIX.getMsg() + FlySpeedConfigEnum.FLYSPEED_OTHERS_RESET.getMsg()).replaceAll("%others-player%", otherPlayerName));
+
+            return true;
+        }
+
+        //如果控制台指令长度为2，则1当作是飞行速度，2是玩家名字
+        //判断参数1飞行速度是否正确
+        Float originalFlySpeed = checkOriginalFlySpeed(sender, args);
+        if (originalFlySpeed == null) {
+            return true;
+        }
+
+        //得到参数2玩家名字
+        String otherPlayerName = args[1];
+        Player otherPlayer = Bukkit.getPlayerExact(otherPlayerName);
+
+        //判断用户存不存在
+        if (otherPlayer == null) {
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', PluginMessageConfigEnum.MESSAGE_PREFIX.getMsg() + PluginMessageConfigEnum.PLAYER_NO_EXIST.getMsg()).replaceAll("%others-player%", otherPlayerName));
+            return true;
+        }
+
+        //获得游戏真正需要的飞行速度参数
+        float properFlySpeed = (originalFlySpeed / 10);
+        properFlySpeed = (float) (Math.round(properFlySpeed * 100)) / 100;
+
+        //设置玩家的飞行速度
+        otherPlayer.setFlySpeed(properFlySpeed);
+
+        //发送对应消息
+        String originalFlySpeedString = originalFlySpeed.toString();
+        otherPlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', PluginMessageConfigEnum.MESSAGE_PREFIX.getMsg() + FlySpeedConfigEnum.FLYSPEED_BY_CONSOLE.getMsg()).replaceAll("%fly-speed%", originalFlySpeedString));
+        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', PluginMessageConfigEnum.MESSAGE_PREFIX.getMsg() + FlySpeedConfigEnum.FLYSPEED_OTHERS.getMsg()).replaceAll("%others-player%", otherPlayerName).replaceAll("%fly-speed%", originalFlySpeedString));
+
         return true;
     }
 
     /**
      * 用于判断是否数值是否合规校验
+     *
      * @return 原始飞行速度
      */
     private static Float checkOriginalFlySpeed(CommandSender sender, String[] args) {
         float originalFlySpeed;
+
         //转换参数为浮点型
         try {
             originalFlySpeed = Float.parseFloat(args[0]);
         } catch (IllegalArgumentException illegalArgumentException) {
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + FlySpeedConfigEnum.FLY_SPEED_SELF_ARGS_ERROR.getMsg()));
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', PluginMessageConfigEnum.MESSAGE_PREFIX.getMsg() + FlySpeedConfigEnum.FLYSPEED_SELF_ARGS_ERROR.getMsg()));
             return null;
         }
+
         //判断数字是否合规
         BigDecimal bigDecimalOriginalFlySpeed = new BigDecimal(originalFlySpeed);
         if (bigDecimalOriginalFlySpeed.compareTo(new BigDecimal(0)) < 0 || bigDecimalOriginalFlySpeed.compareTo(new BigDecimal(10)) > 0) {
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + FlySpeedConfigEnum.FLY_SPEED_SELF_ARGS_ERROR.getMsg()));
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', PluginMessageConfigEnum.MESSAGE_PREFIX.getMsg() + FlySpeedConfigEnum.FLYSPEED_SELF_ARGS_ERROR.getMsg()));
             return null;
         }
+
         return originalFlySpeed;
     }
 
@@ -185,10 +163,19 @@ public class FlySpeedCommand implements TabExecutor {
      */
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
-        //判断指令是否是上面执行的指令
-        if (FlySpeedEnum.FLY_SPEED_COMMAND.getCommand().equalsIgnoreCase(label)) {
+        //如果是玩家只提示飞行速度
+        if (sender instanceof Player) {
+            return Collections.singletonList("[0-10]");
+        }
+
+        //控制台参数输入到第2个时只提示玩家名字
+        if (args.length == 2) {
             return CommonUtils.arg2CommandPlayerTips(args);
         }
-        return null;
+
+        //控制台参数输入到第1个时提示飞行速度跟玩家名字
+        List<String> tips = CommonUtils.arg1CommandPlayerTip(args);
+        tips.add("[0-10]");
+        return tips;
     }
 }

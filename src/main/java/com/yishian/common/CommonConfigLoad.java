@@ -1,8 +1,6 @@
 package com.yishian.common;
 
 import com.yishian.Main;
-import com.yishian.command.rebirthinplace.RebirthInPlaceConfigEnum;
-import com.yishian.command.rebirthinplace.RebirthInPlaceEnum;
 import com.yishian.command.autorespawn.AutoRespawnConfigEnum;
 import com.yishian.command.autorespawn.AutoRespawnEnum;
 import com.yishian.command.back.BackConfigEnum;
@@ -13,16 +11,18 @@ import com.yishian.command.fly.FlyConfigEnum;
 import com.yishian.command.fly.FlyEnum;
 import com.yishian.command.flyspeed.FlySpeedConfigEnum;
 import com.yishian.command.flyspeed.FlySpeedEnum;
+import com.yishian.command.gm.GMConfigEnum;
+import com.yishian.command.gm.GMModeEnum;
 import com.yishian.command.heal.HealConfigEnum;
 import com.yishian.command.heal.HealEnum;
 import com.yishian.command.home.HomeConfigEnum;
 import com.yishian.command.home.HomeEnum;
-import com.yishian.command.killself.KillSelfConfigEnum;
-import com.yishian.command.killself.KillSelfEnum;
+import com.yishian.command.kills.KillSConfigEnum;
+import com.yishian.command.kills.KillSEnum;
 import com.yishian.command.musterplayer.MusterPlayerConfigEnum;
 import com.yishian.command.musterplayer.MusterPlayerEnum;
-import com.yishian.command.gm.GMConfigEnum;
-import com.yishian.command.gm.GMModeEnum;
+import com.yishian.command.rebirthinplace.RebirthInPlaceConfigEnum;
+import com.yishian.command.rebirthinplace.RebirthInPlaceEnum;
 import com.yishian.command.sendconsole.SendConsoleConfigEnum;
 import com.yishian.command.sendconsole.SendConsoleEnum;
 import com.yishian.command.sethome.SetHomeConfigEnum;
@@ -31,8 +31,6 @@ import com.yishian.command.settpp.SetTppConfigEnum;
 import com.yishian.command.settpp.SetTppEnum;
 import com.yishian.command.showtextcolor.ShowTextCodeConfigEnum;
 import com.yishian.command.showtextcolor.ShowTextCodeEnum;
-import com.yishian.command.tpp.TppConfigEnum;
-import com.yishian.command.tpp.TppEnum;
 import com.yishian.command.teleport.TeleportConfigEnum;
 import com.yishian.command.teleport.TeleportEnum;
 import com.yishian.command.tpa.TpaConfigEnum;
@@ -43,6 +41,8 @@ import com.yishian.command.tpaccept.TpaCceptConfigEnum;
 import com.yishian.command.tpaccept.TpaCceptEnum;
 import com.yishian.command.tpadeny.TpaDenyConfigEnum;
 import com.yishian.command.tpadeny.TpaDenyEnum;
+import com.yishian.command.tpp.TppConfigEnum;
+import com.yishian.command.tpp.TppEnum;
 import com.yishian.command.tpr.TprConfigEnum;
 import com.yishian.command.tpr.TprEnum;
 import com.yishian.command.utilitytoolbox.UtilityToolboxConfigEnum;
@@ -93,6 +93,10 @@ public class CommonConfigLoad {
         ServerConfig = CommonUtils.javaPlugin.getConfig();
 
         //读取所有配置文件
+
+        //插件共用消息
+        pluginMessageConfigLoad();
+
         //指令相关
         healConfigLoad();
         autoRespawnBackConfigLoad();
@@ -134,6 +138,30 @@ public class CommonConfigLoad {
             CommonUtils.javaPlugin.getLogger().warning("配置文件里缺少标签或标签值，缺少原因是插件版本更新或配置文件误修改导致，缺少的内容将使用默认值。如果需要自定义该内容，请在配置文件中对应位置添加对应内容，内容位置及模板请参考帖子里最新的config.yml。如果从未修改过配置文件，可直接删除插件配置文件重启服务器自动生成最新配置文件或忽略该警告");
             //清空列表
             undefinedTagList.clear();
+        }
+    }
+
+    /**
+     * PluginMessage的配置加载
+     */
+    public static void pluginMessageConfigLoad() {
+        //PluginMessage消息内容
+        ConfigurationSection pluginMessageConfigMessage = ServerConfig.getConfigurationSection("plugin-message");
+        //得到所有枚举的值
+        PluginMessageConfigEnum[] pluginMessageConfigEnums = PluginMessageConfigEnum.values();
+        //循环判断每个节点是否存在，存在就替换枚举里的内容，不存在就添加到未定义的标签列表并恢复原内容
+        for (PluginMessageConfigEnum pluginMessageConfigNodeEnum : pluginMessageConfigEnums) {
+            //得到配置文件标签
+            String pluginMessageConfigTag = pluginMessageConfigNodeEnum.getTag();
+            //直接设置消息内容，如果存在该节点就会设置节点内容，如果不存在就会使用源配置文件里的内容
+            pluginMessageConfigNodeEnum.setMsg(pluginMessageConfigMessage.getString(pluginMessageConfigTag));
+            //判断是否拥有该节点
+            if (!pluginMessageConfigMessage.contains(pluginMessageConfigTag)) {
+                //添加到未定义的标签列表
+                undefinedTagList.add(pluginMessageConfigTag);
+                //恢复原内容
+                pluginMessageConfigNodeEnum.setMsg(pluginMessageConfigNodeEnum.getMsg());
+            }
         }
     }
 
@@ -386,11 +414,11 @@ public class CommonConfigLoad {
      */
     public static void killSelfConfigLoad() {
         //killself消息内容
-        ConfigurationSection killSelfMessage = ServerConfig.getConfigurationSection(KillSelfEnum.KILL_SELF_COMMAND.getCommand()).getConfigurationSection(CommonEnum.MESSAGE.getCommand());
+        ConfigurationSection killSelfMessage = ServerConfig.getConfigurationSection(KillSEnum.KILLS_COMMAND.getCommand()).getConfigurationSection(CommonEnum.MESSAGE.getCommand());
         //得到所有枚举的值
-        KillSelfConfigEnum[] killSelfConfigEnums = KillSelfConfigEnum.values();
+        KillSConfigEnum[] killSConfigEnums = KillSConfigEnum.values();
         //循环判断每个节点是否存在，存在就替换枚举里的内容，不存在就添加到未定义的标签列表并恢复原内容
-        for (KillSelfConfigEnum killSelfConfigNodeEnum : killSelfConfigEnums) {
+        for (KillSConfigEnum killSelfConfigNodeEnum : killSConfigEnums) {
             //得到配置文件标签
             String killSelfConfigNodeEnumTag = killSelfConfigNodeEnum.getTag();
             //直接设置消息内容，如果存在该节点就会设置节点内容，如果不存在就会使用源配置文件里的内容

@@ -1,8 +1,10 @@
 package com.yishian.command.tpr;
 
 import com.yishian.Main;
+import com.yishian.command.teleport.TeleportCommand;
 import com.yishian.common.CommonEnum;
 import com.yishian.common.CommonUtils;
+import com.yishian.common.PluginMessageConfigEnum;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -31,13 +33,13 @@ public class TprCommand implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         //判断执行指令的是用户还是控制台
         if (!(sender instanceof Player)) {
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + TprConfigEnum.TPR_CONSOLE_ERROR.getMsg()));
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', PluginMessageConfigEnum.MESSAGE_PREFIX.getMsg() + PluginMessageConfigEnum.CONSOLE_COMMAND_NO_USE.getMsg()));
             return true;
         }
 
         //获取玩家位置变量，并发送给玩家等待传送
         Player player = (Player) sender;
-        player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + TprConfigEnum.TPR_SEARCHING.getMsg()));
+        player.sendMessage(ChatColor.translateAlternateColorCodes('&', PluginMessageConfigEnum.MESSAGE_PREFIX.getMsg() + TprConfigEnum.TPR_SEARCHING.getMsg()));
         Location playerLocation = player.getLocation();
 
         //判断是否是允许随机传送
@@ -47,7 +49,7 @@ public class TprCommand implements CommandExecutor {
         //获得允许随机传送的世界列表
         List<?> allowHomeWorldList = CommonUtils.objectToList(TprConfigEnum.ALLOW_WORLD.getMsg());
         if (!allowHomeWorldList.contains(worldName) && !allowHomeWorldList.contains(CommonEnum.ALL.getCommand())) {
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + TprConfigEnum.TPR_WORLD_ERROR.getMsg()).replaceAll("%world%", worldName));
+            player.sendMessage(ChatColor.translateAlternateColorCodes('&', PluginMessageConfigEnum.MESSAGE_PREFIX.getMsg() + TprConfigEnum.TPR_WORLD_ERROR.getMsg()).replaceAll("%world%", worldName));
             return true;
         }
 
@@ -86,7 +88,9 @@ public class TprCommand implements CommandExecutor {
             Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getProvidingPlugin(Main.class), () -> {
                 //传送玩家
                 player.teleport(newLocation);
-                player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + TprConfigEnum.TPR_APPLY.getMsg()).replaceAll("%x%", String.valueOf(newLocation.getBlockX())).replaceAll("%y%", String.valueOf(newLocation.getBlockY())).replaceAll("%z%", String.valueOf(newLocation.getBlockZ())));
+                if (TeleportCommand.allowTp) {
+                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', PluginMessageConfigEnum.MESSAGE_PREFIX.getMsg() + TprConfigEnum.TPR_APPLY.getMsg()).replaceAll("%x%", String.valueOf(newLocation.getBlockX())).replaceAll("%y%", String.valueOf(newLocation.getBlockY())).replaceAll("%z%", String.valueOf(newLocation.getBlockZ())));
+                }
             });
         });
 
@@ -107,8 +111,7 @@ public class TprCommand implements CommandExecutor {
 
         //判断该位置是否安全
         Block highestBlockAt = world.getHighestBlockAt(newLocation);
-        String blockName = highestBlockAt.getType().getKey().toString();
-        if (dangerousBlockList.contains(blockName)) {
+        if (dangerousBlockList.contains(highestBlockAt.getType().getKey().toString())) {
             //重新产生新的位置，如果该位置有危险的话
             return newLocation(location, world, tprx, tprz);
         } else {

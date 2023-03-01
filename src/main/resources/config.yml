@@ -2,6 +2,9 @@
 plugin-message:
   #插件消息前缀
   message-prefix: '&e[UtilityToolbox] &6'
+  console-command-no-use: '&c控制台无法使用该指令'
+  console-use-official-command-tips: '&c控制台请使用官方指令代替该指令'
+  player-no-exist: '&c玩家&3%others-player%&c不存在，请检查玩家名字'
 
 #自定义加入和离开服务器消息
 join-and-leave-server-message:
@@ -106,13 +109,8 @@ heal:
   message:
     heal-self: '&a你已恢复状态'
     heal-others: '&a你已恢复&3%others-player%&a状态'
-    heal-others-no-exist: '&c玩家&3%others-player%&c不存在，请检查玩家名字'
-    heal-others-is-self: '你已恢复状态，你可以使用不带参数的指令来恢复自己'
-    heal-others-no-permission: '&c你没有执行恢复他人状态指令的权限'
-    heal-by-others: '你已被&3%player%&6恢复状态'
     heal-by-console: '你已被服务器恢复状态'
-    heal-console-error: '&c控制台请执行恢复他人状态的指令: &6heal <玩家名称>'
-    heal-command-error: '&c恢复状态指令格式错误，正确格式: &6/heal [玩家名称]'
+    heal-console-error: '&c控制台执行恢复他人状态的指令格式: &6heal <玩家名称>'
 
 #飞行
 fly:
@@ -121,54 +119,33 @@ fly:
     fly-self-close: '&a你已关闭飞行'
     fly-others-open: '&a你已开启&3%others-player%&a的飞行'
     fly-others-close: '&a你已关闭&3%others-player%&a的飞行'
-    fly-others-no-exist: '&c玩家&3%others-player%&c不存在，请检查玩家名字'
-    fly-others-is-self-open: '你已开启飞行，可以使用不带参数的指令来开关飞行'
-    fly-others-is-self-close: '你已关闭飞行，可以使用不带参数的指令来开关飞行'
-    fly-others-no-permission: '&c你没有执行开关他人飞行指令的权限'
-    fly-by-others-open: '你已被&3%player%&6开启飞行'
-    fly-by-others-close: '你已被&3%player%&6关闭飞行'
     fly-by-console-open: '你已被服务器开启飞行'
     fly-by-console-close: '你已被服务器关闭飞行'
-    fly-console-error: '&c控制台请执行开关他人飞行的指令: &6fly <玩家名称>'
-    fly-command-error: '&c开关飞行指令格式错误，正确格式: &6/fly [玩家名称]'
+    fly-console-error: '&c控制台执行开关飞行的指令格式: &6fly <玩家名称>'
 
 #飞行速度
 flyspeed:
   message:
-    fly-speed-self-reset: '&a你已重置飞行速度'
-    fly-speed-self: '&a你已修改飞行速度为%fly-speed%'
-    fly-speed-self-args-error: '&c飞行速度参数错误，飞行速度只能为0-10，默认速度为1'
-    fly-speed-others: '&a你已修改&3%others-player%&a的飞行速度为%fly-speed%'
-    fly-speed-others-reset: '&a你已重置&3%others-player%&a的飞行速度'
-    fly-speed-others-reset-is-self: '你已重置飞行速度，修改自己可以不输入玩家名称'
-    fly-speed-others-is-self: '你已修改飞行速度为%fly-speed%，修改自己可以不输入玩家名称'
-    fly-speed-others-no-exist: '&c玩家&3%others-player%&c不存在，请检查玩家名字'
-    fly-speed-others-no-permission: '&c你没有修改他人飞行速度指令的权限'
-    fly-speed-by-others: '你已被&3%player%&6修改飞行速度为%fly-speed%'
-    fly-speed-by-others-reset: '你已被&3%player%&6重置飞行速度'
-    fly-speed-by-console: '你已被服务器修改飞行速度为%fly-speed%'
-    fly-speed-by-console-reset: '你已被服务器重置飞行速度'
-    fly-speed-console-error: '&c控制台请执行修改他人飞行速度的指令: &6flyspeed [速度] <玩家名称>'
-    fly-speed-command-error: '&c修改飞行速度指令格式错误，格式: &6/flyspeed [速度] [玩家名称]'
+    flyspeed-self-reset: '&a你已重置飞行速度'
+    flyspeed-self: '&a你已修改飞行速度为%fly-speed%'
+    flyspeed-self-args-error: '&c飞行速度参数错误，飞行速度只能为0-10，默认速度为1'
+    flyspeed-others: '&a你已修改&3%others-player%&a的飞行速度为%fly-speed%'
+    flyspeed-others-reset: '&a你已重置&3%others-player%&a的飞行速度'
+    flyspeed-by-console: '你已被服务器修改飞行速度为%fly-speed%'
+    flyspeed-by-console-reset: '你已被服务器重置飞行速度'
+    flyspeed-console-error: '&c控制台请执行修改飞行速度的指令格式: &6flyspeed [速度] <玩家名称>'
 
 #行走速度
 walkspeed:
   message:
-    walk-speed-self-reset: '&a你已重置移动速度'
-    walk-speed-self: '&a你已修改移动速度为%walk-speed%'
-    walk-speed-self-args-error: '&c移动速度参数错误，移动速度只能为0到10，默认速度为2'
-    walk-speed-others: '&a你已修改&3%others-player%&a的移动速度为%walk-speed%'
-    walk-speed-others-reset: '&a你已重置&3%others-player%&a的移动速度'
-    walk-speed-others-reset-is-self: '你已重置移动速度，修改自己可以不输入玩家名称'
-    walk-speed-others-is-self: '你已修改移动速度为%walk-speed%，修改自己可以不输入玩家名称'
-    walk-speed-others-no-exist: '&c玩家&3%others-player%&c不存在，请检查玩家名字'
-    walk-speed-others-no-permission: '&c你没有修改他人移动速度指令的权限'
-    walk-speed-by-others: '你已被&3%player%&6修改移动速度为%walk-speed%'
-    walk-speed-by-others-reset: '你已被&3%player%&6重置移动速度'
-    walk-speed-by-console: '你已被服务器修改移动速度为%walk-speed%'
-    walk-speed-by-console-reset: '你已被服务器重置移动速度'
-    walk-speed-console-error: '&c控制台请执行修改他人移动速度的指令: &6walkspeed [速度] <玩家名称>'
-    walk-speed-command-error: '&c修改移动速度指令格式错误，格式: &6/walkspeed [速度] [玩家名称]'
+    walkspeed-self-reset: '&a你已重置移动速度'
+    walkspeed-self: '&a你已修改移动速度为%walk-speed%'
+    walkspeed-self-args-error: '&c移动速度参数错误，移动速度只能为0到10，默认速度为2'
+    walkspeed-others: '&a你已修改&3%others-player%&a的移动速度为%walk-speed%'
+    walkspeed-others-reset: '&a你已重置&3%others-player%&a的移动速度'
+    walkspeed-by-console: '你已被服务器修改移动速度为%walk-speed%'
+    walkspeed-by-console-reset: '你已被服务器重置移动速度'
+    walkspeed-console-error: '&c控制台执行修改移动速度的指令格式: &6walkspeed [速度] <玩家名称>'
 
 #申请传送
 tpa:
@@ -182,7 +159,6 @@ tpa:
     tpa-apply-tpacancel-tips: '取消请求输入: &c/tpacancel'
     tpa-apply-accept-tips: '同意请求输入: &a/tpaccept'
     tpa-apply-deny-tips: '拒绝请求输入: &c/tpadeny'
-    tpa-console-error: '&c控制台无法使用申请传送相关指令'
     tpa-command-error: '&c传送指令格式错误，正确格式: &6/tpa <其他玩家名称>'
     tpa-others-leave-server: '玩家&3%others-player%&6已离开服务器，已自动取消其传送请求'
 
@@ -192,7 +168,6 @@ tpacancel:
     tpacancel-apply: '&a已取消传送请求'
     tpacancel-others: '玩家&3%player%&6已取消传送请求'
     tpacancel-no-tpa-error: '&c你没有待处理的传送请求'
-    tpacancel-console-error: '&c控制台无法使用申请传送相关指令'
 
 #同意传送
 tpaccept:
@@ -200,9 +175,7 @@ tpaccept:
     tpaccept-apply: '&a你已接受玩家&3%others-player%&a的传送请求'
     tpaccept-apply-is-self: '&c请不要接受自己的传送请求'
     tpaccept-apply-others: '你向玩家&3%player%&6申请的传送请求已被接受'
-    tpaccept-console-error: '&c控制台无法使用申请传送相关指令'
     tpaccept-others-no-exist: '&c玩家&3%others-player%&c不存在，请检查玩家名字'
-    tpaccept-command-error: '&c同意请求指令格式错误，正确格式: &6/tpaccept [其他玩家名称]'
     tpaccept-no-tpa-error: '&c你没有待处理的传送请求'
     tpaccept-no-others-player-tpa-error: '&c你没有玩家&3%others-player%&c的传送请求'
 
@@ -212,9 +185,7 @@ tpadeny:
     tpadeny-apply: '&a你已拒绝玩家&3%others-player%&a的传送请求'
     tpadeny-apply-is-self: '&c请不要拒绝自己的传送请求'
     tpadeny-apply-others: '你向玩家&3%player%&6申请的传送请求已被拒绝'
-    tpadeny-console-error: '&c控制台无法使用申请传送相关指令'
     tpadeny-others-no-exist: '&c玩家&3%others-player%&c不存在，请检查玩家名字'
-    tpadeny-command-error: '&c拒绝请求指令格式错误，正确格式: &6/tpadeny [其他玩家名称]'
     tpadeny-no-tpa-error: '&c你没有待处理的传送请求'
     tpadeny-no-others-player-tpa-error: '&c你没有玩家&3%others-player%&c的传送请求'
 
@@ -242,7 +213,6 @@ tpr:
     tpr-searching: "&6正在定位安全的传送位置，请不要连续使用随机传送"
     tpr-apply: "&a你已随机传送，当前坐标&6 x:%x% y:%y% z:%z%"
     tpr-world-error: "&c世界&3%world%&c禁止随机传送"
-    tpr-console-error: "&c控制台无法使用随机传送相关指令"
 
 #设置家
 sethome:
@@ -252,7 +222,6 @@ sethome:
   message:
     sethome-apply: '&a已将此位置设为&3%name%&a家'
     sethome-world-error: '&c世界&3%world%&c禁止设置家'
-    sethome-console-error: '&c控制台无法使用家相关指令'
     sethome-command-error: '&c设置家指令格式错误，正确格式: &6/sethome [name]'
 
 #回家
@@ -260,7 +229,6 @@ home:
   message:
     home-apply: '&a你已传送回&3%name%&a家'
     home-no-exist: '&c暂无&3%name%&c家，请使用&6/sethome [name]&c指令设置家的位置'
-    home-console-error: '&c控制台无法使用家相关指令'
     home-command-error: '&c回家指令格式错误，正确格式: &6/sethome [name]'
 
 #展示文本代码
@@ -286,11 +254,10 @@ showtextcode:
       - '&c展示列表结束------------------------------'
 
 #等同于自己使用/kill指令
-killself:
+kills:
   message:
-    killself-apply: '&a已让服务器执行自杀指令'
-    killself-console-error: '&c控制台请使用官方指令：kill [目标]'
-    killself-command-error: '&c自杀指令格式错误，正确格式: &6/killself'
+    kills-apply: '&a已让服务器执行自杀指令'
+    kills-command-error: '&c自杀指令格式错误，正确格式: &6/kills'
 
 #传送到上一个传送/死亡的位置
 back:
@@ -299,7 +266,6 @@ back:
     back-died-tips: '你在下一次传送前可使用&c/back&6指令回到死亡位置'
     back-died-no-tp-tips: '服务器&c/back&6指令已记录你的死亡位置'
     back-no-location: '&c你暂时没有返回的位置'
-    back-console-error: '&c控制台无法使用返回指令'
     back-command-error: '&c返回指令格式错误，正确格式: &6/back'
 
 #切换服务器是否允许指令传送
@@ -310,7 +276,6 @@ teleport:
     teleport-deny: '&c服务器已禁止指令传送'
     teleport-deny-apply: '&c服务器已禁止指令传送，传送失败'
     teleport-deny-reason: '&c服务器已禁止指令传送，原因: &6%reason%'
-    teleport-command-error: '&c服务器是否允许指令传送格式错误，正确格式: &6/teleport [reason]'
 
 #复制物品
 copyres:
@@ -336,14 +301,12 @@ copyres:
   message:
     copyres-apply: '&a你已复制&3%res%&a物品'
     copyres-deny: '&c物品&3%res%&c禁止复制'
-    copyres-console-error: '&c控制台请使用官方指令：&6give <玩家> <物品[参数]> [数量]'
     copyres-command-error: '&c复制物品指令格式错误，正确格式: &6/copyres'
 
 #模式切换
 gm:
   message:
     gm-apply: '&a已让服务器执行切换模式指令'
-    gm-console-error: '&c控制台请使用官方指令：&6gamemode <模式> <玩家>'
     gm-command-error: '&c切换模式指令格式错误，正确格式: &6/gm <游戏模式>'
     gm-no-permission-error: '&c你没有切换到模式&3%gamemode%&c的权限'
 
@@ -355,7 +318,6 @@ settpp:
   message:
     settpp-apply: '&a已将此位置设为&3%tp-name%&a传送点'
     settpp-world-error: '&c世界&3%world%&c禁止设置传送点'
-    settpp-console-error: '&c控制台无法使用传送点相关指令'
     settpp-command-error: '&c设置传送点指令格式错误，正确格式: &6/settpp [tpname]'
 
 #传送到传送点
@@ -363,7 +325,6 @@ tpp:
   message:
     tpp-apply: '&a你已传送到&3%tp-name%&a传送点'
     tpp-no-exist: '&c传送点&3%tp-name%&c不存在，请检查传送点名称是否正确'
-    tpp-console-error: '&c控制台无法使用传送点相关指令'
     tpp-command-error: '&c回到传送点指令错误，正确格式: &6/tpp [tpname]'
 
 #召集玩家
@@ -399,7 +360,7 @@ musterplayer:
     musterplayer-apply-error: '&c没有需要处理的召集请求'
     musterplayer-player-leave-convenor: '召集者&3%player%&6已离开服务器，已取消此次召集'
     musterplayer-player-leave-callee: '被召集者&3%player%&6已离开服务器，已在被召集列表中移除该玩家'
-    musterplayer-console-error: '&c控制台仅能使用&6musterplayer cancel&c指令取消玩家召集'
+    musterplayer-console-error: '&c控制台仅能使用&6musterplayer cancel&c指令用于取消玩家召集'
     musterplayer-command-error: '&c召集指令错误，正确格式: &6/musterplayer <参数>'
 
 #重生后自动回到死亡位置
@@ -408,7 +369,6 @@ rebirthinplace:
     rebirthinplace-apply-open: '&a你已开启原地重生'
     rebirthinplace-apply-close: '&a你已关闭原地重生'
     rebirthinplace-apply: '你已原地重生'
-    rebirthinplace-console-error: '&c控制台无法使用此命令'
 
 #自动重生
 autorespawn:
@@ -416,7 +376,6 @@ autorespawn:
     autorespawn-apply-open: '&a你已开启自动重生'
     autorespawn-apply-close: '&a你已关闭自动重生'
     autorespawn-apply: '已自动跳过死亡结算界面'
-    autorespawn-console-error: '&c控制台无法使用此命令'
 
 #发送控制台指令
 sendconsole:

@@ -2,6 +2,7 @@ package com.yishian.command.autorespawn;
 
 import com.yishian.Main;
 import com.yishian.common.CommonEnum;
+import com.yishian.common.PluginMessageConfigEnum;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -27,7 +28,7 @@ public class AutoRespawnListener implements Listener {
             Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getProvidingPlugin(Main.class), () -> {
                 //玩家重生
                 player.spigot().respawn();
-                player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + AutoRespawnConfigEnum.AUTORESPAWN_APPLY.getMsg()));
+                player.sendMessage(ChatColor.translateAlternateColorCodes('&', PluginMessageConfigEnum.MESSAGE_PREFIX.getMsg() + AutoRespawnConfigEnum.AUTORESPAWN_APPLY.getMsg()));
             });
         }
     }

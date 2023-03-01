@@ -1,5 +1,7 @@
 package com.yishian.command.home;
 
+import com.yishian.common.CommonEnum;
+
 /**
  * @author XinQi
  */
@@ -8,7 +10,8 @@ public enum HomeEnum {
     /**
      * 回家
      */
-    HOME_COMMAND("home", "回家指令");
+    HOME_COMMAND("home", "回家指令"),
+    HOME_PERMISSION(CommonEnum.PLUGHIN_NAME.getCommand() + "." + HOME_COMMAND.getCommand(), "家权限");
 
     private final String command;
     private final String msg;

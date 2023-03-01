@@ -17,7 +17,6 @@ public enum TpaConfigEnum {
     TPA_APPLY_TPACANCEL_TIPS("tpa-apply-tpacancel-tips", "取消请求输入: &c/tpacancel"),
     TPA_APPLY_ACCEPT_TIPS("tpa-apply-accept-tips", "同意请求输入: &a/tpaccept"),
     TPA_APPLY_DENY_TIPS("tpa-apply-deny-tips", "拒绝请求输入: &c/tpadeny"),
-    TPA_CONSOLE_ERROR("tpa-console-error", "&c控制台无法使用申请传送相关指令"),
     TPA_COMMAND_ERROR("tpa-command-error", "&c传送指令格式错误，正确格式: &6/tpa <其他玩家名称>"),
     TPA_OTHERS_LEAVE_SERVER("tpa-others-leave-server", "玩家&3%others-player%&6已离开服务器，已自动取消其传送请求");
 

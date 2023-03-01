@@ -13,10 +13,7 @@ public enum CommonEnum {
     FUNCTION_IS_ENABLE("enable","插件是否启用布尔值"),
     OTHERS("others", "是否允许对他人执行权限的后缀"),
     ALL("*", "所有的通配符"),
-    IS_BROADCAST_MESSAGE("is_broadcast_message" , "用于配置文件获取是否广播消息"),
-    MESSAGE("message","用于获取配置文件消息"),
-    TIME("time","用于获取定时器时间的英语"),
-    MESSAGE_PREFIX(CommonConfigLoad.ServerConfig.getConfigurationSection("plugin-message").getString("message-prefix"),"消息前缀");
+    MESSAGE("message","用于获取配置文件消息");
 
     private final String command;
     private final String msg;

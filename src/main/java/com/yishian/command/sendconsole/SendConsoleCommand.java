@@ -1,7 +1,7 @@
 package com.yishian.command.sendconsole;
 
-import com.yishian.common.CommonEnum;
 import com.yishian.common.CommonUtils;
+import com.yishian.common.PluginMessageConfigEnum;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Server;
@@ -18,7 +18,7 @@ public class SendConsoleCommand implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         //判断指令是否带参数
         if (args.length == 0) {
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + SendConsoleConfigEnum.SENDCONSOLE_COMMAND_ERROR.getMsg()));
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', PluginMessageConfigEnum.MESSAGE_PREFIX.getMsg() + SendConsoleConfigEnum.SENDCONSOLE_COMMAND_ERROR.getMsg()));
             return true;
         }
 
@@ -39,9 +39,9 @@ public class SendConsoleCommand implements CommandExecutor {
 
         //判断是否执行成功
         if (isSuccess) {
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + SendConsoleConfigEnum.SENDCONSOLE_APPLY_SUCCESS.getMsg()).replaceAll("%command%", argString));
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', PluginMessageConfigEnum.MESSAGE_PREFIX.getMsg() + SendConsoleConfigEnum.SENDCONSOLE_APPLY_SUCCESS.getMsg()).replaceAll("%command%", argString));
         }else {
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + SendConsoleConfigEnum.SENDCONSOLE_APPLY_FAIL.getMsg()).replaceAll("%command%", argString));
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', PluginMessageConfigEnum.MESSAGE_PREFIX.getMsg() + SendConsoleConfigEnum.SENDCONSOLE_APPLY_FAIL.getMsg()).replaceAll("%command%", argString));
         }
 
         //打印警告日志

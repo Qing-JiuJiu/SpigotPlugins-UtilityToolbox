@@ -22,8 +22,8 @@ import com.yishian.command.heal.HealCommand;
 import com.yishian.command.heal.HealEnum;
 import com.yishian.command.home.HomeCommand;
 import com.yishian.command.home.HomeEnum;
-import com.yishian.command.killself.KillSelfCommand;
-import com.yishian.command.killself.KillSelfEnum;
+import com.yishian.command.kills.KillSCommand;
+import com.yishian.command.kills.KillSEnum;
 import com.yishian.command.musterplayer.MusterPlayerCommand;
 import com.yishian.command.musterplayer.MusterPlayerEnum;
 import com.yishian.command.musterplayer.MusterPlayerListener;
@@ -193,12 +193,12 @@ public final class Main extends JavaPlugin {
 
         //设置家
         PluginCommand setHomeCommand = getCommand(SetHomeEnum.SET_HOME_COMMAND.getCommand());
-        setHomeCommand.setPermission(SetHomeEnum.SET_HOME_PERMISSION.getCommand());
+        setHomeCommand.setPermission(HomeEnum.HOME_PERMISSION.getCommand());
         setHomeCommand.setExecutor(new SetHomeCommand());
 
         //回家
         PluginCommand homeCommand = getCommand(HomeEnum.HOME_COMMAND.getCommand());
-        homeCommand.setPermission(SetHomeEnum.SET_HOME_PERMISSION.getCommand());
+        homeCommand.setPermission(HomeEnum.HOME_PERMISSION.getCommand());
         homeCommand.setExecutor(new HomeCommand());
 
         //展示文本代码
@@ -207,9 +207,9 @@ public final class Main extends JavaPlugin {
         showTextCodeCommand.setExecutor(new ShowTextCodeCommand());
 
         //自杀
-        PluginCommand killSelfCommand = getCommand(KillSelfEnum.KILL_SELF_COMMAND.getCommand());
-        killSelfCommand.setPermission(KillSelfEnum.KILL_SELF_PERMISSION.getCommand());
-        killSelfCommand.setExecutor(new KillSelfCommand());
+        PluginCommand killSelfCommand = getCommand(KillSEnum.KILLS_COMMAND.getCommand());
+        killSelfCommand.setPermission(KillSEnum.KillS_PERMISSION.getCommand());
+        killSelfCommand.setExecutor(new KillSCommand());
 
         //返回
         PluginCommand backCommand = getCommand(BackEnum.BACK_COMMAND.getCommand());
@@ -233,12 +233,12 @@ public final class Main extends JavaPlugin {
 
         //设置临时传送点
         PluginCommand setTpPCommand = getCommand(SetTppEnum.SET_TPP_COMMAND.getCommand());
-        setTpPCommand.setPermission(SetTppEnum.SET_TPP_PERMISSION.getCommand());
+        setTpPCommand.setPermission(TppEnum.TPP_PERMISSION.getCommand());
         setTpPCommand.setExecutor(new SetTppCommand());
 
         //回临时传送点
         PluginCommand snapTpCommand = getCommand(TppEnum.TPP_COMMAND.getCommand());
-        snapTpCommand.setPermission(SetTppEnum.SET_TPP_PERMISSION.getCommand());
+        snapTpCommand.setPermission(TppEnum.TPP_PERMISSION.getCommand());
         snapTpCommand.setExecutor(new TppCommand());
 
         //召集玩家

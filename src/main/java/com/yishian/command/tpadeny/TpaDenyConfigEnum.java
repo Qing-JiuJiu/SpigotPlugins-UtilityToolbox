@@ -11,9 +11,7 @@ public enum TpaDenyConfigEnum {
     TPADENY_APPLY("tpadeny-apply", "&a你已拒绝玩家&3%others-player%&a的传送请求"),
     TPADENY_APPLY_IS_SELF("tpadeny-apply-is-self", "&c请不要拒绝自己的传送请求"),
     TPADENY_APPLY_OTHERS("tpadeny-apply-others", "你向玩家&3%player%&6申请的传送请求已被拒绝"),
-    TPADENY_CONSOLE_ERROR("tpadeny-console-error", "&c控制台无法使用申请传送相关指令"),
     TPADENY_OTHERS_NO_EXIST("tpadeny-others-no-exist", "&c玩家&3%others-player%&c不存在，请检查玩家名字"),
-    TPADENY_COMMAND_ERROR("tpadeny-command-error", "&c拒绝请求指令格式错误，正确格式: &6/tpadeny [其他玩家名称]"),
     TPADENY_NO_TPA_ERROR("tpadeny-no-tpa-error", "&c你没有待处理的传送请求"),
     TPADENY_NO_OTHERS_PLAYER_TPA_ERROR("tpadeny-no-others-player-tpa-error", "&c你没有玩家&3%others-player%&c的传送请求");
 

@@ -4,6 +4,7 @@ import com.yishian.command.back.BackConfig;
 import com.yishian.command.teleport.TeleportCommand;
 import com.yishian.command.teleport.TeleportConfigEnum;
 import com.yishian.common.CommonEnum;
+import com.yishian.common.PluginMessageConfigEnum;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -34,9 +35,9 @@ public class RebirthInPlaceListener implements Listener {
             ConfigurationSection playerConfig = BackConfig.BackFileYaml.getConfigurationSection(playerName);
             if (TeleportCommand.allowTp) {
                 playerRespawnEvent.setRespawnLocation(new Location(Bukkit.getWorld(playerConfig.getString("world")), playerConfig.getDouble("x"), playerConfig.getDouble("y"), playerConfig.getDouble("z"), Float.parseFloat(playerConfig.getString("yaw")), Float.parseFloat(playerConfig.getString("pitch"))));
-                player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + RebirthInPlaceConfigEnum.REBIRTHINPLACE_APPLY.getMsg()));
+                player.sendMessage(ChatColor.translateAlternateColorCodes('&', PluginMessageConfigEnum.MESSAGE_PREFIX.getMsg() + RebirthInPlaceConfigEnum.REBIRTHINPLACE_APPLY.getMsg()));
             }else {
-                player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + TeleportConfigEnum.TELEPORT_DENY_APPLY.getMsg()));
+                player.sendMessage(ChatColor.translateAlternateColorCodes('&', PluginMessageConfigEnum.MESSAGE_PREFIX.getMsg() + TeleportConfigEnum.TELEPORT_DENY_APPLY.getMsg()));
             }
         }
     }

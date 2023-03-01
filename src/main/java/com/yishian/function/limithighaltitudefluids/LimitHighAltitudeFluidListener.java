@@ -2,6 +2,7 @@ package com.yishian.function.limithighaltitudefluids;
 
 import com.yishian.common.CommonEnum;
 import com.yishian.common.CommonUtils;
+import com.yishian.common.PluginMessageConfigEnum;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
@@ -47,7 +48,7 @@ public class LimitHighAltitudeFluidListener implements Listener {
                         recentPlayerDistanceName = playerDistanceTreeMap.pollFirstEntry().getValue().getName();
                     }
                     //发送消息内容模板
-                    String messageTemplate = ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + LimitHighAltitudeFluidConfigEnum.DESTROY_MESSAGE.getMsg()).replaceAll("%player%", recentPlayerDistanceName).replaceAll("%x%", String.valueOf(blockX)).replaceAll("%y%", String.valueOf(blockY)).replaceAll("%z%", String.valueOf(blockZ));
+                    String messageTemplate = ChatColor.translateAlternateColorCodes('&', PluginMessageConfigEnum.MESSAGE_PREFIX.getMsg() + LimitHighAltitudeFluidConfigEnum.DESTROY_MESSAGE.getMsg()).replaceAll("%player%", recentPlayerDistanceName).replaceAll("%x%", String.valueOf(blockX)).replaceAll("%y%", String.valueOf(blockY)).replaceAll("%z%", String.valueOf(blockZ));
                     //判断是否要广播消息
                     if ((Boolean) LimitHighAltitudeFluidConfigEnum.IS_BROADCAST_MESSAGE.getMsg()) {
                         //广播消息

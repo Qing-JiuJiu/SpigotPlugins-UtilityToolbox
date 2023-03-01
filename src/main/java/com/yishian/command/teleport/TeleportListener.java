@@ -1,7 +1,7 @@
 package com.yishian.command.teleport;
 
 import com.yishian.Main;
-import com.yishian.common.CommonEnum;
+import com.yishian.common.PluginMessageConfigEnum;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
@@ -26,7 +26,7 @@ public class TeleportListener implements Listener {
             playerTeleportEvent.setCancelled(true);
 
             //发送消息，让消息显示在最后一行
-            Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getProvidingPlugin(Main.class),()-> playerTeleportEvent.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + TeleportConfigEnum.TELEPORT_DENY_APPLY.getMsg())));
+            Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getProvidingPlugin(Main.class),()-> playerTeleportEvent.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', PluginMessageConfigEnum.MESSAGE_PREFIX.getMsg() + TeleportConfigEnum.TELEPORT_DENY_APPLY.getMsg())));
         }
     }
 

@@ -34,7 +34,6 @@ public enum CopyResConfigEnum {
      */
     COPYRES_APPLY("copyres-apply", "&a你已复制&3%res%&a物品"),
     COPYRES_DENY("copyres-deny", "&c物品&3%res%&c禁止复制"),
-    COPYRES_CONSOLE_ERROR("copyres-console-error", "&c控制台请使用官方指令：&6give <玩家> <物品[参数]> [数量]"),
     COPYRES_COMMAND_ERROR("copyres-command-error", "&c复制物品指令格式错误，正确格式: &6/copyres");
 
     private final String tag;

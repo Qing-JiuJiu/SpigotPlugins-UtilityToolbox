@@ -10,8 +10,7 @@ public enum AutoRespawnConfigEnum {
      */
     AUTORESPAWN_APPLY_OPEN("autorespawn-apply-open", "&a你已开启自动重生"),
     AUTORESPAWN_APPLY_CLOSE("autorespawn-apply-close", "&a你已关闭自动重生"),
-    AUTORESPAWN_APPLY("autorespawn-apply", "已自动跳过死亡结算界面"),
-    AUTORESPAWN_CONSOLE_ERROR("autorespawn-console-error", "&c控制台无法使用此命令");
+    AUTORESPAWN_APPLY("autorespawn-apply", "已自动跳过死亡结算界面");
 
     private final String tag;
     private Object msg;

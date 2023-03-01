@@ -2,6 +2,7 @@ package com.yishian.command.settpp;
 
 import com.yishian.common.CommonEnum;
 import com.yishian.common.CommonUtils;
+import com.yishian.common.PluginMessageConfigEnum;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
@@ -21,13 +22,13 @@ public class SetTppCommand implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         //判断指令是否携带过多参数
         if (args.length > 1) {
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + SetTppConfigEnum.SETTPP_COMMAND_ERROR.getMsg()));
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', PluginMessageConfigEnum.MESSAGE_PREFIX.getMsg() + SetTppConfigEnum.SETTPP_COMMAND_ERROR.getMsg()));
             return true;
         }
 
         //判断执行指令的是用户还是控制台
         if (!(sender instanceof Player)) {
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + SetTppConfigEnum.SETTPP_CONSOLE_ERROR.getMsg()));
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', PluginMessageConfigEnum.MESSAGE_PREFIX.getMsg() + PluginMessageConfigEnum.CONSOLE_COMMAND_NO_USE.getMsg()));
             return true;
         }
 
@@ -40,7 +41,7 @@ public class SetTppCommand implements CommandExecutor {
         //获得允许设置临时传送点的世界列表
         List<?> allowWorldList = CommonUtils.objectToList(SetTppConfigEnum.ALLOW_WORLD.getMsg());
         if (!allowWorldList.contains(worldName) && !allowWorldList.contains(CommonEnum.ALL.getCommand())) {
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + SetTppConfigEnum.SETTPP_WORLD_ERROR.getMsg().toString().replaceAll("%world%", worldName)));
+            player.sendMessage(ChatColor.translateAlternateColorCodes('&', PluginMessageConfigEnum.MESSAGE_PREFIX.getMsg() + SetTppConfigEnum.SETTPP_WORLD_ERROR.getMsg().toString().replaceAll("%world%", worldName)));
             return true;
         }
 
@@ -67,7 +68,7 @@ public class SetTppCommand implements CommandExecutor {
         CommonUtils.saveYamlConfig(snapFileYaml, SetTppConfig.file.toPath());
 
         //发送设置临时传送点消息成功消息
-        player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + SetTppConfigEnum.SETTPP_APPLY.getMsg()).replaceAll("%tp-name%", tpName));
+        player.sendMessage(ChatColor.translateAlternateColorCodes('&', PluginMessageConfigEnum.MESSAGE_PREFIX.getMsg() + SetTppConfigEnum.SETTPP_APPLY.getMsg()).replaceAll("%tp-name%", tpName));
         return true;
     }
 }

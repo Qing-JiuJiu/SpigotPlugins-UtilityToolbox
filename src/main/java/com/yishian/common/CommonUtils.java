@@ -4,7 +4,6 @@ import com.google.common.collect.Lists;
 import com.yishian.Main;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Server;
 import org.bukkit.command.CommandSender;
@@ -230,13 +229,6 @@ public class CommonUtils {
         stringReplace = stringReplace.replace("&o", "§o");
         stringReplace = stringReplace.replace("&r", "§r");
         return stringReplace;
-    }
-
-    /**
-     * 向控制台发送消息
-     */
-    public static void sendConsoleMessage(String message) {
-        Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getMsg() + message));
     }
 
     /**

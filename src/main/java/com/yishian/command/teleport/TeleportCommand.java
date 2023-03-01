@@ -1,6 +1,6 @@
 package com.yishian.command.teleport;
 
-import com.yishian.common.CommonEnum;
+import com.yishian.common.PluginMessageConfigEnum;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -23,26 +23,23 @@ public class TeleportCommand implements CommandExecutor {
         if (args.length == 0) {
             if (allowTp) {
                 allowTp = false;
-                Bukkit.getServer().broadcastMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + TeleportConfigEnum.TELEPORT_DENY.getMsg()));
+                Bukkit.getServer().broadcastMessage(ChatColor.translateAlternateColorCodes('&', PluginMessageConfigEnum.MESSAGE_PREFIX.getMsg() + TeleportConfigEnum.TELEPORT_DENY.getMsg()));
             } else {
                 allowTp = true;
-                Bukkit.getServer().broadcastMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + TeleportConfigEnum.TELEPORT_ALLOW.getMsg()));
+                Bukkit.getServer().broadcastMessage(ChatColor.translateAlternateColorCodes('&', PluginMessageConfigEnum.MESSAGE_PREFIX.getMsg() + TeleportConfigEnum.TELEPORT_ALLOW.getMsg()));
             }
 
-            //判断指令是否带一个参数，这个参数就是原因
-        } else if (args.length == 1) {
-            String reason = args[0];
-            if (allowTp) {
-                allowTp = false;
-                Bukkit.getServer().broadcastMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + TeleportConfigEnum.TELEPORT_DENY_REASON.getMsg()).replaceAll("%reason%", reason));
-            } else {
-                allowTp = true;
-                Bukkit.getServer().broadcastMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + TeleportConfigEnum.TELEPORT_ALLOW_REASON.getMsg()).replaceAll("%reason%", reason));
-            }
+            return true;
+        }
 
-            //携带过多参数，无法识别。
+        //直接获取第一个参数当作原因
+        String reason = args[0];
+        if (allowTp) {
+            allowTp = false;
+            Bukkit.getServer().broadcastMessage(ChatColor.translateAlternateColorCodes('&', PluginMessageConfigEnum.MESSAGE_PREFIX.getMsg() + TeleportConfigEnum.TELEPORT_DENY_REASON.getMsg()).replaceAll("%reason%", reason));
         } else {
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + TeleportConfigEnum.TELEPORT_COMMAND_ERROR.getMsg()));
+            allowTp = true;
+            Bukkit.getServer().broadcastMessage(ChatColor.translateAlternateColorCodes('&', PluginMessageConfigEnum.MESSAGE_PREFIX.getMsg() + TeleportConfigEnum.TELEPORT_ALLOW_REASON.getMsg()).replaceAll("%reason%", reason));
         }
 
         return true;

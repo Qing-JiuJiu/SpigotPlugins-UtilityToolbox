@@ -1,7 +1,7 @@
 package com.yishian.command.copyres;
 
-import com.yishian.common.CommonEnum;
 import com.yishian.common.CommonUtils;
+import com.yishian.common.PluginMessageConfigEnum;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -21,13 +21,13 @@ public class CopyResCommand implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         //判断指令是否带参数
         if (args.length != 0) {
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + CopyResConfigEnum.COPYRES_COMMAND_ERROR.getMsg()));
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', PluginMessageConfigEnum.MESSAGE_PREFIX.getMsg() + CopyResConfigEnum.COPYRES_COMMAND_ERROR.getMsg()));
             return true;
         }
 
         //判断执行指令的是用户还是控制台
         if (!(sender instanceof Player)) {
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + CopyResConfigEnum.COPYRES_CONSOLE_ERROR.getMsg()));
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', PluginMessageConfigEnum.MESSAGE_PREFIX.getMsg() + PluginMessageConfigEnum.CONSOLE_USE_OFFICIAL_COMMAND_TIPS.getMsg()));
             return true;
         }
 
@@ -47,7 +47,7 @@ public class CopyResCommand implements CommandExecutor {
         if (!itemExcludeList.contains(itemName)) {
             //判断黑名单
             if (itemBlackList.contains(itemName)) {
-                player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + CopyResConfigEnum.COPYRES_DENY.getMsg()).replaceAll("%res%", itemName));
+                player.sendMessage(ChatColor.translateAlternateColorCodes('&', PluginMessageConfigEnum.MESSAGE_PREFIX.getMsg() + CopyResConfigEnum.COPYRES_DENY.getMsg()).replaceAll("%res%", itemName));
                 return true;
             }
 
@@ -58,7 +58,7 @@ public class CopyResCommand implements CommandExecutor {
             if (!CommonUtils.collectionIsEmpty(itemWildcardList)) {
                 for (Object itemWildcard : itemWildcardList) {
                     if (itemName.startsWith(itemWildcard.toString())) {
-                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + CopyResConfigEnum.COPYRES_DENY.getMsg()).replaceAll("%res%", itemName));
+                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', PluginMessageConfigEnum.MESSAGE_PREFIX.getMsg() + CopyResConfigEnum.COPYRES_DENY.getMsg()).replaceAll("%res%", itemName));
                         return true;
                     }
                 }
@@ -69,10 +69,10 @@ public class CopyResCommand implements CommandExecutor {
         ItemStack cloneItemStack = itemInMainHand.clone();
         cloneItemStack.setAmount(cloneItemStack.getMaxStackSize());
         playerInventory.addItem(cloneItemStack);
-        player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonEnum.MESSAGE_PREFIX.getCommand() + CopyResConfigEnum.COPYRES_APPLY.getMsg()).replaceAll("%res%", itemName));
+        player.sendMessage(ChatColor.translateAlternateColorCodes('&', PluginMessageConfigEnum.MESSAGE_PREFIX.getMsg() + CopyResConfigEnum.COPYRES_APPLY.getMsg()).replaceAll("%res%", itemName));
 
         //控制台输出信息
-        CommonUtils.sendConsoleMessage("玩家" + player.getName() + "复制了物品：" + itemName);
+        CommonUtils.logger.info("玩家" + player.getName() + "复制了物品：" + itemName);
 
         //执行成功
         return true;
