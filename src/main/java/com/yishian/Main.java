@@ -27,8 +27,8 @@ import com.yishian.command.killself.KillSelfEnum;
 import com.yishian.command.musterplayer.MusterPlayerCommand;
 import com.yishian.command.musterplayer.MusterPlayerEnum;
 import com.yishian.command.musterplayer.MusterPlayerListener;
-import com.yishian.command.playmode.PlayModeCommand;
-import com.yishian.command.playmode.PlayModeEnum;
+import com.yishian.command.gm.GMCommand;
+import com.yishian.command.gm.GMModeEnum;
 import com.yishian.command.sendconsole.SendConsoleCommand;
 import com.yishian.command.sendconsole.SendConsoleEnum;
 import com.yishian.command.sethome.SetHomeCommand;
@@ -227,14 +227,14 @@ public final class Main extends JavaPlugin {
         copyResCommand.setExecutor(new CopyResCommand());
 
         //模式切换
-        PluginCommand playModeCommand = getCommand(PlayModeEnum.PLAY_MODE_COMMAND.getCommand());
-        playModeCommand.setPermission(PlayModeEnum.PLAY_MODE_PERMISSION.getCommand());
-        playModeCommand.setExecutor(new PlayModeCommand());
+        PluginCommand gMCommand = getCommand(GMModeEnum.GM_COMMAND.getCommand());
+        gMCommand.setPermission(GMModeEnum.GM_PERMISSION.getCommand());
+        gMCommand.setExecutor(new GMCommand());
 
         //设置临时传送点
-        PluginCommand setSnapTpCommand = getCommand(SetTppEnum.SET_TPP_COMMAND.getCommand());
-        setSnapTpCommand.setPermission(SetTppEnum.SET_TPP_PERMISSION.getCommand());
-        setSnapTpCommand.setExecutor(new SetTppCommand());
+        PluginCommand setTpPCommand = getCommand(SetTppEnum.SET_TPP_COMMAND.getCommand());
+        setTpPCommand.setPermission(SetTppEnum.SET_TPP_PERMISSION.getCommand());
+        setTpPCommand.setExecutor(new SetTppCommand());
 
         //回临时传送点
         PluginCommand snapTpCommand = getCommand(TppEnum.TPP_COMMAND.getCommand());

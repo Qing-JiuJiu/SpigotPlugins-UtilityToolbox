@@ -340,12 +340,12 @@ copyres:
     copyres-command-error: '&c复制物品指令格式错误，正确格式: &6/copyres'
 
 #模式切换
-playmode:
+gm:
   message:
-    playmode-apply: '&a已让服务器执行切换模式指令'
-    playmode-console-error: '&c控制台请使用官方指令：&6gamemode <模式> <玩家>'
-    playmode-command-error: '&c切换模式指令格式错误，正确格式: &6/playmode <游戏模式>'
-    playmode-no-permission-error: '&c你没有切换到模式&3%gamemode%&c的权限'
+    gm-apply: '&a已让服务器执行切换模式指令'
+    gm-console-error: '&c控制台请使用官方指令：&6gamemode <模式> <玩家>'
+    gm-command-error: '&c切换模式指令格式错误，正确格式: &6/gm <游戏模式>'
+    gm-no-permission-error: '&c你没有切换到模式&3%gamemode%&c的权限'
 
 #设置传送点
 settpp:

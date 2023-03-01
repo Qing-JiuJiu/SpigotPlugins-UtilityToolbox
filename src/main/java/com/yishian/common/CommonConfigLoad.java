@@ -21,8 +21,8 @@ import com.yishian.command.killself.KillSelfConfigEnum;
 import com.yishian.command.killself.KillSelfEnum;
 import com.yishian.command.musterplayer.MusterPlayerConfigEnum;
 import com.yishian.command.musterplayer.MusterPlayerEnum;
-import com.yishian.command.playmode.PlayModeConfigEnum;
-import com.yishian.command.playmode.PlayModeEnum;
+import com.yishian.command.gm.GMConfigEnum;
+import com.yishian.command.gm.GMModeEnum;
 import com.yishian.command.sendconsole.SendConsoleConfigEnum;
 import com.yishian.command.sendconsole.SendConsoleEnum;
 import com.yishian.command.sethome.SetHomeConfigEnum;
@@ -434,11 +434,11 @@ public class CommonConfigLoad {
      */
     public static void playModeConfigLoad() {
         //playmode消息内容
-        ConfigurationSection playModeMessage = ServerConfig.getConfigurationSection(PlayModeEnum.PLAY_MODE_COMMAND.getCommand()).getConfigurationSection(CommonEnum.MESSAGE.getCommand());
+        ConfigurationSection playModeMessage = ServerConfig.getConfigurationSection(GMModeEnum.GM_COMMAND.getCommand()).getConfigurationSection(CommonEnum.MESSAGE.getCommand());
         //得到所有枚举的值
-        PlayModeConfigEnum[] playModeConfigEnums = PlayModeConfigEnum.values();
+        GMConfigEnum[] GMConfigEnums = GMConfigEnum.values();
         //循环判断每个节点是否存在，存在就替换枚举里的内容，不存在就添加到未定义的标签列表并恢复原内容
-        for (PlayModeConfigEnum playModeConfigNodeEnum : playModeConfigEnums) {
+        for (GMConfigEnum playModeConfigNodeEnum : GMConfigEnums) {
             //得到配置文件标签
             String playModeConfigNodeEnumTag = playModeConfigNodeEnum.getTag();
             //直接设置消息内容，如果存在该节点就会设置节点内容，如果不存在就会使用源配置文件里的内容

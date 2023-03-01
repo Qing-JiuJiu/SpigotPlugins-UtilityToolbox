@@ -38,7 +38,7 @@ commands:
     description: 切换服务器是否允许传送
   copyres:
     description: 复制主手上的物品
-  playmode:
+  gm:
     description: 模式切换
   settpp:
     description: 设置传送点
@@ -93,12 +93,12 @@ permissions:
     default: true
     description: 随机传送的权限
 
-  UtilityToolbox.playmode:
+  UtilityToolbox.gm:
     children:
-      UtilityToolbox.playmode.creative: false
-      UtilityToolbox.playmode.survival: false
-      UtilityToolbox.playmode.adventure: false
-      UtilityToolbox.playmode.spectator: false
+      UtilityToolbox.gm.creative: false
+      UtilityToolbox.gm.survival: false
+      UtilityToolbox.gm.adventure: false
+      UtilityToolbox.gm.spectator: false
     description: 切换游戏模式的权限
 
   UtilityToolbox.back:
