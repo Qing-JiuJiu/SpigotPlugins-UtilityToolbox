@@ -15,6 +15,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -25,6 +26,9 @@ public class TprCommand implements CommandExecutor {
 
     //新建一个随机数
     Random rand = new Random();
+
+    //用于存储基岩方块
+    List<Block> blockList = new ArrayList<>();
 
     //危险方块列表
     List<?> dangerousBlockList = CommonUtils.objectToList(TprConfigEnum.DANGEROUS_BLOCK.getMsg());
@@ -111,14 +115,44 @@ public class TprCommand implements CommandExecutor {
 
         //判断该位置是否安全
         Block highestBlockAt = world.getHighestBlockAt(newLocation);
-        if (dangerousBlockList.contains(highestBlockAt.getType().getKey().toString())) {
-            //重新产生新的位置，如果该位置有危险的话
-            return newLocation(location, world, tprx, tprz);
-        } else {
-            //返回将该位置的Y值加1
+
+        //判断是否是下届，不是下届且方块不是危险方块则返回该位置 +1
+        if (!"the_nether".equals(world.getName())) {
+            if (dangerousBlockList.contains(highestBlockAt.getType().getKey().toString())) {
+                //重新产生新的位置，如果该位置有危险的话
+                return newLocation(location, world, tprx, tprz);
+            }
             newLocation.setY(highestBlockAt.getY() + 1);
             return newLocation;
         }
+
+        return removeBedrock(world, newLocation, highestBlockAt, tprx, tprz);
+    }
+
+    /**
+     * 循环去除基岩
+     */
+    public Location removeBedrock(World world, Location location, Block highestBlockAt,Integer tprx, Integer tprz) {
+        //判断是否是基岩
+        if ("minecraft.bedrock".equals(highestBlockAt.getType().getKey().toString())) {
+            blockList.add(highestBlockAt);
+            highestBlockAt.setType(org.bukkit.Material.AIR);
+            return removeBedrock(world, location, world.getHighestBlockAt(location),tprx,tprz);
+        }
+
+        //重新将基岩填上
+        for (Block block : blockList) {
+            block.setType(org.bukkit.Material.BEDROCK);
+        }
+        blockList.clear();
+
+        //判断该位置是否有危险
+        if (dangerousBlockList.contains(highestBlockAt.getType().getKey().toString())) {
+            //重新产生新的位置，如果该位置有危险的话
+            return newLocation(location, world, tprx, tprz);
+        }
+
+        return location;
     }
 }
 

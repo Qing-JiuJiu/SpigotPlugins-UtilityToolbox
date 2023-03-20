@@ -318,14 +318,14 @@ settpp:
   message:
     settpp-apply: '&a已将此位置设为&3%tp-name%&a传送点'
     settpp-world-error: '&c世界&3%world%&c禁止设置传送点'
-    settpp-command-error: '&c设置传送点指令格式错误，正确格式: &6/settpp [tpname]'
+    settpp-command-error: '&c设置传送点指令格式错误，正确格式: &6/settpp [name]'
 
 #传送到传送点
 tpp:
   message:
     tpp-apply: '&a你已传送到&3%tp-name%&a传送点'
     tpp-no-exist: '&c传送点&3%tp-name%&c不存在，请检查传送点名称是否正确'
-    tpp-command-error: '&c回到传送点指令错误，正确格式: &6/tpp [tpname]'
+    tpp-command-error: '&c回到传送点指令错误，正确格式: &6/tpp [name]'
 
 #召集玩家
 musterplayer:
