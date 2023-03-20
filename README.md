@@ -108,4 +108,6 @@
 修改默认权限，玩家默认拥有权限：utilitytoolbox.home、utilitytoolbox.tpp、utilityToolbox.tpa、utilitytoolbox.tpr、utilitytoolbox.back、utilityToolbox.killself、utilityToolbox.rebirthinplace、utilityToolbox.autorespawn
 优化配置文件内容，减少重复的消息内容
 注意：该版本修改了大量的内容，会跟之前版本的配置文件有大量冲突，在此之前的版本更新到此版本请删除旧版本配置文件以自动保存最新的配置文件
+#3.1.1
+修复 tpr 随机传送指令在下届使用时传送到基岩层上的问题
 ```
