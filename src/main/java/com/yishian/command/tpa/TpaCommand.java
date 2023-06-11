@@ -40,7 +40,6 @@ public class TpaCommand implements TabExecutor {
             return true;
         }
 
-
         //判断参数是否为0，为0证明没有指定玩家，报错
         if (args.length == 0) {
             sender.sendMessage(ChatColor.translateAlternateColorCodes('&', PluginMessageConfigEnum.MESSAGE_PREFIX.getMsg() + TpaConfigEnum.TPA_COMMAND_ERROR.getMsg()));
@@ -92,7 +91,6 @@ public class TpaCommand implements TabExecutor {
         othersPlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', PluginMessageConfigEnum.MESSAGE_PREFIX.getMsg() + TpaConfigEnum.TPA_APPLY_OTHERS.getMsg()).replaceAll("%player%", playerName));
         othersPlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', PluginMessageConfigEnum.MESSAGE_PREFIX.getMsg() + TpaConfigEnum.TPA_APPLY_ACCEPT_TIPS.getMsg()));
         othersPlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', PluginMessageConfigEnum.MESSAGE_PREFIX.getMsg() + TpaConfigEnum.TPA_APPLY_DENY_TIPS.getMsg()));
-
 
         return true;
     }

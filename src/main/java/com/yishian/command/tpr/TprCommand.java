@@ -1,11 +1,9 @@
 package com.yishian.command.tpr;
 
-import com.yishian.Main;
 import com.yishian.command.teleport.TeleportCommand;
 import com.yishian.common.CommonEnum;
 import com.yishian.common.CommonUtils;
 import com.yishian.common.PluginMessageConfigEnum;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -58,7 +56,7 @@ public class TprCommand implements CommandExecutor {
         }
 
         //因随机传送获取安全位置开销很大，使用异步任务进行
-        Bukkit.getScheduler().runTaskAsynchronously(Main.getProvidingPlugin(Main.class), () -> {
+
             //得到配置文件里设置的数值
             int tprx = Integer.parseInt(TprConfigEnum.RANDOM_X.getMsg().toString());
             int tprz = Integer.parseInt(TprConfigEnum.RANDOM_Z.getMsg().toString());
@@ -88,15 +86,14 @@ public class TprCommand implements CommandExecutor {
                 newLocation = newLocation(playerLocation, world, tprx, tprz);
             }
 
-            //创建同步任务以传送玩家
-            Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getProvidingPlugin(Main.class), () -> {
                 //传送玩家
                 player.teleport(newLocation);
                 if (TeleportCommand.allowTp) {
                     player.sendMessage(ChatColor.translateAlternateColorCodes('&', PluginMessageConfigEnum.MESSAGE_PREFIX.getMsg() + TprConfigEnum.TPR_APPLY.getMsg()).replaceAll("%x%", String.valueOf(newLocation.getBlockX())).replaceAll("%y%", String.valueOf(newLocation.getBlockY())).replaceAll("%z%", String.valueOf(newLocation.getBlockZ())));
                 }
-            });
-        });
+
+
+
 
         return true;
     }
@@ -117,7 +114,7 @@ public class TprCommand implements CommandExecutor {
         Block highestBlockAt = world.getHighestBlockAt(newLocation);
 
         //判断是否是下届，不是下届且方块不是危险方块则返回该位置 +1
-        if (!"the_nether".equals(world.getName())) {
+        if (!"world_nether".equals(world.getName())) {
             if (dangerousBlockList.contains(highestBlockAt.getType().getKey().toString())) {
                 //重新产生新的位置，如果该位置有危险的话
                 return newLocation(location, world, tprx, tprz);
@@ -134,16 +131,18 @@ public class TprCommand implements CommandExecutor {
      */
     public Location removeBedrock(World world, Location location, Block highestBlockAt,Integer tprx, Integer tprz) {
         //判断是否是基岩
-        if ("minecraft.bedrock".equals(highestBlockAt.getType().getKey().toString())) {
+        if ("minecraft:bedrock".equals(highestBlockAt.getType().getKey().toString())) {
             blockList.add(highestBlockAt);
-            highestBlockAt.setType(org.bukkit.Material.AIR);
+           highestBlockAt.setType(org.bukkit.Material.AIR);
+
             return removeBedrock(world, location, world.getHighestBlockAt(location),tprx,tprz);
         }
 
         //重新将基岩填上
-        for (Block block : blockList) {
-            block.setType(org.bukkit.Material.BEDROCK);
-        }
+            for (Block block : blockList) {
+                block.setType(org.bukkit.Material.BEDROCK);
+            }
+
         blockList.clear();
 
         //判断该位置是否有危险
