@@ -11,14 +11,14 @@ import com.yishian.command.fly.FlyConfigEnum;
 import com.yishian.command.fly.FlyEnum;
 import com.yishian.command.flyspeed.FlySpeedConfigEnum;
 import com.yishian.command.flyspeed.FlySpeedEnum;
-import com.yishian.command.gm.GMConfigEnum;
-import com.yishian.command.gm.GMModeEnum;
+import com.yishian.command.gm.GmConfigEnum;
+import com.yishian.command.gm.GmModeEnum;
 import com.yishian.command.heal.HealConfigEnum;
 import com.yishian.command.heal.HealEnum;
 import com.yishian.command.home.HomeConfigEnum;
 import com.yishian.command.home.HomeEnum;
-import com.yishian.command.kills.KillSConfigEnum;
-import com.yishian.command.kills.KillSEnum;
+import com.yishian.command.killself.KillSelfConfigEnum;
+import com.yishian.command.killself.KillSelfEnum;
 import com.yishian.command.musterplayer.MusterPlayerConfigEnum;
 import com.yishian.command.musterplayer.MusterPlayerEnum;
 import com.yishian.command.rebirthinplace.RebirthInPlaceConfigEnum;
@@ -90,12 +90,10 @@ public class CommonConfigLoad {
      */
     public static void loadConfig() {
         //重新读取配置文件
-        ServerConfig = CommonUtils.javaPlugin.getConfig();
-
-        //读取所有配置文件
+        ServerConfig = CommonUtil.javaPlugin.getConfig();
 
         //插件共用消息
-        pluginMessageConfigLoad();
+        commonMessageConfigLoad();
 
         //指令相关
         healConfigLoad();
@@ -111,11 +109,11 @@ public class CommonConfigLoad {
         setHomeConfigLoad();
         killSelfConfigLoad();
         musterPlayerConfigLoad();
-        playModeConfigLoad();
+        gmConfigLoad();
         sendConsoleConfigLoad();
         setSnapTpConfigLoad();
         showTextCodeConfigLoad();
-        snapTpConfigLoad();
+        tppConfigLoad();
         tpaConfigLoad();
         tpaCancelConfigLoad();
         tpaCceptConfigLoad();
@@ -133,34 +131,32 @@ public class CommonConfigLoad {
         serverListDisplayModificationConfigLoad();
 
         //输出所有未定义的标签
-        if (undefinedTagList.size() > 0) {
-            undefinedTagList.forEach(tag -> CommonUtils.javaPlugin.getLogger().warning("配置文件缺少标签或标签值：" + tag));
-            CommonUtils.javaPlugin.getLogger().warning("配置文件里缺少标签或标签值，缺少原因是插件版本更新或配置文件误修改导致，缺少的内容将使用默认值。如果需要自定义该内容，请在配置文件中对应位置添加对应内容，内容位置及模板请参考帖子里最新的config.yml。如果从未修改过配置文件，可直接删除插件配置文件重启服务器自动生成最新配置文件或忽略该警告");
+        if (!undefinedTagList.isEmpty()) {
+            undefinedTagList.forEach(tag -> CommonUtil.javaPlugin.getLogger().warning("配置文件缺少标签或标签值：" + tag));
+            CommonUtil.javaPlugin.getLogger().warning("配置文件里缺少标签或标签值，缺少原因是插件版本更新或配置文件误修改导致，缺少的内容将使用默认值。如果需要自定义该内容，请在配置文件中对应位置添加对应内容，内容位置及模板请参考帖子里最新的config.yml。如果从未修改过配置文件，可直接删除插件配置文件重启服务器自动生成最新配置文件或忽略该警告");
             //清空列表
             undefinedTagList.clear();
         }
     }
 
     /**
-     * PluginMessage的配置加载
+     * CommonMessage的配置加载
      */
-    public static void pluginMessageConfigLoad() {
-        //PluginMessage消息内容
-        ConfigurationSection pluginMessageConfigMessage = ServerConfig.getConfigurationSection("plugin-message");
+    public static void commonMessageConfigLoad() {
+        //CommonMessage消息内容
+        ConfigurationSection commonMessageConfigMessage = ServerConfig.getConfigurationSection("common-message");
         //得到所有枚举的值
-        PluginMessageConfigEnum[] pluginMessageConfigEnums = PluginMessageConfigEnum.values();
+        CommonMessageEnum[] commonMessageEnums = CommonMessageEnum.values();
         //循环判断每个节点是否存在，存在就替换枚举里的内容，不存在就添加到未定义的标签列表并恢复原内容
-        for (PluginMessageConfigEnum pluginMessageConfigNodeEnum : pluginMessageConfigEnums) {
+        for (CommonMessageEnum commonMessageConfigNodeEnum : commonMessageEnums) {
             //得到配置文件标签
-            String pluginMessageConfigTag = pluginMessageConfigNodeEnum.getTag();
-            //直接设置消息内容，如果存在该节点就会设置节点内容，如果不存在就会使用源配置文件里的内容
-            pluginMessageConfigNodeEnum.setMsg(pluginMessageConfigMessage.getString(pluginMessageConfigTag));
+            String pluginMessageConfigTag = commonMessageConfigNodeEnum.getTag();
+            //直接设置消息内容，如果存在该节点就会设置节点内容，如果不存在就会直接使用源配置文件里的内容
+            commonMessageConfigNodeEnum.setMsg(commonMessageConfigMessage.getString(pluginMessageConfigTag));
             //判断是否拥有该节点
-            if (!pluginMessageConfigMessage.contains(pluginMessageConfigTag)) {
+            if (!commonMessageConfigMessage.contains(pluginMessageConfigTag)) {
                 //添加到未定义的标签列表
                 undefinedTagList.add(pluginMessageConfigTag);
-                //恢复原内容
-                pluginMessageConfigNodeEnum.setMsg(pluginMessageConfigNodeEnum.getMsg());
             }
         }
     }
@@ -170,7 +166,7 @@ public class CommonConfigLoad {
      */
     public static void healConfigLoad() {
         //heal消息内容
-        ConfigurationSection healConfigMessage = ServerConfig.getConfigurationSection(HealEnum.HEAL_COMMAND.getCommand()).getConfigurationSection(CommonEnum.MESSAGE.getCommand());
+        ConfigurationSection healConfigMessage = ServerConfig.getConfigurationSection(HealEnum.HEAL_COMMAND.getCommand()).getConfigurationSection(CommonPluginEnum.MESSAGE.getCommand());
         //得到所有枚举的值
         HealConfigEnum[] healConfigEnums = HealConfigEnum.values();
         //循环判断每个节点是否存在，存在就替换枚举里的内容，不存在就添加到未定义的标签列表并恢复原内容
@@ -192,7 +188,7 @@ public class CommonConfigLoad {
      */
     public static void autoRespawnBackConfigLoad() {
         //autoRespawnBack消息内容
-        ConfigurationSection autoRespawnBackMessage = ServerConfig.getConfigurationSection(RebirthInPlaceEnum.REBIRTH_IN_PLACE_COMMAND.getCommand()).getConfigurationSection(CommonEnum.MESSAGE.getCommand());
+        ConfigurationSection autoRespawnBackMessage = ServerConfig.getConfigurationSection(RebirthInPlaceEnum.REBIRTH_IN_PLACE_COMMAND.getCommand()).getConfigurationSection(CommonPluginEnum.MESSAGE.getCommand());
         //得到所有枚举的值
         RebirthInPlaceConfigEnum[] rebirthInPlaceConfigEnums = RebirthInPlaceConfigEnum.values();
         //循环判断每个节点是否存在，存在就替换枚举里的内容，不存在就添加到未定义的标签列表并恢复原内容
@@ -213,7 +209,7 @@ public class CommonConfigLoad {
      */
     public static void autoRespawnConfigLoad() {
         //autoRespawn消息内容
-        ConfigurationSection autoRespawnMessage = ServerConfig.getConfigurationSection(AutoRespawnEnum.AUTO_RESPAWN_COMMAND.getCommand()).getConfigurationSection(CommonEnum.MESSAGE.getCommand());
+        ConfigurationSection autoRespawnMessage = ServerConfig.getConfigurationSection(AutoRespawnEnum.AUTORESPAWN_COMMAND.getCommand()).getConfigurationSection(CommonPluginEnum.MESSAGE.getCommand());
         //得到所有枚举的值
         AutoRespawnConfigEnum[] autoRespawnConfigEnums = AutoRespawnConfigEnum.values();
         //循环判断每个节点是否存在，存在就替换枚举里的内容，不存在就添加到未定义的标签列表并恢复原内容
@@ -234,7 +230,7 @@ public class CommonConfigLoad {
      */
     public static void teleportConfigLoad() {
         //teleport消息内容
-        ConfigurationSection teleportMessage = ServerConfig.getConfigurationSection(TeleportEnum.TELEPORT_COMMAND.getCommand()).getConfigurationSection(CommonEnum.MESSAGE.getCommand());
+        ConfigurationSection teleportMessage = ServerConfig.getConfigurationSection(TeleportEnum.TELEPORT_COMMAND.getCommand()).getConfigurationSection(CommonPluginEnum.MESSAGE.getCommand());
         //得到所有枚举的值
         TeleportConfigEnum[] teleportConfigEnums = TeleportConfigEnum.values();
         //循环判断每个节点是否存在，存在就替换枚举里的内容，不存在就添加到未定义的标签列表并恢复原内容
@@ -257,7 +253,7 @@ public class CommonConfigLoad {
         //获得copyres指令的配置根目录
         ConfigurationSection copyresConfigurationSection = ServerConfig.getConfigurationSection(CopyResEnum.COPY_RES_COMMAND.getCommand());
         //copyres消息内容
-        ConfigurationSection copyresMessage = copyresConfigurationSection.getConfigurationSection(CommonEnum.MESSAGE.getCommand());
+        ConfigurationSection copyresMessage = copyresConfigurationSection.getConfigurationSection(CommonPluginEnum.MESSAGE.getCommand());
         //得到所有枚举的值
         CopyResConfigEnum[] copyresConfigEnums = CopyResConfigEnum.values();
         //循环判断每个节点是否存在，存在就替换枚举里的内容，不存在就添加到未定义的标签列表并恢复原内容
@@ -282,7 +278,7 @@ public class CommonConfigLoad {
      */
     public static void backConfigLoad() {
         //back消息内容
-        ConfigurationSection backMessage = ServerConfig.getConfigurationSection(BackEnum.BACK_COMMAND.getCommand()).getConfigurationSection(CommonEnum.MESSAGE.getCommand());
+        ConfigurationSection backMessage = ServerConfig.getConfigurationSection(BackEnum.BACK_COMMAND.getCommand()).getConfigurationSection(CommonPluginEnum.MESSAGE.getCommand());
         //得到所有枚举的值
         BackConfigEnum[] backConfigEnums = BackConfigEnum.values();
         //循环判断每个节点是否存在，存在就替换枚举里的内容，不存在就添加到未定义的标签列表并恢复原内容
@@ -303,7 +299,7 @@ public class CommonConfigLoad {
      */
     public static void flyConfigLoad() {
         //fly消息内容
-        ConfigurationSection flyMessage = ServerConfig.getConfigurationSection(FlyEnum.FLY_COMMAND.getCommand()).getConfigurationSection(CommonEnum.MESSAGE.getCommand());
+        ConfigurationSection flyMessage = ServerConfig.getConfigurationSection(FlyEnum.FLY_COMMAND.getCommand()).getConfigurationSection(CommonPluginEnum.MESSAGE.getCommand());
         //得到所有枚举的值
         FlyConfigEnum[] flyConfigEnums = FlyConfigEnum.values();
         //循环判断每个节点是否存在，存在就替换枚举里的内容，不存在就添加到未定义的标签列表并恢复原内容
@@ -324,7 +320,7 @@ public class CommonConfigLoad {
      */
     public static void flySpeedConfigLoad() {
         //flyspeed消息内容
-        ConfigurationSection flySpeedMessage = ServerConfig.getConfigurationSection(FlySpeedEnum.FLY_SPEED_COMMAND.getCommand()).getConfigurationSection(CommonEnum.MESSAGE.getCommand());
+        ConfigurationSection flySpeedMessage = ServerConfig.getConfigurationSection(FlySpeedEnum.FLY_SPEED_COMMAND.getCommand()).getConfigurationSection(CommonPluginEnum.MESSAGE.getCommand());
         //得到所有枚举的值
         FlySpeedConfigEnum[] flySpeedConfigEnums = FlySpeedConfigEnum.values();
         //循环判断每个节点是否存在，存在就替换枚举里的内容，不存在就添加到未定义的标签列表并恢复原内容
@@ -345,7 +341,7 @@ public class CommonConfigLoad {
      */
     public static void walkSpeedConfigLoad() {
         //walkspeed消息内容
-        ConfigurationSection walkSpeedMessage = ServerConfig.getConfigurationSection(WalkSpeedEnum.WALK_SPEED_COMMAND.getCommand()).getConfigurationSection(CommonEnum.MESSAGE.getCommand());
+        ConfigurationSection walkSpeedMessage = ServerConfig.getConfigurationSection(WalkSpeedEnum.WALKSPEED_COMMAND.getCommand()).getConfigurationSection(CommonPluginEnum.MESSAGE.getCommand());
         //得到所有枚举的值
         WalkSpeedConfigEnum[] walkSpeedConfigEnums = WalkSpeedConfigEnum.values();
         //循环判断每个节点是否存在，存在就替换枚举里的内容，不存在就添加到未定义的标签列表并恢复原内容
@@ -366,7 +362,7 @@ public class CommonConfigLoad {
      */
     public static void homeConfigLoad() {
         //home消息内容
-        ConfigurationSection homeMessage = ServerConfig.getConfigurationSection(HomeEnum.HOME_COMMAND.getCommand()).getConfigurationSection(CommonEnum.MESSAGE.getCommand());
+        ConfigurationSection homeMessage = ServerConfig.getConfigurationSection(HomeEnum.HOME_COMMAND.getCommand()).getConfigurationSection(CommonPluginEnum.MESSAGE.getCommand());
         //得到所有枚举的值
         HomeConfigEnum[] homeConfigEnums = HomeConfigEnum.values();
         //循环判断每个节点是否存在，存在就替换枚举里的内容，不存在就添加到未定义的标签列表并恢复原内容
@@ -389,7 +385,7 @@ public class CommonConfigLoad {
         //获得sethome指令的配置根目录
         ConfigurationSection setHomeConfigurationSection = ServerConfig.getConfigurationSection(SetHomeEnum.SET_HOME_COMMAND.getCommand());
         //sethome消息内容
-        ConfigurationSection setHomeMessage = setHomeConfigurationSection.getConfigurationSection(CommonEnum.MESSAGE.getCommand());
+        ConfigurationSection setHomeMessage = setHomeConfigurationSection.getConfigurationSection(CommonPluginEnum.MESSAGE.getCommand());
         //得到所有枚举的值
         SetHomeConfigEnum[] setHomeConfigEnums = SetHomeConfigEnum.values();
         //循环判断每个节点是否存在，存在就替换枚举里的内容，不存在就添加到未定义的标签列表并恢复原内容
@@ -414,11 +410,11 @@ public class CommonConfigLoad {
      */
     public static void killSelfConfigLoad() {
         //killself消息内容
-        ConfigurationSection killSelfMessage = ServerConfig.getConfigurationSection(KillSEnum.KILLS_COMMAND.getCommand()).getConfigurationSection(CommonEnum.MESSAGE.getCommand());
+        ConfigurationSection killSelfMessage = ServerConfig.getConfigurationSection(KillSelfEnum.KILLSELF_COMMAND.getCommand()).getConfigurationSection(CommonPluginEnum.MESSAGE.getCommand());
         //得到所有枚举的值
-        KillSConfigEnum[] killSConfigEnums = KillSConfigEnum.values();
+        KillSelfConfigEnum[] killSelfConfigEnums = KillSelfConfigEnum.values();
         //循环判断每个节点是否存在，存在就替换枚举里的内容，不存在就添加到未定义的标签列表并恢复原内容
-        for (KillSConfigEnum killSelfConfigNodeEnum : killSConfigEnums) {
+        for (KillSelfConfigEnum killSelfConfigNodeEnum : killSelfConfigEnums) {
             //得到配置文件标签
             String killSelfConfigNodeEnumTag = killSelfConfigNodeEnum.getTag();
             //直接设置消息内容，如果存在该节点就会设置节点内容，如果不存在就会使用源配置文件里的内容
@@ -437,7 +433,7 @@ public class CommonConfigLoad {
         //获得copyres指令的配置根目录
         ConfigurationSection musterPlayerConfigurationSection = ServerConfig.getConfigurationSection(MusterPlayerEnum.MUSTER_PLAYER_COMMAND.getCommand());
         //musterplayer消息内容
-        ConfigurationSection musterPlayerMessage = musterPlayerConfigurationSection.getConfigurationSection(CommonEnum.MESSAGE.getCommand());
+        ConfigurationSection musterPlayerMessage = musterPlayerConfigurationSection.getConfigurationSection(CommonPluginEnum.MESSAGE.getCommand());
         //得到所有枚举的值
         MusterPlayerConfigEnum[] musterPlayerConfigEnums = MusterPlayerConfigEnum.values();
         //循环判断每个节点是否存在，存在就替换枚举里的内容，不存在就添加到未定义的标签列表并恢复原内容
@@ -458,22 +454,22 @@ public class CommonConfigLoad {
     }
 
     /**
-     * playmode指令的配置加载
+     * gm指令的配置加载
      */
-    public static void playModeConfigLoad() {
+    public static void gmConfigLoad() {
         //playmode消息内容
-        ConfigurationSection playModeMessage = ServerConfig.getConfigurationSection(GMModeEnum.GM_COMMAND.getCommand()).getConfigurationSection(CommonEnum.MESSAGE.getCommand());
+        ConfigurationSection gmMessage = ServerConfig.getConfigurationSection(GmModeEnum.GM_COMMAND.getCommand()).getConfigurationSection(CommonPluginEnum.MESSAGE.getCommand());
         //得到所有枚举的值
-        GMConfigEnum[] GMConfigEnums = GMConfigEnum.values();
+        GmConfigEnum[] gmConfigEnums = GmConfigEnum.values();
         //循环判断每个节点是否存在，存在就替换枚举里的内容，不存在就添加到未定义的标签列表并恢复原内容
-        for (GMConfigEnum playModeConfigNodeEnum : GMConfigEnums) {
+        for (GmConfigEnum gmConfigNodeEnum : gmConfigEnums) {
             //得到配置文件标签
-            String playModeConfigNodeEnumTag = playModeConfigNodeEnum.getTag();
+            String gmConfigNodeEnumTag = gmConfigNodeEnum.getTag();
             //直接设置消息内容，如果存在该节点就会设置节点内容，如果不存在就会使用源配置文件里的内容
-            playModeConfigNodeEnum.setMsg(playModeMessage.get(playModeConfigNodeEnumTag));
+            gmConfigNodeEnum.setMsg(gmMessage.get(gmConfigNodeEnumTag));
             //判断是否拥有该节点，没有就添加进列表用于输出警告
-            if (!playModeMessage.contains(playModeConfigNodeEnumTag, true)) {
-                undefinedTagList.add(playModeConfigNodeEnumTag);
+            if (!gmMessage.contains(gmConfigNodeEnumTag, true)) {
+                undefinedTagList.add(gmConfigNodeEnumTag);
             }
         }
     }
@@ -483,7 +479,7 @@ public class CommonConfigLoad {
      */
     public static void sendConsoleConfigLoad() {
         //sendconsole消息内容
-        ConfigurationSection sendConsoleMessage = ServerConfig.getConfigurationSection(SendConsoleEnum.SEND_CONSOLE_COMMAND.getCommand()).getConfigurationSection(CommonEnum.MESSAGE.getCommand());
+        ConfigurationSection sendConsoleMessage = ServerConfig.getConfigurationSection(SendConsoleEnum.SENDCONSOLE_COMMAND.getCommand()).getConfigurationSection(CommonPluginEnum.MESSAGE.getCommand());
         //得到所有枚举的值
         SendConsoleConfigEnum[] sendConsoleConfigEnums = SendConsoleConfigEnum.values();
         //循环判断每个节点是否存在，存在就替换枚举里的内容，不存在就添加到未定义的标签列表并恢复原内容
@@ -500,27 +496,27 @@ public class CommonConfigLoad {
     }
 
     /**
-     * setsnaptp指令的配置加载，已经改成settpp
+     * settpp指令的配置加载
      */
     public static void setSnapTpConfigLoad() {
-        ConfigurationSection setSnapTpConfigurationSection = ServerConfig.getConfigurationSection(SetTppEnum.SET_TPP_COMMAND.getCommand());
+        ConfigurationSection setTppConfigurationSection = ServerConfig.getConfigurationSection(SetTppEnum.SETTPP_COMMAND.getCommand());
         //setsnaptp消息内容
-        ConfigurationSection setSnapTpMessage = setSnapTpConfigurationSection.getConfigurationSection(CommonEnum.MESSAGE.getCommand());
+        ConfigurationSection setTppMessage = setTppConfigurationSection.getConfigurationSection(CommonPluginEnum.MESSAGE.getCommand());
         //得到所有枚举的值
         SetTppConfigEnum[] setTppConfigEnums = SetTppConfigEnum.values();
         //循环判断每个节点是否存在，存在就替换枚举里的内容，不存在就添加到未定义的标签列表并恢复原内容
-        for (SetTppConfigEnum setSnapTpConfigNodeEnum : setTppConfigEnums) {
+        for (SetTppConfigEnum setTppConfigNodeEnum : setTppConfigEnums) {
             //得到配置文件标签
-            String setSnapTpConfigNodeEnumTag = setSnapTpConfigNodeEnum.getTag();
+            String setTppConfigNodeEnumTag = setTppConfigNodeEnum.getTag();
             //直接设置消息内容，如果存在该节点就会设置节点内容，如果不存在就会使用源配置文件里的内容
-            if (setSnapTpMessage.get(setSnapTpConfigNodeEnumTag) != null) {
-                setSnapTpConfigNodeEnum.setMsg(setSnapTpMessage.get(setSnapTpConfigNodeEnumTag));
+            if (setTppMessage.get(setTppConfigNodeEnumTag) != null) {
+                setTppConfigNodeEnum.setMsg(setTppMessage.get(setTppConfigNodeEnumTag));
             } else {
-                setSnapTpConfigNodeEnum.setMsg(setSnapTpConfigurationSection.get(setSnapTpConfigNodeEnumTag));
+                setTppConfigNodeEnum.setMsg(setTppConfigurationSection.get(setTppConfigNodeEnumTag));
             }
             //判断是否拥有该节点，没有就添加进列表用于输出警告
-            if (!setSnapTpMessage.contains(setSnapTpConfigNodeEnumTag, true) && !setSnapTpConfigurationSection.contains(setSnapTpConfigNodeEnumTag, true)) {
-                undefinedTagList.add(setSnapTpConfigNodeEnumTag);
+            if (!setTppMessage.contains(setTppConfigNodeEnumTag, true) && !setTppConfigurationSection.contains(setTppConfigNodeEnumTag, true)) {
+                undefinedTagList.add(setTppConfigNodeEnumTag);
             }
         }
     }
@@ -530,7 +526,7 @@ public class CommonConfigLoad {
      */
     public static void showTextCodeConfigLoad() {
         //showtextcode消息内容
-        ConfigurationSection showTextCodeMessage = ServerConfig.getConfigurationSection(ShowTextCodeEnum.SHOW_TEXT_CODE_COMMAND.getCommand()).getConfigurationSection(CommonEnum.MESSAGE.getCommand());
+        ConfigurationSection showTextCodeMessage = ServerConfig.getConfigurationSection(ShowTextCodeEnum.SHOW_TEXT_CODE_COMMAND.getCommand()).getConfigurationSection(CommonPluginEnum.MESSAGE.getCommand());
         //得到所有枚举的值
         ShowTextCodeConfigEnum[] showTextCodeConfigEnums = ShowTextCodeConfigEnum.values();
         //循环判断每个节点是否存在，存在就替换枚举里的内容，不存在就添加到未定义的标签列表并恢复原内容
@@ -547,22 +543,22 @@ public class CommonConfigLoad {
     }
 
     /**
-     * snaptp指令的配置加载
+     * tpp指令的配置加载
      */
-    public static void snapTpConfigLoad() {
+    public static void tppConfigLoad() {
         //snaptp消息内容
-        ConfigurationSection snapTpMessage = ServerConfig.getConfigurationSection(TppEnum.TPP_COMMAND.getCommand()).getConfigurationSection(CommonEnum.MESSAGE.getCommand());
+        ConfigurationSection tppMessage = ServerConfig.getConfigurationSection(TppEnum.TPP_COMMAND.getCommand()).getConfigurationSection(CommonPluginEnum.MESSAGE.getCommand());
         //得到所有枚举的值
         TppConfigEnum[] tppConfigEnums = TppConfigEnum.values();
         //循环判断每个节点是否存在，存在就替换枚举里的内容，不存在就添加到未定义的标签列表并恢复原内容
-        for (TppConfigEnum snapTpConfigNodeEnum : tppConfigEnums) {
+        for (TppConfigEnum tppConfigNodeEnum : tppConfigEnums) {
             //得到配置文件标签
-            String snapTpConfigNodeEnumTag = snapTpConfigNodeEnum.getTag();
+            String tppConfigNodeEnumTag = tppConfigNodeEnum.getTag();
             //直接设置消息内容，如果存在该节点就会设置节点内容，如果不存在就会使用源配置文件里的内容
-            snapTpConfigNodeEnum.setMsg(snapTpMessage.get(snapTpConfigNodeEnumTag));
+            tppConfigNodeEnum.setMsg(tppMessage.get(tppConfigNodeEnumTag));
             //判断是否拥有该节点，没有就添加进列表用于输出警告
-            if (!snapTpMessage.contains(snapTpConfigNodeEnumTag, true)) {
-                undefinedTagList.add(snapTpConfigNodeEnumTag);
+            if (!tppMessage.contains(tppConfigNodeEnumTag, true)) {
+                undefinedTagList.add(tppConfigNodeEnumTag);
             }
         }
     }
@@ -572,7 +568,7 @@ public class CommonConfigLoad {
      */
     public static void tpaConfigLoad() {
         //tpa消息内容
-        ConfigurationSection tpaMessage = ServerConfig.getConfigurationSection(TpaEnum.TPA_COMMAND.getCommand()).getConfigurationSection(CommonEnum.MESSAGE.getCommand());
+        ConfigurationSection tpaMessage = ServerConfig.getConfigurationSection(TpaEnum.TPA_COMMAND.getCommand()).getConfigurationSection(CommonPluginEnum.MESSAGE.getCommand());
         //得到所有枚举的值
         TpaConfigEnum[] tpaConfigEnums = TpaConfigEnum.values();
         //循环判断每个节点是否存在，存在就替换枚举里的内容，不存在就添加到未定义的标签列表并恢复原内容
@@ -593,7 +589,7 @@ public class CommonConfigLoad {
      */
     public static void tpaCancelConfigLoad() {
         //tpacancel消息内容
-        ConfigurationSection tpaCancelMessage = ServerConfig.getConfigurationSection(TpaCancelEnum.TPA_CANCEL_COMMAND.getCommand()).getConfigurationSection(CommonEnum.MESSAGE.getCommand());
+        ConfigurationSection tpaCancelMessage = ServerConfig.getConfigurationSection(TpaCancelEnum.TPACANCEL_COMMAND.getCommand()).getConfigurationSection(CommonPluginEnum.MESSAGE.getCommand());
         //得到所有枚举的值
         TpaCancelConfigEnum[] tpaCancelConfigEnums = TpaCancelConfigEnum.values();
         //循环判断每个节点是否存在，存在就替换枚举里的内容，不存在就添加到未定义的标签列表并恢复原内容
@@ -614,7 +610,7 @@ public class CommonConfigLoad {
      */
     public static void tpaCceptConfigLoad() {
         //tpaccept消息内容
-        ConfigurationSection tpaCceptMessage = ServerConfig.getConfigurationSection(TpaCceptEnum.TPA_CCEPT_COMMAND.getCommand()).getConfigurationSection(CommonEnum.MESSAGE.getCommand());
+        ConfigurationSection tpaCceptMessage = ServerConfig.getConfigurationSection(TpaCceptEnum.TPACCEPT_COMMAND.getCommand()).getConfigurationSection(CommonPluginEnum.MESSAGE.getCommand());
         //得到所有枚举的值
         TpaCceptConfigEnum[] tpaCceptConfigEnums = TpaCceptConfigEnum.values();
         //循环判断每个节点是否存在，存在就替换枚举里的内容，不存在就添加到未定义的标签列表并恢复原内容
@@ -635,7 +631,7 @@ public class CommonConfigLoad {
      */
     public static void tpaDenyConfigLoad() {
         //tpadeny消息内容
-        ConfigurationSection tpaDenyMessage = ServerConfig.getConfigurationSection(TpaDenyEnum.TPA_DENY_COMMAND.getCommand()).getConfigurationSection(CommonEnum.MESSAGE.getCommand());
+        ConfigurationSection tpaDenyMessage = ServerConfig.getConfigurationSection(TpaDenyEnum.TPADENY_COMMAND.getCommand()).getConfigurationSection(CommonPluginEnum.MESSAGE.getCommand());
         //得到所有枚举的值
         TpaDenyConfigEnum[] tpaDenyConfigEnums = TpaDenyConfigEnum.values();
         //循环判断每个节点是否存在，存在就替换枚举里的内容，不存在就添加到未定义的标签列表并恢复原内容
@@ -656,7 +652,7 @@ public class CommonConfigLoad {
      */
     public static void utilityToolboxConfigLoad() {
         //utilitytoolbox消息内容
-        ConfigurationSection utilityToolboxMessage = ServerConfig.getConfigurationSection(UtilityToolboxEnum.UTILITYTOOLBOX_COMMAND.getCommand()).getConfigurationSection(CommonEnum.MESSAGE.getCommand());
+        ConfigurationSection utilityToolboxMessage = ServerConfig.getConfigurationSection(UtilityToolboxEnum.UTILITYTOOLBOX_COMMAND.getCommand()).getConfigurationSection(CommonPluginEnum.MESSAGE.getCommand());
         //得到所有枚举的值
         UtilityToolboxConfigEnum[] utilityToolboxConfigEnums = UtilityToolboxConfigEnum.values();
         //循环判断每个节点是否存在，存在就替换枚举里的内容，不存在就添加到未定义的标签列表并恢复原内容
@@ -679,7 +675,7 @@ public class CommonConfigLoad {
         //获得tpr指令的配置根目录
         ConfigurationSection tprConfig = ServerConfig.getConfigurationSection(TprEnum.TPR_COMMAND.getCommand());
         //获得tpr指令的消息内容
-        ConfigurationSection tprMessage = tprConfig.getConfigurationSection(CommonEnum.MESSAGE.getCommand());
+        ConfigurationSection tprMessage = tprConfig.getConfigurationSection(CommonPluginEnum.MESSAGE.getCommand());
         //得到所有枚举的值
         TprConfigEnum[] tprConfigEnums = TprConfigEnum.values();
         //循环判断每个节点是否存在，存在就替换枚举里的内容，不存在就添加到未定义的标签列表并恢复原内容
@@ -706,7 +702,7 @@ public class CommonConfigLoad {
         //AntiHighFrequencyRedStone功能的配置内容
         ConfigurationSection antiHighFrequencyRedStoneConfig = ServerConfig.getConfigurationSection(AntiHighFrequencyRedStoneEnum.ANTI_HIGH_FREQUENCY_RED_STONE.getCommand());
         //AntiHighFrequencyRedStone的消息内容
-        ConfigurationSection antiHighFrequencyRedStoneMessage = antiHighFrequencyRedStoneConfig.getConfigurationSection(CommonEnum.MESSAGE.getCommand());
+        ConfigurationSection antiHighFrequencyRedStoneMessage = antiHighFrequencyRedStoneConfig.getConfigurationSection(CommonPluginEnum.MESSAGE.getCommand());
         //得到所有枚举的值
         AntiHighFrequencyRedStoneConfigEnum[] antiHighFrequencyRedStoneConfigEnums = AntiHighFrequencyRedStoneConfigEnum.values();
         //循环判断每个节点是否存在，存在就替换枚举里的内容，不存在就添加到未定义的标签列表并恢复原内容
@@ -733,7 +729,7 @@ public class CommonConfigLoad {
         //AutoSendServerMessage功能的配置内容
         ConfigurationSection autoSendServerMessageConfig = ServerConfig.getConfigurationSection(AutoSendServerMessageEnum.AUTO_SEND_SERVER_MESSAGE.getCommand());
         //AutoSendServerMessage的消息内容
-        ConfigurationSection autoSendServerMessageMessage = autoSendServerMessageConfig.getConfigurationSection(CommonEnum.MESSAGE.getCommand());
+        ConfigurationSection autoSendServerMessageMessage = autoSendServerMessageConfig.getConfigurationSection(CommonPluginEnum.MESSAGE.getCommand());
         //得到所有枚举的值
         AutoSendServerMessageConfigEnum[] autoSendServerMessageConfigEnums = AutoSendServerMessageConfigEnum.values();
         //循环判断每个节点是否存在，存在就替换枚举里的内容，不存在就添加到未定义的标签列表并恢复原内容
@@ -760,7 +756,7 @@ public class CommonConfigLoad {
         //CustomJoinAndLeave功能的配置内容
         ConfigurationSection customJoinAndLeaveConfig = ServerConfig.getConfigurationSection(CustomJoinAndLeaveEnum.CUSTOM_JOIN_AND_LEAVE.getCommand());
         //CustomJoinAndLeave的消息内容
-        ConfigurationSection customJoinAndLeaveMessage = customJoinAndLeaveConfig.getConfigurationSection(CommonEnum.MESSAGE.getCommand());
+        ConfigurationSection customJoinAndLeaveMessage = customJoinAndLeaveConfig.getConfigurationSection(CommonPluginEnum.MESSAGE.getCommand());
         //得到所有枚举的值
         CustomJoinAndLeaveConfigEnum[] customJoinAndLeaveConfigEnums = CustomJoinAndLeaveConfigEnum.values();
         //循环判断每个节点是否存在，存在就替换枚举里的内容，不存在就添加到未定义的标签列表并恢复原内容
@@ -787,7 +783,7 @@ public class CommonConfigLoad {
         //JoinServerWelcome功能的配置内容
         ConfigurationSection joinServerWelcomeConfig = ServerConfig.getConfigurationSection(JoinServerWelcomeEnum.JOIN_SERVER_WELCOME.getCommand());
         //JoinServerWelcome的消息内容
-        ConfigurationSection joinServerWelcomeMessage = joinServerWelcomeConfig.getConfigurationSection(CommonEnum.MESSAGE.getCommand());
+        ConfigurationSection joinServerWelcomeMessage = joinServerWelcomeConfig.getConfigurationSection(CommonPluginEnum.MESSAGE.getCommand());
         //得到所有枚举的值
         JoinServerWelcomeConfigEnum[] joinServerWelcomeConfigEnums = JoinServerWelcomeConfigEnum.values();
         //循环判断每个节点是否存在，存在就替换枚举里的内容，不存在就添加到未定义的标签列表并恢复原内容
@@ -814,7 +810,7 @@ public class CommonConfigLoad {
         //LimitHighAltitudeFluid功能的配置内容
         ConfigurationSection limitHighAltitudeFluidConfig = ServerConfig.getConfigurationSection(LimitHighAltitudeFluidEnum.LIMIT_HIGH_ALTITUDE_FLUID.getCommand());
         //LimitHighAltitudeFluid的消息内容
-        ConfigurationSection limitHighAltitudeFluidMessage = limitHighAltitudeFluidConfig.getConfigurationSection(CommonEnum.MESSAGE.getCommand());
+        ConfigurationSection limitHighAltitudeFluidMessage = limitHighAltitudeFluidConfig.getConfigurationSection(CommonPluginEnum.MESSAGE.getCommand());
         //得到所有枚举的值
         LimitHighAltitudeFluidConfigEnum[] limitHighAltitudeFluidConfigEnums = LimitHighAltitudeFluidConfigEnum.values();
         //循环判断每个节点是否存在，存在就替换枚举里的内容，不存在就添加到未定义的标签列表并恢复原内容
@@ -841,7 +837,7 @@ public class CommonConfigLoad {
         //PreventHighFrequencyAttacks功能的配置内容
         ConfigurationSection preventHighFrequencyAttacksConfig = ServerConfig.getConfigurationSection(PreventHighFrequencyAttacksEnum.PREVENT_HIGH_FREQUENCY_ATTACKS.getCommand());
         //PreventHighFrequencyAttacks的消息内容
-        ConfigurationSection preventHighFrequencyAttacksMessage = preventHighFrequencyAttacksConfig.getConfigurationSection(CommonEnum.MESSAGE.getCommand());
+        ConfigurationSection preventHighFrequencyAttacksMessage = preventHighFrequencyAttacksConfig.getConfigurationSection(CommonPluginEnum.MESSAGE.getCommand());
         //得到所有枚举的值
         PreventHighFrequencyAttacksConfigEnum[] preventHighFrequencyAttacksConfigEnums = PreventHighFrequencyAttacksConfigEnum.values();
         //循环判断每个节点是否存在，存在就替换枚举里的内容，不存在就添加到未定义的标签列表并恢复原内容
@@ -868,7 +864,7 @@ public class CommonConfigLoad {
         //ServerListDisplayModification功能的配置内容
         ConfigurationSection serverListDisplayModificationConfig = ServerConfig.getConfigurationSection(ServerListDisplayModificationEnum.SERVER_LIST_DISPLAY_MODIFICATION.getCommand());
         //ServerListDisplayModification的消息内容
-        ConfigurationSection serverListDisplayModificationMessage = serverListDisplayModificationConfig.getConfigurationSection(CommonEnum.MESSAGE.getCommand());
+        ConfigurationSection serverListDisplayModificationMessage = serverListDisplayModificationConfig.getConfigurationSection(CommonPluginEnum.MESSAGE.getCommand());
         //得到所有枚举的值
         ServerListDisplayModificationConfigEnum[] serverListDisplayModificationConfigEnums = ServerListDisplayModificationConfigEnum.values();
         //循环判断每个节点是否存在，存在就替换枚举里的内容，不存在就添加到未定义的标签列表并恢复原内容

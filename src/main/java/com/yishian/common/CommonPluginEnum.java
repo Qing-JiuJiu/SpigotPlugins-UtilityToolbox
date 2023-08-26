@@ -4,7 +4,7 @@ package com.yishian.common;
 /**
  * @author XinQ
  */
-public enum CommonEnum {
+public enum CommonPluginEnum {
 
     /**
      * 通用枚举
@@ -13,12 +13,14 @@ public enum CommonEnum {
     FUNCTION_IS_ENABLE("enable","插件是否启用布尔值"),
     OTHERS("others", "是否允许对他人执行权限的后缀"),
     ALL("*", "所有的通配符"),
-    MESSAGE("message","用于获取配置文件消息");
+    POINT(".", "点"),
+    MESSAGE("message","用于获取配置文件消息"),
+    NUMBER_TWO("2","数字2");
 
     private final String command;
     private final String msg;
 
-    CommonEnum(String command, String msg) {
+    CommonPluginEnum(String command, String msg) {
         this.command = command;
         this.msg = msg;
     }

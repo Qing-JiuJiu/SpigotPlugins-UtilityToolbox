@@ -1,15 +1,14 @@
-package com.yishian.command.kills;
+package com.yishian.command.killself;
 
 /**
  * @author XinQi
  */
-public enum KillSConfigEnum {
+public enum KillSelfConfigEnum {
 
     /**
      * 提示消息列表
      */
-    KILLS_APPLY("kills-apply", "&a已让服务器执行自杀指令"),
-    KILLS_COMMAND_ERROR("kills-command-error", "&c自杀指令格式错误，正确格式: &6/kills");
+    KILLSELF_APPLY("killself-apply", "&a已让服务器执行相关指令");
 
     private final String tag;
     private Object msg;
@@ -18,7 +17,7 @@ public enum KillSConfigEnum {
         this.msg = msg;
     }
 
-    KillSConfigEnum(String tag, String msg) {
+    KillSelfConfigEnum(String tag, String msg) {
         this.tag = tag;
         this.msg = msg;
     }

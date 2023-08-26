@@ -1,7 +1,7 @@
 package com.yishian.command.copyres;
 
-import com.yishian.common.CommonUtils;
-import com.yishian.common.PluginMessageConfigEnum;
+import com.yishian.common.CommonUtil;
+import com.yishian.common.CommonMessageEnum;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -19,15 +19,9 @@ public class CopyResCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        //判断指令是否带参数
-        if (args.length != 0) {
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', PluginMessageConfigEnum.MESSAGE_PREFIX.getMsg() + CopyResConfigEnum.COPYRES_COMMAND_ERROR.getMsg()));
-            return true;
-        }
-
         //判断执行指令的是用户还是控制台
         if (!(sender instanceof Player)) {
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', PluginMessageConfigEnum.MESSAGE_PREFIX.getMsg() + PluginMessageConfigEnum.CONSOLE_USE_OFFICIAL_COMMAND_TIPS.getMsg()));
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonMessageEnum.MESSAGE_PREFIX.getMsg() + CommonMessageEnum.CONSOLE_USE_OFFICIAL_COMMAND_TIPS.getMsg()));
             return true;
         }
 
@@ -39,26 +33,26 @@ public class CopyResCommand implements CommandExecutor {
         //获得物品名称
         String itemName = itemInMainHand.getType().getKey().toString();
         //得到排除列表
-        List<?> itemExcludeList = CommonUtils.objectToList(CopyResConfigEnum.EXCLUDE_LIST.getMsg());
+        List<?> itemExcludeList = CommonUtil.objectToList(CopyResConfigEnum.EXCLUDE_LIST.getMsg());
         //得到黑名单
-        List<?> itemBlackList = CommonUtils.objectToList(CopyResConfigEnum.BLACK_LIST.getMsg());
+        List<?> itemBlackList = CommonUtil.objectToList(CopyResConfigEnum.BLACK_LIST.getMsg());
 
         //判断是否在排除列表
         if (!itemExcludeList.contains(itemName)) {
             //判断黑名单
             if (itemBlackList.contains(itemName)) {
-                player.sendMessage(ChatColor.translateAlternateColorCodes('&', PluginMessageConfigEnum.MESSAGE_PREFIX.getMsg() + CopyResConfigEnum.COPYRES_DENY.getMsg()).replaceAll("%res%", itemName));
+                player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonMessageEnum.MESSAGE_PREFIX.getMsg() + CopyResConfigEnum.COPYRES_DENY.getMsg()).replaceAll("%res%", itemName));
                 return true;
             }
 
             //得到白名单
-            List<?> itemWildcardList = CommonUtils.objectToList(CopyResConfigEnum.WILDCARD_LIST.getMsg());
+            List<?> itemWildcardList = CommonUtil.objectToList(CopyResConfigEnum.WILDCARD_LIST.getMsg());
 
             //判断是否在通配符名单
-            if (!CommonUtils.collectionIsEmpty(itemWildcardList)) {
+            if (!CommonUtil.collectionIsEmpty(itemWildcardList)) {
                 for (Object itemWildcard : itemWildcardList) {
                     if (itemName.startsWith(itemWildcard.toString())) {
-                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', PluginMessageConfigEnum.MESSAGE_PREFIX.getMsg() + CopyResConfigEnum.COPYRES_DENY.getMsg()).replaceAll("%res%", itemName));
+                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonMessageEnum.MESSAGE_PREFIX.getMsg() + CopyResConfigEnum.COPYRES_DENY.getMsg()).replaceAll("%res%", itemName));
                         return true;
                     }
                 }
@@ -69,10 +63,10 @@ public class CopyResCommand implements CommandExecutor {
         ItemStack cloneItemStack = itemInMainHand.clone();
         cloneItemStack.setAmount(cloneItemStack.getMaxStackSize());
         playerInventory.addItem(cloneItemStack);
-        player.sendMessage(ChatColor.translateAlternateColorCodes('&', PluginMessageConfigEnum.MESSAGE_PREFIX.getMsg() + CopyResConfigEnum.COPYRES_APPLY.getMsg()).replaceAll("%res%", itemName));
+        player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonMessageEnum.MESSAGE_PREFIX.getMsg() + CopyResConfigEnum.COPYRES_APPLY.getMsg()).replaceAll("%res%", itemName));
 
         //控制台输出信息
-        CommonUtils.logger.info("玩家" + player.getName() + "复制了物品：" + itemName);
+        CommonUtil.logger.info("玩家" + player.getName() + "复制了物品：" + itemName);
 
         //执行成功
         return true;

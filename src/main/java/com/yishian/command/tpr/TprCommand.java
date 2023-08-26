@@ -1,9 +1,9 @@
 package com.yishian.command.tpr;
 
 import com.yishian.command.teleport.TeleportCommand;
-import com.yishian.common.CommonEnum;
-import com.yishian.common.CommonUtils;
-import com.yishian.common.PluginMessageConfigEnum;
+import com.yishian.common.CommonPluginEnum;
+import com.yishian.common.CommonUtil;
+import com.yishian.common.CommonMessageEnum;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -22,26 +22,32 @@ import java.util.Random;
  */
 public class TprCommand implements CommandExecutor {
 
-    //新建一个随机数
+    /**
+     * 新建一个随机数
+     */
     Random rand = new Random();
 
-    //用于存储基岩方块
+    /**
+     * 用于存储基岩方块
+     */
     List<Block> blockList = new ArrayList<>();
 
-    //危险方块列表
-    List<?> dangerousBlockList = CommonUtils.objectToList(TprConfigEnum.DANGEROUS_BLOCK.getMsg());
+    /**
+     * 危险方块列表
+     */
+    List<?> dangerousBlockList = CommonUtil.objectToList(TprConfigEnum.DANGEROUS_BLOCK.getMsg());
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         //判断执行指令的是用户还是控制台
         if (!(sender instanceof Player)) {
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', PluginMessageConfigEnum.MESSAGE_PREFIX.getMsg() + PluginMessageConfigEnum.CONSOLE_COMMAND_NO_USE.getMsg()));
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonMessageEnum.MESSAGE_PREFIX.getMsg() + CommonMessageEnum.CONSOLE_COMMAND_NO_USE.getMsg()));
             return true;
         }
 
         //获取玩家位置变量，并发送给玩家等待传送
         Player player = (Player) sender;
-        player.sendMessage(ChatColor.translateAlternateColorCodes('&', PluginMessageConfigEnum.MESSAGE_PREFIX.getMsg() + TprConfigEnum.TPR_SEARCHING.getMsg()));
+        player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonMessageEnum.MESSAGE_PREFIX.getMsg() + TprConfigEnum.TPR_SEARCHING.getMsg()));
         Location playerLocation = player.getLocation();
 
         //判断是否是允许随机传送
@@ -49,9 +55,9 @@ public class TprCommand implements CommandExecutor {
         String worldName = world.getName();
 
         //获得允许随机传送的世界列表
-        List<?> allowHomeWorldList = CommonUtils.objectToList(TprConfigEnum.ALLOW_WORLD.getMsg());
-        if (!allowHomeWorldList.contains(worldName) && !allowHomeWorldList.contains(CommonEnum.ALL.getCommand())) {
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&', PluginMessageConfigEnum.MESSAGE_PREFIX.getMsg() + TprConfigEnum.TPR_WORLD_ERROR.getMsg()).replaceAll("%world%", worldName));
+        List<?> allowHomeWorldList = CommonUtil.objectToList(TprConfigEnum.ALLOW_WORLD.getMsg());
+        if (!allowHomeWorldList.contains(worldName) && !allowHomeWorldList.contains(CommonPluginEnum.ALL.getCommand())) {
+            player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonMessageEnum.MESSAGE_PREFIX.getMsg() + TprConfigEnum.TPR_WORLD_ERROR.getMsg()).replaceAll("%world%", worldName));
             return true;
         }
 
@@ -89,7 +95,7 @@ public class TprCommand implements CommandExecutor {
                 //传送玩家
                 player.teleport(newLocation);
                 if (TeleportCommand.allowTp) {
-                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', PluginMessageConfigEnum.MESSAGE_PREFIX.getMsg() + TprConfigEnum.TPR_APPLY.getMsg()).replaceAll("%x%", String.valueOf(newLocation.getBlockX())).replaceAll("%y%", String.valueOf(newLocation.getBlockY())).replaceAll("%z%", String.valueOf(newLocation.getBlockZ())));
+                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonMessageEnum.MESSAGE_PREFIX.getMsg() + TprConfigEnum.TPR_APPLY.getMsg()).replaceAll("%x%", String.valueOf(newLocation.getBlockX())).replaceAll("%y%", String.valueOf(newLocation.getBlockY())).replaceAll("%z%", String.valueOf(newLocation.getBlockZ())));
                 }
 
 
@@ -98,14 +104,13 @@ public class TprCommand implements CommandExecutor {
         return true;
     }
 
-
     /**
      * 根据当前位置产生一个新的安全位置
      */
     private Location newLocation(Location location, World world, Integer tprx, Integer tprz) {
         //获得随机值
-        int x = rand.nextInt(tprx * 2 + 1) - tprx; // 生成对应的对应的正负tprx区间的数值
-        int z = rand.nextInt(tprz * 2 + 1) - tprz; // 生成对应的对应的正负tprz区间的数值
+        int x = rand.nextInt(tprx * 2 + 1) - tprx;
+        int z = rand.nextInt(tprz * 2 + 1) - tprz;
 
         //添加随机值
         Location newLocation = location.clone().add(x, 0, z);
@@ -114,7 +119,7 @@ public class TprCommand implements CommandExecutor {
         Block highestBlockAt = world.getHighestBlockAt(newLocation);
 
         //判断是否是下届，不是下届且方块不是危险方块则返回该位置 +1
-        if (!"world_nether".equals(world.getName())) {
+        if (!TprEnum.WORLD_NETHER.getMsg().equals(world.getName())) {
             if (dangerousBlockList.contains(highestBlockAt.getType().getKey().toString())) {
                 //重新产生新的位置，如果该位置有危险的话
                 return newLocation(location, world, tprx, tprz);
@@ -131,7 +136,7 @@ public class TprCommand implements CommandExecutor {
      */
     public Location removeBedrock(World world, Location location, Block highestBlockAt,Integer tprx, Integer tprz) {
         //判断是否是基岩
-        if ("minecraft:bedrock".equals(highestBlockAt.getType().getKey().toString())) {
+        if (TprEnum.MINECRAFT_BEDROCK.getMsg().equals(highestBlockAt.getType().getKey().toString())) {
             blockList.add(highestBlockAt);
            highestBlockAt.setType(org.bukkit.Material.AIR);
 

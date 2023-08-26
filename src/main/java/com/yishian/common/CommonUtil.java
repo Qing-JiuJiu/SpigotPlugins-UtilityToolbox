@@ -24,22 +24,20 @@ import java.util.logging.Logger;
 /**
  * @author XinQi
  */
-public class CommonUtils {
+public class CommonUtil {
 
     /**
      * 插件管理器
      */
     public static JavaPlugin javaPlugin =Main.getProvidingPlugin(Main.class);
-
     /**
      * 服务器
      */
     public static Server server =  Bukkit.getServer();
-
     /**
      * 日志
      */
-    public static Logger logger = CommonUtils.javaPlugin.getLogger();
+    public static Logger logger = CommonUtil.javaPlugin.getLogger();
 
     /**
      * 参数数量最大为0-1时玩家通用提示
@@ -125,7 +123,9 @@ public class CommonUtils {
         TreeMap<Double, Player> playerDistanceTreeMap = new TreeMap<>();
         //一共要计算多少个位置，以中间为基础向周围8个区块计算有多少个玩家在内
         List<Location> locations = Lists.newArrayList();
-        for (int i = 0; i < 360; i += 45) {
+        int maxAngle = 360;
+        int rotationAngle = 45;
+        for (int i = 0; i < maxAngle; i += rotationAngle) {
             // 转弧度制
             double radians = Math.toRadians(i);
             //添加距离中心坐标为圆心向周边16格外共计8个坐标，一个区块16*16
@@ -259,4 +259,5 @@ public class CommonUtils {
         }
         return null;
     }
+
 }

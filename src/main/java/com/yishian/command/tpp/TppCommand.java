@@ -2,7 +2,7 @@ package com.yishian.command.tpp;
 
 import com.yishian.command.settpp.SetTppConfig;
 import com.yishian.command.teleport.TeleportCommand;
-import com.yishian.common.PluginMessageConfigEnum;
+import com.yishian.common.CommonMessageEnum;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -18,17 +18,20 @@ import org.bukkit.entity.Player;
  */
 public class TppCommand implements CommandExecutor {
 
+    /**
+     * 指令设置
+     */
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         //判断指令是否携带过多参数
         if (args.length > 1) {
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', PluginMessageConfigEnum.MESSAGE_PREFIX.getMsg() + TppConfigEnum.TPP_COMMAND_ERROR.getMsg()));
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonMessageEnum.MESSAGE_PREFIX.getMsg() + TppConfigEnum.TPP_COMMAND_ERROR.getMsg()));
             return true;
         }
 
         //判断执行指令的是用户还是控制台
         if (!(sender instanceof Player)) {
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', PluginMessageConfigEnum.MESSAGE_PREFIX.getMsg() + PluginMessageConfigEnum.CONSOLE_COMMAND_NO_USE.getMsg()));
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonMessageEnum.MESSAGE_PREFIX.getMsg() + CommonMessageEnum.CONSOLE_COMMAND_NO_USE.getMsg()));
             return true;
         }
 
@@ -47,16 +50,17 @@ public class TppCommand implements CommandExecutor {
 
         //判断该用户是否有传送点
         if (playerConfig == null) {
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&', PluginMessageConfigEnum.MESSAGE_PREFIX.getMsg() + TppConfigEnum.TPP_NO_EXIST.getMsg()).replaceAll("%tp-name%", tpName));
+            player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonMessageEnum.MESSAGE_PREFIX.getMsg() + TppConfigEnum.TPP_NO_EXIST.getMsg()).replaceAll("%tp-name%", tpName));
             return true;
         }
 
         //传送玩家并发送对应消息
         player.teleport(new Location(Bukkit.getWorld(playerConfig.getString("world")), playerConfig.getDouble("x"), playerConfig.getDouble("y"), playerConfig.getDouble("z"), Float.parseFloat(playerConfig.getString("yaw")), Float.parseFloat(playerConfig.getString("pitch"))));
         if (TeleportCommand.allowTp) {
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&', PluginMessageConfigEnum.MESSAGE_PREFIX.getMsg() + TppConfigEnum.TPP_APPLY.getMsg()).replaceAll("%tp-name%", tpName));
+            player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonMessageEnum.MESSAGE_PREFIX.getMsg() + TppConfigEnum.TPP_APPLY.getMsg()).replaceAll("%tp-name%", tpName));
         }
 
         return true;
     }
+
 }

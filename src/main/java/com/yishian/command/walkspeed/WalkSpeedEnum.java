@@ -1,6 +1,6 @@
 package com.yishian.command.walkspeed;
 
-import com.yishian.common.CommonEnum;
+import com.yishian.common.CommonPluginEnum;
 
 /**
  * @author XinQi
@@ -10,9 +10,9 @@ public enum WalkSpeedEnum {
     /**
      * 移动速度
      */
-    WALK_SPEED_COMMAND("walkspeed", "移动速度的指令"),
-    WALK_SPEED_PERMISSION(CommonEnum.PLUGHIN_NAME.getCommand() + "." + WALK_SPEED_COMMAND.getCommand(), "修改移动速度的权限"),
-    WALK_SPEED_OTHERS_PERMISSION(WALK_SPEED_PERMISSION.getCommand() + "." + CommonEnum.OTHERS.getCommand(), "修改他人移动速度的权限");
+    WALKSPEED_COMMAND("walkspeed", "移动速度的指令"),
+    WALKSPEED_PERMISSION(CommonPluginEnum.PLUGHIN_NAME.getCommand() + "." + WALKSPEED_COMMAND.getCommand(), "修改移动速度的权限"),
+    WALKSPEED_OTHERS_PERMISSION(WALKSPEED_PERMISSION.getCommand() + "." + CommonPluginEnum.OTHERS.getCommand(), "修改他人移动速度的权限");
 
     private final String command;
     private final String msg;

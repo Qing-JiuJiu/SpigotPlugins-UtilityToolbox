@@ -1,22 +1,22 @@
-package com.yishian.command.back;
+package com.yishian.command.killself;
 
 import com.yishian.common.CommonPluginEnum;
 
 /**
  * @author XinQi
  */
-public enum BackEnum {
+public enum KillSelfEnum {
 
     /**
-     * 返回指令
+     * 自杀
      */
-    BACK_COMMAND("back", "返回指令"),
-    BACK_PERMISSION(CommonPluginEnum.PLUGHIN_NAME.getCommand() + "." + BACK_COMMAND.getCommand(), "返回权限");
+    KILLSELF_COMMAND("killself", "自杀指令"),
+    KILLSELF_PERMISSION(CommonPluginEnum.PLUGHIN_NAME.getCommand() + "." + KILLSELF_COMMAND.getCommand(), "自杀权限");
 
     private final String command;
     private final String msg;
 
-    BackEnum(String command, String msg) {
+    KillSelfEnum(String command, String msg) {
         this.command = command;
         this.msg = msg;
     }
@@ -28,5 +28,4 @@ public enum BackEnum {
     public String getMsg() {
         return msg;
     }
-
 }

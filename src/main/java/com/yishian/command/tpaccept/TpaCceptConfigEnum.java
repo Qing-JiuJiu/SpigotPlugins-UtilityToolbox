@@ -34,4 +34,5 @@ public enum TpaCceptConfigEnum {
     public Object getMsg() {
         return msg;
     }
+
 }

@@ -2,6 +2,7 @@ package com.yishian.command.autorespawn;
 
 /**
  * @author XinQi
+ * 自动重生配置文件内容
  */
 public enum AutoRespawnConfigEnum {
 
@@ -31,4 +32,5 @@ public enum AutoRespawnConfigEnum {
     public Object getMsg() {
         return msg;
     }
+
 }

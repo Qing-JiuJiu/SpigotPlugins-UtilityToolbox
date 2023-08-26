@@ -1,7 +1,7 @@
 package com.yishian.command.heal;
 
-import com.yishian.common.CommonUtils;
-import com.yishian.common.PluginMessageConfigEnum;
+import com.yishian.common.CommonUtil;
+import com.yishian.common.CommonMessageEnum;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.attribute.Attribute;
@@ -34,11 +34,11 @@ public class HealCommand implements TabExecutor {
             Player player = (Player) sender;
             player.setHealth(player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue());
             player.setFoodLevel(20);
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&', PluginMessageConfigEnum.MESSAGE_PREFIX.getMsg() + HealConfigEnum.HEAL_SELF.getMsg()).replaceAll("%player%", player.getName()));
+            player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonMessageEnum.MESSAGE_PREFIX.getMsg() + HealConfigEnum.HEAL_SELF.getMsg()).replaceAll("%player%", player.getName()));
         } else {
             //控制台需要判断长度，必须长度大于1，否则提示指令使用提示
             if (args.length == 0) {
-                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', PluginMessageConfigEnum.MESSAGE_PREFIX.getMsg() + HealConfigEnum.HEAL_CONSOLE_ERROR.getMsg()));
+                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonMessageEnum.MESSAGE_PREFIX.getMsg() + HealConfigEnum.HEAL_CONSOLE_ERROR.getMsg()));
                 return true;
             } else {
                 //得到该用户
@@ -46,13 +46,13 @@ public class HealCommand implements TabExecutor {
                 Player otherPlayer = Bukkit.getPlayerExact(otherPlayerName);
                 //判断该玩家是否存在
                 if (otherPlayer == null) {
-                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', PluginMessageConfigEnum.MESSAGE_PREFIX.getMsg() + PluginMessageConfigEnum.PLAYER_NO_EXIST.getMsg()).replaceAll("%others-player%", otherPlayerName));
+                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonMessageEnum.MESSAGE_PREFIX.getMsg() + CommonMessageEnum.PLAYER_NO_EXIST.getMsg()).replaceAll("%others-player%", otherPlayerName));
                     return true;
                 }
                 otherPlayer.setHealth(otherPlayer.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue());
                 otherPlayer.setFoodLevel(20);
-                otherPlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', PluginMessageConfigEnum.MESSAGE_PREFIX.getMsg() + HealConfigEnum.HEAL_BY_CONSOLE.getMsg()));
-                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', PluginMessageConfigEnum.MESSAGE_PREFIX.getMsg() + HealConfigEnum.HEAL_OTHERS.getMsg()).replaceAll("%others-player%", otherPlayerName));
+                otherPlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonMessageEnum.MESSAGE_PREFIX.getMsg() + HealConfigEnum.HEAL_BY_CONSOLE.getMsg()));
+                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonMessageEnum.MESSAGE_PREFIX.getMsg() + HealConfigEnum.HEAL_OTHERS.getMsg()).replaceAll("%others-player%", otherPlayerName));
             }
         }
         return true;
@@ -67,7 +67,7 @@ public class HealCommand implements TabExecutor {
     public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
         //判断指令是否是上面执行的指令
         if (!(sender instanceof Player)) {
-            return CommonUtils.arg1CommandPlayerTip(args);
+            return CommonUtil.arg1CommandPlayerTip(args);
         }
         return null;
     }

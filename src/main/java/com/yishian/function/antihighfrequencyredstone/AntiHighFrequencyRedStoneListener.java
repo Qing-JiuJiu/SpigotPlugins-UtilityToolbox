@@ -1,6 +1,6 @@
 package com.yishian.function.antihighfrequencyredstone;
 
-import com.yishian.common.CommonUtils;
+import com.yishian.common.CommonUtil;
 import org.bukkit.block.Block;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -19,7 +19,7 @@ public class AntiHighFrequencyRedStoneListener implements Listener {
         //得到那个块
         Block block = blockRedstoneEvent.getBlock();
         //比对命名空间，如果对比成功，将物品登记一次
-        if (CommonUtils.objectToList(AntiHighFrequencyRedStoneConfigEnum.ANTI_RED_STONE_LIST.getMsg()).contains(block.getType().getKey().toString())) {
+        if (CommonUtil.objectToList(AntiHighFrequencyRedStoneConfigEnum.ANTI_RED_STONE_LIST.getMsg()).contains(block.getType().getKey().toString())) {
             AntiHighFrequencyRedStoneRunnable.detectList.merge(block.getLocation(), 1, Integer::sum);
         }
     }

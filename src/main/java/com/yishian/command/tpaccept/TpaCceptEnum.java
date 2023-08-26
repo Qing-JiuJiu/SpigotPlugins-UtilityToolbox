@@ -8,7 +8,7 @@ public enum TpaCceptEnum {
     /**
      * 同意传送请求
      */
-    TPA_CCEPT_COMMAND("tpaccept", "同意传送请求指令");
+    TPACCEPT_COMMAND("tpaccept", "同意传送请求指令");
 
     private final String command;
     private final String msg;

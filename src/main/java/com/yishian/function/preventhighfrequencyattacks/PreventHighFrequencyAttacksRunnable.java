@@ -1,7 +1,7 @@
 package com.yishian.function.preventhighfrequencyattacks;
 
-import com.yishian.common.CommonUtils;
-import com.yishian.common.PluginMessageConfigEnum;
+import com.yishian.common.CommonUtil;
+import com.yishian.common.CommonMessageEnum;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -34,13 +34,13 @@ public class PreventHighFrequencyAttacksRunnable extends BukkitRunnable {
 
                 //判断是否要广播消息还是只给有权限的玩家广播
                 if ((Boolean) PreventHighFrequencyAttacksConfigEnum.IS_BROADCAST_MESSAGE.getMsg()) {
-                    Bukkit.getServer().broadcastMessage(ChatColor.translateAlternateColorCodes('&', PluginMessageConfigEnum.MESSAGE_PREFIX.getMsg() + message));
+                    Bukkit.getServer().broadcastMessage(ChatColor.translateAlternateColorCodes('&', CommonMessageEnum.MESSAGE_PREFIX.getMsg() + message));
                 } else {
-                    Bukkit.getServer().broadcast(ChatColor.translateAlternateColorCodes('&', PluginMessageConfigEnum.MESSAGE_PREFIX.getMsg() + message), PreventHighFrequencyAttacksEnum.CPS_MESSAGE_PERMISSION.getCommand());
+                    Bukkit.getServer().broadcast(ChatColor.translateAlternateColorCodes('&', CommonMessageEnum.MESSAGE_PREFIX.getMsg() + message), PreventHighFrequencyAttacksEnum.CPS_MESSAGE_PERMISSION.getCommand());
                 }
 
                 //广播消息并打印日志
-                CommonUtils.logger.warning(message);
+                CommonUtil.logger.warning(message);
             }
         });
         //判断完后清除所有数据

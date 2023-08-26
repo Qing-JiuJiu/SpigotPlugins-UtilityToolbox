@@ -1,6 +1,6 @@
 package com.yishian.command.teleport;
 
-import com.yishian.common.PluginMessageConfigEnum;
+import com.yishian.common.CommonMessageEnum;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -23,10 +23,10 @@ public class TeleportCommand implements CommandExecutor {
         if (args.length == 0) {
             if (allowTp) {
                 allowTp = false;
-                Bukkit.getServer().broadcastMessage(ChatColor.translateAlternateColorCodes('&', PluginMessageConfigEnum.MESSAGE_PREFIX.getMsg() + TeleportConfigEnum.TELEPORT_DENY.getMsg()));
+                Bukkit.getServer().broadcastMessage(ChatColor.translateAlternateColorCodes('&', CommonMessageEnum.MESSAGE_PREFIX.getMsg() + TeleportConfigEnum.TELEPORT_DENY.getMsg()));
             } else {
                 allowTp = true;
-                Bukkit.getServer().broadcastMessage(ChatColor.translateAlternateColorCodes('&', PluginMessageConfigEnum.MESSAGE_PREFIX.getMsg() + TeleportConfigEnum.TELEPORT_ALLOW.getMsg()));
+                Bukkit.getServer().broadcastMessage(ChatColor.translateAlternateColorCodes('&', CommonMessageEnum.MESSAGE_PREFIX.getMsg() + TeleportConfigEnum.TELEPORT_ALLOW.getMsg()));
             }
 
             return true;
@@ -36,10 +36,10 @@ public class TeleportCommand implements CommandExecutor {
         String reason = args[0];
         if (allowTp) {
             allowTp = false;
-            Bukkit.getServer().broadcastMessage(ChatColor.translateAlternateColorCodes('&', PluginMessageConfigEnum.MESSAGE_PREFIX.getMsg() + TeleportConfigEnum.TELEPORT_DENY_REASON.getMsg()).replaceAll("%reason%", reason));
+            Bukkit.getServer().broadcastMessage(ChatColor.translateAlternateColorCodes('&', CommonMessageEnum.MESSAGE_PREFIX.getMsg() + TeleportConfigEnum.TELEPORT_DENY_REASON.getMsg()).replaceAll("%reason%", reason));
         } else {
             allowTp = true;
-            Bukkit.getServer().broadcastMessage(ChatColor.translateAlternateColorCodes('&', PluginMessageConfigEnum.MESSAGE_PREFIX.getMsg() + TeleportConfigEnum.TELEPORT_ALLOW_REASON.getMsg()).replaceAll("%reason%", reason));
+            Bukkit.getServer().broadcastMessage(ChatColor.translateAlternateColorCodes('&', CommonMessageEnum.MESSAGE_PREFIX.getMsg() + TeleportConfigEnum.TELEPORT_ALLOW_REASON.getMsg()).replaceAll("%reason%", reason));
         }
 
         return true;

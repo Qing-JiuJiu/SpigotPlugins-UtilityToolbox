@@ -1,7 +1,7 @@
 package com.yishian.function.antihighfrequencyredstone;
 
-import com.yishian.common.CommonUtils;
-import com.yishian.common.PluginMessageConfigEnum;
+import com.yishian.common.CommonUtil;
+import com.yishian.common.CommonMessageEnum;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
@@ -25,11 +25,9 @@ public class AntiHighFrequencyRedStoneRunnable extends BukkitRunnable {
     @Override
     public void run() {
         //得到限制列表
-        List<?> anitList = CommonUtils.objectToList(AntiHighFrequencyRedStoneConfigEnum.ANTI_RED_STONE_LIST.getMsg());
+        List<?> anitList = CommonUtil.objectToList(AntiHighFrequencyRedStoneConfigEnum.ANTI_RED_STONE_LIST.getMsg());
         //得到限制次数
         Integer limit = (Integer) AntiHighFrequencyRedStoneConfigEnum.LIMIT.getMsg();
-
-        //判断是否要广播消息
 
         //循环获取Value比对出现次数，超过设置出现次数就将该红石去除
         detectList.forEach((location, frequency) -> {
@@ -39,7 +37,7 @@ public class AntiHighFrequencyRedStoneRunnable extends BukkitRunnable {
 
                 String recentPlayerDistanceName = "(未找到)";
                 //判断是否附近有玩家
-                if (CommonUtils.mapIsNotEmpty(playerDistanceTreeMap)) {
+                if (CommonUtil.mapIsNotEmpty(playerDistanceTreeMap)) {
                     recentPlayerDistanceName = playerDistanceTreeMap.pollFirstEntry().getValue().getName();
                 }
 
@@ -48,13 +46,13 @@ public class AntiHighFrequencyRedStoneRunnable extends BukkitRunnable {
 
                 //判断是否要广播消息
                 if ((Boolean) AntiHighFrequencyRedStoneConfigEnum.IS_BROADCAST_MESSAGE.getMsg()) {
-                    CommonUtils.server.broadcastMessage(ChatColor.translateAlternateColorCodes('&', PluginMessageConfigEnum.MESSAGE_PREFIX.getMsg() + message));
+                    CommonUtil.server.broadcastMessage(ChatColor.translateAlternateColorCodes('&', CommonMessageEnum.MESSAGE_PREFIX.getMsg() + message));
                 } else {
-                    CommonUtils.server.broadcast(ChatColor.translateAlternateColorCodes('&', PluginMessageConfigEnum.MESSAGE_PREFIX.getMsg() + message), AntiHighFrequencyRedStoneEnum.RED_STONE_MESSAGE_PERMISSION.getCommand());
+                    CommonUtil.server.broadcast(ChatColor.translateAlternateColorCodes('&', CommonMessageEnum.MESSAGE_PREFIX.getMsg() + message), AntiHighFrequencyRedStoneEnum.RED_STONE_MESSAGE_PERMISSION.getCommand());
                 }
 
                 //打印警告日志
-                CommonUtils.logger.warning(message);
+                CommonUtil.logger.warning(message);
             }
         });
         //判断完后清除所有数据
@@ -76,7 +74,7 @@ public class AntiHighFrequencyRedStoneRunnable extends BukkitRunnable {
         }
 
         //得到周边区块玩家距离
-        return CommonUtils.calculatePlayerAroundTheItem(location);
+        return CommonUtil.calculatePlayerAroundTheItem(location);
     }
 
 

@@ -1,6 +1,6 @@
 package com.yishian.function.antihighfrequencyredstone;
 
-import com.yishian.common.CommonEnum;
+import com.yishian.common.CommonPluginEnum;
 
 /**
  * @author XinQi
@@ -14,7 +14,7 @@ public enum AntiHighFrequencyRedStoneEnum {
     /**
      * 高频红石信息权限
      */
-    RED_STONE_MESSAGE_PERMISSION(CommonEnum.PLUGHIN_NAME.getCommand() + ".RedStoneDestroyMessage", "高频红石信息权限");
+    RED_STONE_MESSAGE_PERMISSION(CommonPluginEnum.PLUGHIN_NAME.getCommand() + ".RedStoneDestroyMessage", "高频红石信息权限");
 
     private final String command;
     private final String msg;

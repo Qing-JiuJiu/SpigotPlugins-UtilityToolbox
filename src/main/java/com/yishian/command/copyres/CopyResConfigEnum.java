@@ -7,6 +7,7 @@ import java.util.Arrays;
  * @author XinQi
  */
 public enum CopyResConfigEnum {
+
     /**
      * 排除列表
      */
@@ -29,12 +30,12 @@ public enum CopyResConfigEnum {
      * 白名单
      */
     WILDCARD_LIST("wildcard-list", new ArrayList<>()),
+
     /**
      * 提示消息列表
      */
     COPYRES_APPLY("copyres-apply", "&a你已复制&3%res%&a物品"),
-    COPYRES_DENY("copyres-deny", "&c物品&3%res%&c禁止复制"),
-    COPYRES_COMMAND_ERROR("copyres-command-error", "&c复制物品指令格式错误，正确格式: &6/copyres");
+    COPYRES_DENY("copyres-deny", "&c物品&3%res%&c禁止复制");
 
     private final String tag;
     private Object msg;

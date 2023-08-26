@@ -3,9 +3,9 @@ package com.yishian.command.back;
 import com.yishian.Main;
 import com.yishian.command.rebirthinplace.RebirthInPlaceConfig;
 import com.yishian.command.teleport.TeleportCommand;
-import com.yishian.common.CommonEnum;
-import com.yishian.common.CommonUtils;
-import com.yishian.common.PluginMessageConfigEnum;
+import com.yishian.common.CommonPluginEnum;
+import com.yishian.common.CommonUtil;
+import com.yishian.common.CommonMessageEnum;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -54,11 +54,11 @@ public class BackListener implements Listener {
             if (player.hasPermission(BackEnum.BACK_PERMISSION.getCommand())) {
                 //判断服务器是否允许传送，如果允许且玩家没有开启自动重生死亡返回则提醒玩家可以使用/back指令返回到死亡位置
                 if (TeleportCommand.allowTp) {
-                    if (!RebirthInPlaceConfig.rebirthInPlaceFileYaml.getBoolean(player.getName() + "." + CommonEnum.FUNCTION_IS_ENABLE.getCommand())) {
-                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', PluginMessageConfigEnum.MESSAGE_PREFIX.getMsg() + BackConfigEnum.BACK_DIED_TIPS.getMsg()));
+                    if (!RebirthInPlaceConfig.rebirthInPlaceFileYaml.getBoolean(player.getName() + CommonPluginEnum.POINT + CommonPluginEnum.FUNCTION_IS_ENABLE.getCommand())) {
+                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonMessageEnum.MESSAGE_PREFIX.getMsg() + BackConfigEnum.BACK_DIED_TIPS.getMsg()));
                     }
                 } else {
-                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', PluginMessageConfigEnum.MESSAGE_PREFIX.getMsg() + BackConfigEnum.BACK_DIED_NO_TP_TIPS.getMsg()));
+                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonMessageEnum.MESSAGE_PREFIX.getMsg() + BackConfigEnum.BACK_DIED_NO_TP_TIPS.getMsg()));
                 }
             }
         });
@@ -83,7 +83,7 @@ public class BackListener implements Listener {
         backFileYaml.set(playerName + ".yaw", playerLocationYaw);
         backFileYaml.set(playerName + ".pitch", playerLocationPitch);
         //写入back文件
-        CommonUtils.saveYamlConfig(backFileYaml, BackConfig.file.toPath());
+        CommonUtil.saveYamlConfig(backFileYaml, BackConfig.file.toPath());
     }
 }
 

@@ -8,7 +8,8 @@ public enum SetTppEnum {
     /**
      * 设置临时传送点
      */
-    SET_TPP_COMMAND("settpp", "设置传送点指令");
+    SETTPP_COMMAND("settpp", "设置传送点指令");
+
     private final String command;
     private final String msg;
 

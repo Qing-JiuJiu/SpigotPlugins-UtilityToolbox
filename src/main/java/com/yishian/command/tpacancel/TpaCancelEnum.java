@@ -9,7 +9,7 @@ public enum TpaCancelEnum {
     /**
      * 取消传送请求
      */
-    TPA_CANCEL_COMMAND("tpacancel", "取消传送请求指令");
+    TPACANCEL_COMMAND("tpacancel", "取消传送请求指令");
 
     private final String command;
     private final String msg;

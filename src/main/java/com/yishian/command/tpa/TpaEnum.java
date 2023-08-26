@@ -1,6 +1,6 @@
 package com.yishian.command.tpa;
 
-import com.yishian.common.CommonEnum;
+import com.yishian.common.CommonPluginEnum;
 
 /**
  * @author XinQi
@@ -11,7 +11,7 @@ public enum TpaEnum {
      * 申请传送至他人
      */
     TPA_COMMAND("tpa", "申请传送至他人的指令"),
-    TPA_PERMISSION(CommonEnum.PLUGHIN_NAME.getCommand() + "." + TPA_COMMAND.getCommand(), "申请传送至他人的权限");
+    TPA_PERMISSION(CommonPluginEnum.PLUGHIN_NAME.getCommand() + "." + TPA_COMMAND.getCommand(), "申请传送至他人的权限");
 
     private final String command;
     private final String msg;
@@ -28,4 +28,5 @@ public enum TpaEnum {
     public String getMsg() {
         return msg;
     }
+
 }

@@ -2,9 +2,13 @@ package com.yishian.common;
 
 /**
  * @author XinQi
+ * 插件通用提示消息枚举
  */
-public enum PluginMessageConfigEnum {
+public enum CommonMessageEnum {
 
+    /**
+     * 插件通用提示消息
+     */
     MESSAGE_PREFIX("message-prefix", "&e[UtilityToolbox] &6"),
     CONSOLE_COMMAND_NO_USE("console-command-no-use", "&c控制台无法使用该指令"),
     CONSOLE_USE_OFFICIAL_COMMAND_TIPS("console-use-official-command-tips", "&c控制台请使用官方指令代替该指令"),
@@ -13,7 +17,7 @@ public enum PluginMessageConfigEnum {
     private final String tag;
     private String msg;
 
-    PluginMessageConfigEnum(String tag, String msg) {
+    CommonMessageEnum(String tag, String msg) {
         this.tag = tag;
         this.msg = msg;
     }

@@ -1,7 +1,7 @@
 package com.yishian.command.flyspeed;
 
-import com.yishian.common.CommonUtils;
-import com.yishian.common.PluginMessageConfigEnum;
+import com.yishian.common.CommonUtil;
+import com.yishian.common.CommonMessageEnum;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -33,16 +33,16 @@ public class FlySpeedCommand implements TabExecutor {
         if (args.length == 0) {
             //判断执行该指令的是否是玩家
             if (!(sender instanceof Player)) {
-                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', PluginMessageConfigEnum.MESSAGE_PREFIX.getMsg() + FlySpeedConfigEnum.FLYSPEED_CONSOLE_ERROR.getMsg()));
+                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonMessageEnum.MESSAGE_PREFIX.getMsg() + FlySpeedConfigEnum.FLYSPEED_CONSOLE_ERROR.getMsg()));
                 return true;
             }
 
             //重置玩家飞行速度
             Player player = (Player) sender;
-            player.setFlySpeed(0.1F); //默认飞行速度为0.1
+            player.setFlySpeed(0.1F);
 
             //发送对应消息
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&', PluginMessageConfigEnum.MESSAGE_PREFIX.getMsg() + FlySpeedConfigEnum.FLYSPEED_SELF_RESET.getMsg()).replaceAll("%player%", player.getName()));
+            player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonMessageEnum.MESSAGE_PREFIX.getMsg() + FlySpeedConfigEnum.FLYSPEED_SELF_RESET.getMsg()).replaceAll("%player%", player.getName()));
 
             return true;
         }
@@ -64,7 +64,7 @@ public class FlySpeedCommand implements TabExecutor {
             player.setFlySpeed(properFlySpeed);
 
             //发送对应消息
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&', PluginMessageConfigEnum.MESSAGE_PREFIX.getMsg() + FlySpeedConfigEnum.FLYSPEED_SELF.getMsg()).replaceAll("%fly-speed%", Float.toString(originalFlySpeed)));
+            player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonMessageEnum.MESSAGE_PREFIX.getMsg() + FlySpeedConfigEnum.FLYSPEED_SELF.getMsg()).replaceAll("%fly-speed%", Float.toString(originalFlySpeed)));
 
             return true;
         }
@@ -77,16 +77,16 @@ public class FlySpeedCommand implements TabExecutor {
 
             //判断用户存不存在
             if (otherPlayer == null) {
-                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', PluginMessageConfigEnum.MESSAGE_PREFIX.getMsg() + PluginMessageConfigEnum.PLAYER_NO_EXIST.getMsg()).replaceAll("%others-player%", otherPlayerName));
+                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonMessageEnum.MESSAGE_PREFIX.getMsg() + CommonMessageEnum.PLAYER_NO_EXIST.getMsg()).replaceAll("%others-player%", otherPlayerName));
                 return true;
             }
 
             //重置玩家飞行速度
             otherPlayer.setFlySpeed(0.1F);
-            otherPlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', PluginMessageConfigEnum.MESSAGE_PREFIX.getMsg() + FlySpeedConfigEnum.FLYSPEED_BY_CONSOLE_RESET.getMsg()));
+            otherPlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonMessageEnum.MESSAGE_PREFIX.getMsg() + FlySpeedConfigEnum.FLYSPEED_BY_CONSOLE_RESET.getMsg()));
 
             //发送对应消息
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', PluginMessageConfigEnum.MESSAGE_PREFIX.getMsg() + FlySpeedConfigEnum.FLYSPEED_OTHERS_RESET.getMsg()).replaceAll("%others-player%", otherPlayerName));
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonMessageEnum.MESSAGE_PREFIX.getMsg() + FlySpeedConfigEnum.FLYSPEED_OTHERS_RESET.getMsg()).replaceAll("%others-player%", otherPlayerName));
 
             return true;
         }
@@ -104,7 +104,7 @@ public class FlySpeedCommand implements TabExecutor {
 
         //判断用户存不存在
         if (otherPlayer == null) {
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', PluginMessageConfigEnum.MESSAGE_PREFIX.getMsg() + PluginMessageConfigEnum.PLAYER_NO_EXIST.getMsg()).replaceAll("%others-player%", otherPlayerName));
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonMessageEnum.MESSAGE_PREFIX.getMsg() + CommonMessageEnum.PLAYER_NO_EXIST.getMsg()).replaceAll("%others-player%", otherPlayerName));
             return true;
         }
 
@@ -117,36 +117,10 @@ public class FlySpeedCommand implements TabExecutor {
 
         //发送对应消息
         String originalFlySpeedString = originalFlySpeed.toString();
-        otherPlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', PluginMessageConfigEnum.MESSAGE_PREFIX.getMsg() + FlySpeedConfigEnum.FLYSPEED_BY_CONSOLE.getMsg()).replaceAll("%fly-speed%", originalFlySpeedString));
-        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', PluginMessageConfigEnum.MESSAGE_PREFIX.getMsg() + FlySpeedConfigEnum.FLYSPEED_OTHERS.getMsg()).replaceAll("%others-player%", otherPlayerName).replaceAll("%fly-speed%", originalFlySpeedString));
+        otherPlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonMessageEnum.MESSAGE_PREFIX.getMsg() + FlySpeedConfigEnum.FLYSPEED_BY_CONSOLE.getMsg()).replaceAll("%fly-speed%", originalFlySpeedString));
+        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonMessageEnum.MESSAGE_PREFIX.getMsg() + FlySpeedConfigEnum.FLYSPEED_OTHERS.getMsg()).replaceAll("%others-player%", otherPlayerName).replaceAll("%fly-speed%", originalFlySpeedString));
 
         return true;
-    }
-
-    /**
-     * 用于判断是否数值是否合规校验
-     *
-     * @return 原始飞行速度
-     */
-    private static Float checkOriginalFlySpeed(CommandSender sender, String[] args) {
-        float originalFlySpeed;
-
-        //转换参数为浮点型
-        try {
-            originalFlySpeed = Float.parseFloat(args[0]);
-        } catch (IllegalArgumentException illegalArgumentException) {
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', PluginMessageConfigEnum.MESSAGE_PREFIX.getMsg() + FlySpeedConfigEnum.FLYSPEED_SELF_ARGS_ERROR.getMsg()));
-            return null;
-        }
-
-        //判断数字是否合规
-        BigDecimal bigDecimalOriginalFlySpeed = new BigDecimal(originalFlySpeed);
-        if (bigDecimalOriginalFlySpeed.compareTo(new BigDecimal(0)) < 0 || bigDecimalOriginalFlySpeed.compareTo(new BigDecimal(10)) > 0) {
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', PluginMessageConfigEnum.MESSAGE_PREFIX.getMsg() + FlySpeedConfigEnum.FLYSPEED_SELF_ARGS_ERROR.getMsg()));
-            return null;
-        }
-
-        return originalFlySpeed;
     }
 
     /**
@@ -170,12 +144,40 @@ public class FlySpeedCommand implements TabExecutor {
 
         //控制台参数输入到第2个时只提示玩家名字
         if (args.length == 2) {
-            return CommonUtils.arg2CommandPlayerTips(args);
+            return CommonUtil.arg2CommandPlayerTips(args);
         }
 
         //控制台参数输入到第1个时提示飞行速度跟玩家名字
-        List<String> tips = CommonUtils.arg1CommandPlayerTip(args);
+        List<String> tips = CommonUtil.arg1CommandPlayerTip(args);
         tips.add("[0-10]");
         return tips;
     }
+
+    /**
+     * 用于判断是否数值是否合规校验
+     *
+     * @return 原始飞行速度
+     */
+    private static Float checkOriginalFlySpeed(CommandSender sender, String[] args) {
+        float originalFlySpeed;
+
+        //转换参数为浮点型
+        try {
+            originalFlySpeed = Float.parseFloat(args[0]);
+        } catch (IllegalArgumentException illegalArgumentException) {
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonMessageEnum.MESSAGE_PREFIX.getMsg() + FlySpeedConfigEnum.FLYSPEED_SELF_ARGS_ERROR.getMsg()));
+            return null;
+        }
+
+        //判断数字是否合规
+        BigDecimal bigDecimalOriginalFlySpeed = new BigDecimal(originalFlySpeed);
+        String maxFlySpeedString = "10";
+        if (bigDecimalOriginalFlySpeed.compareTo(new BigDecimal(0)) < 0 || bigDecimalOriginalFlySpeed.compareTo(new BigDecimal(maxFlySpeedString)) > 0) {
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonMessageEnum.MESSAGE_PREFIX.getMsg() + FlySpeedConfigEnum.FLYSPEED_SELF_ARGS_ERROR.getMsg()));
+            return null;
+        }
+
+        return originalFlySpeed;
+    }
+
 }

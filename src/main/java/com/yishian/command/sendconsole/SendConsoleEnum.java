@@ -1,6 +1,6 @@
 package com.yishian.command.sendconsole;
 
-import com.yishian.common.CommonEnum;
+import com.yishian.common.CommonPluginEnum;
 
 /**
  * @author XinQi
@@ -10,8 +10,8 @@ public enum SendConsoleEnum {
     /**
      * 发送控制台指令
      */
-    SEND_CONSOLE_COMMAND("sendconsole", "发送控制台指令"),
-    SEND_CONSOLE_PERMISSION(CommonEnum.PLUGHIN_NAME.getCommand() + "." + SEND_CONSOLE_COMMAND.getCommand(), "发送控制台指令的权限");
+    SENDCONSOLE_COMMAND("sendconsole", "发送控制台指令"),
+    SENDCONSOLE_PERMISSION(CommonPluginEnum.PLUGHIN_NAME.getCommand() + "." + SENDCONSOLE_COMMAND.getCommand(), "发送控制台指令的权限");
 
     private final String command;
     private final String msg;

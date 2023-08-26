@@ -1,6 +1,6 @@
 package com.yishian.function.preventhighfrequencyattacks;
 
-import com.yishian.common.CommonEnum;
+import com.yishian.common.CommonPluginEnum;
 
 /**
  * @author XinQi
@@ -15,7 +15,7 @@ public enum PreventHighFrequencyAttacksEnum {
     /**
      * 玩家高频攻击被提出服务器信息权限
      */
-    CPS_MESSAGE_PERMISSION(CommonEnum.PLUGHIN_NAME.getCommand() + ".PlayerFrequencyAttacksMessage", "玩家高频攻击被提出服务器信息");
+    CPS_MESSAGE_PERMISSION(CommonPluginEnum.PLUGHIN_NAME.getCommand() + ".PlayerFrequencyAttacksMessage", "玩家高频攻击被提出服务器信息");
 
     private final String command;
     private final String msg;

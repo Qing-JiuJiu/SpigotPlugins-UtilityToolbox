@@ -1,17 +1,18 @@
 package com.yishian.command.autorespawn;
 
-import com.yishian.common.CommonEnum;
+import com.yishian.common.CommonPluginEnum;
 
 /**
  * @author XinQi
+ * 自动重生指令枚举
  */
 public enum AutoRespawnEnum {
 
     /**
      * 自动重生
      */
-    AUTO_RESPAWN_COMMAND("autorespawn", "自动重生指令"),
-    AUTO_RESPAWN_PERMISSION(CommonEnum.PLUGHIN_NAME.getCommand() + "." + AUTO_RESPAWN_COMMAND.getCommand(), "自动重生指令权限");
+    AUTORESPAWN_COMMAND("autorespawn", "自动重生指令"),
+    AUTORESPAWN_PERMISSION(CommonPluginEnum.PLUGHIN_NAME.getCommand() + "." + AUTORESPAWN_COMMAND.getCommand(), "自动重生指令权限");
 
     private final String command;
     private final String msg;
@@ -28,4 +29,5 @@ public enum AutoRespawnEnum {
     public String getMsg() {
         return msg;
     }
+
 }

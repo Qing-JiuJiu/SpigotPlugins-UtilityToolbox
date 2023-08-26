@@ -3,8 +3,8 @@ package com.yishian.command.rebirthinplace;
 import com.yishian.command.back.BackConfig;
 import com.yishian.command.teleport.TeleportCommand;
 import com.yishian.command.teleport.TeleportConfigEnum;
-import com.yishian.common.CommonEnum;
-import com.yishian.common.PluginMessageConfigEnum;
+import com.yishian.common.CommonPluginEnum;
+import com.yishian.common.CommonMessageEnum;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -30,14 +30,14 @@ public class RebirthInPlaceListener implements Listener {
         String playerName = player.getName();
 
         //判断玩家是否开启自动死亡返回
-        if (RebirthInPlaceConfig.rebirthInPlaceFileYaml.getBoolean(playerName + "." + CommonEnum.FUNCTION_IS_ENABLE.getCommand())) {
+        if (RebirthInPlaceConfig.rebirthInPlaceFileYaml.getBoolean(playerName + CommonPluginEnum.POINT + CommonPluginEnum.FUNCTION_IS_ENABLE.getCommand())) {
             //玩家重生后，获得玩家back信息并设置玩家重生位置和发送消息
             ConfigurationSection playerConfig = BackConfig.BackFileYaml.getConfigurationSection(playerName);
             if (TeleportCommand.allowTp) {
                 playerRespawnEvent.setRespawnLocation(new Location(Bukkit.getWorld(playerConfig.getString("world")), playerConfig.getDouble("x"), playerConfig.getDouble("y"), playerConfig.getDouble("z"), Float.parseFloat(playerConfig.getString("yaw")), Float.parseFloat(playerConfig.getString("pitch"))));
-                player.sendMessage(ChatColor.translateAlternateColorCodes('&', PluginMessageConfigEnum.MESSAGE_PREFIX.getMsg() + RebirthInPlaceConfigEnum.REBIRTHINPLACE_APPLY.getMsg()));
+                player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonMessageEnum.MESSAGE_PREFIX.getMsg() + RebirthInPlaceConfigEnum.REBIRTHINPLACE_APPLY.getMsg()));
             }else {
-                player.sendMessage(ChatColor.translateAlternateColorCodes('&', PluginMessageConfigEnum.MESSAGE_PREFIX.getMsg() + TeleportConfigEnum.TELEPORT_DENY_APPLY.getMsg()));
+                player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonMessageEnum.MESSAGE_PREFIX.getMsg() + TeleportConfigEnum.TELEPORT_DENY_APPLY.getMsg()));
             }
         }
     }

@@ -15,8 +15,7 @@ public enum SetTppConfigEnum {
      * 提示消息列表
      */
     SETTPP_APPLY("settpp-apply", "&a已将此位置设为&3%tp-name%&a传送点"),
-    SETTPP_WORLD_ERROR("settpp-world-error", "&c世界&3%world%&c禁止设置传送点"),
-    SETTPP_COMMAND_ERROR("settpp-command-error", "&c设置传送点指令格式错误，正确格式: &6/settpp [tpname]");
+    SETTPP_WORLD_ERROR("settpp-world-error", "&c世界&3%world%&c禁止设置传送点");
 
     private final String tag;
     private Object msg;

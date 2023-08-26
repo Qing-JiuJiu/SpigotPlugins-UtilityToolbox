@@ -1,6 +1,6 @@
 package com.yishian.command.utilitytoolbox;
 
-import com.yishian.common.CommonEnum;
+import com.yishian.common.CommonPluginEnum;
 
 /**
  * @author XinQi
@@ -18,7 +18,7 @@ public enum UtilityToolboxEnum {
     /**
      * 重载配置文件的权限
      */
-    RELOAD_CONFIG_PERMISSION(CommonEnum.PLUGHIN_NAME.getCommand() + "." + RELOAD_CONFIG_COMMAND.getCommand(), "重载配置文件的权限");
+    RELOAD_CONFIG_PERMISSION(CommonPluginEnum.PLUGHIN_NAME.getCommand() + "." + RELOAD_CONFIG_COMMAND.getCommand(), "重载配置文件的权限");
 
     private final String command;
     private final String msg;

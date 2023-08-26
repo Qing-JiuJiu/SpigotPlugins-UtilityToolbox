@@ -1,6 +1,6 @@
 package com.yishian.command.showtextcolor;
 
-import com.yishian.common.CommonEnum;
+import com.yishian.common.CommonPluginEnum;
 
 /**
  * @author XinQi
@@ -12,7 +12,7 @@ public enum ShowTextCodeEnum {
      */
     SHOW_TEXT_CODE_COMMAND("showtextcode", "展示文本代码指令"),
 
-    SHOW_TEXT_CODE_PERMISSION(CommonEnum.PLUGHIN_NAME.getCommand() + "." + SHOW_TEXT_CODE_COMMAND.getCommand(), "展示颜色代码权限");
+    SHOW_TEXT_CODE_PERMISSION(CommonPluginEnum.PLUGHIN_NAME.getCommand() + "." + SHOW_TEXT_CODE_COMMAND.getCommand(), "展示颜色代码权限");
 
     private final String command;
     private final String msg;

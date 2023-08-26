@@ -30,7 +30,7 @@ commands:
     description: 回家
   showtextcode:
     description: 展示文本代码
-  kills:
+  killself:
     description: 自杀
   back:
     description: 返回
@@ -100,7 +100,7 @@ permissions:
   UtilityToolbox.copyres:
     description: 复制主手上的物品的权限
 
-  UtilityToolbox.kills:
+  UtilityToolbox.killself:
     default: true
     description: 自杀的权限
 

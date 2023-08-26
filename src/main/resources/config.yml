@@ -1,5 +1,5 @@
 #这是一个配置文件，所有主功能的开启和关闭都必须重启服务器/重新加载插件
-plugin-message:
+common-message:
   #插件消息前缀
   message-prefix: '&e[UtilityToolbox] &6'
   console-command-no-use: '&c控制台无法使用该指令'
@@ -222,14 +222,12 @@ sethome:
   message:
     sethome-apply: '&a已将此位置设为&3%name%&a家'
     sethome-world-error: '&c世界&3%world%&c禁止设置家'
-    sethome-command-error: '&c设置家指令格式错误，正确格式: &6/sethome [name]'
 
 #回家
 home:
   message:
     home-apply: '&a你已传送回&3%name%&a家'
     home-no-exist: '&c暂无&3%name%&c家，请使用&6/sethome [name]&c指令设置家的位置'
-    home-command-error: '&c回家指令格式错误，正确格式: &6/sethome [name]'
 
 #展示文本代码
 showtextcode:
@@ -253,11 +251,10 @@ showtextcode:
       - '&nn是下划线'
       - '&c展示列表结束------------------------------'
 
-#等同于自己使用/kill指令
-kills:
+#等同于自己使用 /kill 指令
+killself:
   message:
-    kills-apply: '&a已让服务器执行自杀指令'
-    kills-command-error: '&c自杀指令格式错误，正确格式: &6/kills'
+    killself-apply: '&a已让服务器执行相关指令'
 
 #传送到上一个传送/死亡的位置
 back:
@@ -266,7 +263,6 @@ back:
     back-died-tips: '你在下一次传送前可使用&c/back&6指令回到死亡位置'
     back-died-no-tp-tips: '服务器&c/back&6指令已记录你的死亡位置'
     back-no-location: '&c你暂时没有返回的位置'
-    back-command-error: '&c返回指令格式错误，正确格式: &6/back'
 
 #切换服务器是否允许指令传送
 teleport:
@@ -301,7 +297,6 @@ copyres:
   message:
     copyres-apply: '&a你已复制&3%res%&a物品'
     copyres-deny: '&c物品&3%res%&c禁止复制'
-    copyres-command-error: '&c复制物品指令格式错误，正确格式: &6/copyres'
 
 #模式切换
 gm:

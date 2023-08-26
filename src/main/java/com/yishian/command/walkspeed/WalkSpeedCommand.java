@@ -1,7 +1,7 @@
 package com.yishian.command.walkspeed;
 
-import com.yishian.common.CommonUtils;
-import com.yishian.common.PluginMessageConfigEnum;
+import com.yishian.common.CommonUtil;
+import com.yishian.common.CommonMessageEnum;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -33,7 +33,7 @@ public class WalkSpeedCommand implements TabExecutor {
         if (args.length == 0) {
             //判断执行该指令的是否是玩家
             if (!(sender instanceof Player)) {
-                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', PluginMessageConfigEnum.MESSAGE_PREFIX.getMsg() + WalkSpeedConfigEnum.WALKSPEED_CONSOLE_ERROR.getMsg()));
+                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonMessageEnum.MESSAGE_PREFIX.getMsg() + WalkSpeedConfigEnum.WALKSPEED_CONSOLE_ERROR.getMsg()));
                 return true;
             }
 
@@ -43,7 +43,7 @@ public class WalkSpeedCommand implements TabExecutor {
             player.setWalkSpeed(0.2F);
 
             //发送对应消息
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&', PluginMessageConfigEnum.MESSAGE_PREFIX.getMsg() + WalkSpeedConfigEnum.WALKSPEED_SELF_RESET.getMsg()).replaceAll("%player%", player.getName()));
+            player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonMessageEnum.MESSAGE_PREFIX.getMsg() + WalkSpeedConfigEnum.WALKSPEED_SELF_RESET.getMsg()).replaceAll("%player%", player.getName()));
 
             return true;
         }
@@ -65,7 +65,7 @@ public class WalkSpeedCommand implements TabExecutor {
             player.setWalkSpeed(properWalkSpeed);
 
             //发送对应消息
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&', PluginMessageConfigEnum.MESSAGE_PREFIX.getMsg() + WalkSpeedConfigEnum.WALKSPEED_SELF.getMsg()).replaceAll("%walk-speed%", Float.toString(originalWalkSpeed)));
+            player.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonMessageEnum.MESSAGE_PREFIX.getMsg() + WalkSpeedConfigEnum.WALKSPEED_SELF.getMsg()).replaceAll("%walk-speed%", Float.toString(originalWalkSpeed)));
 
             return true;
         }
@@ -78,16 +78,16 @@ public class WalkSpeedCommand implements TabExecutor {
 
             //判断用户存不存在
             if (otherPlayer == null) {
-                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', PluginMessageConfigEnum.MESSAGE_PREFIX.getMsg() + PluginMessageConfigEnum.PLAYER_NO_EXIST.getMsg()).replaceAll("%others-player%", otherPlayerName));
+                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonMessageEnum.MESSAGE_PREFIX.getMsg() + CommonMessageEnum.PLAYER_NO_EXIST.getMsg()).replaceAll("%others-player%", otherPlayerName));
                 return true;
             }
 
             //重置玩家移动速度
             otherPlayer.setWalkSpeed(0.2F);
-            otherPlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', PluginMessageConfigEnum.MESSAGE_PREFIX.getMsg() + WalkSpeedConfigEnum.WALKSPEED_BY_CONSOLE_RESET.getMsg()));
+            otherPlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonMessageEnum.MESSAGE_PREFIX.getMsg() + WalkSpeedConfigEnum.WALKSPEED_BY_CONSOLE_RESET.getMsg()));
 
             //发送对应消息
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', PluginMessageConfigEnum.MESSAGE_PREFIX.getMsg() + WalkSpeedConfigEnum.WALKSPEED_OTHERS_RESET.getMsg()).replaceAll("%others-player%", otherPlayerName));
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonMessageEnum.MESSAGE_PREFIX.getMsg() + WalkSpeedConfigEnum.WALKSPEED_OTHERS_RESET.getMsg()).replaceAll("%others-player%", otherPlayerName));
 
             return true;
         }
@@ -105,7 +105,7 @@ public class WalkSpeedCommand implements TabExecutor {
 
         //判断用户存不存在
         if (otherPlayer == null) {
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', PluginMessageConfigEnum.MESSAGE_PREFIX.getMsg() + PluginMessageConfigEnum.PLAYER_NO_EXIST.getMsg()).replaceAll("%others-player%", otherPlayerName));
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonMessageEnum.MESSAGE_PREFIX.getMsg() + CommonMessageEnum.PLAYER_NO_EXIST.getMsg()).replaceAll("%others-player%", otherPlayerName));
             return true;
         }
 
@@ -118,8 +118,8 @@ public class WalkSpeedCommand implements TabExecutor {
 
         //发送对应消息
         String originalWalkSpeedString = originalWalkSpeed.toString();
-        otherPlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', PluginMessageConfigEnum.MESSAGE_PREFIX.getMsg() + WalkSpeedConfigEnum.WALKSPEED_BY_CONSOLE.getMsg()).replaceAll("%walk-speed%", originalWalkSpeedString));
-        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', PluginMessageConfigEnum.MESSAGE_PREFIX.getMsg() + WalkSpeedConfigEnum.WALKSPEED_OTHERS.getMsg()).replaceAll("%others-player%", otherPlayerName).replaceAll("%walk-speed%", originalWalkSpeedString));
+        otherPlayer.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonMessageEnum.MESSAGE_PREFIX.getMsg() + WalkSpeedConfigEnum.WALKSPEED_BY_CONSOLE.getMsg()).replaceAll("%walk-speed%", originalWalkSpeedString));
+        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonMessageEnum.MESSAGE_PREFIX.getMsg() + WalkSpeedConfigEnum.WALKSPEED_OTHERS.getMsg()).replaceAll("%others-player%", otherPlayerName).replaceAll("%walk-speed%", originalWalkSpeedString));
         
         return true;
         
@@ -136,13 +136,14 @@ public class WalkSpeedCommand implements TabExecutor {
         try {
             originalWalkSpeed = Float.parseFloat(args[0]);
         } catch (IllegalArgumentException illegalArgumentException) {
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', PluginMessageConfigEnum.MESSAGE_PREFIX.getMsg() + WalkSpeedConfigEnum.WALKSPEED_SELF_ARGS_ERROR.getMsg()));
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonMessageEnum.MESSAGE_PREFIX.getMsg() + WalkSpeedConfigEnum.WALKSPEED_SELF_ARGS_ERROR.getMsg()));
             return null;
         }
         //判断数字是否合规
         BigDecimal bigDecimalOriginalWalkSpeed = new BigDecimal(originalWalkSpeed);
-        if (bigDecimalOriginalWalkSpeed.compareTo(new BigDecimal(0)) < 0 || bigDecimalOriginalWalkSpeed.compareTo(new BigDecimal(10)) > 0) {
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', PluginMessageConfigEnum.MESSAGE_PREFIX.getMsg() + WalkSpeedConfigEnum.WALKSPEED_SELF_ARGS_ERROR.getMsg()));
+        String maxWalkSpeedString = "10";
+        if (bigDecimalOriginalWalkSpeed.compareTo(new BigDecimal(0)) < 0 || bigDecimalOriginalWalkSpeed.compareTo(new BigDecimal(maxWalkSpeedString)) > 0) {
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', CommonMessageEnum.MESSAGE_PREFIX.getMsg() + WalkSpeedConfigEnum.WALKSPEED_SELF_ARGS_ERROR.getMsg()));
             return null;
         }
         return originalWalkSpeed;
@@ -169,11 +170,11 @@ public class WalkSpeedCommand implements TabExecutor {
 
         //控制台参数输入到第2个时只提示玩家名字
         if (args.length == 2) {
-            return CommonUtils.arg2CommandPlayerTips(args);
+            return CommonUtil.arg2CommandPlayerTips(args);
         }
 
         //控制台参数输入到第1个时提示移动速度跟玩家名字
-        List<String> tips = CommonUtils.arg1CommandPlayerTip(args);
+        List<String> tips = CommonUtil.arg1CommandPlayerTip(args);
         tips.add("[0-10]");
         return tips;
     }

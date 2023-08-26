@@ -3,7 +3,7 @@ package com.yishian.command.gm;
 /**
  * @author XinQi
  */
-public enum GMConfigEnum {
+public enum GmConfigEnum {
 
     /**
      * 提示消息列表
@@ -19,7 +19,7 @@ public enum GMConfigEnum {
         this.msg = msg;
     }
 
-    GMConfigEnum(String tag, String msg) {
+    GmConfigEnum(String tag, String msg) {
         this.tag = tag;
         this.msg = msg;
     }

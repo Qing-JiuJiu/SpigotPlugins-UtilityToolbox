@@ -1,7 +1,7 @@
 package com.yishian.function.joinserverwelcome;
 
 import com.yishian.Main;
-import com.yishian.common.CommonUtils;
+import com.yishian.common.CommonUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -24,13 +24,13 @@ public class JoinServerWelcomeListener implements Listener {
                     //判断玩家是否第一次加入服务器
                     if (player.hasPlayedBefore()) {
                         //后续来到服务器
-                        CommonUtils.objectToList(JoinServerWelcomeConfigEnum.JOIN_SERVER_WELCOME_MESSAGE.getMsg()).forEach(joinServerWelcomeMessage -> player.sendMessage(ChatColor.translateAlternateColorCodes('&', joinServerWelcomeMessage.toString().replaceAll("%player%", player.getName()))));
+                        CommonUtil.objectToList(JoinServerWelcomeConfigEnum.JOIN_SERVER_WELCOME_MESSAGE.getMsg()).forEach(joinServerWelcomeMessage -> player.sendMessage(ChatColor.translateAlternateColorCodes('&', joinServerWelcomeMessage.toString().replaceAll("%player%", player.getName()))));
                     } else {
                         //第一次来到服务器
-                        CommonUtils.objectToList(JoinServerWelcomeConfigEnum.FIRST_JOIN_SERVER_WELCOME_MESSAGE.getMsg()).forEach(joinServerWelcomeMessage -> player.sendMessage(ChatColor.translateAlternateColorCodes('&', joinServerWelcomeMessage.toString().replaceAll("%player%", player.getName()))));
+                        CommonUtil.objectToList(JoinServerWelcomeConfigEnum.FIRST_JOIN_SERVER_WELCOME_MESSAGE.getMsg()).forEach(joinServerWelcomeMessage -> player.sendMessage(ChatColor.translateAlternateColorCodes('&', joinServerWelcomeMessage.toString().replaceAll("%player%", player.getName()))));
                     }
                 } else {
-                    CommonUtils.objectToList(JoinServerWelcomeConfigEnum.JOIN_SERVER_WELCOME_MESSAGE.getMsg()).forEach(joinServerWelcomeMessage -> player.sendMessage(ChatColor.translateAlternateColorCodes('&', joinServerWelcomeMessage.toString().replaceAll("%player%", player.getName()))));
+                    CommonUtil.objectToList(JoinServerWelcomeConfigEnum.JOIN_SERVER_WELCOME_MESSAGE.getMsg()).forEach(joinServerWelcomeMessage -> player.sendMessage(ChatColor.translateAlternateColorCodes('&', joinServerWelcomeMessage.toString().replaceAll("%player%", player.getName()))));
                 }
             });
         }

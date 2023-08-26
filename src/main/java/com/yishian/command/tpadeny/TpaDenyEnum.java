@@ -8,7 +8,7 @@ public enum TpaDenyEnum {
     /**
      * 拒绝传送请求
      */
-    TPA_DENY_COMMAND("tpadeny", "拒绝传送请求指令");
+    TPADENY_COMMAND("tpadeny", "拒绝传送请求指令");
 
     private final String command;
     private final String msg;
@@ -25,4 +25,5 @@ public enum TpaDenyEnum {
     public String getMsg() {
         return msg;
     }
+
 }

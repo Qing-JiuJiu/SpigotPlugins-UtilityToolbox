@@ -10,13 +10,23 @@ import java.io.IOException;
 
 /**
  * @author XinQi
+ * 自动重生配置文件
  */
 public class AutoRespawnConfig {
 
+    /**
+     * 自动重生配置文件内容
+     */
     public static YamlConfiguration autoRespawnFileYaml;
 
+    /**
+     * 自动重生配置文件
+     */
     public static File file;
 
+    /**
+     * 加载自动重生配置文件
+     */
     public static void loadAutoRespawnConfigFile() throws IOException {
         //得到插件配置目录下的homes.yml文件
         file = new File(JavaPlugin.getPlugin(Main.class).getDataFolder(), "AutoRespawn.yml");

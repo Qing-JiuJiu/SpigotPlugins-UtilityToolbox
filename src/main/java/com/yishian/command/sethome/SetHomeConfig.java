@@ -20,7 +20,7 @@ public class SetHomeConfig {
 
     public static void loadHomeConfigFile() throws IOException {
         //得到插件配置目录下的homes.yml文件
-        file = new File(JavaPlugin.getPlugin(Main.class).getDataFolder(), "homes.yml");
+        file = new File(JavaPlugin.getPlugin(Main.class).getDataFolder(), "home.yml");
         //判断文件是否存在
         if (!file.exists()) {
             //创建文件并加载该文件

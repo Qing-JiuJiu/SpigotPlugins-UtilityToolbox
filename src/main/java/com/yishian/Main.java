@@ -22,13 +22,13 @@ import com.yishian.command.heal.HealCommand;
 import com.yishian.command.heal.HealEnum;
 import com.yishian.command.home.HomeCommand;
 import com.yishian.command.home.HomeEnum;
-import com.yishian.command.kills.KillSCommand;
-import com.yishian.command.kills.KillSEnum;
+import com.yishian.command.killself.KillSelfCommand;
+import com.yishian.command.killself.KillSelfEnum;
 import com.yishian.command.musterplayer.MusterPlayerCommand;
 import com.yishian.command.musterplayer.MusterPlayerEnum;
 import com.yishian.command.musterplayer.MusterPlayerListener;
-import com.yishian.command.gm.GMCommand;
-import com.yishian.command.gm.GMModeEnum;
+import com.yishian.command.gm.GmCommand;
+import com.yishian.command.gm.GmModeEnum;
 import com.yishian.command.sendconsole.SendConsoleCommand;
 import com.yishian.command.sendconsole.SendConsoleEnum;
 import com.yishian.command.sethome.SetHomeCommand;
@@ -60,8 +60,8 @@ import com.yishian.command.utilitytoolbox.UtilityToolboxEnum;
 import com.yishian.command.walkspeed.WalkSpeedCommand;
 import com.yishian.command.walkspeed.WalkSpeedEnum;
 import com.yishian.common.CommonConfigLoad;
-import com.yishian.common.CommonEnum;
-import com.yishian.common.CommonUtils;
+import com.yishian.common.CommonPluginEnum;
+import com.yishian.common.CommonUtil;
 import com.yishian.function.antihighfrequencyredstone.AntiHighFrequencyRedStoneConfigEnum;
 import com.yishian.function.antihighfrequencyredstone.AntiHighFrequencyRedStoneListener;
 import com.yishian.function.antihighfrequencyredstone.AntiHighFrequencyRedStoneRunnable;
@@ -118,7 +118,7 @@ public final class Main extends JavaPlugin {
         }
 
         //保存配置文件后初始化一些跟配置文件相关的变量
-        messagePrefix = "&e[" + CommonEnum.PLUGHIN_NAME.getCommand() + "] &7";
+        messagePrefix = "&e[" + CommonPluginEnum.PLUGHIN_NAME.getCommand() + "] &7";
 
         //启动服务器时发送插件消息
         consoleSender.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + "&6欢迎使用UtilityToolbox，插件主页：http://www.utilitytoolbox.cn"));
@@ -142,7 +142,7 @@ public final class Main extends JavaPlugin {
      */
     public void registerCommand() {
         //重载配置文件
-        PluginCommand reloadCommand = getCommand(CommonEnum.PLUGHIN_NAME.getCommand());
+        PluginCommand reloadCommand = getCommand(CommonPluginEnum.PLUGHIN_NAME.getCommand());
         reloadCommand.setPermission(UtilityToolboxEnum.RELOAD_CONFIG_PERMISSION.getCommand());
         reloadCommand.setExecutor(new UtilityToolboxCommand());
 
@@ -162,8 +162,8 @@ public final class Main extends JavaPlugin {
         flySpeedCommand.setExecutor(new FlySpeedCommand());
 
         //修改移动速度
-        PluginCommand walkSpeedCommand = getCommand(WalkSpeedEnum.WALK_SPEED_COMMAND.getCommand());
-        walkSpeedCommand.setPermission(WalkSpeedEnum.WALK_SPEED_PERMISSION.getCommand());
+        PluginCommand walkSpeedCommand = getCommand(WalkSpeedEnum.WALKSPEED_COMMAND.getCommand());
+        walkSpeedCommand.setPermission(WalkSpeedEnum.WALKSPEED_PERMISSION.getCommand());
         walkSpeedCommand.setExecutor(new WalkSpeedCommand());
 
         //申请传送至该玩家位置
@@ -172,17 +172,17 @@ public final class Main extends JavaPlugin {
         tpaCommand.setExecutor(new TpaCommand());
 
         //取消申请传送
-        PluginCommand tpaCancelCommand = getCommand(TpaCancelEnum.TPA_CANCEL_COMMAND.getCommand());
+        PluginCommand tpaCancelCommand = getCommand(TpaCancelEnum.TPACANCEL_COMMAND.getCommand());
         tpaCancelCommand.setPermission(TpaEnum.TPA_PERMISSION.getCommand());
         tpaCancelCommand.setExecutor(new TpaCancelCommand());
 
         //同意申请传送
-        PluginCommand tpaCceptCommand = getCommand(TpaCceptEnum.TPA_CCEPT_COMMAND.getCommand());
+        PluginCommand tpaCceptCommand = getCommand(TpaCceptEnum.TPACCEPT_COMMAND.getCommand());
         tpaCceptCommand.setPermission(TpaEnum.TPA_PERMISSION.getCommand());
         tpaCceptCommand.setExecutor(new TpaCceptCommand());
 
         //拒绝申请传送
-        PluginCommand tpaDenyCommand = getCommand(TpaDenyEnum.TPA_DENY_COMMAND.getCommand());
+        PluginCommand tpaDenyCommand = getCommand(TpaDenyEnum.TPADENY_COMMAND.getCommand());
         tpaDenyCommand.setPermission(TpaEnum.TPA_PERMISSION.getCommand());
         tpaDenyCommand.setExecutor(new TpaDenyCommand());
 
@@ -207,9 +207,9 @@ public final class Main extends JavaPlugin {
         showTextCodeCommand.setExecutor(new ShowTextCodeCommand());
 
         //自杀
-        PluginCommand killSelfCommand = getCommand(KillSEnum.KILLS_COMMAND.getCommand());
-        killSelfCommand.setPermission(KillSEnum.KillS_PERMISSION.getCommand());
-        killSelfCommand.setExecutor(new KillSCommand());
+        PluginCommand killSelfCommand = getCommand(KillSelfEnum.KILLSELF_COMMAND.getCommand());
+        killSelfCommand.setPermission(KillSelfEnum.KILLSELF_PERMISSION.getCommand());
+        killSelfCommand.setExecutor(new KillSelfCommand());
 
         //返回
         PluginCommand backCommand = getCommand(BackEnum.BACK_COMMAND.getCommand());
@@ -227,12 +227,12 @@ public final class Main extends JavaPlugin {
         copyResCommand.setExecutor(new CopyResCommand());
 
         //模式切换
-        PluginCommand gMCommand = getCommand(GMModeEnum.GM_COMMAND.getCommand());
-        gMCommand.setPermission(GMModeEnum.GM_PERMISSION.getCommand());
-        gMCommand.setExecutor(new GMCommand());
+        PluginCommand gMCommand = getCommand(GmModeEnum.GM_COMMAND.getCommand());
+        gMCommand.setPermission(GmModeEnum.GM_PERMISSION.getCommand());
+        gMCommand.setExecutor(new GmCommand());
 
         //设置临时传送点
-        PluginCommand setTpPCommand = getCommand(SetTppEnum.SET_TPP_COMMAND.getCommand());
+        PluginCommand setTpPCommand = getCommand(SetTppEnum.SETTPP_COMMAND.getCommand());
         setTpPCommand.setPermission(TppEnum.TPP_PERMISSION.getCommand());
         setTpPCommand.setExecutor(new SetTppCommand());
 
@@ -254,15 +254,15 @@ public final class Main extends JavaPlugin {
         //开关自动重生
         try {
             Class.forName("org.bukkit.Server$Spigot");
-            PluginCommand autoRespawnCommand = getCommand(AutoRespawnEnum.AUTO_RESPAWN_COMMAND.getCommand());
-            autoRespawnCommand.setPermission(AutoRespawnEnum.AUTO_RESPAWN_PERMISSION.getCommand());
+            PluginCommand autoRespawnCommand = getCommand(AutoRespawnEnum.AUTORESPAWN_COMMAND.getCommand());
+            autoRespawnCommand.setPermission(AutoRespawnEnum.AUTORESPAWN_PERMISSION.getCommand());
             autoRespawnCommand.setExecutor(new AutoRespawnCommand());
         } catch (ClassNotFoundException ignored) {
         }
 
         //向控制台发送指令
-        PluginCommand sendConsoleCommand = getCommand(SendConsoleEnum.SEND_CONSOLE_COMMAND.getCommand());
-        sendConsoleCommand.setPermission(SendConsoleEnum.SEND_CONSOLE_PERMISSION.getCommand());
+        PluginCommand sendConsoleCommand = getCommand(SendConsoleEnum.SENDCONSOLE_COMMAND.getCommand());
+        sendConsoleCommand.setPermission(SendConsoleEnum.SENDCONSOLE_PERMISSION.getCommand());
         sendConsoleCommand.setExecutor(new SendConsoleCommand());
     }
 
@@ -316,7 +316,7 @@ public final class Main extends JavaPlugin {
         if ((Boolean) PreventHighFrequencyAttacksConfigEnum.ENABLE.getMsg()) {
             pluginManager.registerEvents(new PreventHighFrequencyAttacksListener(), this);
             consoleSender.sendMessage(ChatColor.translateAlternateColorCodes('&', messagePrefix + "已开启限制高频攻击"));
-            CommonUtils.logger.warning("限制高频攻击功能目前还存在缺陷，特殊场景会出现CPS统计异常的情况，建议不要开启此功能");
+            CommonUtil.logger.warning("限制高频攻击功能目前还存在缺陷，特殊场景会出现CPS统计异常的情况，建议不要开启此功能");
         }
 
         //玩家死亡自动回到死亡位置
@@ -327,7 +327,7 @@ public final class Main extends JavaPlugin {
             Class.forName("org.bukkit.Server$Spigot");
             pluginManager.registerEvents(new AutoRespawnListener(), this);
         } catch (ClassNotFoundException ignored) {
-            CommonUtils.logger.warning("Bukkit服务器不支持自动重生功能，请使用Spigot服务端及以上服务端");
+            CommonUtil.logger.warning("Bukkit服务器不支持自动重生功能，请使用Spigot服务端及以上服务端");
         }
     }
 
@@ -375,4 +375,5 @@ public final class Main extends JavaPlugin {
             throw new RuntimeException(e);
         }
     }
+
 }
